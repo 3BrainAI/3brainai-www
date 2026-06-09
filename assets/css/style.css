@@ -994,6 +994,59 @@ h3 {
   color: var(--slate);
 }
 
+.investors-expansion-lines {
+  margin: 0 0 14px;
+  font-size: clamp(17px, 1.65vw, 19px);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--charcoal);
+}
+
+.investors-scenario-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(71, 84, 103, 0.13);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: 0 1px 0 rgba(27, 31, 42, 0.03);
+}
+
+.investors-scenario-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.investors-scenario-table th,
+.investors-scenario-table td {
+  padding: 14px 18px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(71, 84, 103, 0.1);
+}
+
+.investors-scenario-table th {
+  font-weight: 600;
+  color: var(--charcoal);
+  background: var(--ice);
+}
+
+.investors-scenario-table td {
+  color: var(--slate);
+}
+
+.investors-scenario-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.investors-scenario-table td:first-child {
+  font-weight: 500;
+  color: var(--charcoal);
+  white-space: nowrap;
+}
+
 @media (max-width: 720px) {
   .investors-tracks-grid {
     grid-template-columns: 1fr;
