@@ -370,10 +370,40 @@ h3 {
 }
 
 @media (min-width: 981px) {
+  .nav {
+    gap: 2px;
+  }
+
   .nav a {
     font-size: 13px;
-    padding: 10px 9px;
+    padding: 10px 7px;
   }
+}
+
+.use-case-list {
+  display: grid;
+  gap: 20px;
+}
+
+.use-case-details {
+  margin: 16px 0 0;
+}
+
+.use-case-details dt {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--charcoal);
+  margin-top: 14px;
+}
+
+.use-case-details dt:first-child {
+  margin-top: 0;
+}
+
+.use-case-details dd {
+  margin: 4px 0 0;
+  color: var(--slate);
+  line-height: 1.6;
 }
 
 .panel-headline {
