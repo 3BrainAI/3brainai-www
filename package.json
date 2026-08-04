@@ -1,0 +1,21 @@
+{
+  "name": "3brainai-www-review",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Deterministic review checks for the static 3BrainAI website.",
+  "engines": {
+    "node": ">=24.8.0 <25"
+  },
+  "scripts": {
+    "validate": "npm run validate:html && npm run validate:css",
+    "validate:html": "html-validate index.html",
+    "validate:css": "csstree-validator assets/css/style.css",
+    "test:r3": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "csstree-validator": "4.0.1",
+    "html-validate": "11.6.1",
+    "http-server": "14.1.1"
+  }
+}

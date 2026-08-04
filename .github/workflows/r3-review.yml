@@ -1,0 +1,65 @@
+name: R3 review checks
+
+on:
+  pull_request:
+    branches:
+      - main
+      - redesign/r3-day-one
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: r3-review-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Validate and render homepage
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install review dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Check pull-request whitespace
+        if: github.event_name == 'pull_request'
+        run: git diff --check "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}"
+
+      - name: Check latest commit whitespace
+        if: github.event_name != 'pull_request'
+        run: git diff --check HEAD^ HEAD
+
+      - name: Validate HTML and CSS
+        run: npm run validate
+
+      - name: Run responsive and screenshot checks
+        run: npm run test:r3
+
+      - name: Upload review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-review-${{ github.run_id }}
+          path: |
+            artifacts/r3-preview/
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 14
