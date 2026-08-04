@@ -48,8 +48,9 @@ The workflow runs only as a validation and rendering job. It has read-only repos
 - compatibility correction: workflow moved to Node 24 and the package runtime contract set to `>=24.8.0 <25`;
 - corrected GitHub Actions run: passed, including HTML/CSS validation, all 9 Playwright tests and artifact upload;
 - first full-page desktop and mobile artifacts: visually verified without duplicated page content;
-- expanded five-image review contract: pending the next GitHub Actions run.
+- expanded five-image review contract: passed in GitHub Actions run `30894915183`;
+- final artifact set: 7 PNG files — 2 full-page captures and 5 focused review captures — visually verified without duplicated or stale content.
 
 ## Exact next step
 
-Review the corrected draft infrastructure PR and its next GitHub Actions run. Merge it only into `redesign/r3-day-one` after all validation and browser checks pass; do not merge the homepage PR or any production branch at this gate.
+Merge the green infrastructure PR only into `redesign/r3-day-one`, then update the homepage integration branch against that base and review its GitHub-generated artefacts. Do not merge any production branch at this gate.
