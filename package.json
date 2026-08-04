@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "description": "Deterministic review checks for the static 3BrainAI website.",
+  "engines": {
+    "node": ">=24.8.0 <25"
+  },
   "scripts": {
     "validate": "npm run validate:html && npm run validate:css",
     "validate:html": "html-validate index.html",

@@ -2,7 +2,7 @@
 
 **Issue:** `R3 Review Infrastructure — deterministic CI validation and Playwright previews`
 
-**Date:** 2 August 2026
+**Date:** 4 August 2026
 
 **Working branch:** `infra/r3-review-pipeline`
 
@@ -43,9 +43,10 @@ The workflow runs only as a validation and rendering job. It has read-only repos
 - package installation: passed with the pinned lockfile;
 - HTML/CSS validation: passed;
 - Playwright test discovery: passed — 9 tests discovered in one specification file;
-- browser execution: pending GitHub Actions runner;
-- draft PR checks: pending.
+- first GitHub Actions run: failed before browser tests because the workflow used Node 20 while `html-validate@11.6.1` requires Node 22.22+ or Node 24.8+;
+- compatibility correction: workflow moved to Node 24 and the package runtime contract set to `>=24.8.0 <25`;
+- browser execution and draft PR checks: pending the corrected GitHub Actions run.
 
 ## Exact next step
 
-Review the draft infrastructure PR and its first GitHub Actions run. Do not merge the infrastructure PR, homepage PR or any production branch until Dušan gives a separate approval.
+Review the corrected draft infrastructure PR and its next GitHub Actions run. Merge it only into `redesign/r3-day-one` after all validation and browser checks pass; do not merge the homepage PR or any production branch at this gate.
