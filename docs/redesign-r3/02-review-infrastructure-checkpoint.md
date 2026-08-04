@@ -21,7 +21,8 @@ Replace model-generated screenshot claims with deterministic repository checks a
 - Playwright checks for review-safety invariants, internal anchors and routes;
 - responsive overflow checks at 320, 390, 768, 1280 and 1920 px;
 - conditional verification of the approved CRI-first homepage section order;
-- native Playwright screenshots at 1280 and 390 px;
+- native Playwright full-page screenshots at 1280 and 390 px;
+- a five-image review contract covering desktop and mobile homepage viewports, the complete mobile Evidence Pack, the desktop Evidence Pack anchor target and a desktop Evidence Pack close-up;
 - GitHub artifact upload for screenshots, HTML report and failure traces;
 - read-only workflow permissions and no deployment step.
 
@@ -45,7 +46,9 @@ The workflow runs only as a validation and rendering job. It has read-only repos
 - Playwright test discovery: passed — 9 tests discovered in one specification file;
 - first GitHub Actions run: failed before browser tests because the workflow used Node 20 while `html-validate@11.6.1` requires Node 22.22+ or Node 24.8+;
 - compatibility correction: workflow moved to Node 24 and the package runtime contract set to `>=24.8.0 <25`;
-- browser execution and draft PR checks: pending the corrected GitHub Actions run.
+- corrected GitHub Actions run: passed, including HTML/CSS validation, all 9 Playwright tests and artifact upload;
+- first full-page desktop and mobile artifacts: visually verified without duplicated page content;
+- expanded five-image review contract: pending the next GitHub Actions run.
 
 ## Exact next step
 

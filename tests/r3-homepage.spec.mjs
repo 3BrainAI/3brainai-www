@@ -100,7 +100,7 @@ test('homepage local navigation targets resolve', async ({ page, request }) => {
   }
 });
 
-test('creates deterministic desktop and mobile review screenshots', async ({ page }) => {
+test('creates deterministic full-page and focused review screenshots', async ({ page }) => {
   test.setTimeout(60_000);
   const outputDirectory = path.resolve('artifacts/r3-preview');
   await mkdir(outputDirectory, { recursive: true });
@@ -116,4 +116,32 @@ test('creates deterministic desktop and mobile review screenshots', async ({ pag
       animations: 'disabled'
     });
   }
+
+  await openHomepage(page, 1280, 900);
+  await page.screenshot({
+    path: path.join(outputDirectory, 'r3-homepage-desktop-1280.png'),
+    animations: 'disabled'
+  });
+
+  await openHomepage(page, 390, 844);
+  await page.screenshot({
+    path: path.join(outputDirectory, 'r3-homepage-mobile-390.png'),
+    animations: 'disabled'
+  });
+  await page.locator('#evidence-pack-sample').screenshot({
+    path: path.join(outputDirectory, 'r3-evidence-pack-mobile-390.png'),
+    animations: 'disabled'
+  });
+
+  await openHomepage(page, 1280, 900);
+  await page.locator('.r3-proof-link').click();
+  await expect(page).toHaveURL(/#evidence-pack-sample$/);
+  await page.screenshot({
+    path: path.join(outputDirectory, 'r3-evidence-pack-target-desktop-1280.png'),
+    animations: 'disabled'
+  });
+  await page.locator('#evidence-pack-sample').screenshot({
+    path: path.join(outputDirectory, 'r3-evidence-pack-closeup-1280.png'),
+    animations: 'disabled'
+  });
 });
