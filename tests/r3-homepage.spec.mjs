@@ -25,6 +25,27 @@ async function openHomepage(page, width, height = 900) {
   await page.evaluate(() => document.fonts?.ready);
 }
 
+async function activateEvidencePackAnchor(page) {
+  await page.locator('.r3-proof-link').click();
+  await expect(page).toHaveURL(/#evidence-pack-sample$/);
+
+  await expect.poll(() => page.evaluate(() => {
+    const target = document.querySelector('#evidence-pack-sample');
+    const stickyHeader = document.querySelector('.site-header');
+    if (!target || !stickyHeader) return false;
+
+    const targetTop = target.getBoundingClientRect().top;
+    const headerBottom = stickyHeader.getBoundingClientRect().bottom;
+    return targetTop >= headerBottom && targetTop <= headerBottom + 32;
+  }), {
+    message: 'Evidence Pack anchor should settle below the sticky header'
+  }).toBeTruthy();
+
+  await expect(page.locator('#evidence-pack-sample .evidence-pack-label')).toBeInViewport();
+  await expect(page.locator('#evidence-pack-title')).toBeInViewport();
+  await expect(page.locator('#evidence-pack-sample .evidence-pack-state')).toBeInViewport();
+}
+
 test('homepage preserves the approved review-safety invariants', async ({ page }) => {
   await openHomepage(page, 1280);
 
@@ -100,6 +121,16 @@ test('homepage local navigation targets resolve', async ({ page, request }) => {
   }
 });
 
+test('Evidence Pack anchor exposes its label, title and status at desktop and mobile', async ({ page }) => {
+  for (const viewport of [
+    { width: 1280, height: 900 },
+    { width: 390, height: 844 }
+  ]) {
+    await openHomepage(page, viewport.width, viewport.height);
+    await activateEvidencePackAnchor(page);
+  }
+});
+
 test('creates deterministic full-page and focused review screenshots', async ({ page }) => {
   test.setTimeout(60_000);
   const outputDirectory = path.resolve('artifacts/r3-preview');
@@ -134,14 +165,20 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
   });
 
   await openHomepage(page, 1280, 900);
-  await page.locator('.r3-proof-link').click();
-  await expect(page).toHaveURL(/#evidence-pack-sample$/);
+  await activateEvidencePackAnchor(page);
   await page.screenshot({
     path: path.join(outputDirectory, 'r3-evidence-pack-target-desktop-1280.png'),
     animations: 'disabled'
   });
   await page.locator('#evidence-pack-sample').screenshot({
     path: path.join(outputDirectory, 'r3-evidence-pack-closeup-1280.png'),
+    animations: 'disabled'
+  });
+
+  await openHomepage(page, 390, 844);
+  await activateEvidencePackAnchor(page);
+  await page.screenshot({
+    path: path.join(outputDirectory, 'r3-evidence-pack-target-mobile-390.png'),
     animations: 'disabled'
   });
 });

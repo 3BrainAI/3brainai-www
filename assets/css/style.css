@@ -72,6 +72,7 @@
   --r3-border-width: 1px;
   --r3-shadow: 0 18px 50px rgba(24, 33, 37, 0.07);
   --r3-metadata-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --r3-sticky-header-offset: 96px;
 }
 
 * {
@@ -1984,7 +1985,8 @@ h3 {
 }
 
 .evidence-pack-sample {
-  scroll-margin-top: 96px;
+  scroll-margin-top: var(--r3-sticky-header-offset);
+  scroll-margin-block-start: var(--r3-sticky-header-offset);
   overflow: hidden;
   border: var(--r3-border-width) solid var(--r3-border);
   border-radius: var(--r3-card-radius);
