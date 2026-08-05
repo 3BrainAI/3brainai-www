@@ -4,13 +4,17 @@
 
 **Checkpoint date:** 5 August 2026
 
-**Working branch:** `work/r3-sitewide-navigation` (local only)
+**Working branch:** `work/r3-sitewide-navigation`
 
 **Base branch:** `redesign/r3-day-one`
 
-**Base and current HEAD:** `007f598949e3852b0715e3965f499b3f33ec65c4`
+**Base HEAD before implementation:** `007f598949e3852b0715e3965f499b3f33ec65c4`
 
-**Status:** Implementation and local deterministic validation complete. All 16 approved files are staged for review. No commit, push, pull request, Pages change or deployment has been performed.
+**Implementation commit:** `96bc3a8776d0edc385729865ca7d56fe69fc1099`
+
+**Draft pull request:** `#7` → `redesign/r3-day-one`
+
+**Status:** Implementation, owner live-preview review and the first pull-request CI gate are complete. PR #7 remains an open draft. No merge, Pages change or deployment has been performed.
 
 ## Implemented scope
 
@@ -88,10 +92,25 @@ Local results:
 - representative routes have no horizontal overflow at 320, 390, 768, 1280 or 1920 px;
 - keyboard focus remains visible on representative homepage and legacy-page navigation;
 - the existing homepage review-safety, section-order, route, anchor and screenshot tests still pass.
+- the owner reviewed the branch through a local Live Server preview and approved the rendered navigation.
 
 The environment could not download Playwright's pinned Chromium from its CDN because the network gateway rejected the certificate. The same repository test suite was therefore run with an isolated temporary Chromium 149 binary and a temporary local Python static server. Neither fallback changed the repository.
 
-Remote CI evidence for this branch is pending because push and pull-request creation are not authorized. The verified base-branch CI run remains `30897439151` with result `success`.
+Remote pull-request evidence:
+
+- draft PR: `#7` — `work/r3-sitewide-navigation` → `redesign/r3-day-one`;
+- PR scope: one implementation commit, 16 files, 261 insertions and 14 deletions;
+- PR mergeability after GitHub recalculation: `true`;
+- workflow: `R3 review checks`;
+- successful run: `31015953067`;
+- successful job: `Validate and render homepage` (`92339914551`);
+- passed steps: pull-request whitespace, HTML/CSS validation, responsive and screenshot checks, and review-evidence upload;
+- artifact: `r3-review-31015953067`;
+- artifact ID: `8934489528`;
+- artifact digest: `sha256:1d0d7b288f78893782fad4edc9d4a67517abb80aa25774f7de9c9ff65d03c894`;
+- artifact retention expiry: 19 August 2026.
+
+This checkpoint update follows the successful run above and therefore requires one final green `R3 review checks` run after it is committed and pushed.
 
 ## Known issues and blockers
 
@@ -102,4 +121,4 @@ Remote CI evidence for this branch is pending because push and pull-request crea
 
 ## Exact next step
 
-Dušan reviews the staged diff and decides whether to authorize a commit containing exactly the 16 files listed above. Committing, pushing, creating a draft pull request into `redesign/r3-day-one`, and any later merge remain separate approval gates.
+Stage and commit only this checkpoint update, push it to PR #7, and require one final green `R3 review checks` run. Dušan may then decide whether to mark PR #7 ready and squash-merge it only into `redesign/r3-day-one`. PR #4, `main`, GitHub Pages and production remain separate protected gates.
