@@ -53,7 +53,23 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('h1')).toContainText('Review-ready evidence');
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
   await expect(page.locator('#evidence-pack-sample .evidence-pack-state')).toContainText('WATCH');
-  await expect(page.locator('.evidence-eo-input-placeholder')).toHaveCount(1);
+  const eoInput = page.locator('.evidence-eo-input');
+  await expect(eoInput).toHaveCount(1);
+  await expect(eoInput.locator('.evidence-eo-image')).toHaveAttribute(
+    'src',
+    '/assets/img/cri/sentinel-lom-bilina.jpg'
+  );
+  await expect(eoInput.locator('.evidence-eo-image')).toHaveAttribute(
+    'alt',
+    /open-pit lignite mining area near Bílina/
+  );
+  await expect(eoInput.locator('figcaption')).toContainText('Open-pit lignite mining area');
+  await expect(eoInput.locator('figcaption')).toContainText('2 Aug 2026');
+  await expect(eoInput.locator('figcaption')).toContainText('not a validated CRI assessment');
+  await expect(eoInput.locator('figcaption')).toContainText(
+    'Contains modified Copernicus Sentinel data (2026).'
+  );
+  await expect(page.locator('.evidence-eo-input-placeholder')).toHaveCount(0);
 
   const humanReview = page.locator('.evidence-pack-metadata dt', {
     hasText: /^Human review$/
