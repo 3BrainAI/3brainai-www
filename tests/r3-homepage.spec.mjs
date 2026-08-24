@@ -2,7 +2,8 @@ import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
-const responsiveWidths = [320, 390, 768, 1280, 1920];
+const responsiveWidths = [320, 390, 768, 1280, 1440, 1920];
+const evidencePackDesktopWidths = [768, 1280, 1440, 1920];
 const integrationSectionIds = [
   'evidence-gap',
   'evidence-pack-proof',
@@ -124,6 +125,73 @@ for (const width of responsiveWidths) {
   });
 }
 
+test('Evidence Pack content surface remains independent of the provenance rail', async ({ page }) => {
+  for (const width of evidencePackDesktopWidths) {
+    await openHomepage(page, width);
+
+    const geometry = await page.evaluate(() => {
+      const content = document.querySelector('.evidence-pack-content');
+      const lastSection = document.querySelector('.evidence-next-step');
+      const rail = document.querySelector('.evidence-pack-metadata');
+      const eoInput = document.querySelector('.evidence-eo-input');
+      const demoNote = document.querySelector('.evidence-demo-note');
+      const layout = document.querySelector('.evidence-pack-layout');
+
+      if (!content || !lastSection || !rail || !eoInput || !demoNote || !layout) return null;
+
+      const contentRect = content.getBoundingClientRect();
+      const lastSectionRect = lastSection.getBoundingClientRect();
+      const railRect = rail.getBoundingClientRect();
+
+      return {
+        contentTail: contentRect.bottom - lastSectionRect.bottom,
+        railExtension: railRect.bottom - contentRect.bottom,
+        contentBeforeRail: Boolean(
+          content.compareDocumentPosition(rail) & Node.DOCUMENT_POSITION_FOLLOWING
+        ),
+        eoRemainsInRail: rail.contains(eoInput),
+        noteRemainsInRail: rail.contains(demoNote),
+        contentBackground: getComputedStyle(content).backgroundColor,
+        layoutBackground: getComputedStyle(layout).backgroundColor
+      };
+    });
+
+    expect(geometry, `Evidence Pack geometry is available at ${width}px`).not.toBeNull();
+    expect(geometry.contentTail, `main surface ends with its last section at ${width}px`).toBeLessThanOrEqual(1.1);
+    expect(geometry.railExtension, `provenance rail remains independently taller at ${width}px`).toBeGreaterThan(16);
+    expect(geometry.contentBeforeRail).toBeTruthy();
+    expect(geometry.eoRemainsInRail).toBeTruthy();
+    expect(geometry.noteRemainsInRail).toBeTruthy();
+    expect(geometry.contentBackground).toBe('rgb(255, 254, 251)');
+    expect(geometry.layoutBackground).toBe('rgb(241, 242, 239)');
+  }
+});
+
+test('Evidence Pack mobile stacking and DOM order remain unchanged', async ({ page }) => {
+  for (const width of [320, 390]) {
+    await openHomepage(page, width, 844);
+
+    const geometry = await page.evaluate(() => {
+      const content = document.querySelector('.evidence-pack-content');
+      const rail = document.querySelector('.evidence-pack-metadata');
+      if (!content || !rail) return null;
+
+      const contentRect = content.getBoundingClientRect();
+      const railRect = rail.getBoundingClientRect();
+      return {
+        contentBeforeRail: Boolean(
+          content.compareDocumentPosition(rail) & Node.DOCUMENT_POSITION_FOLLOWING
+        ),
+        stackedWithoutOverlap: railRect.top >= contentRect.bottom - 1
+      };
+    });
+
+    expect(geometry, `Evidence Pack mobile geometry is available at ${width}px`).not.toBeNull();
+    expect(geometry.contentBeforeRail).toBeTruthy();
+    expect(geometry.stackedWithoutOverlap).toBeTruthy();
+  }
+});
+
 test('homepage local navigation targets resolve', async ({ page, request }) => {
   await openHomepage(page, 1280);
 
@@ -140,6 +208,7 @@ test('homepage local navigation targets resolve', async ({ page, request }) => {
 test('Evidence Pack anchor exposes its label, title and status at desktop and mobile', async ({ page }) => {
   for (const viewport of [
     { width: 1280, height: 900 },
+    { width: 1920, height: 1080 },
     { width: 390, height: 844 }
   ]) {
     await openHomepage(page, viewport.width, viewport.height);
@@ -148,12 +217,14 @@ test('Evidence Pack anchor exposes its label, title and status at desktop and mo
 });
 
 test('creates deterministic full-page and focused review screenshots', async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
   const outputDirectory = path.resolve('artifacts/r3-preview');
   await mkdir(outputDirectory, { recursive: true });
 
   for (const viewport of [
     { width: 1280, height: 900, filename: 'r3-homepage-1280.png' },
+    { width: 1440, height: 900, filename: 'r3-homepage-1440.png' },
+    { width: 1920, height: 1080, filename: 'r3-homepage-1920.png' },
     { width: 390, height: 844, filename: 'r3-homepage-390.png' }
   ]) {
     await openHomepage(page, viewport.width, viewport.height);
@@ -180,16 +251,25 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
     animations: 'disabled'
   });
 
-  await openHomepage(page, 1280, 900);
-  await activateEvidencePackAnchor(page);
-  await page.screenshot({
-    path: path.join(outputDirectory, 'r3-evidence-pack-target-desktop-1280.png'),
-    animations: 'disabled'
-  });
-  await page.locator('#evidence-pack-sample').screenshot({
-    path: path.join(outputDirectory, 'r3-evidence-pack-closeup-1280.png'),
-    animations: 'disabled'
-  });
+  for (const viewport of [
+    { width: 1280, height: 900 },
+    { width: 1440, height: 900 },
+    { width: 1920, height: 1080 }
+  ]) {
+    await openHomepage(page, viewport.width, viewport.height);
+    await activateEvidencePackAnchor(page);
+    await page.locator('#evidence-pack-sample').screenshot({
+      path: path.join(outputDirectory, `r3-evidence-pack-closeup-${viewport.width}.png`),
+      animations: 'disabled'
+    });
+
+    if (viewport.width === 1280) {
+      await page.screenshot({
+        path: path.join(outputDirectory, 'r3-evidence-pack-target-desktop-1280.png'),
+        animations: 'disabled'
+      });
+    }
+  }
 
   await openHomepage(page, 390, 844);
   await activateEvidencePackAnchor(page);
