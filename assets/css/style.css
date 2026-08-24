@@ -2260,6 +2260,20 @@ h3 {
   text-transform: uppercase;
 }
 
+/* Maintenance M1: keep the desktop ledger surface independent of the taller provenance rail. */
+@media (min-width: 721px) {
+  .r3-home .evidence-pack-layout {
+    align-items: start;
+    background: var(--r3-page-background);
+  }
+
+  .r3-home .evidence-pack-content {
+    align-self: start;
+    background: var(--r3-surface);
+    border-bottom: var(--r3-border-width) solid var(--r3-border);
+  }
+}
+
 @media (max-width: 1179px) {
   .r3-hero-grid {
     grid-template-columns: 1fr;
