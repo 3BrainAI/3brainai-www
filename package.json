@@ -8,7 +8,7 @@
   },
   "scripts": {
     "validate": "npm run validate:html && npm run validate:css",
-    "validate:html": "html-validate index.html",
+    "validate:html": "html-validate --max-warnings=0 \"**/*.html\"",
     "validate:css": "csstree-validator assets/css/style.css",
     "test:r3": "playwright test"
   },
