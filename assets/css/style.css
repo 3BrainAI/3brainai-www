@@ -683,6 +683,13 @@ h3 {
   color: rgba(255, 255, 255, 0.82);
 }
 
+.cri-boundary-chips,
+.records-boundary-chips {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .cri-boundary-chips {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
