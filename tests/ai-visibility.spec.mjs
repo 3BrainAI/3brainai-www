@@ -9,7 +9,7 @@ const canonicalPages = [
     route: '/',
     url: 'https://www.3brain.ai/',
     title: '3BrainAI CRI | Review-ready Evidence Packs for physical-asset risk',
-    description: '3BrainAI CRI turns Earth Observation and project-context inputs into governed Evidence Packs with explicit uncertainty, provenance and human review.'
+    description: '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.'
   },
   {
     route: '/mis/',
@@ -20,8 +20,8 @@ const canonicalPages = [
   {
     route: '/cri/',
     url: 'https://www.3brain.ai/cri/',
-    title: '3BrainAI CRI | Construction Risk Intelligence',
-    description: 'Review-ready Evidence Packs for construction, infrastructure and physical-asset risk monitoring.'
+    title: '3BrainAI CRI | Bank-readable evidence between project controls',
+    description: 'Governed Evidence Packs for bank credit-risk, CRE, project-finance, collateral and portfolio review between formal control points.'
   },
   {
     route: '/use-cases/',
@@ -39,25 +39,25 @@ const canonicalPages = [
     route: '/about/',
     url: 'https://www.3brain.ai/about/',
     title: 'About | 3BrainAI',
-    description: 'Founder-led European data and evidence company building a Trusted Data Plane for regulated evidence workflows.'
+    description: 'Founder-led 3BrainAI Nexus develops governed CRI Evidence Packs for accountable bank review and participates in ESA BIC Czech Republic.'
   },
   {
     route: '/validation/',
     url: 'https://www.3brain.ai/validation/',
-    title: 'Pilots & Partners | 3BrainAI',
-    description: 'Shadow-mode pilots and partnerships for trusted evidence workflows, CRI Evidence Packs and governed records.'
+    title: 'Shadow-mode validation | 3BrainAI CRI',
+    description: 'A low-risk path for banks and institutional lenders to test CRI Evidence Packs alongside existing controls, without affecting live financial or risk decisions.'
   },
   {
     route: '/investors/',
     url: 'https://www.3brain.ai/investors/',
-    title: 'Investors & Partners | 3BrainAI',
-    description: 'Investor overview for 3BrainAI Trusted Data Plane, CRI Evidence Packs and recurring trusted-output workflows.'
+    title: 'Investors | 3BrainAI CRI',
+    description: 'Investor overview of the CRI bank-first beachhead, governed Evidence Pack product, current validation stage and execution path.'
   },
   {
     route: '/contact/',
     url: 'https://www.3brain.ai/contact/',
-    title: 'Contact | 3BrainAI',
-    description: 'Contact 3BrainAI for CRI pilots, trusted evidence workflows, investor and strategic partnership discussions.'
+    title: 'Contact | 3BrainAI CRI',
+    description: 'Contact 3BrainAI for bank validation of CRI Evidence Packs or for a private investor conversation.'
   },
   {
     route: '/privacy/',
@@ -118,8 +118,9 @@ test('llms.txt is public-safe, bounded and internally resolvable', async ({ requ
   expect(body).toContain('3BrainAI Nexus s.r.o. develops 3BrainAI CRI');
   expect(body).toContain('3BrainAI CRI');
   expect(body).toContain('Evidence Pack');
-  expect(body).toContain('does not make autonomous project or credit decisions');
+  expect(body).toContain('does not make autonomous credit decisions, replace bank policy or replace professional assessment');
   expect(body).toContain('Earth Observation is an input medium');
+  expect(body).toContain('participating in the ESA Business Incubation Centre Czech Republic');
   expect(body).not.toMatch(/EY Praha|Google Cloud|25[,. ]?000|Česká spořitelna/i);
 
   const linkedUrls = [...body.matchAll(/\(https:\/\/www\.3brain\.ai\/(?:[^)#]*)?(?:#[^)]+)?\)/g)]
@@ -218,6 +219,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Evidence Pack sample', async (
     ],
     '/about/': [
       'https://www.3brain.ai/#brand',
+      'https://www.3brain.ai/about/#founder',
       'https://www.3brain.ai/#organization',
       'https://www.3brain.ai/about/#webpage'
     ],

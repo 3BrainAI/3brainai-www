@@ -4,8 +4,6 @@ const canonicalNavigation = [
   { label: 'CRI', href: '/cri/' },
   { label: 'Evidence Pack', href: '/#evidence-pack-sample' },
   { label: 'Validation', href: '/validation/' },
-  { label: 'Data Plane', href: '/governance-layer/' },
-  { label: 'Records', href: '/mis/' },
   { label: 'Investors', href: '/investors/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' }
@@ -16,14 +14,14 @@ const scopedRoutes = [
   { route: '/about/', file: 'about/index.html', active: 'About' },
   { route: '/contact/', file: 'contact/index.html', active: 'Contact' },
   { route: '/cri/', file: 'cri/index.html', active: 'CRI' },
-  { route: '/governance-layer/', file: 'governance-layer/index.html', active: 'Data Plane' },
-  { route: '/how-it-works/', file: 'how-it-works/index.html', active: 'Data Plane' },
+  { route: '/governance-layer/', file: 'governance-layer/index.html', active: null },
+  { route: '/how-it-works/', file: 'how-it-works/index.html', active: null },
   { route: '/imprint/', file: 'imprint/index.html', active: null },
   { route: '/investors/', file: 'investors/index.html', active: 'Investors' },
-  { route: '/mis/', file: 'mis/index.html', active: 'Records' },
+  { route: '/mis/', file: 'mis/index.html', active: null },
   { route: '/pilots/', file: 'pilots/index.html', active: 'Validation' },
   { route: '/privacy/', file: 'privacy/index.html', active: null },
-  { route: '/product/', file: 'product/index.html', active: 'Records' },
+  { route: '/product/', file: 'product/index.html', active: null },
   { route: '/security/', file: 'security/index.html', active: null },
   { route: '/use-cases/', file: 'use-cases/index.html', active: null },
   { route: '/validation/', file: 'validation/index.html', active: 'Validation' }
@@ -88,6 +86,21 @@ for (const routeContract of scopedRoutes) {
     for (const link of await links.all()) {
       await expect(link).toBeVisible();
     }
+
+    const footer = page.locator('.footer');
+    await expect(footer.locator('.footer-esa-statement')).toHaveText(
+      '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
+    );
+    await expect(footer.locator('.footer-esa-link')).toHaveAttribute('href', 'https://www.esa-bic.cz/');
+    await expect(footer.locator('.footer-esa-link img')).toHaveAttribute('src', '/assets/img/esa-bic-cz-white.png');
+    await expect(footer.locator('.footer-navigation a', { hasText: 'Data Plane' })).toHaveAttribute(
+      'href',
+      '/governance-layer/'
+    );
+    await expect(footer.locator('.footer-navigation a', { hasText: 'Records' })).toHaveAttribute(
+      'href',
+      '/mis/'
+    );
   });
 }
 

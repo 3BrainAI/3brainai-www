@@ -8,15 +8,15 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, '..');
 
 const canonicalPages = [
-  ['index.html', 'https://www.3brain.ai/', '3BrainAI CRI | Review-ready Evidence Packs for physical-asset risk', '3BrainAI CRI turns Earth Observation and project-context inputs into governed Evidence Packs with explicit uncertainty, provenance and human review.'],
+  ['index.html', 'https://www.3brain.ai/', '3BrainAI CRI | Review-ready Evidence Packs for physical-asset risk', '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.'],
   ['mis/index.html', 'https://www.3brain.ai/mis/', '3BrainAI Records | Catalog &amp; Registry Record Layer', 'Governed records for consistent catalog, registry and institutional outputs.'],
-  ['cri/index.html', 'https://www.3brain.ai/cri/', '3BrainAI CRI | Construction Risk Intelligence', 'Review-ready Evidence Packs for construction, infrastructure and physical-asset risk monitoring.'],
+  ['cri/index.html', 'https://www.3brain.ai/cri/', '3BrainAI CRI | Bank-readable evidence between project controls', 'Governed Evidence Packs for bank credit-risk, CRE, project-finance, collateral and portfolio review between formal control points.'],
   ['use-cases/index.html', 'https://www.3brain.ai/use-cases/', 'Use Cases | 3BrainAI', 'Model situations for CRI Evidence Packs, governed records, shadow-mode pilots and Evidence Readiness Assessment.'],
   ['governance-layer/index.html', 'https://www.3brain.ai/governance-layer/', 'Trusted Data Plane | 3BrainAI', 'A governed data plane for review-ready evidence, trusted records and safe action workflows.'],
-  ['about/index.html', 'https://www.3brain.ai/about/', 'About | 3BrainAI', 'Founder-led European data and evidence company building a Trusted Data Plane for regulated evidence workflows.'],
-  ['validation/index.html', 'https://www.3brain.ai/validation/', 'Pilots &amp; Partners | 3BrainAI', 'Shadow-mode pilots and partnerships for trusted evidence workflows, CRI Evidence Packs and governed records.'],
-  ['investors/index.html', 'https://www.3brain.ai/investors/', 'Investors &amp; Partners | 3BrainAI', 'Investor overview for 3BrainAI Trusted Data Plane, CRI Evidence Packs and recurring trusted-output workflows.'],
-  ['contact/index.html', 'https://www.3brain.ai/contact/', 'Contact | 3BrainAI', 'Contact 3BrainAI for CRI pilots, trusted evidence workflows, investor and strategic partnership discussions.'],
+  ['about/index.html', 'https://www.3brain.ai/about/', 'About | 3BrainAI', 'Founder-led 3BrainAI Nexus develops governed CRI Evidence Packs for accountable bank review and participates in ESA BIC Czech Republic.'],
+  ['validation/index.html', 'https://www.3brain.ai/validation/', 'Shadow-mode validation | 3BrainAI CRI', 'A low-risk path for banks and institutional lenders to test CRI Evidence Packs alongside existing controls, without affecting live financial or risk decisions.'],
+  ['investors/index.html', 'https://www.3brain.ai/investors/', 'Investors | 3BrainAI CRI', 'Investor overview of the CRI bank-first beachhead, governed Evidence Pack product, current validation stage and execution path.'],
+  ['contact/index.html', 'https://www.3brain.ai/contact/', 'Contact | 3BrainAI CRI', 'Contact 3BrainAI for bank validation of CRI Evidence Packs or for a private investor conversation.'],
   ['privacy/index.html', 'https://www.3brain.ai/privacy/', 'Privacy | 3BrainAI', 'Privacy information for the 3BrainAI public website.'],
   ['imprint/index.html', 'https://www.3brain.ai/imprint/', 'Imprint | 3BrainAI', 'Legal and service information for the public 3BrainAI website.'],
   ['security/index.html', 'https://www.3brain.ai/security/', 'Security | 3BrainAI', 'Public security posture and contact guidance for the 3BrainAI website.']
@@ -74,6 +74,7 @@ const expectedGraphIds = new Map([
   ]],
   ['about/index.html', [
     'https://www.3brain.ai/#brand',
+    'https://www.3brain.ai/about/#founder',
     'https://www.3brain.ai/#organization',
     'https://www.3brain.ai/about/#webpage'
   ]],
@@ -118,9 +119,73 @@ assert.ok(llmsText.startsWith('# 3BrainAI\n'));
 assert.match(llmsText, /3BrainAI is the public brand/);
 assert.match(llmsText, /3BrainAI Nexus s\.r\.o\. develops 3BrainAI CRI/);
 assert.match(llmsText, /3BrainAI CRI/);
-assert.match(llmsText, /does not make autonomous project or credit decisions/);
+assert.match(llmsText, /does not make autonomous credit decisions, replace bank policy or replace professional assessment/);
 assert.match(llmsText, /Earth Observation is an input medium/);
+assert.match(llmsText, /participating in the ESA Business Incubation Centre Czech Republic/);
 assert.doesNotMatch(llmsText, /EY Praha|Google Cloud|25[,. ]?000|Česká spořitelna/i);
+
+const publicEnglishPages = [
+  'index.html',
+  'about/index.html',
+  'contact/index.html',
+  'cri/index.html',
+  'governance-layer/index.html',
+  'how-it-works/index.html',
+  'imprint/index.html',
+  'investors/index.html',
+  'mis/index.html',
+  'pilots/index.html',
+  'privacy/index.html',
+  'product/index.html',
+  'security/index.html',
+  'use-cases/index.html',
+  'validation/index.html'
+];
+
+const primaryNavigation = [
+  ['CRI', '/cri/'],
+  ['Evidence Pack', '/#evidence-pack-sample'],
+  ['Validation', '/validation/'],
+  ['Investors', '/investors/'],
+  ['About', '/about/'],
+  ['Contact', '/contact/']
+];
+
+for (const file of publicEnglishPages) {
+  const html = await readRepositoryFile(file);
+  assert.doesNotMatch(html, /EY Praha|Google Cloud|OVHcloud|Česká spořitelna/i, `${file} contains a locked public claim`);
+  assert.match(html, /3BrainAI Nexus s\.r\.o\. is participating in the ESA Business Incubation Centre Czech Republic\./, `${file} is missing the exact ESA participation statement`);
+  assert.match(html, /href="https:\/\/www\.esa-bic\.cz\/"/, `${file} is missing the ESA BIC link`);
+
+  const navigationMatch = html.match(/<nav class="nav" aria-label="Main navigation">([\s\S]*?)<\/nav>/);
+  assert.ok(navigationMatch, `${file} is missing the primary navigation`);
+  const navigationLinks = [...navigationMatch[1].matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
+    .map(match => [match[2].trim(), match[1]]);
+  const expectedNavigation = primaryNavigation.map(([label, href]) => [
+    label,
+    file === 'index.html' && label === 'Evidence Pack' ? '#evidence-pack-sample' : href
+  ]);
+  assert.deepEqual(navigationLinks, expectedNavigation, `${file} has unexpected primary navigation`);
+
+  const footerMatch = html.match(/<footer class="footer">([\s\S]*?)<\/footer>/);
+  assert.ok(footerMatch, `${file} is missing the footer`);
+  assert.match(footerMatch[1], /href="\/governance-layer\/">Data Plane<\/a>/, `${file} footer is missing Data Plane`);
+  assert.match(footerMatch[1], /href="\/mis\/">Records<\/a>/, `${file} footer is missing Records`);
+}
+
+const investorPage = await readRepositoryFile('investors/index.html');
+assert.doesNotMatch(investorPage, /Indicative commercial scenarios|monthly recurring|annual recurring|€|\brevenue\b|\bburn\b|\brunway\b/i);
+
+const validationPage = await readRepositoryFile('validation/index.html');
+assert.doesNotMatch(validationPage, /public-sector|insurers|corporates|technology partners|OVHcloud/i);
+assert.match(validationPage, /mailto:cri@3brain\.ai[^>]*>Discuss shadow-mode validation<\/a>/);
+
+const contactPage = await readRepositoryFile('contact/index.html');
+assert.match(contactPage, /mailto:cri@3brain\.ai/);
+assert.match(contactPage, /mailto:investors@3brain\.ai/);
+
+const homepage = await readRepositoryFile('index.html');
+assert.match(homepage, /A WATCH status routes the evidence to human review; it does not trigger a credit decision\./);
 
 const indexNowKey = '4c359192cfa68f4af5c6a8dd38964897';
 assert.equal((await readRepositoryFile(`${indexNowKey}.txt`)).trim(), indexNowKey);
