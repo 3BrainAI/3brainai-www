@@ -2846,8 +2846,15 @@ h3 {
 .r3-institutional-logo img,
 .institutional-card-logo img {
   display: block;
-  width: min(318px, 100%);
   height: auto;
+}
+
+.r3-institutional-logo img {
+  width: min(318px, 100%);
+}
+
+.institutional-card-logo img {
+  width: min(413.4px, 100%);
 }
 
 .r3-proof-qualification,

@@ -176,6 +176,20 @@ for (const file of publicEnglishPages) {
 const investorPage = await readRepositoryFile('investors/index.html');
 assert.doesNotMatch(investorPage, /Indicative commercial scenarios|monthly recurring|annual recurring|€|\brevenue\b|\bburn\b|\brunway\b/i);
 
+const eyCompletionClaim = /3BrainAI Solutions was one of 11 startups in the EY Startup Academy Frankfurt 2025 cohort and completed the programme\./;
+const aboutPage = await readRepositoryFile('about/index.html');
+for (const [file, html] of [
+  ['investors/index.html', investorPage],
+  ['about/index.html', aboutPage]
+]) {
+  assert.match(html, eyCompletionClaim, `${file} is missing the approved EY completion statement`);
+  assert.doesNotMatch(
+    html,
+    /Christopher Schmitz|Peter Fricke|christopher\.schmitz@|peter\.fricke@/i,
+    `${file} exposes private EY verification contacts`
+  );
+}
+
 const validationPage = await readRepositoryFile('validation/index.html');
 assert.doesNotMatch(validationPage, /public-sector|insurers|corporates|technology partners|OVHcloud/i);
 assert.match(validationPage, /mailto:cri@3brain\.ai[^>]*>Discuss shadow-mode validation<\/a>/);
