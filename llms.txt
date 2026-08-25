@@ -1,0 +1,22 @@
+# 3BrainAI
+
+> 3BrainAI is the public brand for governed, review-ready evidence workflows. 3BrainAI Nexus s.r.o. develops 3BrainAI CRI for physical-asset risk monitoring.
+
+## Core product
+
+- [3BrainAI CRI](https://www.3brain.ai/cri/): Construction Risk Intelligence turns Earth Observation and project-context inputs into governed Evidence Packs with explicit uncertainty, provenance and human review.
+- [Evidence Pack sample](https://www.3brain.ai/#evidence-pack-sample): Synthetic public-safe example; not a live customer assessment.
+- [Validation](https://www.3brain.ai/validation/): Shadow-mode validation before operational use.
+
+## Company and verification
+
+- [About](https://www.3brain.ai/about/): Entity, founder and operating context.
+- [Investors](https://www.3brain.ai/investors/): Public investor overview; detailed materials remain private.
+- [Contact](https://www.3brain.ai/contact/): CRI and investor contact routes.
+- [Imprint](https://www.3brain.ai/imprint/): Legal entities and website operator.
+
+## Boundaries
+
+- CRI supports accountable human review and does not make autonomous project or credit decisions.
+- Public Evidence Pack content is synthetic or clearly identified as illustrative.
+- Earth Observation is an input medium; the product is the governed Evidence Pack and review workflow.
