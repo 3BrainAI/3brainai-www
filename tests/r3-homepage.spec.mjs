@@ -8,9 +8,11 @@ const integrationSectionIds = [
   'evidence-gap',
   'evidence-pack-proof',
   'observed-vs-declared',
+  'bank-review-scenario',
   'how-it-works',
   'validation-path',
   'governance-layer',
+  'institutional-proof',
   'founder-proof',
   'final-cta'
 ];
@@ -52,6 +54,18 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
 
   await expect(page.locator('h1')).toHaveCount(1);
   await expect(page.locator('h1')).toContainText('Review-ready evidence');
+  await expect(page.locator('.r3-hero .kicker')).toHaveText('For banks and institutional lenders');
+  await expect(page.locator('.r3-hero .lead')).toHaveText(
+    '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.'
+  );
+  await expect(page.locator('.r3-boundary-line')).toHaveText(
+    'CRI supports accountable human review. It does not make autonomous credit decisions, replace bank policy or replace professional assessment.'
+  );
+  await expect(page.locator('.r3-buyer-strip > li')).toHaveText([
+    'Credit risk & portfolio monitoring',
+    'CRE & project finance',
+    'Collateral & progress review'
+  ]);
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
   await expect(page.locator('#evidence-pack-sample .evidence-pack-state')).toContainText('WATCH');
   const eoInput = page.locator('.evidence-eo-input');
@@ -90,6 +104,18 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
       .filter(id => id && !document.getElementById(id))
   );
   expect(missingAnchors).toEqual([]);
+
+  await expect(page.locator('#bank-review-scenario')).toContainText(
+    'A WATCH status routes the evidence to human review; it does not trigger a credit decision.'
+  );
+  await expect(page.locator('#institutional-proof')).toContainText(
+    '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
+  );
+  await expect(page.locator('#institutional-proof a')).toHaveAttribute('href', 'https://www.esa-bic.cz/');
+  await expect(page.getByRole('link', { name: 'Request investor materials' })).toHaveAttribute(
+    'href',
+    /mailto:investors@3brain\.ai/
+  );
 });
 
 test('CRI-first integration sections remain in the approved order when present', async ({ page }) => {

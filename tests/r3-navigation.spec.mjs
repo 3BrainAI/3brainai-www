@@ -1,14 +1,23 @@
 import { expect, test } from '@playwright/test';
+import { mkdir } from 'node:fs/promises';
+import path from 'node:path';
 
 const canonicalNavigation = [
   { label: 'CRI', href: '/cri/' },
   { label: 'Evidence Pack', href: '/#evidence-pack-sample' },
   { label: 'Validation', href: '/validation/' },
-  { label: 'Data Plane', href: '/governance-layer/' },
-  { label: 'Records', href: '/mis/' },
   { label: 'Investors', href: '/investors/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' }
+];
+
+const primaryJourneyRoutes = [
+  { route: '/', slug: 'home' },
+  { route: '/cri/', slug: 'cri' },
+  { route: '/validation/', slug: 'validation' },
+  { route: '/investors/', slug: 'investors' },
+  { route: '/about/', slug: 'about' },
+  { route: '/contact/', slug: 'contact' }
 ];
 
 const scopedRoutes = [
@@ -16,23 +25,21 @@ const scopedRoutes = [
   { route: '/about/', file: 'about/index.html', active: 'About' },
   { route: '/contact/', file: 'contact/index.html', active: 'Contact' },
   { route: '/cri/', file: 'cri/index.html', active: 'CRI' },
-  { route: '/governance-layer/', file: 'governance-layer/index.html', active: 'Data Plane' },
-  { route: '/how-it-works/', file: 'how-it-works/index.html', active: 'Data Plane' },
+  { route: '/governance-layer/', file: 'governance-layer/index.html', active: null },
+  { route: '/how-it-works/', file: 'how-it-works/index.html', active: null },
   { route: '/imprint/', file: 'imprint/index.html', active: null },
   { route: '/investors/', file: 'investors/index.html', active: 'Investors' },
-  { route: '/mis/', file: 'mis/index.html', active: 'Records' },
+  { route: '/mis/', file: 'mis/index.html', active: null },
   { route: '/pilots/', file: 'pilots/index.html', active: 'Validation' },
   { route: '/privacy/', file: 'privacy/index.html', active: null },
-  { route: '/product/', file: 'product/index.html', active: 'Records' },
+  { route: '/product/', file: 'product/index.html', active: null },
   { route: '/security/', file: 'security/index.html', active: null },
   { route: '/use-cases/', file: 'use-cases/index.html', active: null },
   { route: '/validation/', file: 'validation/index.html', active: 'Validation' }
 ];
 
 const representativeRoutes = [
-  '/',
-  '/cri/',
-  '/validation/',
+  ...primaryJourneyRoutes.map(({ route }) => route),
   '/governance-layer/',
   '/mis/',
   '/use-cases/',
@@ -88,6 +95,21 @@ for (const routeContract of scopedRoutes) {
     for (const link of await links.all()) {
       await expect(link).toBeVisible();
     }
+
+    const footer = page.locator('.footer');
+    await expect(footer.locator('.footer-esa-statement')).toHaveText(
+      '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
+    );
+    await expect(footer.locator('.footer-esa-link')).toHaveAttribute('href', 'https://www.esa-bic.cz/');
+    await expect(footer.locator('.footer-esa-link img')).toHaveAttribute('src', '/assets/img/esa-bic-cz-white.png');
+    await expect(footer.locator('.footer-navigation a', { hasText: 'Data Plane' })).toHaveAttribute(
+      'href',
+      '/governance-layer/'
+    );
+    await expect(footer.locator('.footer-navigation a', { hasText: 'Records' })).toHaveAttribute(
+      'href',
+      '/mis/'
+    );
   });
 }
 
@@ -102,6 +124,23 @@ test('every canonical navigation target resolves', async ({ page, request }) => 
 
   await openRoute(page, '/#evidence-pack-sample');
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
+});
+
+test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
+  await preparePage(page, 1280);
+
+  for (const { route } of primaryJourneyRoutes) {
+    await openRoute(page, route);
+    const headingLevels = await page.locator('main h1, main h2, main h3, main h4, main h5, main h6')
+      .evaluateAll(headings => headings.map(heading => Number(heading.tagName.slice(1))));
+    const skippedLevels = headingLevels
+      .slice(1)
+      .filter((level, index) => level - headingLevels[index] > 1);
+
+    expect(headingLevels.filter(level => level === 1), `${route} should have exactly one h1`)
+      .toHaveLength(1);
+    expect(skippedLevels, `${route} should not skip heading levels`).toEqual([]);
+  }
 });
 
 for (const width of responsiveWidths) {
@@ -138,5 +177,30 @@ test('primary navigation links retain a visible keyboard focus indicator', async
     expect(focusState.focused, `${route} navigation link should receive focus`).toBeTruthy();
     expect(focusState.outlineStyle, `${route} focus outline should be visible`).not.toBe('none');
     expect(focusState.outlineWidth, `${route} focus outline should have width`).toBeGreaterThan(0);
+  }
+});
+
+test('creates deterministic fast-refresh screenshots for the six primary journeys', async ({ page }) => {
+  test.setTimeout(120_000);
+  const outputDirectory = path.resolve('artifacts/r3-preview');
+  await mkdir(outputDirectory, { recursive: true });
+  await page.route('https://fonts.googleapis.com/**', route => route.abort());
+  await page.route('https://fonts.gstatic.com/**', route => route.abort());
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+
+  for (const viewport of [
+    { width: 1280, height: 900 },
+    { width: 390, height: 844 }
+  ]) {
+    await page.setViewportSize(viewport);
+
+    for (const { route, slug } of primaryJourneyRoutes) {
+      await openRoute(page, route);
+      await page.screenshot({
+        path: path.join(outputDirectory, `fast-refresh-${slug}-${viewport.width}.png`),
+        fullPage: true,
+        animations: 'disabled'
+      });
+    }
   }
 });

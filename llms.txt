@@ -1,22 +1,32 @@
 # 3BrainAI
 
-> 3BrainAI is the public brand for governed, review-ready evidence workflows. 3BrainAI Nexus s.r.o. develops 3BrainAI CRI for physical-asset risk monitoring.
+> 3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.
+
+## Primary audience
+
+- Banks and institutional lenders.
+- Credit risk and portfolio monitoring teams.
+- Commercial real-estate and project-finance teams.
+- Collateral and progress-review roles.
 
 ## Core product
 
-- [3BrainAI CRI](https://www.3brain.ai/cri/): Construction Risk Intelligence turns Earth Observation and project-context inputs into governed Evidence Packs with explicit uncertainty, provenance and human review.
+- [3BrainAI CRI](https://www.3brain.ai/cri/): Bank-readable evidence between formal project controls.
 - [Evidence Pack sample](https://www.3brain.ai/#evidence-pack-sample): Synthetic public-safe example; not a live customer assessment.
-- [Validation](https://www.3brain.ai/validation/): Shadow-mode validation before operational use.
+- [Validation](https://www.3brain.ai/validation/): Evidence readiness and shadow-mode validation alongside existing controls.
 
 ## Company and verification
 
-- [About](https://www.3brain.ai/about/): Entity, founder and operating context.
-- [Investors](https://www.3brain.ai/investors/): Public investor overview; detailed materials remain private.
-- [Contact](https://www.3brain.ai/contact/): CRI and investor contact routes.
+- 3BrainAI is the public brand. 3BrainAI Nexus s.r.o. develops 3BrainAI CRI.
+- 3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic. Participation does not imply endorsement, product validation or customer status.
+- [About](https://www.3brain.ai/about/): Founder, entity boundaries and institutional milestones.
+- [Investors](https://www.3brain.ai/investors/): Public-safe bank-first investor overview; detailed materials remain private.
+- [Contact](https://www.3brain.ai/contact/): Separate bank-validation and investor routes.
 - [Imprint](https://www.3brain.ai/imprint/): Legal entities and website operator.
 
 ## Boundaries
 
-- CRI supports accountable human review and does not make autonomous project or credit decisions.
+- CRI supports accountable human review. It does not make autonomous credit decisions, replace bank policy or replace professional assessment.
+- Shadow-mode outputs do not affect live financial, credit or risk decisions, and existing controls remain in place.
 - Public Evidence Pack content is synthetic or clearly identified as illustrative.
 - Earth Observation is an input medium; the product is the governed Evidence Pack and review workflow.
