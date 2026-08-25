@@ -7,10 +7,12 @@
     "node": ">=24.8.0 <25"
   },
   "scripts": {
-    "validate": "npm run validate:html && npm run validate:css",
+    "validate": "npm run validate:html && npm run validate:css && npm run validate:ai",
     "validate:html": "html-validate --max-warnings=0 \"**/*.html\"",
     "validate:css": "csstree-validator assets/css/style.css",
-    "test:r3": "playwright test"
+    "validate:ai": "node scripts/validate-ai-visibility.mjs",
+    "test:r3": "playwright test",
+    "indexnow": "node scripts/submit-indexnow.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",

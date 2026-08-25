@@ -1,3 +1,31 @@
+# Search and citation crawlers
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Model-development controls — explicit current owner policy
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# All other compliant crawlers
 User-agent: *
 Allow: /
+
 Sitemap: https://www.3brain.ai/sitemap.xml
