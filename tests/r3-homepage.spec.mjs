@@ -44,9 +44,10 @@ async function activateEvidencePackAnchor(page) {
     message: 'Evidence Pack anchor should settle below the sticky header'
   }).toBeTruthy();
 
-  await expect(page.locator('#evidence-pack-sample .evidence-pack-label')).toBeInViewport();
-  await expect(page.locator('#evidence-pack-title')).toBeInViewport();
-  await expect(page.locator('#evidence-pack-sample .evidence-pack-state')).toBeInViewport();
+  await expect(page.locator('#evidence-pack-sample .evidence-case-selector')).toBeInViewport();
+  await expect(page.locator('#panel-lausitz .evidence-pack-label')).toBeInViewport();
+  await expect(page.locator('#lausitz-pack-title')).toBeInViewport();
+  await expect(page.locator('#panel-lausitz .evidence-pack-state')).toBeInViewport();
 }
 
 test('homepage preserves the approved review-safety invariants', async ({ page }) => {
@@ -67,30 +68,24 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
     'Collateral & progress review'
   ]);
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
-  await expect(page.locator('#evidence-pack-sample .evidence-pack-state')).toContainText('WATCH');
-  const eoInput = page.locator('.evidence-eo-input');
-  await expect(eoInput).toHaveCount(1);
-  await expect(eoInput.locator('.evidence-eo-image')).toHaveAttribute(
-    'src',
-    '/assets/img/cri/sentinel-lom-bilina.jpg'
+  await expect(page.getByRole('tablist', { name: 'Synthetic Evidence Pack cases' })).toBeVisible();
+  await expect(page.getByRole('tab')).toHaveCount(2);
+  await expect(page.locator('#tab-lausitz')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#tab-north-sea')).toHaveAttribute('aria-selected', 'false');
+  await expect(page.locator('#panel-lausitz')).toBeVisible();
+  await expect(page.locator('#panel-north-sea')).toBeHidden();
+  await expect(page.locator('#panel-lausitz .evidence-pack-state')).toContainText('WATCH');
+  await expect(page.locator('#panel-lausitz .evidence-pack-case-title')).toHaveText(
+    'Post-mining transformation — Lausitz, Germany'
   );
-  await expect(eoInput.locator('.evidence-eo-image')).toHaveAttribute(
-    'alt',
-    /open-pit lignite mining area near Bílina/
-  );
-  await expect(eoInput.locator('figcaption')).toContainText('Open-pit lignite mining area');
-  await expect(eoInput.locator('figcaption')).toContainText('2 Aug 2026');
-  await expect(eoInput.locator('figcaption')).toContainText('not a validated CRI assessment');
-  await expect(eoInput.locator('figcaption')).toContainText(
-    'Contains modified Copernicus Sentinel data (2026).'
-  );
-  await expect(page.locator('.evidence-eo-input-placeholder')).toHaveCount(0);
+  await expect(page.locator('.evidence-eo-input')).toHaveCount(0);
+  await expect(page.locator('img[src="/assets/img/cri/sentinel-lom-bilina.jpg"]')).toHaveCount(0);
 
   const humanReview = page.locator('.evidence-pack-metadata dt', {
     hasText: /^Human review$/
   });
-  await expect(humanReview).toHaveCount(1);
-  await expect(humanReview.locator('xpath=..').locator('dd')).toHaveText('Required');
+  await expect(humanReview).toHaveCount(2);
+  await expect(humanReview.locator('xpath=..').locator('dd')).toHaveText(['Required', 'Required']);
 
   const duplicateIds = await page.evaluate(() => {
     const ids = [...document.querySelectorAll('[id]')].map(element => element.id);
@@ -116,6 +111,100 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
     'href',
     /mailto:investors@3brain\.ai/
   );
+});
+
+test('Evidence Pack case selector is manual and keyboard accessible', async ({ page }) => {
+  await openHomepage(page, 1280);
+
+  const lausitzTab = page.locator('#tab-lausitz');
+  const northSeaTab = page.locator('#tab-north-sea');
+  const lausitzPanel = page.locator('#panel-lausitz');
+  const northSeaPanel = page.locator('#panel-north-sea');
+
+  await page.waitForTimeout(750);
+  await expect(lausitzTab).toHaveAttribute('aria-selected', 'true');
+  await expect(lausitzPanel).toBeVisible();
+  await expect(northSeaPanel).toBeHidden();
+
+  await northSeaTab.click();
+  await expect(northSeaTab).toHaveAttribute('aria-selected', 'true');
+  await expect(northSeaTab).toHaveAttribute('tabindex', '0');
+  await expect(lausitzTab).toHaveAttribute('aria-selected', 'false');
+  await expect(lausitzTab).toHaveAttribute('tabindex', '-1');
+  await expect(northSeaPanel).toBeVisible();
+  await expect(lausitzPanel).toBeHidden();
+
+  await northSeaTab.focus();
+  await northSeaTab.press('Home');
+  await expect(lausitzTab).toBeFocused();
+  await expect(lausitzTab).toHaveAttribute('aria-selected', 'true');
+  await expect(lausitzPanel).toBeVisible();
+
+  await lausitzTab.press('End');
+  await expect(northSeaTab).toBeFocused();
+  await expect(northSeaTab).toHaveAttribute('aria-selected', 'true');
+  await expect(northSeaPanel).toBeVisible();
+
+  await northSeaTab.press('ArrowRight');
+  await expect(lausitzTab).toBeFocused();
+  await expect(lausitzPanel).toBeVisible();
+});
+
+test('European Evidence Pack variants preserve approved sources and claim boundaries', async ({ page, request }) => {
+  await openHomepage(page, 1280);
+
+  const lausitz = page.locator('#panel-lausitz');
+  await expect(lausitz).toContainText('DEMO-EU-LUS-01');
+  await expect(lausitz).toContainText('VISIBLE_SURFACE_CHANGE');
+  await expect(lausitz).toContainText('ENGINEERING_STATE_UNVERIFIED');
+  await expect(lausitz).toContainText(
+    'Engineering completion, water quality and geotechnical condition cannot be determined from imagery alone.'
+  );
+  await expect(lausitz.locator('.evidence-input-figure')).toHaveCount(2);
+  await expect(lausitz.locator('.evidence-input-figure').first()).toContainText('T0 · Optical baseline');
+  await expect(lausitz.locator('.evidence-input-figure').nth(1)).toContainText('T1 · Recent observation');
+  await expect(lausitz.locator('.evidence-input-footer')).toContainText(
+    'Contains modified Copernicus Sentinel data (2019, 2026).'
+  );
+
+  const northSea = page.locator('#panel-north-sea');
+  await expect(northSea).toContainText('DEMO-EU-NSEA-01');
+  await expect(northSea).toContainText('REPEAT_PASS_CONTEXT');
+  await expect(northSea).toContainText('SUBSEA_SCOPE_UNVERIFIED');
+  await expect(northSea).toContainText(
+    'Sentinel-1 GRD VV contains backscatter, not interferometric phase, and cannot confirm subsea works, deformation or structural condition.'
+  );
+  await expect(northSea.locator('.evidence-input-figure')).toHaveCount(2);
+  await expect(northSea.locator('.evidence-input-figure').first()).toContainText('T0 · Repeat-pass baseline');
+  await expect(northSea.locator('.evidence-input-figure').nth(1)).toContainText('T1 · Repeat-pass observation');
+  await expect(northSea.locator('.evidence-input-footer')).toContainText(
+    'Contains modified Copernicus Sentinel data (2026).'
+  );
+
+  const sourcePaths = await page.locator('.evidence-input-figure source').evaluateAll(sources =>
+    sources.map(source => source.getAttribute('srcset'))
+  );
+  const fallbackPaths = await page.locator('.evidence-input-figure img').evaluateAll(images =>
+    images.map(image => image.getAttribute('src'))
+  );
+
+  expect(sourcePaths).toEqual([
+    '/assets/img/cri/evidence/lausitz-t0-2019-16x9.webp',
+    '/assets/img/cri/evidence/lausitz-t1-2026-16x9.webp',
+    '/assets/img/cri/evidence/north-sea-t0-2026-06-07-16x9.webp',
+    '/assets/img/cri/evidence/north-sea-t1-2026-06-19-16x9.webp'
+  ]);
+  expect(fallbackPaths).toEqual([
+    '/assets/img/cri/evidence/lausitz-t0-2019-16x9.png',
+    '/assets/img/cri/evidence/lausitz-t1-2026-16x9.png',
+    '/assets/img/cri/evidence/north-sea-t0-2026-06-07-16x9.png',
+    '/assets/img/cri/evidence/north-sea-t1-2026-06-19-16x9.png'
+  ]);
+
+  for (const assetPath of [...sourcePaths, ...fallbackPaths]) {
+    const response = await request.get(assetPath);
+    expect.soft(response.ok(), `${assetPath} returned ${response.status()}`).toBeTruthy();
+  }
 });
 
 test('CRI-first integration sections remain in the approved order when present', async ({ page }) => {
@@ -151,70 +240,99 @@ for (const width of responsiveWidths) {
   });
 }
 
-test('Evidence Pack content surface remains independent of the provenance rail', async ({ page }) => {
+test('Evidence input excerpt spans the pack below the document body', async ({ page }) => {
   for (const width of evidencePackDesktopWidths) {
     await openHomepage(page, width);
 
     const geometry = await page.evaluate(() => {
-      const content = document.querySelector('.evidence-pack-content');
-      const lastSection = document.querySelector('.evidence-next-step');
-      const rail = document.querySelector('.evidence-pack-metadata');
-      const eoInput = document.querySelector('.evidence-eo-input');
-      const demoNote = document.querySelector('.evidence-demo-note');
-      const layout = document.querySelector('.evidence-pack-layout');
+      const pack = document.querySelector('#panel-lausitz .evidence-pack-sample');
+      const layout = pack?.querySelector('.evidence-pack-layout');
+      const rail = pack?.querySelector('.evidence-pack-metadata');
+      const band = pack?.querySelector('.evidence-input-band');
+      const figures = band ? [...band.querySelectorAll('.evidence-input-figure')] : [];
 
-      if (!content || !lastSection || !rail || !eoInput || !demoNote || !layout) return null;
+      if (!pack || !layout || !rail || !band || figures.length !== 2) return null;
 
-      const contentRect = content.getBoundingClientRect();
-      const lastSectionRect = lastSection.getBoundingClientRect();
+      const packRect = pack.getBoundingClientRect();
+      const layoutRect = layout.getBoundingClientRect();
       const railRect = rail.getBoundingClientRect();
+      const bandRect = band.getBoundingClientRect();
+      const firstFigureRect = figures[0].getBoundingClientRect();
+      const secondFigureRect = figures[1].getBoundingClientRect();
 
       return {
-        contentTail: contentRect.bottom - lastSectionRect.bottom,
-        railExtension: railRect.bottom - contentRect.bottom,
-        contentBeforeRail: Boolean(
-          content.compareDocumentPosition(rail) & Node.DOCUMENT_POSITION_FOLLOWING
+        bandLeftInset: bandRect.left - packRect.left,
+        bandRightInset: packRect.right - bandRect.right,
+        bandAfterLayout: bandRect.top >= layoutRect.bottom - 1,
+        bandFollowsLayoutInDom: Boolean(
+          layout.compareDocumentPosition(band) & Node.DOCUMENT_POSITION_FOLLOWING
         ),
-        eoRemainsInRail: rail.contains(eoInput),
-        noteRemainsInRail: rail.contains(demoNote),
-        contentBackground: getComputedStyle(content).backgroundColor,
-        layoutBackground: getComputedStyle(layout).backgroundColor
+        bandOutsideRail: !rail.contains(band),
+        railEndsBeforeBand: railRect.bottom <= bandRect.top + 1,
+        figuresSideBySide: secondFigureRect.left >= firstFigureRect.right - 1,
+        t0BeforeT1: Boolean(
+          figures[0].compareDocumentPosition(figures[1]) & Node.DOCUMENT_POSITION_FOLLOWING
+        )
       };
     });
 
     expect(geometry, `Evidence Pack geometry is available at ${width}px`).not.toBeNull();
-    expect(geometry.contentTail, `main surface ends with its last section at ${width}px`).toBeLessThanOrEqual(1.1);
-    expect(geometry.railExtension, `provenance rail remains independently taller at ${width}px`).toBeGreaterThan(16);
-    expect(geometry.contentBeforeRail).toBeTruthy();
-    expect(geometry.eoRemainsInRail).toBeTruthy();
-    expect(geometry.noteRemainsInRail).toBeTruthy();
-    expect(geometry.contentBackground).toBe('rgb(255, 254, 251)');
-    expect(geometry.layoutBackground).toBe('rgb(241, 242, 239)');
+    expect(geometry.bandLeftInset, `band reaches the left pack edge at ${width}px`).toBeLessThanOrEqual(1.1);
+    expect(geometry.bandRightInset, `band reaches the right pack edge at ${width}px`).toBeLessThanOrEqual(1.1);
+    expect(geometry.bandAfterLayout).toBeTruthy();
+    expect(geometry.bandFollowsLayoutInDom).toBeTruthy();
+    expect(geometry.bandOutsideRail).toBeTruthy();
+    expect(geometry.railEndsBeforeBand).toBeTruthy();
+    expect(geometry.figuresSideBySide, `T0 and T1 remain paired at ${width}px`).toBeTruthy();
+    expect(geometry.t0BeforeT1).toBeTruthy();
   }
 });
 
-test('Evidence Pack mobile stacking and DOM order remain unchanged', async ({ page }) => {
+test('both Evidence Pack variants stack body, metadata, T0 and T1 in mobile order', async ({ page }) => {
   for (const width of [320, 390]) {
     await openHomepage(page, width, 844);
 
-    const geometry = await page.evaluate(() => {
-      const content = document.querySelector('.evidence-pack-content');
-      const rail = document.querySelector('.evidence-pack-metadata');
-      if (!content || !rail) return null;
+    for (const caseName of ['lausitz', 'north-sea']) {
+      await page.locator(`#tab-${caseName}`).click();
+      await expect(page.locator(`#panel-${caseName}`)).toBeVisible();
 
-      const contentRect = content.getBoundingClientRect();
-      const railRect = rail.getBoundingClientRect();
-      return {
-        contentBeforeRail: Boolean(
-          content.compareDocumentPosition(rail) & Node.DOCUMENT_POSITION_FOLLOWING
-        ),
-        stackedWithoutOverlap: railRect.top >= contentRect.bottom - 1
-      };
-    });
+      const geometry = await page.locator(`#panel-${caseName}`).evaluate(panel => {
+        const content = panel.querySelector('.evidence-pack-content');
+        const rail = panel.querySelector('.evidence-pack-metadata');
+        const band = panel.querySelector('.evidence-input-band');
+        const figures = [...panel.querySelectorAll('.evidence-input-figure')];
+        if (!content || !rail || !band || figures.length !== 2) return null;
 
-    expect(geometry, `Evidence Pack mobile geometry is available at ${width}px`).not.toBeNull();
-    expect(geometry.contentBeforeRail).toBeTruthy();
-    expect(geometry.stackedWithoutOverlap).toBeTruthy();
+        const contentRect = content.getBoundingClientRect();
+        const railRect = rail.getBoundingClientRect();
+        const bandRect = band.getBoundingClientRect();
+        const firstFigureRect = figures[0].getBoundingClientRect();
+        const secondFigureRect = figures[1].getBoundingClientRect();
+
+        return {
+          contentBeforeRail: Boolean(
+            content.compareDocumentPosition(rail) & Node.DOCUMENT_POSITION_FOLLOWING
+          ),
+          railBeforeBand: Boolean(
+            rail.compareDocumentPosition(band) & Node.DOCUMENT_POSITION_FOLLOWING
+          ),
+          t0BeforeT1: Boolean(
+            figures[0].compareDocumentPosition(figures[1]) & Node.DOCUMENT_POSITION_FOLLOWING
+          ),
+          bodyStacked: railRect.top >= contentRect.bottom - 1,
+          bandStacked: bandRect.top >= railRect.bottom - 1,
+          figuresStacked: secondFigureRect.top >= firstFigureRect.bottom - 1
+        };
+      });
+
+      expect(geometry, `${caseName} mobile geometry is available at ${width}px`).not.toBeNull();
+      expect(geometry.contentBeforeRail).toBeTruthy();
+      expect(geometry.railBeforeBand).toBeTruthy();
+      expect(geometry.t0BeforeT1).toBeTruthy();
+      expect(geometry.bodyStacked).toBeTruthy();
+      expect(geometry.bandStacked).toBeTruthy();
+      expect(geometry.figuresStacked).toBeTruthy();
+    }
   }
 });
 

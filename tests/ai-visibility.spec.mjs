@@ -265,7 +265,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Evidence Pack sample', async (
   const evidencePackSample = parsedGraphs['/'].find(
     entity => entity['@id'] === 'https://www.3brain.ai/#evidence-pack-sample'
   );
-  expect(evidencePackSample.version).toBe('0.1-public-demo');
+  expect(evidencePackSample.version).toBe('0.2-public-demo');
   expect(evidencePackSample.creator['@id']).toBe('https://www.3brain.ai/#organization');
 
   const imprintOrganizations = parsedGraphs['/imprint/'].filter(entity => entity['@type'] === 'Organization');
