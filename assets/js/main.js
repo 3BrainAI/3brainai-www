@@ -12,39 +12,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('[data-evidence-pack-trigger]').forEach(function (trigger) {
     trigger.addEventListener('click', function (event) {
-      const target = document.querySelector(trigger.getAttribute('href'));
-      if (!target) return;
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const fallbackTarget = document.querySelector(trigger.getAttribute('href'));
+      const showcase = document.querySelector('#evidence-pack-sample');
+      if (!fallbackTarget || !showcase) return;
 
       event.preventDefault();
 
+      const activePanel = showcase.querySelector('.evidence-case-panel:not([hidden])');
+      const activePack = activePanel?.querySelector('.evidence-pack-sample');
+      const activeInput = activePanel?.querySelector('.evidence-input-band');
+      const destination = trigger.dataset.evidencePackDestination;
+      const scrollTarget = destination === 'input' && activeInput ? activeInput : fallbackTarget;
+
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      target.scrollIntoView({
+      scrollTarget.scrollIntoView({
         behavior: reduceMotion ? 'auto' : 'smooth',
         block: 'start'
       });
 
-      if (window.location.hash !== '#evidence-pack-sample') {
-        window.history.pushState(null, '', '#evidence-pack-sample');
+      const nextHash = scrollTarget.id ? `#${scrollTarget.id}` : '#evidence-pack-sample';
+      if (window.location.hash !== nextHash) {
+        window.history.pushState(null, '', nextHash);
       }
 
-      const activePanel = target.querySelector('.evidence-case-panel:not([hidden])');
-      const activePack = activePanel?.querySelector('.evidence-pack-sample');
       if (!activePanel || !activePack) return;
 
-      const previousTimer = evidenceHighlightTimers.get(activePack);
+      const emphasisTarget = destination === 'input' && activeInput ? activeInput : activePack;
+      const focusTarget = destination === 'input' && activeInput ? activeInput : activePanel;
+      const previousTimer = evidenceHighlightTimers.get(emphasisTarget);
       if (previousTimer) window.clearTimeout(previousTimer);
 
-      activePack.classList.remove('is-emphasized');
+      emphasisTarget.classList.remove('is-emphasized');
       window.requestAnimationFrame(function () {
-        activePack.classList.add('is-emphasized');
-        activePanel.focus({ preventScroll: true });
+        emphasisTarget.classList.add('is-emphasized');
+        focusTarget.focus({ preventScroll: true });
       });
 
       const timer = window.setTimeout(function () {
-        activePack.classList.remove('is-emphasized');
-        evidenceHighlightTimers.delete(activePack);
+        emphasisTarget.classList.remove('is-emphasized');
+        evidenceHighlightTimers.delete(emphasisTarget);
       }, 1600);
-      evidenceHighlightTimers.set(activePack, timer);
+      evidenceHighlightTimers.set(emphasisTarget, timer);
     });
   });
 

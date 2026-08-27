@@ -26,14 +26,14 @@ const htmlFiles = files.filter(file => path.extname(file) === '.html');
 assert.equal(htmlFiles.length, 33, 'All 33 public HTML entry points must remain covered');
 
 const requiredIconLinks = [
-  '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">',
-  '<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">',
-  '<link rel="shortcut icon" href="/assets/img/favicon.ico">',
-  '<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">',
+  '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">',
+  '<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-mark-v2-32.png">',
+  '<link rel="shortcut icon" href="/assets/img/favicon-mark-v2.ico">',
+  '<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon-mark-v2.png">',
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
 
-const releaseAssetVersion = '74a8024';
+const releaseAssetVersion = '3036e1a9';
 const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseAssetVersion}">`;
 const requiredScriptSource = `/assets/js/main.js?v=${releaseAssetVersion}`;
 
@@ -103,8 +103,8 @@ for (const relativePath of canonicalEnglishPages) {
 
 const expectedPngDimensions = new Map([
   ['assets/img/favicon.png', [64, 64]],
-  ['assets/img/favicon-32.png', [32, 32]],
-  ['assets/img/apple-touch-icon.png', [180, 180]],
+  ['assets/img/favicon-mark-v2-32.png', [32, 32]],
+  ['assets/img/apple-touch-icon-mark-v2.png', [180, 180]],
   ['assets/img/icon-192.png', [192, 192]],
   ['assets/img/icon-512.png', [512, 512]]
 ]);
@@ -116,8 +116,39 @@ for (const [relativePath, [expectedWidth, expectedHeight]] of expectedPngDimensi
   assert.equal(image.readUInt32BE(20), expectedHeight, `${relativePath} has an unexpected height`);
 }
 
-const faviconSvg = await readFile(path.join(repositoryRoot, 'assets/img/favicon.svg'), 'utf8');
-assert.match(faviconSvg, /<rect width="512" height="512" rx="112" fill="#1b1f2a"\/>/);
+const faviconSvg = await readFile(path.join(repositoryRoot, 'assets/img/favicon-mark-v2.svg'), 'utf8');
+assert.doesNotMatch(faviconSvg, /<rect\b/, 'Favicon must keep a transparent background');
+assert.match(faviconSvg, /fill="#1b1f2a"/);
 assert.equal((faviconSvg.match(/<path /g) ?? []).length, 6, 'Favicon must use the six-part 3BrainAI mark');
+
+const homepageHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
+assert.equal(
+  (homepageHtml.match(/Bank-review artefact · synthetic public-safe sample/g) ?? []).length,
+  2,
+  'Both Evidence Pack cases must use the bank-review artefact label'
+);
+assert.equal(
+  (homepageHtml.match(/evidence-pack-state evidence-pack-state--featured/g) ?? []).length,
+  2,
+  'Both case headers must expose the featured status treatment'
+);
+assert.match(
+  homepageHtml,
+  /href="#lausitz-evidence-input"[^>]*data-evidence-pack-destination="input">View the evidence imagery/
+);
+assert.match(homepageHtml, /id="lausitz-evidence-input"[^>]*tabindex="-1"/);
+assert.match(homepageHtml, /id="north-sea-evidence-input"[^>]*tabindex="-1"/);
+
+const stylesheet = await readFile(path.join(repositoryRoot, 'assets/css/style.css'), 'utf8');
+assert.match(stylesheet, /\.evidence-pack-header h2\s*{[^}]*font-size:\s*33\.35px;[^}]*font-weight:\s*400;/s);
+assert.match(stylesheet, /\.evidence-pack-product\s*{[^}]*font-weight:\s*600;/s);
+assert.match(stylesheet, /#panel-lausitz \.evidence-input-figure img\s*{[^}]*brightness\(1\.14\)/s);
+assert.match(stylesheet, /#panel-north-sea \.evidence-input-figure img\s*{[^}]*brightness\(1\.25\)/s);
+assert.match(stylesheet, /\.evidence-input-band:target\s*{/);
+
+const mainScript = await readFile(path.join(repositoryRoot, 'assets/js/main.js'), 'utf8');
+assert.match(mainScript, /dataset\.evidencePackDestination/);
+assert.match(mainScript, /activePanel\?\.querySelector\('\.evidence-input-band'\)/);
+assert.match(mainScript, /focusTarget\.focus\(\{ preventScroll: true \}\)/);
 
 process.stdout.write(`Site polish contract validated for ${htmlFiles.length} HTML entry points.\n`);
