@@ -97,6 +97,11 @@ for (const routeContract of scopedRoutes) {
     }
 
     const footer = page.locator('.footer');
+    await expect(footer.locator('.footer-navigation')).toHaveCount(2);
+    await expect(footer.locator('.footer-europe')).toHaveText('European project · Head office in Prague');
+    await expect(footer.locator('.footer-market-focus')).toHaveText(
+      'Focused on DACH, Benelux and Central European institutional markets.'
+    );
     await expect(footer.locator('.footer-esa-statement')).toHaveText(
       '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
     );
@@ -156,6 +161,41 @@ for (const width of responsiveWidths) {
     }
   });
 }
+
+test('footer is compact on desktop and preserves two-column navigation on mobile', async ({ page }) => {
+  await preparePage(page, 1280, 900);
+  await openRoute(page, '/');
+
+  const desktop = await page.locator('.footer').evaluate(footer => {
+    const main = footer.querySelector('.footer-main');
+    const columns = main ? [...main.children].map(child => child.getBoundingClientRect()) : [];
+    return {
+      height: footer.getBoundingClientRect().height,
+      columnCount: columns.length,
+      distinctColumnStarts: new Set(columns.map(rect => Math.round(rect.left))).size
+    };
+  });
+  expect(desktop.height).toBeLessThan(380);
+  expect(desktop.columnCount).toBe(4);
+  expect(desktop.distinctColumnStarts).toBe(4);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const mobile = await page.locator('.footer').evaluate(footer => {
+    const primary = footer.querySelector('.footer-navigation--primary')?.getBoundingClientRect();
+    const secondary = footer.querySelector('.footer-navigation--secondary')?.getBoundingClientRect();
+    const contact = footer.querySelector('.footer-contact')?.getBoundingClientRect();
+    if (!primary || !secondary || !contact) return null;
+    return {
+      navigationAligned: Math.abs(primary.top - secondary.top) <= 1,
+      navigationSideBySide: secondary.left >= primary.right - 1,
+      contactBelowNavigation: contact.top >= Math.max(primary.bottom, secondary.bottom) - 1
+    };
+  });
+  expect(mobile).not.toBeNull();
+  expect(mobile.navigationAligned).toBeTruthy();
+  expect(mobile.navigationSideBySide).toBeTruthy();
+  expect(mobile.contactBelowNavigation).toBeTruthy();
+});
 
 test('primary navigation links retain a visible keyboard focus indicator', async ({ page }) => {
   await preparePage(page, 1280);

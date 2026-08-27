@@ -8,7 +8,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, '..');
 
 const canonicalPages = [
-  ['index.html', 'https://www.3brain.ai/', '3BrainAI CRI | Review-ready Evidence Packs for physical-asset risk', '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.'],
+  ['index.html', 'https://www.3brain.ai/', '3BrainAI CRI | Review-ready Evidence Packs for physical-asset risk', '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review – with explicit uncertainty, provenance and mandatory human review.'],
   ['mis/index.html', 'https://www.3brain.ai/mis/', '3BrainAI Records | Catalog &amp; Registry Record Layer', 'Governed records for consistent catalog, registry and institutional outputs.'],
   ['cri/index.html', 'https://www.3brain.ai/cri/', '3BrainAI CRI | Bank-readable evidence between project controls', 'Governed Evidence Packs for bank credit-risk, CRE, project-finance, collateral and portfolio review between formal control points.'],
   ['use-cases/index.html', 'https://www.3brain.ai/use-cases/', 'Use Cases | 3BrainAI', 'Model situations for CRI Evidence Packs, governed records, shadow-mode pilots and Evidence Readiness Assessment.'],
@@ -99,6 +99,8 @@ const criGraph = structuredDataByFile.get('cri/index.html')['@graph'];
 const homepageProduct = homepageGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/cri/#product');
 const criProduct = criGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/cri/#product');
 assert.deepEqual(criProduct, homepageProduct, 'Homepage and CRI must describe one stable Product entity');
+assert.equal(homepageProduct.areaServed, 'Europe');
+assert.equal(homepageGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/#organization').areaServed, 'Europe');
 
 const robots = await readRepositoryFile('robots.txt');
 for (const userAgent of ['OAI-SearchBot', 'Claude-SearchBot', 'PerplexityBot', 'Bingbot', 'Googlebot', 'GPTBot', 'ClaudeBot', 'Google-Extended', '*']) {
@@ -119,6 +121,7 @@ assert.ok(llmsText.startsWith('# 3BrainAI\n'));
 assert.match(llmsText, /3BrainAI is the public brand/);
 assert.match(llmsText, /3BrainAI Nexus s\.r\.o\. develops 3BrainAI CRI/);
 assert.match(llmsText, /3BrainAI CRI/);
+assert.match(llmsText, /3BrainAI CRI is a European project for institutional markets/);
 assert.match(llmsText, /does not make autonomous credit decisions, replace bank policy or replace professional assessment/);
 assert.match(llmsText, /Earth Observation is an input medium/);
 assert.match(llmsText, /participating in the ESA Business Incubation Centre Czech Republic/);
