@@ -2010,12 +2010,11 @@ h3 {
   box-shadow: 0 7px 24px rgba(24, 33, 37, 0.045);
 }
 
-.evidence-case-selector-label,
-.evidence-case-selector-note {
+.evidence-case-selector-label {
   margin: 0;
   color: var(--r3-text-secondary);
   font-family: var(--r3-metadata-font);
-  font-size: 9.5px;
+  font-size: 10.5px;
   letter-spacing: 0.06em;
   line-height: 1.4;
   text-transform: uppercase;
@@ -2027,7 +2026,11 @@ h3 {
 }
 
 .evidence-case-selector-note {
+  margin: 0;
   padding-right: 5px;
+  color: var(--r3-text-secondary);
+  font-size: 11.5px;
+  line-height: 1.45;
   text-align: right;
 }
 
@@ -2039,12 +2042,13 @@ h3 {
 }
 
 .evidence-case-tab {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  min-height: 48px;
-  padding: 9px 13px;
+  min-height: 62px;
+  padding: 10px 13px;
   border: 1px solid transparent;
   border-radius: 7px;
   background: var(--r3-surface-subtle);
@@ -2063,17 +2067,29 @@ h3 {
   color: #fff;
 }
 
-.evidence-case-tab span {
-  font-size: 13px;
+.evidence-case-tab-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.evidence-case-tab-copy strong {
+  font-size: 13.5px;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .evidence-case-tab small {
   color: inherit;
   font-family: var(--r3-metadata-font);
-  font-size: 9px;
-  line-height: 1.3;
+  font-size: 10px;
+  line-height: 1.35;
   opacity: 0.74;
+}
+
+.evidence-case-tab-meta {
+  white-space: nowrap;
+  text-align: right;
 }
 
 .evidence-case-panel {
@@ -2096,6 +2112,18 @@ h3 {
   background: var(--r3-surface);
   box-shadow: var(--r3-shadow);
   color: var(--r3-text);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.evidence-pack-sample.is-emphasized {
+  border-color: var(--r3-action);
+  box-shadow: 0 0 0 4px rgba(18, 60, 105, 0.16), var(--r3-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-pack-sample {
+    transition: none;
+  }
 }
 
 .evidence-pack-sample p,
@@ -2119,7 +2147,7 @@ h3 {
   margin-bottom: 7px !important;
   color: var(--r3-text-secondary);
   font-family: var(--r3-metadata-font);
-  font-size: 10px;
+  font-size: 10.5px;
   letter-spacing: 0.055em;
   line-height: 1.4;
   text-transform: uppercase;
@@ -2136,9 +2164,17 @@ h3 {
 .evidence-pack-case-title {
   margin-top: 6px !important;
   color: var(--r3-text-secondary);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 13.5px;
+  font-weight: 600;
   line-height: 1.4;
+}
+
+.evidence-pack-case-context {
+  max-width: 72ch;
+  margin-top: 4px !important;
+  color: var(--r3-text-secondary);
+  font-size: 11.5px;
+  line-height: 1.45;
 }
 
 .evidence-pack-state {
@@ -2152,7 +2188,7 @@ h3 {
   background: transparent;
   color: var(--r3-text-secondary);
   font-family: var(--r3-metadata-font);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.05em;
 }
@@ -2193,7 +2229,7 @@ h3 {
 .evidence-meta-list dt {
   color: var(--r3-text-secondary);
   font-family: var(--r3-metadata-font);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 650;
   letter-spacing: 0.07em;
   line-height: 1.4;
@@ -2278,7 +2314,7 @@ h3 {
   padding-top: 9px;
   border-top: 1px solid rgba(88, 102, 107, 0.22);
   color: var(--r3-text-secondary);
-  font-size: 10.5px;
+  font-size: 11px;
   font-style: italic;
   line-height: 1.45;
 }
@@ -2300,7 +2336,7 @@ h3 {
   margin-bottom: 10px !important;
   color: var(--r3-action);
   font-family: var(--r3-metadata-font);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.09em;
   line-height: 1.4;
@@ -2320,7 +2356,7 @@ h3 {
   margin: 3px 0 0;
   color: var(--r3-text);
   font-family: var(--r3-metadata-font);
-  font-size: 10.5px;
+  font-size: 11px;
   line-height: 1.4;
 }
 
@@ -2332,7 +2368,7 @@ h3 {
 .evidence-provenance ul {
   padding-left: 15px;
   color: var(--r3-text-secondary);
-  font-size: 10px;
+  font-size: 10.5px;
   line-height: 1.5;
 }
 
@@ -2352,7 +2388,7 @@ h3 {
   border-top: 1px solid rgba(88, 102, 107, 0.2);
   color: var(--r3-text-secondary);
   font-family: var(--r3-metadata-font);
-  font-size: 9.5px;
+  font-size: 10.5px;
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -2373,7 +2409,7 @@ h3 {
 
 .evidence-input-header p:not(.evidence-section-label) {
   color: var(--r3-text-secondary);
-  font-size: 11px;
+  font-size: 11.5px;
   line-height: 1.45;
 }
 
@@ -2385,8 +2421,25 @@ h3 {
   background: var(--r3-surface);
   color: var(--r3-text-secondary);
   font-family: var(--r3-metadata-font);
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.3;
+}
+
+.evidence-input-scope {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid rgba(18, 60, 105, 0.45);
+  background: rgba(255, 254, 251, 0.66);
+  color: var(--r3-text-secondary);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.evidence-input-scope strong {
+  color: var(--r3-text);
+  font-weight: 700;
 }
 
 .evidence-input-grid {
@@ -2424,13 +2477,13 @@ h3 {
   border-top: 1px solid var(--r3-border);
   color: var(--r3-text-secondary);
   font-family: var(--r3-metadata-font);
-  font-size: 9px;
+  font-size: 10.5px;
   line-height: 1.45;
 }
 
 .evidence-input-figure figcaption strong {
   color: var(--r3-text);
-  font-size: 9.5px;
+  font-size: 10.5px;
   font-weight: 700;
 }
 
@@ -2445,7 +2498,7 @@ h3 {
   gap: 20px;
   margin-top: 11px;
   color: var(--r3-text-secondary);
-  font-size: 9.5px;
+  font-size: 11.5px;
   line-height: 1.5;
 }
 
@@ -2503,12 +2556,22 @@ h3 {
     font-size: clamp(38px, 11vw, 50px);
   }
 
+  .evidence-case-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-case-selector-note {
+    padding: 0 5px;
+    text-align: left;
+  }
+
   .evidence-case-tabs {
+    grid-column: 1;
     grid-template-columns: 1fr;
   }
 
   .evidence-case-tab {
-    min-height: 50px;
+    min-height: 62px;
   }
 
   .evidence-pack-layout,
@@ -2581,12 +2644,11 @@ h3 {
 
   .evidence-case-tab {
     align-items: flex-start;
-    flex-direction: column;
-    gap: 3px;
+    gap: 10px;
   }
 
   .evidence-pack-case-title {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .evidence-pack-section {
@@ -3373,6 +3435,22 @@ h3 {
 }
 
 @media (max-width: 720px) {
+  .r3-buyer-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 18px;
+  }
+
+  .r3-buyer-strip li {
+    flex: 1 1 auto;
+    padding: 7px 9px;
+    font-size: 10.5px;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+  }
+
   .investors-milestones {
     grid-template-columns: 1fr;
   }

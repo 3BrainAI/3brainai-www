@@ -130,24 +130,24 @@
     <div class="r3-hero-copy">
       <p class="kicker">For banks and institutional lenders</p>
       <h1 id="r3-hero-title">Review-ready evidence for physical&#8209;asset risk.</h1>
-      <p class="lead">3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.</p>
-      <p class="r3-boundary-line">CRI supports accountable human review. It does not make autonomous credit decisions, replace bank policy or replace professional assessment.</p>
+      <p class="lead">3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review. Each pack makes uncertainty, provenance and human-review status explicit.</p>
+      <p class="r3-boundary-line">CRI does not make autonomous credit decisions, replace bank policy or replace professional assessment.</p>
       <ul class="r3-buyer-strip" aria-label="Primary bank review contexts">
         <li>Credit risk &amp; portfolio monitoring</li>
         <li>CRE &amp; project finance</li>
         <li>Collateral &amp; progress review</li>
       </ul>
       <div class="ctas r3-hero-actions">
-        <a class="btn" href="#evidence-pack-sample">Review the Evidence Pack</a>
+        <a class="btn" href="#evidence-pack-sample" data-evidence-pack-trigger>Explore the Evidence Pack</a>
         <a class="btn secondary" href="/validation/">Discuss shadow-mode validation</a>
       </div>
-      <a class="r3-proof-link" href="#evidence-pack-sample">Illustrative, synthetic public-safe sample <span aria-hidden="true">↓</span></a>
+      <a class="r3-proof-link" href="#evidence-pack-sample" data-evidence-pack-trigger>See the illustrative Evidence Pack sample <span aria-hidden="true">↓</span></a>
     </div>
 
     <div class="evidence-pack-showcase" id="evidence-pack-sample">
       <nav class="evidence-case-selector" aria-label="Evidence Pack case selector">
         <span class="evidence-case-selector-label">Case view</span>
-        <p class="evidence-case-selector-note">Manual selection only · no carousel · no live assessment</p>
+        <p class="evidence-case-selector-note">Two deliberately selected financing contexts — choose a case. Synthetic public-safe examples, not live assessments.</p>
         <div class="evidence-case-tabs" role="tablist" aria-label="Synthetic Evidence Pack cases">
           <button
             class="evidence-case-tab"
@@ -159,8 +159,11 @@
             tabindex="0"
             data-case-target="panel-lausitz"
           >
-            <span>Lausitz</span>
-            <small>Optical · 2019 / 2026</small>
+            <span class="evidence-case-tab-copy">
+              <strong>Lausitz, Germany</strong>
+              <small>Former lignite mine · post-mining transformation</small>
+            </span>
+            <small class="evidence-case-tab-meta">Optical · 2019 / 2026</small>
           </button>
           <button
             class="evidence-case-tab"
@@ -172,8 +175,11 @@
             tabindex="-1"
             data-case-target="panel-north-sea"
           >
-            <span>German North Sea</span>
-            <small>SAR · 7 / 19 Jun 2026</small>
+            <span class="evidence-case-tab-copy">
+              <strong>German North Sea</strong>
+              <small>Offshore wind development · SAR monitoring</small>
+            </span>
+            <small class="evidence-case-tab-meta">7 / 19 Jun 2026</small>
           </button>
         </div>
       </nav>
@@ -190,7 +196,8 @@
             <div>
               <p class="evidence-pack-label">Evidence Pack sample — synthetic public-safe data</p>
               <h2 id="lausitz-pack-title">Evidence Pack</h2>
-              <p class="evidence-pack-case-title">Post-mining transformation — Lausitz, Germany</p>
+              <p class="evidence-pack-case-title">Lausitz, Germany — post-mining transformation</p>
+              <p class="evidence-pack-case-context">Environmentally impacted former open-pit lignite mine undergoing large-scale flooding and redevelopment.</p>
             </div>
             <div class="evidence-pack-state" role="status" aria-label="Assessment status Watch">
               <span class="status-dot status-dot-watch" aria-hidden="true"></span>
@@ -243,8 +250,7 @@
             </div>
 
             <aside class="evidence-pack-metadata" aria-label="Lausitz Evidence Pack metadata and provenance">
-              <section role="group" class="evidence-meta-group" aria-labelledby="lausitz-meta-case">
-                <p class="evidence-meta-group-title" id="lausitz-meta-case">Case</p>
+              <section role="group" class="evidence-meta-group" aria-label="Lausitz case details">
                 <dl class="evidence-meta-list">
                   <div>
                     <dt>Case</dt>
@@ -252,7 +258,7 @@
                   </div>
                   <div>
                     <dt>Asset</dt>
-                    <dd>Post-mining transformation area</dd>
+                    <dd>Former open-pit lignite mine</dd>
                   </div>
                   <div>
                     <dt>Monitoring window</dt>
@@ -320,6 +326,10 @@
               <span class="evidence-input-mode">Sentinel-2 L2A</span>
             </header>
 
+            <div class="evidence-input-scope">
+              <p><strong>Full area-of-interest overview.</strong> The views below show the full monitored area for geographic context. Operational CRI monitoring can narrow the focus to priority zones, structures and individual project milestones, combining the most appropriate available observation and project data for much finer operational detail.</p>
+            </div>
+
             <div class="evidence-input-grid">
               <figure class="evidence-input-figure">
                 <picture>
@@ -379,7 +389,8 @@
             <div>
               <p class="evidence-pack-label">Evidence Pack sample — synthetic public-safe data</p>
               <h2 id="north-sea-pack-title">Evidence Pack</h2>
-              <p class="evidence-pack-case-title">Offshore installation monitoring — German North Sea</p>
+              <p class="evidence-pack-case-title">German North Sea — offshore wind development monitoring</p>
+              <p class="evidence-pack-case-context">Renewable-energy development area with regularly spaced surface-visible offshore structures.</p>
             </div>
             <div class="evidence-pack-state" role="status" aria-label="Assessment status Watch">
               <span class="status-dot status-dot-watch" aria-hidden="true"></span>
@@ -391,7 +402,7 @@
             <div class="evidence-pack-content">
               <section role="group" class="evidence-pack-section evidence-pack-summary" aria-labelledby="north-sea-summary-title">
                 <p class="evidence-section-label" id="north-sea-summary-title">Assessment summary</p>
-                <p>Repeat-pass radar observations provide a dated surface record for reconciling a synthetic installation milestone. Surface-visible point targets are present, but the available evidence cannot confirm subsea works, contractual completion or the identity and condition of individual assets.</p>
+                <p>Repeat-pass radar observations provide a dated surface record for reconciling a synthetic offshore wind installation milestone. Surface-visible point targets are present, but the available evidence cannot confirm subsea works, contractual completion or the identity and condition of individual assets.</p>
               </section>
 
               <section role="group" class="evidence-pack-section" aria-labelledby="north-sea-ovd-title">
@@ -399,7 +410,7 @@
                 <div class="observed-declared-grid">
                   <div>
                     <p class="evidence-field-label">Declared</p>
-                    <p>Installation activity substantially progressed across the monitored offshore area during June 2026.</p>
+                    <p>Offshore wind installation activity substantially progressed across the monitored area during June 2026.</p>
                   </div>
                   <div>
                     <p class="evidence-field-label">Observed</p>
@@ -432,8 +443,7 @@
             </div>
 
             <aside class="evidence-pack-metadata" aria-label="German North Sea Evidence Pack metadata and provenance">
-              <section role="group" class="evidence-meta-group" aria-labelledby="north-sea-meta-case">
-                <p class="evidence-meta-group-title" id="north-sea-meta-case">Case</p>
+              <section role="group" class="evidence-meta-group" aria-label="German North Sea case details">
                 <dl class="evidence-meta-list">
                   <div>
                     <dt>Case</dt>
@@ -441,7 +451,7 @@
                   </div>
                   <div>
                     <dt>Asset</dt>
-                    <dd>Offshore installation area</dd>
+                    <dd>Offshore wind development area</dd>
                   </div>
                   <div>
                     <dt>Monitoring window</dt>
@@ -505,10 +515,15 @@
             <header class="evidence-input-header">
               <div>
                 <p class="evidence-section-label" id="north-sea-input-title">Evidence input excerpt</p>
-                <p>Repeat-pass surface-visible context · public Copernicus inputs</p>
+                <p>Repeat-pass surface-visible context across an offshore wind development area · public Copernicus inputs</p>
               </div>
               <span class="evidence-input-mode">Sentinel-1 GRD · VV</span>
             </header>
+
+            <div class="evidence-input-scope">
+              <p><strong>Full area-of-interest overview.</strong> The views below show the full monitored area for geographic context. Operational CRI monitoring can narrow the focus to priority zones, structures and individual project milestones, combining the most appropriate available observation and project data for much finer operational detail.</p>
+              <p>The regularly spaced bright radar targets are consistent with surface-visible offshore wind structures. Imagery alone does not establish individual turbine identity, installation status or condition.</p>
+            </div>
 
             <div class="evidence-input-grid">
               <figure class="evidence-input-figure">
@@ -520,7 +535,7 @@
                     height="900"
                     loading="lazy"
                     decoding="async"
-                    alt="Sentinel-1 VV backscatter image over an offshore installation area in the German North Sea on 7 June 2026"
+                    alt="Sentinel-1 VV backscatter image over an offshore wind development area in the German North Sea on 7 June 2026, showing regularly spaced bright surface targets"
                   >
                 </picture>
                 <figcaption>
@@ -538,7 +553,7 @@
                     height="900"
                     loading="lazy"
                     decoding="async"
-                    alt="Sentinel-1 VV backscatter image over an offshore installation area in the German North Sea on 19 June 2026"
+                    alt="Sentinel-1 VV backscatter image over an offshore wind development area in the German North Sea on 19 June 2026, showing regularly spaced bright surface targets"
                   >
                 </picture>
                 <figcaption>
@@ -594,7 +609,7 @@
       </li>
       <li>
         <span class="r3-proof-label">Human review</span>
-        <span>Required before any accountable decision. CRI does not make autonomous credit decisions, replace bank policy or replace professional assessment.</span>
+        <span>Required before any accountable decision; the review state stays attached to the pack.</span>
       </li>
       <li>
         <span class="r3-proof-label">Versioning</span>
