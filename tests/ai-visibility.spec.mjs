@@ -202,15 +202,15 @@ for (const canonicalPage of canonicalPages) {
     );
     await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute(
       'href',
-      '/assets/img/favicon.svg'
+      '/assets/img/favicon-mark-v2.svg'
     );
     await expect(page.locator('head link[rel="icon"][sizes="32x32"]')).toHaveAttribute(
       'href',
-      '/assets/img/favicon-32.png'
+      '/assets/img/favicon-mark-v2-32.png'
     );
     await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
       'href',
-      '/assets/img/apple-touch-icon.png'
+      '/assets/img/apple-touch-icon-mark-v2.png'
     );
   });
 }

@@ -101,11 +101,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="/assets/css/style.css?v=74a8024">
-  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
-  <link rel="shortcut icon" href="/assets/img/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/css/style.css?v=3036e1a9">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-mark-v2-32.png">
+  <link rel="shortcut icon" href="/assets/img/favicon-mark-v2.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon-mark-v2.png">
   <link rel="manifest" href="/assets/manifest.json">
 </head>
 <body class="r3-home">
@@ -144,10 +144,10 @@
         <li>Collateral &amp; progress review</li>
       </ul>
       <div class="ctas r3-hero-actions">
-        <a class="btn" href="#evidence-pack-sample" data-evidence-pack-trigger>Explore the Evidence Pack</a>
+        <a class="btn" href="#lausitz-evidence-input" data-evidence-pack-trigger data-evidence-pack-destination="input">View the evidence imagery</a>
         <a class="btn secondary" href="/validation/">Discuss shadow-mode validation</a>
       </div>
-      <a class="r3-proof-link" href="#evidence-pack-sample" data-evidence-pack-trigger>See the illustrative Evidence Pack sample <span aria-hidden="true">↓</span></a>
+      <a class="r3-proof-link" href="#evidence-pack-sample" data-evidence-pack-trigger data-evidence-pack-destination="pack">See the illustrative Evidence Pack sample <span aria-hidden="true">↓</span></a>
     </div>
 
     <div class="evidence-pack-showcase" id="evidence-pack-sample">
@@ -204,14 +204,18 @@
         <article class="evidence-pack-sample" aria-labelledby="lausitz-pack-title">
           <header class="evidence-pack-header">
             <div>
-              <p class="evidence-pack-label">Evidence Pack sample – synthetic public-safe data</p>
-              <h2 id="lausitz-pack-title">3BrainAI CRI Evidence Pack</h2>
+              <p class="evidence-pack-label">Bank-review artefact · synthetic public-safe sample</p>
+              <h2 id="lausitz-pack-title"><span class="evidence-pack-brand">3BrainAI CRI</span> <span class="evidence-pack-product">Evidence Pack</span></h2>
               <p class="evidence-pack-case-title">Lausitz, Germany – post-mining transformation</p>
               <p class="evidence-pack-case-context">Environmentally impacted former open-pit lignite mine undergoing large-scale flooding and redevelopment.</p>
             </div>
-            <div class="evidence-pack-state" role="status" aria-label="Assessment status Watch">
-              <span class="status-dot status-dot-watch" aria-hidden="true"></span>
-              <span>WATCH</span>
+            <div class="evidence-pack-state evidence-pack-state--featured" role="status" aria-label="Assessment status Watch. Review cadence is project-defined.">
+              <span class="evidence-pack-state-label">Status</span>
+              <span class="evidence-pack-state-value">
+                <span class="status-dot status-dot-watch" aria-hidden="true"></span>
+                <span>WATCH</span>
+              </span>
+              <span class="evidence-pack-state-cadence">Review cadence · project-defined</span>
             </div>
           </header>
 
@@ -327,7 +331,7 @@
             </aside>
           </div>
 
-          <section role="group" class="evidence-input-band" aria-labelledby="lausitz-input-title">
+          <section role="group" class="evidence-input-band" id="lausitz-evidence-input" aria-labelledby="lausitz-input-title" tabindex="-1">
             <header class="evidence-input-header">
               <div>
                 <p class="evidence-section-label" id="lausitz-input-title">Evidence input excerpt</p>
@@ -406,14 +410,18 @@
         <article class="evidence-pack-sample" aria-labelledby="north-sea-pack-title">
           <header class="evidence-pack-header">
             <div>
-              <p class="evidence-pack-label">Evidence Pack sample – synthetic public-safe data</p>
-              <h2 id="north-sea-pack-title">3BrainAI CRI Evidence Pack</h2>
+              <p class="evidence-pack-label">Bank-review artefact · synthetic public-safe sample</p>
+              <h2 id="north-sea-pack-title"><span class="evidence-pack-brand">3BrainAI CRI</span> <span class="evidence-pack-product">Evidence Pack</span></h2>
               <p class="evidence-pack-case-title">German North Sea – offshore wind development monitoring</p>
               <p class="evidence-pack-case-context">Renewable-energy development area with regularly spaced surface-visible offshore structures.</p>
             </div>
-            <div class="evidence-pack-state" role="status" aria-label="Assessment status Watch">
-              <span class="status-dot status-dot-watch" aria-hidden="true"></span>
-              <span>WATCH</span>
+            <div class="evidence-pack-state evidence-pack-state--featured" role="status" aria-label="Assessment status Watch. Review cadence is project-defined.">
+              <span class="evidence-pack-state-label">Status</span>
+              <span class="evidence-pack-state-value">
+                <span class="status-dot status-dot-watch" aria-hidden="true"></span>
+                <span>WATCH</span>
+              </span>
+              <span class="evidence-pack-state-cadence">Review cadence · project-defined</span>
             </div>
           </header>
 
@@ -530,7 +538,7 @@
             </aside>
           </div>
 
-          <section role="group" class="evidence-input-band" aria-labelledby="north-sea-input-title">
+          <section role="group" class="evidence-input-band" id="north-sea-evidence-input" aria-labelledby="north-sea-input-title" tabindex="-1">
             <header class="evidence-input-header">
               <div>
                 <p class="evidence-section-label" id="north-sea-input-title">Evidence input excerpt</p>
@@ -888,6 +896,6 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=74a8024"></script>
+<script src="/assets/js/main.js?v=3036e1a9"></script>
 </body>
 </html>

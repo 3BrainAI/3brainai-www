@@ -77,6 +77,12 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#panel-lausitz')).toBeVisible();
   await expect(page.locator('#panel-north-sea')).toBeHidden();
   await expect(page.locator('#panel-lausitz .evidence-pack-state')).toContainText('WATCH');
+  await expect(page.locator('.evidence-pack-state--featured')).toHaveCount(2);
+  await expect(page.locator('.evidence-pack-state-label')).toHaveText(['Status', 'Status']);
+  await expect(page.locator('.evidence-pack-state-cadence')).toHaveText([
+    'Review cadence · project-defined',
+    'Review cadence · project-defined'
+  ]);
   await expect(page.locator('#lausitz-pack-title')).toHaveText('3BrainAI CRI Evidence Pack');
   await expect(page.locator('#north-sea-pack-title')).toHaveText('3BrainAI CRI Evidence Pack');
   await expect(page.locator('#panel-lausitz .evidence-pack-case-title')).toHaveText(
@@ -85,9 +91,13 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#panel-lausitz .evidence-pack-case-context')).toHaveText(
     'Environmentally impacted former open-pit lignite mine undergoing large-scale flooding and redevelopment.'
   );
-  await expect(page.getByRole('link', { name: 'Explore the Evidence Pack' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'View the evidence imagery' })).toHaveAttribute(
     'href',
-    '#evidence-pack-sample'
+    '#lausitz-evidence-input'
+  );
+  await expect(page.getByRole('link', { name: 'View the evidence imagery' })).toHaveAttribute(
+    'data-evidence-pack-destination',
+    'input'
   );
   await expect(page.locator('.r3-proof-link')).toContainText('See the illustrative Evidence Pack sample');
   await expect(page.locator('.evidence-case-selector-note')).toHaveText(
@@ -178,7 +188,7 @@ test('Evidence Pack case selector is manual and keyboard accessible', async ({ p
 test('homepage action hierarchy and peer-choice states respond visibly', async ({ page }) => {
   await openHomepage(page, 1280);
 
-  const primary = page.getByRole('link', { name: 'Explore the Evidence Pack' });
+  const primary = page.getByRole('link', { name: 'View the evidence imagery' });
   const secondary = page.getByRole('link', { name: 'Discuss shadow-mode validation' }).first();
   const northSeaTab = page.locator('#tab-north-sea');
 
@@ -231,16 +241,40 @@ test('homepage action hierarchy and peer-choice states respond visibly', async (
   expect(focusState.outlineWidth).toBeGreaterThan(0);
 });
 
+test('primary Evidence Pack action reveals the active evidence input', async ({ page }) => {
+  await openHomepage(page, 1280);
+
+  const primary = page.getByRole('link', { name: 'View the evidence imagery' });
+  const lausitzInput = page.locator('#lausitz-evidence-input');
+  await primary.click();
+  await expect(page).toHaveURL(/#lausitz-evidence-input$/);
+  await expect(lausitzInput).toBeFocused();
+  await expect(lausitzInput).toHaveClass(/is-emphasized/);
+  await expect(lausitzInput).toBeInViewport();
+
+  await page.locator('#tab-north-sea').click();
+  const northSeaInput = page.locator('#north-sea-evidence-input');
+  await primary.click();
+  await expect(page).toHaveURL(/#north-sea-evidence-input$/);
+  await expect(northSeaInput).toBeFocused();
+  await expect(northSeaInput).toHaveClass(/is-emphasized/);
+  await expect(northSeaInput).toBeInViewport();
+});
+
 test('hero audience and case-selector hierarchy stay prominent and compact', async ({ page }) => {
   await openHomepage(page, 1280);
 
   const hierarchy = await page.evaluate(() => {
     const kicker = document.querySelector('.r3-hero .kicker');
     const packTitle = document.querySelector('#lausitz-pack-title');
+    const packBrand = packTitle?.querySelector('.evidence-pack-brand');
+    const packProduct = packTitle?.querySelector('.evidence-pack-product');
     const tabs = [...document.querySelectorAll('.evidence-case-tab')];
     return {
       kickerSize: kicker ? Number.parseFloat(getComputedStyle(kicker).fontSize) : 0,
       packTitleSize: packTitle ? Number.parseFloat(getComputedStyle(packTitle).fontSize) : 0,
+      packBrandWeight: packBrand ? Number.parseInt(getComputedStyle(packBrand).fontWeight, 10) : 0,
+      packProductWeight: packProduct ? Number.parseInt(getComputedStyle(packProduct).fontWeight, 10) : 0,
       tabs: tabs.map(tab => {
         const title = tab.querySelector('strong');
         const details = tab.querySelector('.evidence-case-tab-details');
@@ -256,7 +290,8 @@ test('hero audience and case-selector hierarchy stay prominent and compact', asy
   });
 
   expect(hierarchy.kickerSize).toBeGreaterThanOrEqual(15);
-  expect(hierarchy.packTitleSize).toBeGreaterThanOrEqual(28);
+  expect(hierarchy.packTitleSize).toBeCloseTo(33.35, 1);
+  expect(hierarchy.packBrandWeight).toBeLessThan(hierarchy.packProductWeight);
   for (const tab of hierarchy.tabs) {
     expect(tab.height).toBeLessThanOrEqual(64);
     expect(tab.titleBeforeDetails).toBeTruthy();
