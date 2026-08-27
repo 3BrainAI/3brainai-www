@@ -81,10 +81,10 @@
       {
         "@type": "Report",
         "@id": "https://www.3brain.ai/#evidence-pack-sample",
-        "name": "Synthetic Evidence Pack sample",
+        "name": "Synthetic European Evidence Pack samples",
         "url": "https://www.3brain.ai/#evidence-pack-sample",
-        "description": "Illustrative, public-safe Evidence Pack sample. It is not a live customer assessment.",
-        "version": "0.1-public-demo",
+        "description": "Illustrative, public-safe Evidence Pack samples using dated Copernicus observation pairs. They are not live customer assessments.",
+        "version": "0.2-public-demo",
         "inLanguage": "en",
         "creator": {
           "@id": "https://www.3brain.ai/#organization"
@@ -144,137 +144,418 @@
       <a class="r3-proof-link" href="#evidence-pack-sample">Illustrative, synthetic public-safe sample <span aria-hidden="true">↓</span></a>
     </div>
 
-    <article class="evidence-pack-sample" id="evidence-pack-sample" aria-labelledby="evidence-pack-title">
-      <header class="evidence-pack-header">
-        <div>
-          <p class="evidence-pack-label">Evidence Pack sample — synthetic public-safe data</p>
-          <h2 id="evidence-pack-title">Evidence Pack</h2>
+    <div class="evidence-pack-showcase" id="evidence-pack-sample">
+      <nav class="evidence-case-selector" aria-label="Evidence Pack case selector">
+        <span class="evidence-case-selector-label">Case view</span>
+        <p class="evidence-case-selector-note">Manual selection only · no carousel · no live assessment</p>
+        <div class="evidence-case-tabs" role="tablist" aria-label="Synthetic Evidence Pack cases">
+          <button
+            class="evidence-case-tab"
+            id="tab-lausitz"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-lausitz"
+            tabindex="0"
+            data-case-target="panel-lausitz"
+          >
+            <span>Lausitz</span>
+            <small>Optical · 2019 / 2026</small>
+          </button>
+          <button
+            class="evidence-case-tab"
+            id="tab-north-sea"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-north-sea"
+            tabindex="-1"
+            data-case-target="panel-north-sea"
+          >
+            <span>German North Sea</span>
+            <small>SAR · 7 / 19 Jun 2026</small>
+          </button>
         </div>
-        <div class="evidence-pack-state" role="status">
-          <span class="status-dot status-dot-watch" aria-hidden="true"></span>
-          <span>WATCH</span>
-        </div>
-      </header>
+      </nav>
 
-      <div class="evidence-pack-layout">
-        <div class="evidence-pack-content">
-          <section class="evidence-pack-section evidence-pack-summary" aria-labelledby="assessment-summary-title">
-            <p class="evidence-section-label" id="assessment-summary-title">Assessment summary</p>
-            <p>Available evidence partially supports the declared milestone. Some visible activity is present, but current data does not fully confirm the reported scope.</p>
-          </section>
-
-          <section class="evidence-pack-section" aria-labelledby="observed-declared-title">
-            <p class="evidence-section-label" id="observed-declared-title">Observed vs Declared</p>
-            <div class="observed-declared-grid">
-              <div>
-                <p class="evidence-field-label">Declared</p>
-                <p>Structural works progressing within the monitored area.</p>
-              </div>
-              <div>
-                <p class="evidence-field-label">Observed</p>
-                <p>Surface change is visible in part of the area. The available observation does not fully confirm the declared extent.</p>
-              </div>
+      <section
+        class="evidence-case-panel"
+        id="panel-lausitz"
+        role="tabpanel"
+        aria-labelledby="tab-lausitz"
+        tabindex="0"
+      >
+        <article class="evidence-pack-sample" aria-labelledby="lausitz-pack-title">
+          <header class="evidence-pack-header">
+            <div>
+              <p class="evidence-pack-label">Evidence Pack sample — synthetic public-safe data</p>
+              <h2 id="lausitz-pack-title">Evidence Pack</h2>
+              <p class="evidence-pack-case-title">Post-mining transformation — Lausitz, Germany</p>
             </div>
-          </section>
+            <div class="evidence-pack-state" role="status" aria-label="Assessment status Watch">
+              <span class="status-dot status-dot-watch" aria-hidden="true"></span>
+              <span>WATCH</span>
+            </div>
+          </header>
 
-          <div class="evidence-pack-pair">
-            <section class="evidence-pack-section" aria-labelledby="findings-title">
-              <p class="evidence-section-label" id="findings-title">Findings</p>
-              <ul class="evidence-findings">
-                <li>Change is visible within the monitored area.</li>
-                <li>Evidence is partial.</li>
-                <li>The observation is not sufficient for a final project judgement.</li>
-              </ul>
-            </section>
+          <div class="evidence-pack-layout">
+            <div class="evidence-pack-content">
+              <section role="group" class="evidence-pack-section evidence-pack-summary" aria-labelledby="lausitz-summary-title">
+                <p class="evidence-section-label" id="lausitz-summary-title">Assessment summary</p>
+                <p>Dated optical observations show a substantial change from predominantly exposed surfaces in June 2019 to a large water body in May 2026. The synthetic milestone is directionally supported. Engineering completion, water quality and geotechnical condition cannot be determined from imagery alone.</p>
+              </section>
 
-            <section class="evidence-pack-section evidence-uncertainty" aria-labelledby="uncertainty-title">
-              <p class="evidence-section-label" id="uncertainty-title">Uncertainty</p>
-              <p>Partial cloud cover and limited temporal coverage reduce confidence in the completeness of the observation.</p>
-            </section>
+              <section role="group" class="evidence-pack-section" aria-labelledby="lausitz-ovd-title">
+                <p class="evidence-section-label" id="lausitz-ovd-title">Observed vs Declared</p>
+                <div class="observed-declared-grid">
+                  <div>
+                    <p class="evidence-field-label">Declared</p>
+                    <p>Flooding and post-mining transformation substantially advanced within the monitored area by May 2026.</p>
+                  </div>
+                  <div>
+                    <p class="evidence-field-label">Observed</p>
+                    <p>The May 2026 observation shows a large water body where the June 2019 baseline showed predominantly exposed surfaces.</p>
+                  </div>
+                </div>
+              </section>
+
+              <div class="evidence-pack-pair">
+                <section role="group" class="evidence-pack-section" aria-labelledby="lausitz-findings-title">
+                  <p class="evidence-section-label" id="lausitz-findings-title">Findings</p>
+                  <ul class="evidence-findings">
+                    <li>Substantial visible land and water-body change is present.</li>
+                    <li>The dated pair provides comparable surface context.</li>
+                    <li>The visible change supports the direction of the synthetic milestone, not overall completion.</li>
+                  </ul>
+                </section>
+
+                <section role="group" class="evidence-pack-section evidence-uncertainty" aria-labelledby="lausitz-uncertainty-title">
+                  <p class="evidence-section-label" id="lausitz-uncertainty-title">Uncertainty</p>
+                  <p>Different acquisition dates and seasonal surface conditions affect direct comparison. The imagery does not establish cause, engineering completion, water quality, geotechnical safety or regulatory compliance.</p>
+                </section>
+              </div>
+
+              <section role="group" class="evidence-pack-section evidence-next-step" aria-labelledby="lausitz-next-step-title">
+                <p class="evidence-section-label" id="lausitz-next-step-title">Recommended next step</p>
+                <p>Reconcile the observation pair with the synthetic milestone record and supporting engineering documentation in human review.</p>
+                <p class="confidence-boundary">Confidence applies only to the visible land and water-body observation — not to overall project completion, safety or compliance.</p>
+              </section>
+            </div>
+
+            <aside class="evidence-pack-metadata" aria-label="Lausitz Evidence Pack metadata and provenance">
+              <section role="group" class="evidence-meta-group" aria-labelledby="lausitz-meta-case">
+                <p class="evidence-meta-group-title" id="lausitz-meta-case">Case</p>
+                <dl class="evidence-meta-list">
+                  <div>
+                    <dt>Case</dt>
+                    <dd>DEMO-EU-LUS-01</dd>
+                  </div>
+                  <div>
+                    <dt>Asset</dt>
+                    <dd>Post-mining transformation area</dd>
+                  </div>
+                  <div>
+                    <dt>Monitoring window</dt>
+                    <dd>18 Jun 2019 – 27 May 2026</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section role="group" class="evidence-meta-group" aria-labelledby="lausitz-meta-assessment">
+                <p class="evidence-meta-group-title" id="lausitz-meta-assessment">Assessment</p>
+                <dl class="evidence-meta-list">
+                  <div>
+                    <dt>Confidence</dt>
+                    <dd>Medium</dd>
+                  </div>
+                  <div>
+                    <dt>Evidence sufficiency</dt>
+                    <dd>Partial</dd>
+                  </div>
+                  <div>
+                    <dt>Data quality uncertainty</dt>
+                    <dd>Medium</dd>
+                  </div>
+                  <div>
+                    <dt>Human review</dt>
+                    <dd>Required</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section role="group" class="evidence-meta-group" aria-labelledby="lausitz-meta-reasons">
+                <p class="evidence-meta-group-title" id="lausitz-meta-reasons">Illustrative reason codes</p>
+                <ul class="reason-code-list">
+                  <li>VISIBLE_SURFACE_CHANGE</li>
+                  <li>MILESTONE_DIRECTION_SUPPORTED</li>
+                  <li>ENGINEERING_STATE_UNVERIFIED</li>
+                </ul>
+              </section>
+
+              <section role="group" class="evidence-meta-group evidence-provenance" aria-labelledby="lausitz-meta-provenance">
+                <p class="evidence-meta-group-title" id="lausitz-meta-provenance">Provenance</p>
+                <dl class="evidence-meta-list">
+                  <div>
+                    <dt>Version</dt>
+                    <dd>0.2-public-demo</dd>
+                  </div>
+                </dl>
+                <ul>
+                  <li>Sentinel-2B L2A · 18 Jun 2019</li>
+                  <li>Sentinel-2C L2A · 27 May 2026</li>
+                  <li>Synthetic milestone record</li>
+                </ul>
+              </section>
+
+              <p class="evidence-demo-note">Not a live customer assessment</p>
+            </aside>
           </div>
 
-          <section class="evidence-pack-section evidence-next-step" aria-labelledby="next-step-title">
-            <p class="evidence-section-label" id="next-step-title">Recommended next step</p>
-            <p>Human review of the current evidence and supporting project documentation.</p>
-            <p class="confidence-boundary">Confidence applies to the stated observation — not to an overall judgement about the project.</p>
-          </section>
-        </div>
+          <section role="group" class="evidence-input-band" aria-labelledby="lausitz-input-title">
+            <header class="evidence-input-header">
+              <div>
+                <p class="evidence-section-label" id="lausitz-input-title">Evidence input excerpt</p>
+                <p>Dated optical observation pair · true colour · public Copernicus inputs</p>
+              </div>
+              <span class="evidence-input-mode">Sentinel-2 L2A</span>
+            </header>
 
-        <aside class="evidence-pack-metadata" aria-label="Evidence Pack metadata and provenance">
-          <section class="evidence-meta-group" aria-labelledby="evidence-meta-case">
-            <p class="evidence-meta-group-title" id="evidence-meta-case">Case</p>
-            <dl class="evidence-meta-list">
-              <div>
-                <dt>Case</dt>
-                <dd>DEMO-ASSET-01</dd>
-              </div>
-              <div>
-                <dt>Asset</dt>
-                <dd>Industrial development site</dd>
-              </div>
-              <div>
-                <dt>Monitoring window</dt>
-                <dd>June 2026</dd>
-              </div>
-            </dl>
-          </section>
+            <div class="evidence-input-grid">
+              <figure class="evidence-input-figure">
+                <picture>
+                  <source srcset="/assets/img/cri/evidence/lausitz-t0-2019-16x9.webp" type="image/webp">
+                  <img
+                    src="/assets/img/cri/evidence/lausitz-t0-2019-16x9.png"
+                    width="1296"
+                    height="729"
+                    loading="lazy"
+                    decoding="async"
+                    alt="Sentinel-2 true-colour view of the Cottbuser Ostsee area on 18 June 2019, showing predominantly exposed surfaces"
+                  >
+                </picture>
+                <figcaption>
+                  <strong>T0 · Optical baseline</strong>
+                  <span>Sentinel-2B L2A · 18 Jun 2019 · 10 m/pixel</span>
+                </figcaption>
+              </figure>
 
-          <section class="evidence-meta-group" aria-labelledby="evidence-meta-assessment">
-            <p class="evidence-meta-group-title" id="evidence-meta-assessment">Assessment</p>
-            <dl class="evidence-meta-list">
-              <div>
-                <dt>Confidence</dt>
-                <dd>Medium</dd>
-              </div>
-              <div>
-                <dt>Evidence sufficiency</dt>
-                <dd>Partial</dd>
-              </div>
-              <div>
-                <dt>Data quality</dt>
-                <dd>Limited</dd>
-              </div>
-              <div>
-                <dt>Human review</dt>
-                <dd>Required</dd>
-              </div>
-            </dl>
-          </section>
+              <figure class="evidence-input-figure">
+                <picture>
+                  <source srcset="/assets/img/cri/evidence/lausitz-t1-2026-16x9.webp" type="image/webp">
+                  <img
+                    src="/assets/img/cri/evidence/lausitz-t1-2026-16x9.png"
+                    width="1296"
+                    height="729"
+                    loading="lazy"
+                    decoding="async"
+                    alt="Sentinel-2 true-colour view of the Cottbuser Ostsee area on 27 May 2026, showing a large water body"
+                  >
+                </picture>
+                <figcaption>
+                  <strong>T1 · Recent observation</strong>
+                  <span>Sentinel-2C L2A · 27 May 2026 · 10 m/pixel</span>
+                </figcaption>
+              </figure>
+            </div>
 
-          <section class="evidence-meta-group evidence-provenance" aria-labelledby="evidence-meta-provenance">
-            <p class="evidence-meta-group-title" id="evidence-meta-provenance">Provenance</p>
-            <dl class="evidence-meta-list">
-              <div>
-                <dt>Version</dt>
-                <dd>0.1-public-demo</dd>
-              </div>
-            </dl>
-            <ul>
-              <li>Sentinel-2 optical context</li>
-              <li>Sentinel-1 SAR context</li>
-              <li>Synthetic project milestone record</li>
-            </ul>
-            <figure class="evidence-eo-input">
-              <img
-                class="evidence-eo-image"
-                src="/assets/img/cri/sentinel-lom-bilina.jpg"
-                width="3092"
-                height="1668"
-                alt="Sentinel-2 optical view of an open-pit lignite mining area near Bílina in Northwest Czechia"
-              >
-              <figcaption>
-                <strong>Open-pit lignite mining area</strong>
-                <span>Sentinel-2 · Bílina, Northwest Czechia · 2 Aug 2026</span>
-                <span>Illustrative EO context — not a validated CRI assessment.</span>
-                <span>Contains modified Copernicus Sentinel data (2026).</span>
-              </figcaption>
-            </figure>
+            <footer class="evidence-input-footer">
+              <p>Public Copernicus observation pair used to illustrate a concept workflow. No client data or operational validation is represented.</p>
+              <p>Contains modified Copernicus Sentinel data (2019, 2026).</p>
+            </footer>
           </section>
+        </article>
+      </section>
 
-          <p class="evidence-demo-note">Not a live customer assessment</p>
-        </aside>
-      </div>
-    </article>
+      <section
+        class="evidence-case-panel"
+        id="panel-north-sea"
+        role="tabpanel"
+        aria-labelledby="tab-north-sea"
+        tabindex="0"
+        hidden
+      >
+        <article class="evidence-pack-sample" aria-labelledby="north-sea-pack-title">
+          <header class="evidence-pack-header">
+            <div>
+              <p class="evidence-pack-label">Evidence Pack sample — synthetic public-safe data</p>
+              <h2 id="north-sea-pack-title">Evidence Pack</h2>
+              <p class="evidence-pack-case-title">Offshore installation monitoring — German North Sea</p>
+            </div>
+            <div class="evidence-pack-state" role="status" aria-label="Assessment status Watch">
+              <span class="status-dot status-dot-watch" aria-hidden="true"></span>
+              <span>WATCH</span>
+            </div>
+          </header>
+
+          <div class="evidence-pack-layout">
+            <div class="evidence-pack-content">
+              <section role="group" class="evidence-pack-section evidence-pack-summary" aria-labelledby="north-sea-summary-title">
+                <p class="evidence-section-label" id="north-sea-summary-title">Assessment summary</p>
+                <p>Repeat-pass radar observations provide a dated surface record for reconciling a synthetic installation milestone. Surface-visible point targets are present, but the available evidence cannot confirm subsea works, contractual completion or the identity and condition of individual assets.</p>
+              </section>
+
+              <section role="group" class="evidence-pack-section" aria-labelledby="north-sea-ovd-title">
+                <p class="evidence-section-label" id="north-sea-ovd-title">Observed vs Declared</p>
+                <div class="observed-declared-grid">
+                  <div>
+                    <p class="evidence-field-label">Declared</p>
+                    <p>Installation activity substantially progressed across the monitored offshore area during June 2026.</p>
+                  </div>
+                  <div>
+                    <p class="evidence-field-label">Observed</p>
+                    <p>Both repeat-pass radar observations show multiple surface-visible point targets. Differences in brightness and texture do not by themselves confirm installation progress or asset condition.</p>
+                  </div>
+                </div>
+              </section>
+
+              <div class="evidence-pack-pair">
+                <section role="group" class="evidence-pack-section" aria-labelledby="north-sea-findings-title">
+                  <p class="evidence-section-label" id="north-sea-findings-title">Findings</p>
+                  <ul class="evidence-findings">
+                    <li>The repeat-pass acquisitions use comparable mode, orbit and geometry.</li>
+                    <li>Multiple bright point targets are visible at the sea surface.</li>
+                    <li>The surface record is insufficient to verify subsea or contractual completion.</li>
+                  </ul>
+                </section>
+
+                <section role="group" class="evidence-pack-section evidence-uncertainty" aria-labelledby="north-sea-uncertainty-title">
+                  <p class="evidence-section-label" id="north-sea-uncertainty-title">Uncertainty</p>
+                  <p>Sea state, speckle, acquisition geometry and radar response affect interpretation. Sentinel-1 GRD VV contains backscatter, not interferometric phase, and cannot confirm subsea works, deformation or structural condition.</p>
+                </section>
+              </div>
+
+              <section role="group" class="evidence-pack-section evidence-next-step" aria-labelledby="north-sea-next-step-title">
+                <p class="evidence-section-label" id="north-sea-next-step-title">Recommended next step</p>
+                <p>Reconcile the radar pair with the synthetic milestone record, operator logs and supporting engineering documentation in human review.</p>
+                <p class="confidence-boundary">Confidence applies only to the dated surface-visible context — not to installation progress, asset identity or condition.</p>
+              </section>
+            </div>
+
+            <aside class="evidence-pack-metadata" aria-label="German North Sea Evidence Pack metadata and provenance">
+              <section role="group" class="evidence-meta-group" aria-labelledby="north-sea-meta-case">
+                <p class="evidence-meta-group-title" id="north-sea-meta-case">Case</p>
+                <dl class="evidence-meta-list">
+                  <div>
+                    <dt>Case</dt>
+                    <dd>DEMO-EU-NSEA-01</dd>
+                  </div>
+                  <div>
+                    <dt>Asset</dt>
+                    <dd>Offshore installation area</dd>
+                  </div>
+                  <div>
+                    <dt>Monitoring window</dt>
+                    <dd>7–19 Jun 2026</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section role="group" class="evidence-meta-group" aria-labelledby="north-sea-meta-assessment">
+                <p class="evidence-meta-group-title" id="north-sea-meta-assessment">Assessment</p>
+                <dl class="evidence-meta-list">
+                  <div>
+                    <dt>Confidence</dt>
+                    <dd>Medium</dd>
+                  </div>
+                  <div>
+                    <dt>Evidence sufficiency</dt>
+                    <dd>Partial</dd>
+                  </div>
+                  <div>
+                    <dt>Data quality uncertainty</dt>
+                    <dd>Medium</dd>
+                  </div>
+                  <div>
+                    <dt>Human review</dt>
+                    <dd>Required</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section role="group" class="evidence-meta-group" aria-labelledby="north-sea-meta-reasons">
+                <p class="evidence-meta-group-title" id="north-sea-meta-reasons">Illustrative reason codes</p>
+                <ul class="reason-code-list">
+                  <li>REPEAT_PASS_CONTEXT</li>
+                  <li>SURFACE_TARGETS_VISIBLE</li>
+                  <li>SUBSEA_SCOPE_UNVERIFIED</li>
+                </ul>
+              </section>
+
+              <section role="group" class="evidence-meta-group evidence-provenance" aria-labelledby="north-sea-meta-provenance">
+                <p class="evidence-meta-group-title" id="north-sea-meta-provenance">Provenance</p>
+                <dl class="evidence-meta-list">
+                  <div>
+                    <dt>Version</dt>
+                    <dd>0.2-public-demo</dd>
+                  </div>
+                </dl>
+                <ul>
+                  <li>Sentinel-1A GRD VV · 7 Jun 2026</li>
+                  <li>Sentinel-1A GRD VV · 19 Jun 2026</li>
+                  <li>Descending · relative orbit 37</li>
+                  <li>Synthetic milestone record</li>
+                </ul>
+              </section>
+
+              <p class="evidence-demo-note">Not a live customer assessment</p>
+            </aside>
+          </div>
+
+          <section role="group" class="evidence-input-band" aria-labelledby="north-sea-input-title">
+            <header class="evidence-input-header">
+              <div>
+                <p class="evidence-section-label" id="north-sea-input-title">Evidence input excerpt</p>
+                <p>Repeat-pass surface-visible context · public Copernicus inputs</p>
+              </div>
+              <span class="evidence-input-mode">Sentinel-1 GRD · VV</span>
+            </header>
+
+            <div class="evidence-input-grid">
+              <figure class="evidence-input-figure">
+                <picture>
+                  <source srcset="/assets/img/cri/evidence/north-sea-t0-2026-06-07-16x9.webp" type="image/webp">
+                  <img
+                    src="/assets/img/cri/evidence/north-sea-t0-2026-06-07-16x9.png"
+                    width="1600"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                    alt="Sentinel-1 VV backscatter image over an offshore installation area in the German North Sea on 7 June 2026"
+                  >
+                </picture>
+                <figcaption>
+                  <strong>T0 · Repeat-pass baseline</strong>
+                  <span>Sentinel-1A GRD VV · 7 Jun 2026 · descending · relative orbit 37</span>
+                </figcaption>
+              </figure>
+
+              <figure class="evidence-input-figure">
+                <picture>
+                  <source srcset="/assets/img/cri/evidence/north-sea-t1-2026-06-19-16x9.webp" type="image/webp">
+                  <img
+                    src="/assets/img/cri/evidence/north-sea-t1-2026-06-19-16x9.png"
+                    width="1600"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                    alt="Sentinel-1 VV backscatter image over an offshore installation area in the German North Sea on 19 June 2026"
+                  >
+                </picture>
+                <figcaption>
+                  <strong>T1 · Repeat-pass observation</strong>
+                  <span>Sentinel-1A GRD VV · 19 Jun 2026 · descending · relative orbit 37</span>
+                </figcaption>
+              </figure>
+            </div>
+
+            <footer class="evidence-input-footer">
+              <p>Public Sentinel-1 repeat-pass inputs shown as concept evidence. No operator data, asset assessment or monitoring result is represented.</p>
+              <p>Contains modified Copernicus Sentinel data (2026).</p>
+            </footer>
+          </section>
+        </article>
+      </section>
+    </div>
   </div>
 </section>
 
@@ -346,22 +627,22 @@
       <div class="r3-ovd-grid">
         <div class="r3-ovd-col">
           <p class="evidence-field-label">Declared</p>
-          <p>Structural works progressing within the monitored area.</p>
+          <p>Flooding and post-mining transformation substantially advanced within the monitored area by May 2026.</p>
         </div>
         <div class="r3-ovd-col">
           <p class="evidence-field-label">Observed</p>
-          <p>Surface change is visible in part of the area. The available observation does not fully confirm the declared extent.</p>
+          <p>The May 2026 observation shows a large water body where the June 2019 baseline showed predominantly exposed surfaces.</p>
         </div>
       </div>
 
       <dl class="r3-ovd-meta">
         <div>
-          <dt>Optical context</dt>
-          <dd>Sentinel-2 optical context — illustrative input, not a validated assessment</dd>
+          <dt>Case</dt>
+          <dd>DEMO-EU-LUS-01 — synthetic public-safe data</dd>
         </div>
         <div>
-          <dt>SAR context</dt>
-          <dd>Sentinel-1 SAR context — illustrative input, not a validated assessment</dd>
+          <dt>Evidence input</dt>
+          <dd>Sentinel-2 L2A dated optical pair — public Copernicus inputs</dd>
         </div>
         <div>
           <dt>Evidence sufficiency</dt>
@@ -369,7 +650,7 @@
         </div>
         <div>
           <dt>Uncertainty</dt>
-          <dd>Partial cloud cover and limited temporal coverage reduce confidence in the completeness of the observation.</dd>
+          <dd>Seasonal surface conditions affect direct comparison; engineering completion, safety and compliance remain unverified.</dd>
         </div>
       </dl>
 
