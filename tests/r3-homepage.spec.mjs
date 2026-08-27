@@ -193,22 +193,27 @@ test('homepage action hierarchy and peer-choice states respond visibly', async (
 
   const primaryDefault = await readColours(primary);
   await primary.hover();
+  await expect.poll(async () => (await readColours(primary)).background)
+    .not.toBe(primaryDefault.background);
   const primaryHover = await readColours(primary);
-  expect(primaryHover.background).not.toBe(primaryDefault.background);
 
   const secondaryDefault = await readColours(secondary);
   await secondary.hover();
+  await expect.poll(async () => (await readColours(secondary)).background)
+    .not.toBe(secondaryDefault.background);
   const secondaryHover = await readColours(secondary);
-  expect(secondaryHover.background).not.toBe(secondaryDefault.background);
   expect(secondaryHover.background).not.toBe(primaryHover.background);
 
   const tabDefault = await readColours(northSeaTab);
   await northSeaTab.hover();
+  await expect.poll(async () => (await readColours(northSeaTab)).background)
+    .not.toBe(tabDefault.background);
   const tabHover = await readColours(northSeaTab);
-  expect(tabHover.background).not.toBe(tabDefault.background);
   await northSeaTab.click();
+  await expect.poll(async () => (await readColours(northSeaTab)).background)
+    .not.toBe(tabHover.background);
   const tabSelected = await readColours(northSeaTab);
-  expect(tabSelected.background).not.toBe(tabHover.background);
+  expect(tabSelected.background).not.toBe(tabDefault.background);
 
   await secondary.focus();
   const focusState = await secondary.evaluate(element => {
@@ -299,10 +304,11 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
     'Contains modified Copernicus Sentinel data (2026).'
   );
   await expect(northSea.locator('.evidence-input-context')).toHaveCount(2);
-  await expect(northSea.locator('.evidence-input-context')).toContainText(
+  const northSeaInterpretation = northSea.getByRole('group', { name: 'Image interpretation' });
+  await expect(northSeaInterpretation).toContainText(
     'Regularly spaced bright radar targets are consistent with surface-visible offshore wind structures.'
   );
-  await expect(northSea.locator('.evidence-input-context')).toContainText(
+  await expect(northSeaInterpretation).toContainText(
     'Imagery alone does not establish individual turbine identity, installation status or condition.'
   );
 
