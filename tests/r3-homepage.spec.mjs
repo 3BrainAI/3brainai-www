@@ -215,7 +215,9 @@ test('homepage action hierarchy and peer-choice states respond visibly', async (
   const tabSelected = await readColours(northSeaTab);
   expect(tabSelected.background).not.toBe(tabDefault.background);
 
-  await secondary.focus();
+  await primary.focus();
+  await page.keyboard.press('Tab');
+  await expect(secondary).toBeFocused();
   const focusState = await secondary.evaluate(element => {
     const style = getComputedStyle(element);
     return {
@@ -304,7 +306,7 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
     'Contains modified Copernicus Sentinel data (2026).'
   );
   await expect(northSea.locator('.evidence-input-context')).toHaveCount(2);
-  const northSeaInterpretation = northSea.getByRole('group', { name: 'Image interpretation' });
+  const northSeaInterpretation = northSea.locator('[aria-labelledby="north-sea-interpretation-title"]');
   await expect(northSeaInterpretation).toContainText(
     'Regularly spaced bright radar targets are consistent with surface-visible offshore wind structures.'
   );
