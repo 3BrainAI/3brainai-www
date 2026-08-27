@@ -31,6 +31,8 @@ async function openHomepage(page, width, height = 900) {
 async function activateEvidencePackAnchor(page) {
   await page.locator('.r3-proof-link').click();
   await expect(page).toHaveURL(/#evidence-pack-sample$/);
+  await expect(page.locator('#panel-lausitz .evidence-pack-sample')).toHaveClass(/is-emphasized/);
+  await expect(page.locator('#panel-lausitz')).toBeFocused();
 
   await expect.poll(() => page.evaluate(() => {
     const target = document.querySelector('#evidence-pack-sample');
@@ -57,10 +59,10 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('h1')).toContainText('Review-ready evidence');
   await expect(page.locator('.r3-hero .kicker')).toHaveText('For banks and institutional lenders');
   await expect(page.locator('.r3-hero .lead')).toHaveText(
-    '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.'
+    '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review. Each pack makes uncertainty, provenance and human-review status explicit.'
   );
   await expect(page.locator('.r3-boundary-line')).toHaveText(
-    'CRI supports accountable human review. It does not make autonomous credit decisions, replace bank policy or replace professional assessment.'
+    'CRI does not make autonomous credit decisions, replace bank policy or replace professional assessment.'
   );
   await expect(page.locator('.r3-buyer-strip > li')).toHaveText([
     'Credit risk & portfolio monitoring',
@@ -76,8 +78,23 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#panel-north-sea')).toBeHidden();
   await expect(page.locator('#panel-lausitz .evidence-pack-state')).toContainText('WATCH');
   await expect(page.locator('#panel-lausitz .evidence-pack-case-title')).toHaveText(
-    'Post-mining transformation — Lausitz, Germany'
+    'Lausitz, Germany — post-mining transformation'
   );
+  await expect(page.locator('#panel-lausitz .evidence-pack-case-context')).toHaveText(
+    'Environmentally impacted former open-pit lignite mine undergoing large-scale flooding and redevelopment.'
+  );
+  await expect(page.getByRole('link', { name: 'Explore the Evidence Pack' })).toHaveAttribute(
+    'href',
+    '#evidence-pack-sample'
+  );
+  await expect(page.locator('.r3-proof-link')).toContainText('See the illustrative Evidence Pack sample');
+  await expect(page.locator('.evidence-case-selector-note')).toHaveText(
+    'Two deliberately selected financing contexts — choose a case. Synthetic public-safe examples, not live assessments.'
+  );
+  await expect(page.locator('#tab-lausitz')).toContainText('Lausitz, Germany');
+  await expect(page.locator('#tab-lausitz')).toContainText('Former lignite mine · post-mining transformation');
+  await expect(page.locator('#tab-north-sea')).toContainText('Offshore wind development · SAR monitoring');
+  await expect(page.locator('.evidence-meta-group-title', { hasText: /^Case$/ })).toHaveCount(0);
   await expect(page.locator('.evidence-eo-input')).toHaveCount(0);
   await expect(page.locator('img[src="/assets/img/cri/sentinel-lom-bilina.jpg"]')).toHaveCount(0);
 
@@ -107,6 +124,9 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
     '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
   );
   await expect(page.locator('#institutional-proof a')).toHaveAttribute('href', 'https://www.esa-bic.cz/');
+  await expect(page.locator('#evidence-pack-proof .r3-proof-points')).toContainText(
+    'Required before any accountable decision; the review state stays attached to the pack.'
+  );
   await expect(page.getByRole('link', { name: 'Request investor materials' })).toHaveAttribute(
     'href',
     /mailto:investors@3brain\.ai/
@@ -166,8 +186,17 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
   await expect(lausitz.locator('.evidence-input-footer')).toContainText(
     'Contains modified Copernicus Sentinel data (2019, 2026).'
   );
+  await expect(lausitz.locator('.evidence-input-scope')).toContainText('Full area-of-interest overview.');
+  await expect(lausitz.locator('.evidence-input-scope')).toContainText(
+    'Operational CRI monitoring can narrow the focus to priority zones, structures and individual project milestones'
+  );
+  await expect(lausitz.locator('.evidence-input-scope')).toContainText('much finer operational detail');
 
   const northSea = page.locator('#panel-north-sea');
+  await expect(northSea.locator('.evidence-pack-case-title')).toHaveText(
+    'German North Sea — offshore wind development monitoring'
+  );
+  await expect(northSea).toContainText('Offshore wind development area');
   await expect(northSea).toContainText('DEMO-EU-NSEA-01');
   await expect(northSea).toContainText('REPEAT_PASS_CONTEXT');
   await expect(northSea).toContainText('SUBSEA_SCOPE_UNVERIFIED');
@@ -179,6 +208,12 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
   await expect(northSea.locator('.evidence-input-figure').nth(1)).toContainText('T1 · Repeat-pass observation');
   await expect(northSea.locator('.evidence-input-footer')).toContainText(
     'Contains modified Copernicus Sentinel data (2026).'
+  );
+  await expect(northSea.locator('.evidence-input-scope')).toContainText(
+    'The regularly spaced bright radar targets are consistent with surface-visible offshore wind structures.'
+  );
+  await expect(northSea.locator('.evidence-input-scope')).toContainText(
+    'Imagery alone does not establish individual turbine identity, installation status or condition.'
   );
 
   const sourcePaths = await page.locator('.evidence-input-figure source').evaluateAll(sources =>
