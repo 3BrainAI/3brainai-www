@@ -498,6 +498,17 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
   const outputDirectory = path.resolve('artifacts/r3-preview');
   await mkdir(outputDirectory, { recursive: true });
 
+  const ensureLausitzImagesLoaded = async () => {
+    const images = page.locator('#panel-lausitz .evidence-input-figure img');
+    const imageCount = await images.count();
+    for (let index = 0; index < imageCount; index += 1) {
+      const image = images.nth(index);
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0))
+        .toBeTruthy();
+    }
+  };
+
   for (const viewport of [
     { width: 1280, height: 900, filename: 'r3-homepage-1280.png' },
     { width: 1440, height: 900, filename: 'r3-homepage-1440.png' },
@@ -505,6 +516,7 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
     { width: 390, height: 844, filename: 'r3-homepage-390.png' }
   ]) {
     await openHomepage(page, viewport.width, viewport.height);
+    await ensureLausitzImagesLoaded();
     await page.screenshot({
       path: path.join(outputDirectory, viewport.filename),
       fullPage: true,
@@ -523,6 +535,7 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
     path: path.join(outputDirectory, 'r3-homepage-mobile-390.png'),
     animations: 'disabled'
   });
+  await ensureLausitzImagesLoaded();
   await page.locator('#evidence-pack-sample').screenshot({
     path: path.join(outputDirectory, 'r3-evidence-pack-mobile-390.png'),
     animations: 'disabled'
@@ -535,6 +548,7 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
   ]) {
     await openHomepage(page, viewport.width, viewport.height);
     await activateEvidencePackAnchor(page);
+    await ensureLausitzImagesLoaded();
     await page.locator('#evidence-pack-sample').screenshot({
       path: path.join(outputDirectory, `r3-evidence-pack-closeup-${viewport.width}.png`),
       animations: 'disabled'
