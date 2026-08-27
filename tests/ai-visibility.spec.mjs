@@ -9,7 +9,7 @@ const canonicalPages = [
     route: '/',
     url: 'https://www.3brain.ai/',
     title: '3BrainAI CRI | Review-ready Evidence Packs for physical-asset risk',
-    description: '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review — with explicit uncertainty, provenance and mandatory human review.'
+    description: '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review – with explicit uncertainty, provenance and mandatory human review.'
   },
   {
     route: '/mis/',
@@ -117,6 +117,7 @@ test('llms.txt is public-safe, bounded and internally resolvable', async ({ requ
   expect(body).toContain('3BrainAI is the public brand');
   expect(body).toContain('3BrainAI Nexus s.r.o. develops 3BrainAI CRI');
   expect(body).toContain('3BrainAI CRI');
+  expect(body).toContain('3BrainAI CRI is a European project for institutional markets');
   expect(body).toContain('Evidence Pack');
   expect(body).toContain('does not make autonomous credit decisions, replace bank policy or replace professional assessment');
   expect(body).toContain('Earth Observation is an input medium');
@@ -181,7 +182,7 @@ for (const canonicalPage of canonicalPages) {
     await expect(page.locator('head meta[property="og:image:height"]')).toHaveAttribute('content', '630');
     await expect(page.locator('head meta[property="og:image:alt"]')).toHaveAttribute(
       'content',
-      '3BrainAI — governed evidence workflows'
+      '3BrainAI – governed evidence workflows'
     );
     await expect(page.locator('head meta[name="twitter:card"]')).toHaveAttribute(
       'content',
@@ -198,6 +199,18 @@ for (const canonicalPage of canonicalPages) {
     await expect(page.locator('head meta[name="twitter:image"]')).toHaveAttribute(
       'content',
       'https://www.3brain.ai/assets/img/og_3brainai.png'
+    );
+    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute(
+      'href',
+      '/assets/img/favicon.svg'
+    );
+    await expect(page.locator('head link[rel="icon"][sizes="32x32"]')).toHaveAttribute(
+      'href',
+      '/assets/img/favicon-32.png'
+    );
+    await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
+      'href',
+      '/assets/img/apple-touch-icon.png'
     );
   });
 }
@@ -250,6 +263,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Evidence Pack sample', async (
   );
   expect(homepageOrganization.name).toBe('3BrainAI Nexus s.r.o.');
   expect(homepageOrganization.identifier).toBe('29513049');
+  expect(homepageOrganization.areaServed).toBe('Europe');
   expect(homepageOrganization.sameAs).toContain('https://www.linkedin.com/company/3brainai-nexus/');
 
   const homepageProduct = parsedGraphs['/'].find(
@@ -260,6 +274,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Evidence Pack sample', async (
   );
   expect(criProduct).toEqual(homepageProduct);
   expect(homepageProduct.brand['@id']).toBe('https://www.3brain.ai/#brand');
+  expect(homepageProduct.areaServed).toBe('Europe');
   expect(homepageProduct.manufacturer['@id']).toBe('https://www.3brain.ai/#organization');
 
   const evidencePackSample = parsedGraphs['/'].find(

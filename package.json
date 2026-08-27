@@ -7,10 +7,11 @@
     "node": ">=24.8.0 <25"
   },
   "scripts": {
-    "validate": "npm run validate:html && npm run validate:css && npm run validate:ai",
+    "validate": "npm run validate:html && npm run validate:css && npm run validate:ai && npm run validate:polish",
     "validate:html": "html-validate --max-warnings=0 \"**/*.html\"",
     "validate:css": "csstree-validator assets/css/style.css",
     "validate:ai": "node scripts/validate-ai-visibility.mjs",
+    "validate:polish": "node scripts/validate-site-polish.mjs",
     "test:r3": "playwright test",
     "indexnow": "node scripts/submit-indexnow.mjs"
   },

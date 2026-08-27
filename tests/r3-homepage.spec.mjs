@@ -77,8 +77,10 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#panel-lausitz')).toBeVisible();
   await expect(page.locator('#panel-north-sea')).toBeHidden();
   await expect(page.locator('#panel-lausitz .evidence-pack-state')).toContainText('WATCH');
+  await expect(page.locator('#lausitz-pack-title')).toHaveText('3BrainAI CRI Evidence Pack');
+  await expect(page.locator('#north-sea-pack-title')).toHaveText('3BrainAI CRI Evidence Pack');
   await expect(page.locator('#panel-lausitz .evidence-pack-case-title')).toHaveText(
-    'Lausitz, Germany — post-mining transformation'
+    'Lausitz, Germany – post-mining transformation'
   );
   await expect(page.locator('#panel-lausitz .evidence-pack-case-context')).toHaveText(
     'Environmentally impacted former open-pit lignite mine undergoing large-scale flooding and redevelopment.'
@@ -89,11 +91,11 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   );
   await expect(page.locator('.r3-proof-link')).toContainText('See the illustrative Evidence Pack sample');
   await expect(page.locator('.evidence-case-selector-note')).toHaveText(
-    'Two deliberately selected financing contexts — choose a case. Synthetic public-safe examples, not live assessments.'
+    'Two deliberately selected financing contexts – choose a case. Synthetic public-safe examples, not live assessments.'
   );
   await expect(page.locator('#tab-lausitz')).toContainText('Lausitz, Germany');
-  await expect(page.locator('#tab-lausitz')).toContainText('Former lignite mine · post-mining transformation');
-  await expect(page.locator('#tab-north-sea')).toContainText('Offshore wind development · SAR monitoring');
+  await expect(page.locator('#tab-lausitz')).toContainText('Former lignite mine · post-mining');
+  await expect(page.locator('#tab-north-sea')).toContainText('Offshore wind · SAR monitoring');
   await expect(page.locator('.evidence-meta-group-title', { hasText: /^Case$/ })).toHaveCount(0);
   await expect(page.locator('.evidence-eo-input')).toHaveCount(0);
   await expect(page.locator('img[src="/assets/img/cri/sentinel-lom-bilina.jpg"]')).toHaveCount(0);
@@ -122,6 +124,9 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   );
   await expect(page.locator('#institutional-proof')).toContainText(
     '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
+  );
+  await expect(page.locator('#institutional-proof')).toContainText(
+    '3BrainAI CRI is being developed as a European risk-intelligence project for banks and institutional lenders, with its head office in Prague.'
   );
   await expect(page.locator('#institutional-proof a')).toHaveAttribute('href', 'https://www.esa-bic.cz/');
   await expect(page.locator('#evidence-pack-proof .r3-proof-points')).toContainText(
@@ -170,6 +175,87 @@ test('Evidence Pack case selector is manual and keyboard accessible', async ({ p
   await expect(lausitzPanel).toBeVisible();
 });
 
+test('homepage action hierarchy and peer-choice states respond visibly', async ({ page }) => {
+  await openHomepage(page, 1280);
+
+  const primary = page.getByRole('link', { name: 'Explore the Evidence Pack' });
+  const secondary = page.getByRole('link', { name: 'Discuss shadow-mode validation' }).first();
+  const northSeaTab = page.locator('#tab-north-sea');
+
+  const readColours = locator => locator.evaluate(element => {
+    const style = getComputedStyle(element);
+    return {
+      background: style.backgroundColor,
+      border: style.borderColor,
+      color: style.color
+    };
+  });
+
+  const primaryDefault = await readColours(primary);
+  await primary.hover();
+  const primaryHover = await readColours(primary);
+  expect(primaryHover.background).not.toBe(primaryDefault.background);
+
+  const secondaryDefault = await readColours(secondary);
+  await secondary.hover();
+  const secondaryHover = await readColours(secondary);
+  expect(secondaryHover.background).not.toBe(secondaryDefault.background);
+  expect(secondaryHover.background).not.toBe(primaryHover.background);
+
+  const tabDefault = await readColours(northSeaTab);
+  await northSeaTab.hover();
+  const tabHover = await readColours(northSeaTab);
+  expect(tabHover.background).not.toBe(tabDefault.background);
+  await northSeaTab.click();
+  const tabSelected = await readColours(northSeaTab);
+  expect(tabSelected.background).not.toBe(tabHover.background);
+
+  await secondary.focus();
+  const focusState = await secondary.evaluate(element => {
+    const style = getComputedStyle(element);
+    return {
+      focused: document.activeElement === element,
+      outlineStyle: style.outlineStyle,
+      outlineWidth: Number.parseFloat(style.outlineWidth)
+    };
+  });
+  expect(focusState.focused).toBeTruthy();
+  expect(focusState.outlineStyle).not.toBe('none');
+  expect(focusState.outlineWidth).toBeGreaterThan(0);
+});
+
+test('hero audience and case-selector hierarchy stay prominent and compact', async ({ page }) => {
+  await openHomepage(page, 1280);
+
+  const hierarchy = await page.evaluate(() => {
+    const kicker = document.querySelector('.r3-hero .kicker');
+    const packTitle = document.querySelector('#lausitz-pack-title');
+    const tabs = [...document.querySelectorAll('.evidence-case-tab')];
+    return {
+      kickerSize: kicker ? Number.parseFloat(getComputedStyle(kicker).fontSize) : 0,
+      packTitleSize: packTitle ? Number.parseFloat(getComputedStyle(packTitle).fontSize) : 0,
+      tabs: tabs.map(tab => {
+        const title = tab.querySelector('strong');
+        const details = tab.querySelector('.evidence-case-tab-details');
+        const tabRect = tab.getBoundingClientRect();
+        const titleRect = title?.getBoundingClientRect();
+        const detailsRect = details?.getBoundingClientRect();
+        return {
+          height: tabRect.height,
+          titleBeforeDetails: Boolean(titleRect && detailsRect && titleRect.bottom <= detailsRect.top + 1)
+        };
+      })
+    };
+  });
+
+  expect(hierarchy.kickerSize).toBeGreaterThanOrEqual(15);
+  expect(hierarchy.packTitleSize).toBeGreaterThanOrEqual(28);
+  for (const tab of hierarchy.tabs) {
+    expect(tab.height).toBeLessThanOrEqual(64);
+    expect(tab.titleBeforeDetails).toBeTruthy();
+  }
+});
+
 test('European Evidence Pack variants preserve approved sources and claim boundaries', async ({ page, request }) => {
   await openHomepage(page, 1280);
 
@@ -186,15 +272,18 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
   await expect(lausitz.locator('.evidence-input-footer')).toContainText(
     'Contains modified Copernicus Sentinel data (2019, 2026).'
   );
-  await expect(lausitz.locator('.evidence-input-scope')).toContainText('Full area-of-interest overview.');
-  await expect(lausitz.locator('.evidence-input-scope')).toContainText(
-    'Operational CRI monitoring can narrow the focus to priority zones, structures and individual project milestones'
+  await expect(lausitz.locator('.evidence-input-context')).toContainText('Monitoring scope');
+  await expect(lausitz.locator('.evidence-input-context')).toContainText(
+    'Operational CRI monitoring can focus on selected zones, structures and project milestones'
   );
-  await expect(lausitz.locator('.evidence-input-scope')).toContainText('much finer operational detail');
+  await expect(lausitz.locator('.evidence-input-context')).toContainText('at much finer detail');
+  await expect(lausitz.locator('.evidence-input-footer > div')).toHaveCount(2);
+  await expect(lausitz.locator('.evidence-input-footer')).toContainText('Illustrative use');
+  await expect(lausitz.locator('.evidence-input-footer')).toContainText('Source attribution');
 
   const northSea = page.locator('#panel-north-sea');
   await expect(northSea.locator('.evidence-pack-case-title')).toHaveText(
-    'German North Sea — offshore wind development monitoring'
+    'German North Sea – offshore wind development monitoring'
   );
   await expect(northSea).toContainText('Offshore wind development area');
   await expect(northSea).toContainText('DEMO-EU-NSEA-01');
@@ -209,10 +298,11 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
   await expect(northSea.locator('.evidence-input-footer')).toContainText(
     'Contains modified Copernicus Sentinel data (2026).'
   );
-  await expect(northSea.locator('.evidence-input-scope')).toContainText(
-    'The regularly spaced bright radar targets are consistent with surface-visible offshore wind structures.'
+  await expect(northSea.locator('.evidence-input-context')).toHaveCount(2);
+  await expect(northSea.locator('.evidence-input-context')).toContainText(
+    'Regularly spaced bright radar targets are consistent with surface-visible offshore wind structures.'
   );
-  await expect(northSea.locator('.evidence-input-scope')).toContainText(
+  await expect(northSea.locator('.evidence-input-context')).toContainText(
     'Imagery alone does not establish individual turbine identity, installation status or condition.'
   );
 

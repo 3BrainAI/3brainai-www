@@ -14,7 +14,7 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-# Model-development controls — explicit current owner policy
+# Model-development controls – explicit current owner policy
 User-agent: GPTBot
 Allow: /
 
