@@ -33,11 +33,36 @@ const requiredIconLinks = [
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
 
+const releaseAssetVersion = '74a8024';
+const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseAssetVersion}">`;
+const requiredScriptSource = `/assets/js/main.js?v=${releaseAssetVersion}`;
+
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const relativePath = path.relative(repositoryRoot, file);
+  assert.ok(
+    html.includes(requiredStylesheetLink),
+    `${relativePath} must use the versioned release stylesheet`
+  );
+  assert.doesNotMatch(
+    html,
+    /href="\/assets\/css\/style\.css"/,
+    `${relativePath} contains an unversioned stylesheet reference`
+  );
   for (const link of requiredIconLinks) {
     assert.ok(html.includes(link), `${relativePath} is missing ${link}`);
+  }
+
+  if (html.includes('/assets/js/main.js')) {
+    assert.ok(
+      html.includes(requiredScriptSource),
+      `${relativePath} must use the versioned release script`
+    );
+    assert.doesNotMatch(
+      html,
+      /src="\/assets\/js\/main\.js"/,
+      `${relativePath} contains an unversioned script reference`
+    );
   }
 }
 
