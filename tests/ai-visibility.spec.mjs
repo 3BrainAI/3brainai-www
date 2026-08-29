@@ -8,8 +8,8 @@ const canonicalPages = [
   {
     route: '/',
     url: 'https://www.3brain.ai/',
-    title: '3BrainAI CRI | Review-ready Evidence Packs for physical-asset risk',
-    description: '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review – with explicit uncertainty, provenance and mandatory human review.'
+    title: '3BrainAI CRI | Construction Risk Intelligence for governed review',
+    description: '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'
   },
   {
     route: '/mis/',
@@ -20,20 +20,20 @@ const canonicalPages = [
   {
     route: '/cri/',
     url: 'https://www.3brain.ai/cri/',
-    title: '3BrainAI CRI | Bank-readable evidence between project controls',
-    description: 'Governed Evidence Packs for bank credit-risk, CRE, project-finance, collateral and portfolio review between formal control points.'
+    title: 'CRI – Construction Risk Intelligence | 3BrainAI Nexus',
+    description: '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'
   },
   {
     route: '/use-cases/',
     url: 'https://www.3brain.ai/use-cases/',
     title: 'Use Cases | 3BrainAI',
-    description: 'Model situations for CRI Evidence Packs, governed records, shadow-mode pilots and Evidence Readiness Assessment.'
+    description: 'Model situations for CRI Evidence Packs, governed records, an Evidence Readiness Check and an institution-specific PoC run in shadow mode.'
   },
   {
     route: '/governance-layer/',
     url: 'https://www.3brain.ai/governance-layer/',
     title: 'Trusted Data Plane | 3BrainAI',
-    description: 'A governed data plane for review-ready evidence, trusted records and safe action workflows.'
+    description: 'The Trusted Data Plane is the intended reusable governed operating layer behind CRI, with a long-term direction toward an AI-ready data backbone for regulated decisions.'
   },
   {
     route: '/about/',
@@ -44,14 +44,14 @@ const canonicalPages = [
   {
     route: '/validation/',
     url: 'https://www.3brain.ai/validation/',
-    title: 'Shadow-mode validation | 3BrainAI CRI',
-    description: 'A low-risk path for banks and institutional lenders to test CRI Evidence Packs alongside existing controls, without affecting live financial or risk decisions.'
+    title: 'Proof of Concept path | 3BrainAI CRI',
+    description: 'A bounded path from Evidence Readiness Check to institution-specific PoC, paid pilot and target commercial deployment, with CRI outputs reviewed in shadow mode.'
   },
   {
     route: '/investors/',
     url: 'https://www.3brain.ai/investors/',
     title: 'Investors | 3BrainAI CRI',
-    description: 'Investor overview of the CRI bank-first beachhead, governed Evidence Pack product, current validation stage and execution path.'
+    description: 'Investor overview of 3BrainAI Nexus, the CRI Evidence Pack product design and the gated path from institution-specific PoC to paid pilot and target commercial deployment.'
   },
   {
     route: '/contact/',
@@ -115,9 +115,10 @@ test('llms.txt is public-safe, bounded and internally resolvable', async ({ requ
   const body = await response.text();
   expect(body).toContain('# 3BrainAI');
   expect(body).toContain('3BrainAI is the public brand');
-  expect(body).toContain('3BrainAI Nexus s.r.o. develops 3BrainAI CRI');
+  expect(body).toContain('3BrainAI Nexus s.r.o. is developing 3BrainAI CRI');
   expect(body).toContain('3BrainAI CRI');
-  expect(body).toContain('3BrainAI CRI is a European project for institutional markets');
+  expect(body).toContain('3BrainAI is a European startup for institutional markets');
+  expect(body).toContain('Current stage: product development and illustrative Evidence Pack prototypes');
   expect(body).toContain('Evidence Pack');
   expect(body).toContain('does not make autonomous credit decisions, replace bank policy or replace professional assessment');
   expect(body).toContain('Earth Observation is an input medium');
@@ -145,7 +146,7 @@ test('sitemap contains exactly the live canonical pages with truthful release da
 
   expect(locations).toEqual(canonicalPages.map(page => page.url));
   expect(lastModifiedDates).toHaveLength(canonicalPages.length);
-  expect(new Set(lastModifiedDates)).toEqual(new Set(['2026-08-25']));
+  expect(new Set(lastModifiedDates)).toEqual(new Set(['2026-08-28']));
 
   for (const canonicalPage of canonicalPages) {
     const pageResponse = await request.get(canonicalPage.route);

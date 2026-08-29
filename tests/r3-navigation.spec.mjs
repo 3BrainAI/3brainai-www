@@ -98,7 +98,7 @@ for (const routeContract of scopedRoutes) {
 
     const footer = page.locator('.footer');
     await expect(footer.locator('.footer-navigation')).toHaveCount(2);
-    await expect(footer.locator('.footer-europe')).toHaveText('European project · Head office in Prague');
+    await expect(footer.locator('.footer-europe')).toHaveText('European startup · Head office in Prague');
     await expect(footer.locator('.footer-market-focus')).toHaveText(
       'Focused on DACH, Benelux and Central European institutional markets.'
     );
