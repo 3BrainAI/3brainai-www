@@ -133,7 +133,7 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
     'A WATCH status is intended to route evidence to human review without triggering a credit decision.'
   );
   await expect(page.locator('#institutional-proof')).toContainText(
-    '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
+    'The company is participating in the ESA Business Incubation Centre Czech Republic.'
   );
   await expect(page.locator('#institutional-proof')).toContainText(
     '3BrainAI Nexus is developing CRI as a commercial product for banks and institutional asset reviewers, with its head office in Prague.'
@@ -318,7 +318,7 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
   await expect(lausitz.locator('.evidence-input-context')).toContainText(
     'The target CRI workflow is intended to focus on selected zones, structures and project milestones'
   );
-  await expect(lausitz.locator('.evidence-input-context')).toContainText('at much finer detail');
+  await expect(lausitz.locator('.evidence-input-context')).toContainText('at finer detail');
   await expect(lausitz.locator('.evidence-input-footer > div')).toHaveCount(2);
   await expect(lausitz.locator('.evidence-input-footer')).toContainText('Illustrative use');
   await expect(lausitz.locator('.evidence-input-footer')).toContainText('Source attribution');
