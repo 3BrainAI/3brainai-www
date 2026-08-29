@@ -107,4 +107,63 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
+
+  document.querySelectorAll('[data-contact-form]').forEach(function (form) {
+    const requiredFields = Array.from(form.querySelectorAll('[required]'));
+    const confirmation = form.parentElement?.querySelector('.form-confirmation');
+
+    function validateField(field) {
+      const errorId = field.getAttribute('aria-describedby');
+      const error = errorId ? document.getElementById(errorId) : null;
+      const value = field.value.trim();
+      let message = '';
+
+      if (!value) {
+        message = 'This field is required.';
+      } else if (field.type === 'email' && !field.validity.valid) {
+        message = 'Enter a valid work e-mail.';
+      }
+
+      field.setAttribute('aria-invalid', String(Boolean(message)));
+      if (error) error.textContent = message;
+      return !message;
+    }
+
+    requiredFields.forEach(function (field) {
+      field.addEventListener('input', function () {
+        if (field.getAttribute('aria-invalid') === 'true') validateField(field);
+      });
+    });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      let firstInvalid = null;
+      requiredFields.forEach(function (field) {
+        if (!validateField(field) && !firstInvalid) firstInvalid = field;
+      });
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      const recipient = form.dataset.recipient;
+      const subject = form.dataset.subject || '3BrainAI website enquiry';
+      const lines = requiredFields.map(function (field) {
+        const label = field.dataset.fieldLabel || field.name;
+        return `${label}: ${field.value.trim()}`;
+      });
+      const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n\n'))}`;
+
+      if (confirmation) {
+        confirmation.hidden = false;
+        confirmation.focus();
+      }
+
+      window.setTimeout(function () {
+        window.location.href = mailto;
+      }, 0);
+    });
+  });
 });

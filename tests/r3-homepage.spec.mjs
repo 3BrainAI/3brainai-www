@@ -29,7 +29,7 @@ async function openHomepage(page, width, height = 900) {
 }
 
 async function activateEvidencePackAnchor(page) {
-  await page.locator('.r3-proof-link').click();
+  await page.locator('[data-evidence-pack-destination="pack"]').click();
   await expect(page).toHaveURL(/#evidence-pack-sample$/);
   await expect(page.locator('#panel-lausitz .evidence-pack-sample')).toHaveClass(/is-emphasized/);
   await expect(page.locator('#panel-lausitz')).toBeFocused();
@@ -59,10 +59,10 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('h1')).toContainText('Review-ready evidence');
   await expect(page.locator('.r3-hero .kicker')).toHaveText('For banks and institutional lenders');
   await expect(page.locator('.r3-hero .lead')).toHaveText(
-    '3BrainAI CRI turns Earth Observation and project context into governed Evidence Packs for credit-risk, real-estate and project-finance review. Each pack makes uncertainty, provenance and human-review status explicit.'
+    '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product for banks and institutional asset reviewers. CRI is designed to add a governed evidence state between formal review points through short, versioned Evidence Packs.'
   );
   await expect(page.locator('.r3-boundary-line')).toHaveText(
-    'CRI does not make autonomous credit decisions, replace bank policy or replace professional assessment.'
+    'The target workflow supports human review. It is not intended to make autonomous credit decisions, replace bank policy or replace professional assessment.'
   );
   await expect(page.locator('.r3-buyer-strip > li')).toHaveText([
     'Credit risk & portfolio monitoring',
@@ -70,7 +70,7 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
     'Collateral & progress review'
   ]);
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
-  await expect(page.getByRole('tablist', { name: 'Synthetic Evidence Pack cases' })).toBeVisible();
+  await expect(page.getByRole('tablist', { name: 'Illustrative Evidence Pack prototypes' })).toBeVisible();
   await expect(page.getByRole('tab')).toHaveCount(2);
   await expect(page.locator('#tab-lausitz')).toHaveAttribute('aria-selected', 'true');
   await expect(page.locator('#tab-north-sea')).toHaveAttribute('aria-selected', 'false');
@@ -91,17 +91,17 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#panel-lausitz .evidence-pack-case-context')).toHaveText(
     'Environmentally impacted former open-pit lignite mine undergoing large-scale flooding and redevelopment.'
   );
-  await expect(page.getByRole('link', { name: 'View the evidence imagery' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'View the Evidence Pack prototype' })).toHaveAttribute(
     'href',
-    '#lausitz-evidence-input'
+    '#evidence-pack-sample'
   );
-  await expect(page.getByRole('link', { name: 'View the evidence imagery' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'View the Evidence Pack prototype' })).toHaveAttribute(
     'data-evidence-pack-destination',
-    'input'
+    'pack'
   );
-  await expect(page.locator('.r3-proof-link')).toContainText('See the illustrative Evidence Pack sample');
+  await expect(page.locator('.r3-proof-link')).toContainText('View the evidence imagery in the active prototype');
   await expect(page.locator('.evidence-case-selector-note')).toHaveText(
-    'Two deliberately selected financing contexts – choose a case. Synthetic public-safe examples, not live assessments.'
+    'Two illustrative public-safe Evidence Pack prototypes. They show the intended record format; they are not outputs from a deployed customer system.'
   );
   await expect(page.locator('#tab-lausitz')).toContainText('Lausitz, Germany');
   await expect(page.locator('#tab-lausitz')).toContainText('Former lignite mine · post-mining');
@@ -130,13 +130,13 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   expect(missingAnchors).toEqual([]);
 
   await expect(page.locator('#bank-review-scenario')).toContainText(
-    'A WATCH status routes the evidence to human review; it does not trigger a credit decision.'
+    'A WATCH status is intended to route evidence to human review without triggering a credit decision.'
   );
   await expect(page.locator('#institutional-proof')).toContainText(
     '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
   );
   await expect(page.locator('#institutional-proof')).toContainText(
-    '3BrainAI CRI is being developed as a European risk-intelligence project for banks and institutional lenders, with its head office in Prague.'
+    '3BrainAI Nexus is developing CRI as a commercial product for banks and institutional asset reviewers, with its head office in Prague.'
   );
   await expect(page.locator('#institutional-proof a')).toHaveAttribute('href', 'https://www.esa-bic.cz/');
   await expect(page.locator('#evidence-pack-proof .r3-proof-points')).toContainText(
@@ -188,8 +188,8 @@ test('Evidence Pack case selector is manual and keyboard accessible', async ({ p
 test('homepage action hierarchy and peer-choice states respond visibly', async ({ page }) => {
   await openHomepage(page, 1280);
 
-  const primary = page.getByRole('link', { name: 'View the evidence imagery' });
-  const secondary = page.getByRole('link', { name: 'Discuss shadow-mode validation' }).first();
+  const primary = page.getByRole('link', { name: 'View the Evidence Pack prototype' });
+  const secondary = page.getByRole('link', { name: 'Discuss a PoC' }).first();
   const northSeaTab = page.locator('#tab-north-sea');
 
   const readColours = locator => locator.evaluate(element => {
@@ -241,10 +241,10 @@ test('homepage action hierarchy and peer-choice states respond visibly', async (
   expect(focusState.outlineWidth).toBeGreaterThan(0);
 });
 
-test('primary Evidence Pack action reveals the active evidence input', async ({ page }) => {
+test('evidence imagery action reveals the active evidence input', async ({ page }) => {
   await openHomepage(page, 1280);
 
-  const primary = page.getByRole('link', { name: 'View the evidence imagery' });
+  const primary = page.locator('.r3-proof-link');
   const lausitzInput = page.locator('#lausitz-evidence-input');
   await primary.click();
   await expect(page).toHaveURL(/#lausitz-evidence-input$/);
@@ -309,14 +309,14 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
     'Engineering completion, water quality and geotechnical condition cannot be determined from imagery alone.'
   );
   await expect(lausitz.locator('.evidence-input-figure')).toHaveCount(2);
-  await expect(lausitz.locator('.evidence-input-figure').first()).toContainText('T0 · Optical baseline');
-  await expect(lausitz.locator('.evidence-input-figure').nth(1)).toContainText('T1 · Recent observation');
+  await expect(lausitz.locator('.evidence-input-figure').first()).toContainText('T0 · Baseline');
+  await expect(lausitz.locator('.evidence-input-figure').nth(1)).toContainText('T1 · Observation');
   await expect(lausitz.locator('.evidence-input-footer')).toContainText(
     'Contains modified Copernicus Sentinel data (2019, 2026).'
   );
   await expect(lausitz.locator('.evidence-input-context')).toContainText('Monitoring scope');
   await expect(lausitz.locator('.evidence-input-context')).toContainText(
-    'Operational CRI monitoring can focus on selected zones, structures and project milestones'
+    'The target CRI workflow is intended to focus on selected zones, structures and project milestones'
   );
   await expect(lausitz.locator('.evidence-input-context')).toContainText('at much finer detail');
   await expect(lausitz.locator('.evidence-input-footer > div')).toHaveCount(2);
@@ -335,8 +335,8 @@ test('European Evidence Pack variants preserve approved sources and claim bounda
     'Sentinel-1 GRD VV contains backscatter, not interferometric phase, and cannot confirm subsea works, deformation or structural condition.'
   );
   await expect(northSea.locator('.evidence-input-figure')).toHaveCount(2);
-  await expect(northSea.locator('.evidence-input-figure').first()).toContainText('T0 · Repeat-pass baseline');
-  await expect(northSea.locator('.evidence-input-figure').nth(1)).toContainText('T1 · Repeat-pass observation');
+  await expect(northSea.locator('.evidence-input-figure').first()).toContainText('T0 · Baseline');
+  await expect(northSea.locator('.evidence-input-figure').nth(1)).toContainText('T1 · Observation');
   await expect(northSea.locator('.evidence-input-footer')).toContainText(
     'Contains modified Copernicus Sentinel data (2026).'
   );

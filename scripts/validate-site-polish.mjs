@@ -33,7 +33,7 @@ const requiredIconLinks = [
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
 
-const releaseAssetVersion = '3036e1a9';
+const releaseAssetVersion = 'f87d840f';
 const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseAssetVersion}">`;
 const requiredScriptSource = `/assets/js/main.js?v=${releaseAssetVersion}`;
 
@@ -96,7 +96,7 @@ for (const relativePath of canonicalEnglishPages) {
   assert.match(footer, /class="footer-main"/, `${relativePath} footer is missing the compact main grid`);
   assert.match(footer, /class="footer-navigation footer-navigation--primary"/);
   assert.match(footer, /class="footer-navigation footer-navigation--secondary"/);
-  assert.match(footer, /European project · Head office in Prague/);
+  assert.match(footer, /European startup · Head office in Prague/);
   assert.match(footer, /Focused on DACH, Benelux and Central European institutional markets\./);
   assert.match(footer, /class="footer-esa-proof"/);
 }
@@ -123,9 +123,9 @@ assert.equal((faviconSvg.match(/<path /g) ?? []).length, 6, 'Favicon must use th
 
 const homepageHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
 assert.equal(
-  (homepageHtml.match(/Bank-review artefact · synthetic public-safe sample/g) ?? []).length,
+  (homepageHtml.match(/Illustrative prototype · public-safe example/g) ?? []).length,
   2,
-  'Both Evidence Pack cases must use the bank-review artefact label'
+  'Both Evidence Pack cases must use the approved prototype label'
 );
 assert.equal(
   (homepageHtml.match(/evidence-pack-state evidence-pack-state--featured/g) ?? []).length,
@@ -134,10 +134,79 @@ assert.equal(
 );
 assert.match(
   homepageHtml,
-  /href="#lausitz-evidence-input"[^>]*data-evidence-pack-destination="input">View the evidence imagery/
+  /href="#evidence-pack-sample"[^>]*data-evidence-pack-destination="pack">View the Evidence Pack prototype<\/a>/
+);
+assert.match(
+  homepageHtml,
+  /href="#lausitz-evidence-input"[^>]*data-evidence-pack-destination="input">View the evidence imagery in the active prototype/
 );
 assert.match(homepageHtml, /id="lausitz-evidence-input"[^>]*tabindex="-1"/);
 assert.match(homepageHtml, /id="north-sea-evidence-input"[^>]*tabindex="-1"/);
+assert.equal((homepageHtml.match(/<link rel="preload" as="image"/g) ?? []).length, 2);
+assert.equal((homepageHtml.match(/loading="eager"/g) ?? []).length, 2);
+assert.equal((homepageHtml.match(/fetchpriority="high"/g) ?? []).length, 2);
+assert.equal((homepageHtml.match(/loading="lazy"/g) ?? []).length, 2);
+assert.equal((homepageHtml.match(/class="evidence-date-chip"/g) ?? []).length, 4);
+assert.match(homepageHtml, /class="review-timeline"/);
+assert.match(homepageHtml, /class="r3-flow"/);
+
+const reviewPackageFiles = [
+  'index.html',
+  'cri/index.html',
+  'validation/index.html',
+  'investors/index.html',
+  'governance-layer/index.html'
+];
+const reviewPackageHtml = (await Promise.all(
+  reviewPackageFiles.map(relativePath => readFile(path.join(repositoryRoot, relativePath), 'utf8'))
+)).join('\n');
+const publicClaimSurface = `${(await Promise.all(
+  canonicalEnglishPages.map(relativePath => readFile(path.join(repositoryRoot, relativePath), 'utf8'))
+)).join('\n')}\n${await readFile(path.join(repositoryRoot, 'llms.txt'), 'utf8')}`;
+
+assert.doesNotMatch(
+  publicClaimSurface,
+  /Shadow-Mode Case|Possible Paid Pilot|Portfolio Workflow|Evidence Readiness Assessment|shadow-mode pilot/i,
+  'Review package contains retired commercial-stage vocabulary'
+);
+assert.doesNotMatch(
+  publicClaimSurface,
+  /early October 2026|one month of intensive sprint|PoC Demonstrator|selected Austrian investors/i,
+  'Review package contains Internal Delivery Appendix wording'
+);
+assert.doesNotMatch(
+  publicClaimSurface,
+  /AI Act compliant|compliance-ready|regulator-ready|not high-risk|outside the AI Act/i,
+  'Review package contains a prohibited regulatory claim'
+);
+assert.equal(
+  (reviewPackageHtml.match(/How does CRI relate to the EU AI Act and banking governance\?/g) ?? []).length,
+  1,
+  'The approved package must contain exactly one explicit AI Act Q&A item'
+);
+
+const criHtml = await readFile(path.join(repositoryRoot, 'cri/index.html'), 'utf8');
+assert.match(
+  criHtml,
+  /The Evidence Pack format is designed to keep source, observation date, version, uncertainty and review state visible alongside the evidence/
+);
+assert.equal((criHtml.match(/parallel-rail parallel-rail--/g) ?? []).length, 1);
+assert.equal((criHtml.match(/class="product-chain"/g) ?? []).length, 1);
+
+const validationHtml = await readFile(path.join(repositoryRoot, 'validation/index.html'), 'utf8');
+assert.equal((validationHtml.match(/class="evaluation-item"/g) ?? []).length, 4);
+assert.equal((validationHtml.match(/<details>/g) ?? []).length, 6);
+assert.equal((validationHtml.match(/data-contact-form/g) ?? []).length, 1);
+assert.equal((validationHtml.match(/data-field-label=/g) ?? []).length, 4);
+
+const investorsHtml = await readFile(path.join(repositoryRoot, 'investors/index.html'), 'utf8');
+assert.match(investorsHtml, /class="commercial-equation"/);
+assert.equal((investorsHtml.match(/data-contact-form/g) ?? []).length, 1);
+assert.equal((investorsHtml.match(/data-field-label=/g) ?? []).length, 4);
+
+const governanceHtml = await readFile(path.join(repositoryRoot, 'governance-layer/index.html'), 'utf8');
+assert.match(governanceHtml, /class="governance-pipeline"/);
+assert.equal((governanceHtml.match(/class="maturity-band maturity-band--/g) ?? []).length, 3);
 
 const stylesheet = await readFile(path.join(repositoryRoot, 'assets/css/style.css'), 'utf8');
 assert.match(stylesheet, /\.evidence-pack-header h2\s*{[^}]*font-size:\s*33\.35px;[^}]*font-weight:\s*400;/s);
