@@ -5,7 +5,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 const repositoryRoot = process.cwd();
-const ignoredDirectories = new Set(['.git', 'node_modules', 'playwright-report', 'artifacts']);
+const ignoredDirectories = new Set(['.git', 'node_modules', 'playwright-report', 'test-results', 'artifacts']);
 const copyExtensions = new Set(['.css', '.html', '.js', '.mjs', '.json', '.txt', '.xml']);
 const forbiddenCopyPattern = new RegExp('\\u2014|&' + 'mdash;');
 const standaloneArtifactPages = new Set([
@@ -40,6 +40,7 @@ const requiredIconLinks = [
 const releaseAssetVersion = 'f87d840f';
 const m2AssetVersion = '2cc56e54';
 const m3HomepageCorrectionVersion = 'b7b7bad8';
+const aboutFounderVersion = 'f8700cdd';
 const m2StylesheetPages = new Set([
   'index.html',
   'cri/index.html',
@@ -77,6 +78,18 @@ for (const file of htmlFiles) {
       `${relativePath} must not load the homepage-only correction layer`
     );
   }
+  if (relativePath === 'about/index.html') {
+    assert.ok(
+      html.includes(`<link rel="stylesheet" href="/assets/css/about-founder.css?v=${aboutFounderVersion}">`),
+      'About must load the versioned Founder redesign layer'
+    );
+  } else {
+    assert.doesNotMatch(
+      html,
+      /about-founder\.css/,
+      `${relativePath} must not load the About-only Founder redesign layer`
+    );
+  }
   for (const link of requiredIconLinks) {
     assert.ok(html.includes(link), `${relativePath} is missing ${link}`);
   }
@@ -107,6 +120,19 @@ for (const [relativePath, expectedHash] of fischamendArtifactHashes) {
   const value = await readFile(path.join(repositoryRoot, relativePath));
   const actualHash = createHash('sha256').update(value).digest('hex');
   assert.equal(actualHash, expectedHash, `${relativePath} must retain its founder-locked bytes`);
+}
+
+const founderPortraitHashes = new Map([
+  ['assets/foto/prikryl-portret-1x1-navy.jpg', 'c232e76527afb1c69340b8502f5cea29ded1e17ed15df560b5a4e54c92394fd2'],
+  ['assets/foto/prikryl-portret-1x1-sepia.jpg', '2e4324ae36262a8486c082e752b3f8c1faefda426bebd4d3e214c67b9251db53'],
+  ['assets/foto/prikryl-portret-4x5-navy.jpg', '294ce1d653d5c358997efd3a76dcc9792e3e1f126fe3d225b2080674657b08fe'],
+  ['assets/foto/prikryl-portret-4x5-sepia.jpg', '6fbe82195c1bcfc841a693298843ea753e67412470e2c9ca827e150c26f94b25']
+]);
+
+for (const [relativePath, expectedHash] of founderPortraitHashes) {
+  const value = await readFile(path.join(repositoryRoot, relativePath));
+  const actualHash = createHash('sha256').update(value).digest('hex');
+  assert.equal(actualHash, expectedHash, `${relativePath} must retain its supplied portrait bytes`);
 }
 
 const fischamendArtifactHtml = await readFile(
@@ -182,6 +208,31 @@ const faviconSvg = await readFile(path.join(repositoryRoot, 'assets/img/favicon-
 assert.doesNotMatch(faviconSvg, /<rect\b/, 'Favicon must keep a transparent background');
 assert.match(faviconSvg, /fill="#1b1f2a"/);
 assert.equal((faviconSvg.match(/<path /g) ?? []).length, 6, 'Favicon must use the six-part 3BrainAI mark');
+
+const aboutHtml = await readFile(path.join(repositoryRoot, 'about/index.html'), 'utf8');
+assert.equal((aboutHtml.match(/class="about-founder-photo"/g) ?? []).length, 1);
+assert.match(
+  aboutHtml,
+  /src="\/assets\/foto\/prikryl-portret-4x5-navy\.jpg"[\s\S]*width="426"[\s\S]*height="533"[\s\S]*loading="lazy"[\s\S]*decoding="async"[\s\S]*alt="Portrait of Dušan Přikryl, Founder and CEO of 3BrainAI"/
+);
+assert.match(aboutHtml, /<h2 class="about-founder-name">Dušan Přikryl<\/h2>/);
+assert.match(aboutHtml, /<p class="about-founder-role">Founder &amp; CEO<\/p>/);
+assert.match(
+  aboutHtml,
+  /<p class="about-founder-tags">Owner-side CAPEX leadership · Tier-1 technology integration · German-speaking market experience<\/p>/
+);
+for (const approvedFounderCopy of [
+  'Dušan Přikryl is a shareholder-mandated crisis and CAPEX transformation leader with direct owner-side responsibility for complex industrial and energy investments. From 2003 to 2009, under mandates linked to Expandia, Schouw &amp; Co./Fibertex and J&amp;T/EPH, he restructured project delivery around a small accountable owner-side core and directly coordinated Tier-1 European technology suppliers, including Siemens, GEA, Geberit and Hörmann.',
+  "His professional connection to German-speaking markets is long-standing: practical experience in Germany helped shape his delivery model and he works professionally in German. 3BrainAI's DACH engagement includes 3BrainAI Solutions' completion of the EY Startup Academy Frankfurt 2025 programme.",
+  'He later added a second professional layer across digital product development, data operations, analytics and AI. CRI brings these layers together: first-hand responsibility for complex physical assets and the product discipline required to turn fragmented inputs into governed, review-ready evidence for institutional decision support.'
+]) {
+  assert.ok(aboutHtml.includes(`<p>${approvedFounderCopy}</p>`), 'About must retain the exact founder-approved copy');
+}
+assert.match(
+  aboutHtml,
+  /<a class="founder-profile-link" href="https:\/\/www\.linkedin\.com\/in\/dusanprikryl\/" rel="noopener noreferrer">LinkedIn profile<\/a>/
+);
+assert.doesNotMatch(aboutHtml, /Keller Grundbau|Vigona|United Energy|events and networks/i);
 
 const homepageHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
 assert.equal(
@@ -316,6 +367,23 @@ assert.match(homepageCorrections, /\.m2-archive-prototypes\s*{[^}]*max-width:\s*
 assert.match(homepageCorrections, /\.review-timeline::before\s*{[^}]*border-top:\s*2px solid/s);
 assert.match(homepageCorrections, /\.evidence-section-label[\s\S]*font-size:\s*12px;/);
 assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.evidence-input-footer\s*{[^}]*grid-template-columns:\s*1fr;/);
+
+const aboutFounderStylesheet = await readFile(
+  path.join(repositoryRoot, 'assets/css/about-founder.css'),
+  'utf8'
+);
+assert.match(
+  aboutFounderStylesheet,
+  /\.about-founder-grid\s*{[^}]*grid-template-columns:\s*minmax\(240px, 300px\) minmax\(0, 1fr\);/s
+);
+assert.match(
+  aboutFounderStylesheet,
+  /\.about-founder-role\s*{[^}]*font-size:\s*11\.5px;[^}]*text-transform:\s*uppercase;/s
+);
+assert.match(
+  aboutFounderStylesheet,
+  /@media \(max-width:\s*860px\)[\s\S]*\.about-founder-photo\s*{[^}]*max-width:\s*280px;/
+);
 
 const mainScript = await readFile(path.join(repositoryRoot, 'assets/js/main.js'), 'utf8');
 assert.match(mainScript, /dataset\.evidencePackDestination/);
