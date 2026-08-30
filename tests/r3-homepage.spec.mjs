@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
-const responsiveWidths = [320, 390, 768, 1280, 1440, 1920];
+const responsiveWidths = [320, 390, 768, 1024, 1440, 1920];
 const evidencePackDesktopWidths = [768, 1280, 1440, 1920];
 const integrationSectionIds = [
   'evidence-gap',
@@ -55,6 +55,7 @@ async function activateEvidencePackAnchor(page) {
 test('homepage preserves the approved review-safety invariants', async ({ page }) => {
   await openHomepage(page, 1280);
 
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=b7b7bad8"]')).toHaveCount(1);
   await expect(page.locator('h1')).toHaveCount(1);
   await expect(page.locator('h1')).toHaveText('Turn dated project evidence into a reviewable decision-support record.');
   await expect(page.locator('.r3-hero .kicker')).toHaveText('For banks and institutional lenders');
@@ -108,6 +109,40 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('.evidence-meta-group-title', { hasText: /^Case$/ })).toHaveCount(0);
   await expect(page.locator('.evidence-eo-input')).toHaveCount(0);
   await expect(page.locator('img[src="/assets/img/cri/sentinel-lom-bilina.jpg"]')).toHaveCount(0);
+  await expect(page.locator('#governance-layer .maturity-label--on-dark')).toHaveText('Direction');
+
+  const visualCorrectionContract = await page.evaluate(() => {
+    const archive = document.querySelector('.m2-archive-prototypes');
+    const timeline = document.querySelector('.review-timeline');
+    const checkpoint = document.querySelector('.review-timeline-checkpoint .review-timeline-mark');
+    const pack = document.querySelector('.review-timeline-pack .review-timeline-mark');
+    const localLabel = document.querySelector('#panel-lausitz .evidence-section-label');
+
+    if (!archive || !timeline || !checkpoint || !pack || !localLabel) return null;
+
+    const checkpointStyle = getComputedStyle(checkpoint);
+    const packStyle = getComputedStyle(pack);
+    const localLabelStyle = getComputedStyle(localLabel);
+
+    return {
+      archiveWidth: archive.getBoundingClientRect().width,
+      axisBorderWidth: getComputedStyle(timeline, '::before').borderTopWidth,
+      checkpointBorderRadius: checkpointStyle.borderRadius,
+      packBorderRadius: packStyle.borderRadius,
+      packBackground: packStyle.backgroundColor,
+      localLabelFontSize: localLabelStyle.fontSize,
+      localLabelFontWeight: Number(localLabelStyle.fontWeight)
+    };
+  });
+
+  expect(visualCorrectionContract).not.toBeNull();
+  expect(visualCorrectionContract.archiveWidth).toBeLessThanOrEqual(1060.5);
+  expect(visualCorrectionContract.axisBorderWidth).toBe('2px');
+  expect(visualCorrectionContract.checkpointBorderRadius).toBe('50%');
+  expect(visualCorrectionContract.packBorderRadius).toBe('50%');
+  expect(visualCorrectionContract.packBackground).not.toBe('rgba(0, 0, 0, 0)');
+  expect(visualCorrectionContract.localLabelFontSize).toBe('12px');
+  expect(visualCorrectionContract.localLabelFontWeight).toBeGreaterThanOrEqual(700);
 
   const humanReview = page.locator('.evidence-pack-metadata dt', {
     hasText: /^Human review$/
@@ -467,13 +502,17 @@ test('both Evidence Pack variants stack body, metadata, T0 and T1 in mobile orde
         const rail = panel.querySelector('.evidence-pack-metadata');
         const band = panel.querySelector('.evidence-input-band');
         const figures = [...panel.querySelectorAll('.evidence-input-figure')];
-        if (!content || !rail || !band || figures.length !== 2) return null;
+        const footer = panel.querySelector('.evidence-input-footer');
+        const footerColumns = footer ? [...footer.children] : [];
+        if (!content || !rail || !band || figures.length !== 2 || footerColumns.length !== 2) return null;
 
         const contentRect = content.getBoundingClientRect();
         const railRect = rail.getBoundingClientRect();
         const bandRect = band.getBoundingClientRect();
         const firstFigureRect = figures[0].getBoundingClientRect();
         const secondFigureRect = figures[1].getBoundingClientRect();
+        const firstFooterColumnRect = footerColumns[0].getBoundingClientRect();
+        const secondFooterColumnRect = footerColumns[1].getBoundingClientRect();
 
         return {
           contentBeforeRail: Boolean(
@@ -487,7 +526,8 @@ test('both Evidence Pack variants stack body, metadata, T0 and T1 in mobile orde
           ),
           bodyStacked: railRect.top >= contentRect.bottom - 1,
           bandStacked: bandRect.top >= railRect.bottom - 1,
-          figuresStacked: secondFigureRect.top >= firstFigureRect.bottom - 1
+          figuresStacked: secondFigureRect.top >= firstFigureRect.bottom - 1,
+          footerColumnsStacked: secondFooterColumnRect.top >= firstFooterColumnRect.bottom - 1
         };
       });
 
@@ -498,6 +538,7 @@ test('both Evidence Pack variants stack body, metadata, T0 and T1 in mobile orde
       expect(geometry.bodyStacked).toBeTruthy();
       expect(geometry.bandStacked).toBeTruthy();
       expect(geometry.figuresStacked).toBeTruthy();
+      expect(geometry.footerColumnsStacked).toBeTruthy();
     }
   }
 });
@@ -543,6 +584,8 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
   };
 
   for (const viewport of [
+    { width: 768, height: 1024, filename: 'r3-homepage-768.png' },
+    { width: 1024, height: 900, filename: 'r3-homepage-1024.png' },
     { width: 1280, height: 900, filename: 'r3-homepage-1280.png' },
     { width: 1440, height: 900, filename: 'r3-homepage-1440.png' },
     { width: 1920, height: 1080, filename: 'r3-homepage-1920.png' },
@@ -575,6 +618,8 @@ test('creates deterministic full-page and focused review screenshots', async ({ 
   });
 
   for (const viewport of [
+    { width: 768, height: 1024 },
+    { width: 1024, height: 900 },
     { width: 1280, height: 900 },
     { width: 1440, height: 900 },
     { width: 1920, height: 1080 }

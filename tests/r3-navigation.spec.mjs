@@ -46,7 +46,7 @@ const representativeRoutes = [
   '/security/'
 ];
 
-const responsiveWidths = [320, 390, 768, 1280, 1920];
+const responsiveWidths = [390, 768, 1024, 1440, 1920];
 
 async function preparePage(page, width, height = 900) {
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
@@ -156,6 +156,13 @@ test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
     expect(headingLevels.filter(level => level === 1), `${route} should have exactly one h1`)
       .toHaveLength(1);
     expect(skippedLevels, `${route} should not skip heading levels`).toEqual([]);
+
+    if (route === '/cri/') {
+      const marker = page.locator('.maturity-marker--on-dark');
+      await expect(marker).toHaveCount(1);
+      await expect(marker.locator('.maturity-label')).toHaveCSS('color', 'rgb(255, 255, 255)');
+      await expect(marker.locator('.maturity-detail')).not.toHaveCSS('color', 'rgb(74, 88, 98)');
+    }
   }
 });
 

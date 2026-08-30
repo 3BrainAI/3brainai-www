@@ -39,6 +39,7 @@ const requiredIconLinks = [
 
 const releaseAssetVersion = 'f87d840f';
 const m2AssetVersion = '2cc56e54';
+const m3HomepageCorrectionVersion = 'b7b7bad8';
 const m2StylesheetPages = new Set([
   'index.html',
   'cri/index.html',
@@ -64,6 +65,18 @@ for (const file of htmlFiles) {
     /href="\/assets\/css\/style\.css"/,
     `${relativePath} contains an unversioned stylesheet reference`
   );
+  if (relativePath === 'index.html') {
+    assert.ok(
+      html.includes(`<link rel="stylesheet" href="/assets/css/hp-corrections.css?v=${m3HomepageCorrectionVersion}">`),
+      'Homepage must load the versioned M3 visual-correction layer'
+    );
+  } else {
+    assert.doesNotMatch(
+      html,
+      /hp-corrections\.css/,
+      `${relativePath} must not load the homepage-only correction layer`
+    );
+  }
   for (const link of requiredIconLinks) {
     assert.ok(html.includes(link), `${relativePath} is missing ${link}`);
   }
@@ -205,6 +218,10 @@ assert.equal((homepageHtml.match(/loading="lazy"/g) ?? []).length, 4);
 assert.equal((homepageHtml.match(/class="evidence-date-chip"/g) ?? []).length, 4);
 assert.match(homepageHtml, /class="review-timeline"/);
 assert.match(homepageHtml, /class="r3-flow"/);
+assert.match(
+  homepageHtml,
+  /class="maturity-label maturity-label--standalone maturity-label--on-dark">Direction<\/p>/
+);
 
 const reviewPackageFiles = [
   'index.html',
@@ -251,13 +268,18 @@ assert.equal((criHtml.match(/class="product-chain"/g) ?? []).length, 1);
 assert.equal((criHtml.match(/class="m2-mechanism-index"/g) ?? []).length, 4);
 assert.match(criHtml, /01 · Declared[\s\S]*02 · Observed[\s\S]*03 · Governed[\s\S]*04 · Output/);
 assert.match(criHtml, /Human-review state/);
+assert.match(
+  criHtml,
+  /class="maturity-marker maturity-marker--current maturity-marker--on-dark"/
+);
 
 const validationHtml = await readFile(path.join(repositoryRoot, 'validation/index.html'), 'utf8');
 assert.equal((validationHtml.match(/class="m2-stage /g) ?? []).length, 5);
 assert.equal((validationHtml.match(/class="m2-engagement-state"/g) ?? []).length, 4);
 assert.equal((validationHtml.match(/class="stage-rail"/g) ?? []).length, 0);
-assert.match(validationHtml, /Idea and problem definition[\s\S]*Product concept and illustrative prototypes[\s\S]*Proof of Concept[\s\S]*Paid Pilot[\s\S]*Commercial Deployment/);
+assert.match(validationHtml, /Idea and problem definition[\s\S]*Product concept and illustrative prototypes[\s\S]*Proof of Concept[\s\S]*Paid Pilot[\s\S]*Commercial deployment/);
 assert.match(validationHtml, /Institution-specific engagement &#8212; a separate axis/);
+assert.doesNotMatch(validationHtml, /Commercial Deployment/);
 assert.equal((validationHtml.match(/class="evaluation-item"/g) ?? []).length, 4);
 assert.equal((validationHtml.match(/<details>/g) ?? []).length, 6);
 assert.equal((validationHtml.match(/data-contact-form/g) ?? []).length, 1);
@@ -268,6 +290,7 @@ assert.match(investorsHtml, /<h1>Public discipline, private diligence depth\.<\/
 assert.equal((investorsHtml.match(/class="m2-investor-gate /g) ?? []).length, 3);
 assert.match(investorsHtml, /mailto:investors@3brain\.ai\?subject=Request%3A%203BrainAI%20investor%20materials/);
 assert.match(investorsHtml, /class="commercial-equation"/);
+assert.doesNotMatch(investorsHtml, /Commercial Deployment/);
 assert.equal((investorsHtml.match(/data-contact-form/g) ?? []).length, 1);
 assert.equal((investorsHtml.match(/data-field-label=/g) ?? []).length, 4);
 
@@ -284,6 +307,15 @@ assert.match(stylesheet, /\.evidence-input-band:target\s*{/);
 assert.match(stylesheet, /\.m2-history\s*{/);
 assert.match(stylesheet, /\.m2-engagement\s*{/);
 assert.match(stylesheet, /\.m2-fischamend-hero\s*,/);
+
+const homepageCorrections = await readFile(
+  path.join(repositoryRoot, 'assets/css/hp-corrections.css'),
+  'utf8'
+);
+assert.match(homepageCorrections, /\.m2-archive-prototypes\s*{[^}]*max-width:\s*1060px;/s);
+assert.match(homepageCorrections, /\.review-timeline::before\s*{[^}]*border-top:\s*2px solid/s);
+assert.match(homepageCorrections, /\.evidence-section-label[\s\S]*font-size:\s*12px;/);
+assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.evidence-input-footer\s*{[^}]*grid-template-columns:\s*1fr;/);
 
 const mainScript = await readFile(path.join(repositoryRoot, 'assets/js/main.js'), 'utf8');
 assert.match(mainScript, /dataset\.evidencePackDestination/);
