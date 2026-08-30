@@ -1,0 +1,155 @@
+/* ============================================================
+   HP CORRECTION CANDIDATE M3 (visual only, content unchanged)
+   2026-08-30 – each rule is numbered for the web-tool handoff.
+   Revert = remove this file and its <link> from index.html.
+   ============================================================ */
+
+/* HP-FIX-1a: Lausitz/North Sea card – eliminate the 224px dead zone
+   in the left column: the last section (Recommended next step, on
+   surface-subtle background) grows to absorb the height difference
+   against the taller metadata sidebar. */
+.evidence-pack-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.evidence-pack-content > .evidence-pack-section,
+.evidence-pack-content > .evidence-pack-pair {
+  flex: 0 0 auto;
+}
+
+.evidence-pack-content > .evidence-next-step {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* HP-FIX-1b: tighten the metadata sidebar so it stops forcing
+   the card taller than the content column needs. */
+.evidence-pack-metadata {
+  padding: 16px 16px 12px;
+}
+
+.evidence-meta-group + .evidence-meta-group {
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+/* HP-FIX-1c: header balance – vertically centre the WATCH status box
+   against the title block so it stops floating in the corner. */
+.evidence-pack-header {
+  align-items: center;
+  padding-top: 18px;
+  padding-bottom: 16px;
+}
+
+/* HP-FIX-1d: historical prototypes read as full-width – narrow and
+   centre the archive block so it stays visually subordinate to the
+   primary Fischamend case above it. */
+.m2-archive-prototypes {
+  max-width: 1060px;
+  margin-inline: auto;
+}
+
+/* HP-FIX-2: timeline "A governed signal for human review" –
+   replace the wireframe look with a finished axis: single 2px baseline,
+   circular nodes on the line and filled navy Evidence Pack nodes. */
+.review-timeline {
+  min-height: 148px;
+  padding-top: 26px;
+  border-top: 0;
+}
+
+.review-timeline::before {
+  top: 59px;
+  right: 10%;
+  left: 10%;
+  border-top: 2px solid rgba(18, 60, 105, 0.22);
+}
+
+.review-timeline-item {
+  grid-template-rows: 66px auto;
+}
+
+.review-timeline-checkpoint .review-timeline-mark {
+  width: 11px;
+  height: 11px;
+  border: 2px solid #7a8791;
+  border-radius: 50%;
+  background: var(--r3-surface);
+}
+
+.review-timeline-pack .review-timeline-mark {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--r3-action);
+  box-shadow: 0 0 0 2px var(--r3-surface), 0 0 0 4px rgba(18, 60, 105, 0.28);
+}
+
+.review-timeline-label {
+  margin-top: 6px;
+  color: #46545e;
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+}
+
+.review-timeline-pack .review-timeline-label {
+  color: var(--r3-action);
+  font-weight: 700;
+}
+
+@media (max-width: 620px) {
+  .review-timeline {
+    min-height: 132px;
+    padding-top: 22px;
+  }
+
+  .review-timeline::before {
+    top: 51px;
+    right: 6%;
+    left: 6%;
+  }
+
+  .review-timeline-item {
+    grid-template-rows: 58px auto;
+  }
+
+  .review-timeline-checkpoint .review-timeline-mark {
+    width: 9px;
+    height: 9px;
+  }
+
+  .review-timeline-pack .review-timeline-mark {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* HP-FIX-3: local headings inside boxes – 10–10.5px at low contrast
+   was getting lost above the body text. Raise to 12px, darker and
+   consistently weighted. */
+.evidence-section-label,
+.evidence-field-label,
+.evidence-meta-list dt,
+.r3-ovd-meta dt,
+.r3-proof-label {
+  color: #41505a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* HP-FIX-4: mobile (<=720px) – stack Illustrative use and Source
+   attribution once the divider has changed to its mobile form. */
+@media (max-width: 720px) {
+  .evidence-input-footer {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* HP-FIX-5 is in index.html: the standalone Direction pill in the
+   dark Governance Layer section carries maturity-label--on-dark. */
