@@ -21,21 +21,21 @@ const primaryJourneyRoutes = [
 ];
 
 const scopedRoutes = [
-  { route: '/', file: 'index.html', active: null, evidenceHref: '#evidence-pack-sample' },
+  { route: '/', file: 'index.html', active: null, evidenceHref: '#portfolio' },
   { route: '/about/', file: 'about/index.html', active: 'About' },
   { route: '/contact/', file: 'contact/index.html', active: 'Contact' },
-  { route: '/cri/', file: 'cri/index.html', active: 'CRI' },
+  { route: '/cri/', file: 'cri/index.html', active: 'CRI', evidenceHref: '/#portfolio' },
   { route: '/governance-layer/', file: 'governance-layer/index.html', active: null },
   { route: '/how-it-works/', file: 'how-it-works/index.html', active: null },
   { route: '/imprint/', file: 'imprint/index.html', active: null },
-  { route: '/investors/', file: 'investors/index.html', active: 'Investors' },
+  { route: '/investors/', file: 'investors/index.html', active: 'Investors', evidenceHref: '/#portfolio' },
   { route: '/mis/', file: 'mis/index.html', active: null },
   { route: '/pilots/', file: 'pilots/index.html', active: 'Validation' },
   { route: '/privacy/', file: 'privacy/index.html', active: null },
   { route: '/product/', file: 'product/index.html', active: null },
   { route: '/security/', file: 'security/index.html', active: null },
   { route: '/use-cases/', file: 'use-cases/index.html', active: null },
-  { route: '/validation/', file: 'validation/index.html', active: 'Validation' }
+  { route: '/validation/', file: 'validation/index.html', active: 'Validation', evidenceHref: '/#portfolio' }
 ];
 
 const representativeRoutes = [
@@ -57,7 +57,15 @@ async function preparePage(page, width, height = 900) {
 
 async function openRoute(page, route) {
   const response = await page.goto(route, { waitUntil: 'domcontentloaded' });
-  expect(response?.ok(), `${route} should return a successful response`).toBeTruthy();
+  if (response) {
+    expect(response.ok(), `${route} should return a successful response`).toBeTruthy();
+  } else {
+    const currentUrl = new URL(page.url());
+    expect(
+      `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`,
+      `${route} should complete as a same-document navigation`
+    ).toBe(route);
+  }
   await page.evaluate(() => document.fonts?.ready);
 }
 
@@ -126,6 +134,9 @@ test('every canonical navigation target resolves', async ({ page, request }) => 
     const response = await request.get(href);
     expect.soft(response.ok(), `${label} target ${href} returned ${response.status()}`).toBeTruthy();
   }
+
+  await openRoute(page, '/#portfolio');
+  await expect(page.locator('#portfolio')).toHaveCount(1);
 
   await openRoute(page, '/#evidence-pack-sample');
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);

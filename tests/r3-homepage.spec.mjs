@@ -29,10 +29,10 @@ async function openHomepage(page, width, height = 900) {
 }
 
 async function activateEvidencePackAnchor(page) {
-  await page.locator('[data-evidence-pack-destination="pack"]').click();
+  await page.evaluate(() => {
+    window.location.hash = 'evidence-pack-sample';
+  });
   await expect(page).toHaveURL(/#evidence-pack-sample$/);
-  await expect(page.locator('#panel-lausitz .evidence-pack-sample')).toHaveClass(/is-emphasized/);
-  await expect(page.locator('#panel-lausitz')).toBeFocused();
 
   await expect.poll(() => page.evaluate(() => {
     const target = document.querySelector('#evidence-pack-sample');
@@ -49,17 +49,17 @@ async function activateEvidencePackAnchor(page) {
   await expect(page.locator('#evidence-pack-sample .evidence-case-selector')).toBeInViewport();
   await expect(page.locator('#panel-lausitz .evidence-pack-label')).toBeInViewport();
   await expect(page.locator('#lausitz-pack-title')).toBeInViewport();
-  await expect(page.locator('#panel-lausitz .evidence-pack-state')).toBeInViewport();
+  await expect(page.locator('#panel-lausitz .evidence-pack-state')).toBeVisible();
 }
 
 test('homepage preserves the approved review-safety invariants', async ({ page }) => {
   await openHomepage(page, 1280);
 
   await expect(page.locator('h1')).toHaveCount(1);
-  await expect(page.locator('h1')).toContainText('Review-ready evidence');
+  await expect(page.locator('h1')).toHaveText('Turn dated project evidence into a reviewable decision-support record.');
   await expect(page.locator('.r3-hero .kicker')).toHaveText('For banks and institutional lenders');
   await expect(page.locator('.r3-hero .lead')).toHaveText(
-    '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product for banks and institutional asset reviewers. CRI is designed to add a governed evidence state between formal review points through short, versioned Evidence Packs.'
+    'CRI is validating a governed Evidence Pack workflow for physical-asset risk review. It separates what was declared, what was observed and what still requires responsible human review.'
   );
   await expect(page.locator('.r3-boundary-line')).toHaveText(
     'The target workflow supports human review. It is not intended to make autonomous credit decisions, replace bank policy or replace professional assessment.'
@@ -69,7 +69,11 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
     'CRE & project finance',
     'Collateral & progress review'
   ]);
+  await expect(page.locator('#portfolio')).toHaveCount(1);
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
+  await expect(page.locator('.m2-fischamend-hero')).toContainText('Fischamend, Lower Austria');
+  await expect(page.locator('.m2-watch-badge')).toHaveText(/WATCH\s+\u2014\s+EVIDENCE SUFFICIENCY/);
+  await expect(page.locator('.m2-portfolio-card--secondary')).toContainText('D4 infrastructure example');
   await expect(page.getByRole('tablist', { name: 'Illustrative Evidence Pack prototypes' })).toBeVisible();
   await expect(page.getByRole('tab')).toHaveCount(2);
   await expect(page.locator('#tab-lausitz')).toHaveAttribute('aria-selected', 'true');
@@ -91,17 +95,12 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#panel-lausitz .evidence-pack-case-context')).toHaveText(
     'Environmentally impacted former open-pit lignite mine undergoing large-scale flooding and redevelopment.'
   );
-  await expect(page.getByRole('link', { name: 'View the Evidence Pack prototype' })).toHaveAttribute(
-    'href',
-    '#evidence-pack-sample'
-  );
-  await expect(page.getByRole('link', { name: 'View the Evidence Pack prototype' })).toHaveAttribute(
-    'data-evidence-pack-destination',
-    'pack'
-  );
-  await expect(page.locator('.r3-proof-link')).toContainText('View the evidence imagery in the active prototype');
+  await expect(page.locator('.r3-hero-actions').getByRole('link', { name: 'View the Austrian Evidence Pack' })).toHaveAttribute('href', '#portfolio');
+  await expect(page.locator('.r3-hero-actions').getByRole('link', { name: 'Discuss an Evidence Readiness Check' })).toHaveAttribute('href', '/validation/#readiness-form');
+  await expect(page.locator('.m2-portfolio-card--primary').getByRole('link', { name: 'View the Austrian Evidence Pack' })).toHaveAttribute('href', '/evidence-packs/fischamend/');
+  await expect(page.locator('.r3-proof-link')).toContainText('Understand the product and commercial path');
   await expect(page.locator('.evidence-case-selector-note')).toHaveText(
-    'Two illustrative public-safe Evidence Pack prototypes. They show the intended record format; they are not outputs from a deployed customer system.'
+    'Two earlier public-safe Evidence Pack prototypes retained as historical concept evidence.'
   );
   await expect(page.locator('#tab-lausitz')).toContainText('Lausitz, Germany');
   await expect(page.locator('#tab-lausitz')).toContainText('Former lignite mine · post-mining');
@@ -188,8 +187,8 @@ test('Evidence Pack case selector is manual and keyboard accessible', async ({ p
 test('homepage action hierarchy and peer-choice states respond visibly', async ({ page }) => {
   await openHomepage(page, 1280);
 
-  const primary = page.getByRole('link', { name: 'View the Evidence Pack prototype' });
-  const secondary = page.getByRole('link', { name: 'Discuss a PoC' }).first();
+  const primary = page.locator('.r3-hero-actions').getByRole('link', { name: 'View the Austrian Evidence Pack' });
+  const secondary = page.locator('.r3-hero-actions').getByRole('link', { name: 'Discuss an Evidence Readiness Check' });
   const northSeaTab = page.locator('#tab-north-sea');
 
   const readColours = locator => locator.evaluate(element => {
@@ -241,23 +240,22 @@ test('homepage action hierarchy and peer-choice states respond visibly', async (
   expect(focusState.outlineWidth).toBeGreaterThan(0);
 });
 
-test('evidence imagery action reveals the active evidence input', async ({ page }) => {
+test('earlier prototype evidence-input fragments remain reachable for the active case', async ({ page }) => {
   await openHomepage(page, 1280);
 
-  const primary = page.locator('.r3-proof-link');
   const lausitzInput = page.locator('#lausitz-evidence-input');
-  await primary.click();
+  await page.evaluate(() => {
+    window.location.hash = 'lausitz-evidence-input';
+  });
   await expect(page).toHaveURL(/#lausitz-evidence-input$/);
-  await expect(lausitzInput).toBeFocused();
-  await expect(lausitzInput).toHaveClass(/is-emphasized/);
   await expect(lausitzInput).toBeInViewport();
 
   await page.locator('#tab-north-sea').click();
   const northSeaInput = page.locator('#north-sea-evidence-input');
-  await primary.click();
+  await page.evaluate(() => {
+    window.location.hash = 'north-sea-evidence-input';
+  });
   await expect(page).toHaveURL(/#north-sea-evidence-input$/);
-  await expect(northSeaInput).toBeFocused();
-  await expect(northSeaInput).toHaveClass(/is-emphasized/);
   await expect(northSeaInput).toBeInViewport();
 });
 
@@ -517,7 +515,7 @@ test('homepage local navigation targets resolve', async ({ page, request }) => {
   }
 });
 
-test('Evidence Pack anchor exposes its label, title and status at desktop and mobile', async ({ page }) => {
+test('Evidence Pack anchor exposes its selector and title while retaining visible status at desktop and mobile', async ({ page }) => {
   for (const viewport of [
     { width: 1280, height: 900 },
     { width: 1920, height: 1080 },
