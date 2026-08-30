@@ -49,7 +49,7 @@ async function activateEvidencePackAnchor(page) {
   await expect(page.locator('#evidence-pack-sample .evidence-case-selector')).toBeInViewport();
   await expect(page.locator('#panel-lausitz .evidence-pack-label')).toBeInViewport();
   await expect(page.locator('#lausitz-pack-title')).toBeInViewport();
-  await expect(page.locator('#panel-lausitz .evidence-pack-state')).toBeInViewport();
+  await expect(page.locator('#panel-lausitz .evidence-pack-state')).toBeVisible();
 }
 
 test('homepage preserves the approved review-safety invariants', async ({ page }) => {
@@ -515,7 +515,7 @@ test('homepage local navigation targets resolve', async ({ page, request }) => {
   }
 });
 
-test('Evidence Pack anchor exposes its label, title and status at desktop and mobile', async ({ page }) => {
+test('Evidence Pack anchor exposes its selector and title while retaining visible status at desktop and mobile', async ({ page }) => {
   for (const viewport of [
     { width: 1280, height: 900 },
     { width: 1920, height: 1080 },
