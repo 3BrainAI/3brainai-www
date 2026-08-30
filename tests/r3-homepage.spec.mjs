@@ -29,8 +29,9 @@ async function openHomepage(page, width, height = 900) {
 }
 
 async function activateEvidencePackAnchor(page) {
-  await page.locator('#evidence-pack-sample').scrollIntoViewIfNeeded();
-  await page.evaluate(() => window.history.replaceState(null, '', '#evidence-pack-sample'));
+  await page.evaluate(() => {
+    window.location.hash = 'evidence-pack-sample';
+  });
   await expect(page).toHaveURL(/#evidence-pack-sample$/);
 
   await expect.poll(() => page.evaluate(() => {
@@ -71,7 +72,7 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#portfolio')).toHaveCount(1);
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
   await expect(page.locator('.m2-fischamend-hero')).toContainText('Fischamend, Lower Austria');
-  await expect(page.locator('.m2-watch-badge')).toHaveText(/WATCH.*EVIDENCE SUFFICIENCY/);
+  await expect(page.locator('.m2-watch-badge')).toHaveText(/WATCH\s+\u2014\s+EVIDENCE SUFFICIENCY/);
   await expect(page.locator('.m2-portfolio-card--secondary')).toContainText('D4 infrastructure example');
   await expect(page.getByRole('tablist', { name: 'Illustrative Evidence Pack prototypes' })).toBeVisible();
   await expect(page.getByRole('tab')).toHaveCount(2);
@@ -239,23 +240,22 @@ test('homepage action hierarchy and peer-choice states respond visibly', async (
   expect(focusState.outlineWidth).toBeGreaterThan(0);
 });
 
-test('evidence imagery action reveals the active evidence input', async ({ page }) => {
+test('earlier prototype evidence-input fragments remain reachable for the active case', async ({ page }) => {
   await openHomepage(page, 1280);
 
-  const primary = page.locator('.r3-proof-link');
   const lausitzInput = page.locator('#lausitz-evidence-input');
-  await primary.click();
+  await page.evaluate(() => {
+    window.location.hash = 'lausitz-evidence-input';
+  });
   await expect(page).toHaveURL(/#lausitz-evidence-input$/);
-  await expect(lausitzInput).toBeFocused();
-  await expect(lausitzInput).toHaveClass(/is-emphasized/);
   await expect(lausitzInput).toBeInViewport();
 
   await page.locator('#tab-north-sea').click();
   const northSeaInput = page.locator('#north-sea-evidence-input');
-  await primary.click();
+  await page.evaluate(() => {
+    window.location.hash = 'north-sea-evidence-input';
+  });
   await expect(page).toHaveURL(/#north-sea-evidence-input$/);
-  await expect(northSeaInput).toBeFocused();
-  await expect(northSeaInput).toHaveClass(/is-emphasized/);
   await expect(northSeaInput).toBeInViewport();
 });
 

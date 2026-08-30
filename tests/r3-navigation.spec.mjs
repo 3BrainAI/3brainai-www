@@ -57,7 +57,15 @@ async function preparePage(page, width, height = 900) {
 
 async function openRoute(page, route) {
   const response = await page.goto(route, { waitUntil: 'domcontentloaded' });
-  expect(response?.ok(), `${route} should return a successful response`).toBeTruthy();
+  if (response) {
+    expect(response.ok(), `${route} should return a successful response`).toBeTruthy();
+  } else {
+    const currentUrl = new URL(page.url());
+    expect(
+      `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`,
+      `${route} should complete as a same-document navigation`
+    ).toBe(route);
+  }
   await page.evaluate(() => document.fonts?.ready);
 }
 
