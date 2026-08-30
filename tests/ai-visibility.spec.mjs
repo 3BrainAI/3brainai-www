@@ -144,10 +144,12 @@ test('sitemap contains exactly the live canonical pages with truthful release da
   const body = await response.text();
   const locations = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
   const lastModifiedDates = [...body.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(match => match[1]);
+  const expectedLastModifiedDates = canonicalPages.map(page =>
+    page.route === '/about/' ? '2026-08-30' : '2026-08-28'
+  );
 
   expect(locations).toEqual(canonicalPages.map(page => page.url));
-  expect(lastModifiedDates).toHaveLength(canonicalPages.length);
-  expect(new Set(lastModifiedDates)).toEqual(new Set(['2026-08-28']));
+  expect(lastModifiedDates).toEqual(expectedLastModifiedDates);
 
   for (const canonicalPage of canonicalPages) {
     const pageResponse = await request.get(canonicalPage.route);

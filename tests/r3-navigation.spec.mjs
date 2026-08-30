@@ -163,6 +163,55 @@ test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
       await expect(marker.locator('.maturity-label')).toHaveCSS('color', 'rgb(255, 255, 255)');
       await expect(marker.locator('.maturity-detail')).not.toHaveCSS('color', 'rgb(74, 88, 98)');
     }
+
+    if (route === '/about/') {
+      const founderCopy = page.locator('.about-founder-copy');
+      const founderImage = page.locator('.about-founder-photo img');
+      await expect(page.locator('link[href="/assets/css/about-founder.css?v=f8700cdd"]')).toHaveCount(1);
+      await expect(founderCopy.locator('.about-founder-name')).toHaveText('Dušan Přikryl');
+      await expect(founderCopy.locator('.about-founder-role')).toHaveText('Founder & CEO');
+      await expect(founderCopy.locator('.about-founder-tags')).toHaveText(
+        'Owner-side CAPEX leadership · Tier-1 technology integration · German-speaking market experience'
+      );
+      expect(await founderCopy.locator(':scope > p').allTextContents()).toEqual([
+        'Founder',
+        'Founder & CEO',
+        'Owner-side CAPEX leadership · Tier-1 technology integration · German-speaking market experience',
+        'Dušan Přikryl is a shareholder-mandated crisis and CAPEX transformation leader with direct owner-side responsibility for complex industrial and energy investments. From 2003 to 2009, under mandates linked to Expandia, Schouw & Co./Fibertex and J&T/EPH, he restructured project delivery around a small accountable owner-side core and directly coordinated Tier-1 European technology suppliers, including Siemens, GEA, Geberit and Hörmann.',
+        "His professional connection to German-speaking markets is long-standing: practical experience in Germany helped shape his delivery model and he works professionally in German. 3BrainAI's DACH engagement includes 3BrainAI Solutions' completion of the EY Startup Academy Frankfurt 2025 programme.",
+        'He later added a second professional layer across digital product development, data operations, analytics and AI. CRI brings these layers together: first-hand responsibility for complex physical assets and the product discipline required to turn fragmented inputs into governed, review-ready evidence for institutional decision support.',
+        'LinkedIn profile'
+      ]);
+      await expect(founderImage).toHaveAttribute('src', '/assets/foto/prikryl-portret-4x5-navy.jpg');
+      await expect(founderImage).toHaveAttribute('width', '426');
+      await expect(founderImage).toHaveAttribute('height', '533');
+      await expect(founderImage).toHaveAttribute(
+        'alt',
+        'Portrait of Dušan Přikryl, Founder and CEO of 3BrainAI'
+      );
+      const imageState = await founderImage.evaluate(image => ({
+        complete: image.complete,
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight
+      }));
+      expect(imageState).toEqual({ complete: true, naturalWidth: 426, naturalHeight: 533 });
+      const roleStyle = await founderCopy.locator('.about-founder-role').evaluate(role => {
+        const style = getComputedStyle(role);
+        return {
+          fontFamily: style.fontFamily,
+          fontSize: style.fontSize,
+          textTransform: style.textTransform
+        };
+      });
+      expect(roleStyle.fontFamily).toContain('ui-monospace');
+      expect(roleStyle.fontSize).toBe('11.5px');
+      expect(roleStyle.textTransform).toBe('uppercase');
+      await expect(founderCopy.locator('.founder-profile-link')).toHaveAttribute(
+        'href',
+        'https://www.linkedin.com/in/dusanprikryl/'
+      );
+      await expect(founderCopy.locator('.founder-profile-link')).toHaveAttribute('rel', 'noopener noreferrer');
+    }
   }
 });
 
@@ -176,6 +225,36 @@ for (const width of responsiveWidths) {
         document.documentElement.scrollWidth - document.documentElement.clientWidth
       );
       expect.soft(overflow, `${route} overflow at ${width}px`).toBeLessThanOrEqual(1);
+
+      if (route === '/about/') {
+        const geometry = await page.locator('.about-founder-grid').evaluate(grid => {
+          const photo = grid.querySelector('.about-founder-photo')?.getBoundingClientRect();
+          const copy = grid.querySelector('.about-founder-copy')?.getBoundingClientRect();
+          const role = grid.querySelector('.about-founder-role');
+          if (!photo || !copy || !role) return null;
+          return {
+            photo: { top: photo.top, right: photo.right, bottom: photo.bottom, width: photo.width },
+            copy: { top: copy.top, left: copy.left, width: copy.width },
+            copyOverflow: grid.querySelector('.about-founder-copy').scrollWidth - grid.querySelector('.about-founder-copy').clientWidth,
+            roleFontSize: getComputedStyle(role).fontSize
+          };
+        });
+
+        expect(geometry, `About Founder geometry should resolve at ${width}px`).not.toBeNull();
+        expect(geometry.copyOverflow, `About Founder copy should not clip at ${width}px`).toBeLessThanOrEqual(1);
+        expect(geometry.roleFontSize).toBe('11.5px');
+        if (width <= 860) {
+          expect(geometry.photo.width, `Founder portrait max width at ${width}px`).toBeLessThanOrEqual(280.5);
+          expect(geometry.copy.top, `Founder copy should stack below the portrait at ${width}px`)
+            .toBeGreaterThanOrEqual(geometry.photo.bottom - 1);
+        } else {
+          expect(Math.abs(geometry.photo.top - geometry.copy.top), `Founder columns should align at ${width}px`)
+            .toBeLessThanOrEqual(1);
+          expect(geometry.photo.width, `Founder portrait desktop width at ${width}px`).toBeLessThanOrEqual(300.5);
+          expect(geometry.copy.left, `Founder copy should follow the portrait at ${width}px`)
+            .toBeGreaterThanOrEqual(geometry.photo.right + 47);
+        }
+      }
     }
   });
 }
@@ -239,7 +318,7 @@ test('primary navigation links retain a visible keyboard focus indicator', async
 });
 
 test('creates deterministic fast-refresh screenshots for the six primary journeys', async ({ page }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(180_000);
   const outputDirectory = path.resolve('artifacts/r3-preview');
   await mkdir(outputDirectory, { recursive: true });
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
@@ -260,5 +339,19 @@ test('creates deterministic fast-refresh screenshots for the six primary journey
         animations: 'disabled'
       });
     }
+  }
+
+  for (const viewport of [
+    { width: 768, height: 1024 },
+    { width: 1024, height: 900 },
+    { width: 1440, height: 900 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await openRoute(page, '/about/');
+    await page.screenshot({
+      path: path.join(outputDirectory, `fast-refresh-about-${viewport.width}.png`),
+      fullPage: true,
+      animations: 'disabled'
+    });
   }
 });

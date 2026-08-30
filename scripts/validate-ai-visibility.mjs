@@ -112,9 +112,11 @@ assert.doesNotMatch(robots, /^Disallow:/m);
 const sitemap = await readRepositoryFile('sitemap.xml');
 const sitemapLocations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
 const sitemapDates = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(match => match[1]);
+const expectedSitemapDates = canonicalPages.map(([file]) =>
+  file === 'about/index.html' ? '2026-08-30' : '2026-08-28'
+);
 assert.deepEqual(sitemapLocations, canonicalPages.map(([, canonicalUrl]) => canonicalUrl));
-assert.deepEqual(new Set(sitemapDates), new Set(['2026-08-28']));
-assert.equal(sitemapDates.length, canonicalPages.length);
+assert.deepEqual(sitemapDates, expectedSitemapDates);
 
 const llmsText = await readRepositoryFile('llms.txt');
 assert.ok(llmsText.startsWith('# 3BrainAI\n'));
@@ -205,6 +207,12 @@ assert.doesNotMatch(investorPage, /Indicative commercial scenarios|monthly recur
 
 const eyCompletionClaim = /3BrainAI Solutions was one of 11 startups in the EY Startup Academy Frankfurt 2025 cohort and completed the programme\./;
 const aboutPage = await readRepositoryFile('about/index.html');
+assert.match(aboutPage, /<h2 class="about-founder-name">Dušan Přikryl<\/h2>/);
+assert.match(aboutPage, /Owner-side CAPEX leadership · Tier-1 technology integration · German-speaking market experience/);
+assert.match(aboutPage, /Siemens, GEA, Geberit and Hörmann/);
+assert.match(aboutPage, /practical experience in Germany helped shape his delivery model and he works professionally in German/);
+assert.match(aboutPage, /3BrainAI Solutions' completion of the EY Startup Academy Frankfurt 2025 programme/);
+assert.doesNotMatch(aboutPage, /Keller Grundbau|Vigona|United Energy|events and networks/i);
 for (const [file, html] of [
   ['investors/index.html', investorPage],
   ['about/index.html', aboutPage]
