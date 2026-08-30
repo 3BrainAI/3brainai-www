@@ -1,6 +1,6 @@
 # R3 Site-wide Navigation Checkpoint
 
-**Issue:** `R3 Site-wide CRI-first Navigation Sync — existing English routes only`
+**Issue:** `R3 Site-wide CRI-first Navigation Sync – existing English routes only`
 
 **Checkpoint date:** 5 August 2026
 
@@ -83,7 +83,7 @@ No CSS, JavaScript, body copy, hierarchy, footer, metadata, route, Czech/German 
 
 Local results:
 
-- `npm run validate`: passed — configured homepage HTML and global CSS validation;
+- `npm run validate`: passed – configured homepage HTML and global CSS validation;
 - `git diff --check`: passed;
 - Playwright: 32/32 passed, consisting of the 10 existing homepage tests and 22 new navigation tests;
 - all 15 scoped English routes match the canonical labels, order, targets and active-state contract;
@@ -98,7 +98,7 @@ The environment could not download Playwright's pinned Chromium from its CDN bec
 
 Remote pull-request evidence:
 
-- draft PR: `#7` — `work/r3-sitewide-navigation` → `redesign/r3-day-one`;
+- draft PR: `#7` – `work/r3-sitewide-navigation` → `redesign/r3-day-one`;
 - PR scope: one implementation commit, 16 files, 261 insertions and 14 deletions;
 - PR mergeability after GitHub recalculation: `true`;
 - workflow: `R3 review checks`;

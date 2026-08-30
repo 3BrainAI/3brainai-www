@@ -7,7 +7,10 @@ import process from 'node:process';
 const repositoryRoot = process.cwd();
 const ignoredDirectories = new Set(['.git', 'node_modules', 'playwright-report', 'test-results', 'artifacts']);
 const copyExtensions = new Set(['.css', '.html', '.js', '.mjs', '.json', '.txt', '.xml']);
-const forbiddenCopyPattern = new RegExp('\\u2014|&' + 'mdash;');
+const forbiddenCopyPattern = new RegExp(
+  `${String.fromCodePoint(0x2014)}|${'\\\\' + 'u2014'}|&${'(?:mdash|#0*8212|#x0*2014);'}`,
+  'i'
+);
 const standaloneArtifactPages = new Set([
   'evidence-packs/fischamend/index.html'
 ]);
@@ -37,26 +40,17 @@ const requiredIconLinks = [
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
 
-const releaseAssetVersion = 'f87d840f';
-const m2AssetVersion = '2cc56e54';
+const releaseStylesheetVersion = '2cc56e54';
+const releaseScriptVersion = 'f87d840f';
 const m3HomepageCorrectionVersion = 'b7b7bad8';
 const aboutFounderVersion = 'f8700cdd';
-const m2StylesheetPages = new Set([
-  'index.html',
-  'cri/index.html',
-  'validation/index.html',
-  'investors/index.html'
-]);
-const requiredScriptSource = `/assets/js/main.js?v=${releaseAssetVersion}`;
+const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const relativePath = path.relative(repositoryRoot, file);
   if (standaloneArtifactPages.has(relativePath)) continue;
-  const expectedStylesheetVersion = m2StylesheetPages.has(relativePath)
-    ? m2AssetVersion
-    : releaseAssetVersion;
-  const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${expectedStylesheetVersion}">`;
+  const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseStylesheetVersion}">`;
   assert.ok(
     html.includes(requiredStylesheetLink),
     `${relativePath} must use the versioned release stylesheet`
@@ -107,19 +101,28 @@ for (const file of htmlFiles) {
   }
 }
 
-const fischamendArtifactHashes = new Map([
-  ['evidence-packs/fischamend/index.html', '8abb3fd128f6c3ef245b9d12844004cb66a1d6822e7598f4783bcea33fa16f84'],
-  ['evidence-packs/fischamend/3BrainAI_CRI_Fischamend_Evidence_Pack_v0_1.pdf', '9965d58e31d4039d72d9b0fc808ded13a449b4c3172e650a3e9123b19c80dcdf'],
+const fischamendImmutableAssetHashes = new Map([
   ['evidence-packs/fischamend/assets/fischamend_t0_T0_2023-08-20_visual.png', 'a0dafc4173b0a1800d43c738a97dccbbf555fe261929c5e5d019536bab41cb8f'],
   ['evidence-packs/fischamend/assets/fischamend_t1_T1_2025-08-19_visual.png', 'b938f6be662e6ecc996634b854dd28ebfd7607ff37030d0aa0fe878cf5eca6fa'],
   ['assets/img/cri/evidence/fischamend-t0-2023-08-20.png', 'a0dafc4173b0a1800d43c738a97dccbbf555fe261929c5e5d019536bab41cb8f'],
   ['assets/img/cri/evidence/fischamend-t1-2025-08-19.png', 'b938f6be662e6ecc996634b854dd28ebfd7607ff37030d0aa0fe878cf5eca6fa']
 ]);
 
-for (const [relativePath, expectedHash] of fischamendArtifactHashes) {
+for (const [relativePath, expectedHash] of fischamendImmutableAssetHashes) {
   const value = await readFile(path.join(repositoryRoot, relativePath));
   const actualHash = createHash('sha256').update(value).digest('hex');
-  assert.equal(actualHash, expectedHash, `${relativePath} must retain its founder-locked bytes`);
+  assert.equal(actualHash, expectedHash, `${relativePath} must retain its founder-locked image bytes`);
+}
+
+const fischamendPublicReleaseHashes = new Map([
+  ['evidence-packs/fischamend/index.html', 'a68630279a8447e0cfea306f0b0abf5c50074b37e15b089ac1279264523460c7'],
+  ['evidence-packs/fischamend/3BrainAI_CRI_Fischamend_Evidence_Pack_v0_1.pdf', '525aba2f01b9d43c8c55d52349026ca5d2533747d46002bc8c3ed098cd0cfb05']
+]);
+
+for (const [relativePath, expectedHash] of fischamendPublicReleaseHashes) {
+  const value = await readFile(path.join(repositoryRoot, relativePath));
+  const actualHash = createHash('sha256').update(value).digest('hex');
+  assert.equal(actualHash, expectedHash, `${relativePath} must retain its founder-approved public-release bytes`);
 }
 
 const founderPortraitHashes = new Map([
@@ -148,9 +151,18 @@ assert.doesNotMatch(
   /<(?:img|script)\b[^>]*\bsrc="https?:\/\//i,
   'Fischamend artefact must not load an external runtime image or script'
 );
+for (const requiredReleaseMarker of [
+  'ILLUSTRATIVE PROTOTYPE - PUBLIC-SAFE EXAMPLE - HUMAN REVIEW REQUIRED',
+  'PUBLIC-SAFE EXAMPLE - HUMAN REVIEW REQUIRED',
+  'v0.1 PUBLIC-SAFE RELEASE'
+]) {
+  assert.ok(fischamendArtifactHtml.includes(requiredReleaseMarker));
+}
+assert.doesNotMatch(fischamendArtifactHtml, /REVIEW MOCK|NOT FOR PUBLIC RELEASE|v0\.1 DRAFT/);
+assert.match(fischamendArtifactHtml, /<link rel="canonical" href="https:\/\/www\.3brain\.ai\/evidence-packs\/fischamend\/">/);
 assert.doesNotMatch(
   fischamendArtifactHtml,
-  /<link\b[^>]*\bhref="https?:\/\//i,
+  /<link\b(?=[^>]*\brel="stylesheet")(?=[^>]*\bhref="https?:\/\/)[^>]*>/i,
   'Fischamend artefact must not load an external runtime stylesheet'
 );
 
@@ -255,7 +267,7 @@ assert.match(
 );
 assert.match(homepageHtml, /href="\/validation\/#readiness-form">Discuss an Evidence Readiness Check<\/a>/);
 assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View the Austrian Evidence Pack<\/a>/);
-assert.match(homepageHtml, /WATCH &#8212;<\/span>\s*<span>EVIDENCE SUFFICIENCY<\/span>/);
+assert.match(homepageHtml, /WATCH –<\/span>\s*<span>EVIDENCE SUFFICIENCY<\/span>/);
 assert.match(homepageHtml, /id="portfolio"/);
 assert.match(homepageHtml, /id="evidence-pack-sample"/);
 assert.match(homepageHtml, /D4 infrastructure example/);
@@ -329,7 +341,7 @@ assert.equal((validationHtml.match(/class="m2-stage /g) ?? []).length, 5);
 assert.equal((validationHtml.match(/class="m2-engagement-state"/g) ?? []).length, 4);
 assert.equal((validationHtml.match(/class="stage-rail"/g) ?? []).length, 0);
 assert.match(validationHtml, /Idea and problem definition[\s\S]*Product concept and illustrative prototypes[\s\S]*Proof of Concept[\s\S]*Paid Pilot[\s\S]*Commercial deployment/);
-assert.match(validationHtml, /Institution-specific engagement &#8212; a separate axis/);
+assert.match(validationHtml, /Institution-specific engagement – a separate axis/);
 assert.doesNotMatch(validationHtml, /Commercial Deployment/);
 assert.equal((validationHtml.match(/class="evaluation-item"/g) ?? []).length, 4);
 assert.equal((validationHtml.match(/<details>/g) ?? []).length, 6);

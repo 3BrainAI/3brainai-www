@@ -1,4 +1,4 @@
-# Web R5 / M2 — G2 assets, route and portfolio map
+# Web R5 / M2 – G2 assets, route and portfolio map
 
 **State:** Technical asset preparation approved; public publication not approved
 

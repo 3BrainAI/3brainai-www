@@ -1,4 +1,4 @@
-# Web R5 / M2 — G0 implementation baseline
+# Web R5 / M2 – G0 implementation baseline
 
 **Date:** 30 August 2026
 

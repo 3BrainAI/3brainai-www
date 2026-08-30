@@ -1,4 +1,4 @@
-# Web R5 / M2 — G1 cross-surface content map
+# Web R5 / M2 – G1 cross-surface content map
 
 **State:** G1 prepared from founder lock; production implementation remains G3
 
@@ -8,18 +8,18 @@
 
 | Item | Canonical implementation value |
 |---|---|
-| Current product state | `Controlled-case validation of the governed Evidence Pack workflow — in progress.` |
+| Current product state | `Controlled-case validation of the governed Evidence Pack workflow – in progress.` |
 | Product history | Idea completed → Product Concept and Illustrative Prototypes completed → Proof of Concept current → Paid Pilot next → Commercial Deployment target |
 | Institution entry | Evidence Readiness Check; this is a separate axis from product history |
-| Primary case | Fischamend, Lower Austria — Vienna Airport logistics park observation area |
+| Primary case | Fischamend, Lower Austria – Vienna Airport logistics park observation area |
 | Secondary case | D4 infrastructure example; independent AOI and evidence review required |
-| Status | `WATCH — EVIDENCE SUFFICIENCY`; evidence state, not project rating |
+| Status | `WATCH – EVIDENCE SUFFICIENCY`; evidence state, not project rating |
 | Primary CTA | `View the Austrian Evidence Pack` |
 | Secondary CTA | `Discuss an Evidence Readiness Check` |
 | Investor CTA | Exact locked `mailto:investors@3brain.ai?subject=Request%3A%203BrainAI%20investor%20materials` |
 | Public boundary | Human-reviewed decision support; no autonomous credit/payment decision and no deployed-customer claim |
 
-## 2. Homepage — `/index.html`
+## 2. Homepage – `/index.html`
 
 ### Current mismatch
 
@@ -44,7 +44,7 @@
 The existing `#evidence-pack-sample` block remains available until its archive
 position is explicitly implemented. Existing inbound fragments must not break.
 
-## 3. CRI — `/cri/index.html`
+## 3. CRI – `/cri/index.html`
 
 ### Current mismatch
 
@@ -63,7 +63,7 @@ position is explicitly implemented. Existing inbound fragments must not break.
 - Keep Earth Observation as an input rather than the customer-facing product.
 - Route the public example through the new portfolio/Fischamend path.
 
-## 4. Validation — `/validation/index.html`
+## 4. Validation – `/validation/index.html`
 
 ### Current mismatch
 
@@ -75,23 +75,23 @@ one line. It therefore merges product history with institution engagement.
 
 Create two visibly and semantically independent blocks:
 
-1. **Product maturity — complete history**
-   - Idea and problem definition — Completed
-   - Product concept and illustrative prototypes — Completed
-   - Proof of Concept — Current
-   - Paid Pilot — Next
-   - Commercial Deployment — Target
-2. **Institution-specific engagement — separate axis**
-   - Evidence Readiness Check — Entry gate
-   - Institution-specific validation — As agreed
-   - Paid Pilot — Contracted
-   - Commercial Deployment — Accepted
+1. **Product maturity – complete history**
+   - Idea and problem definition – Completed
+   - Product concept and illustrative prototypes – Completed
+   - Proof of Concept – Current
+   - Paid Pilot – Next
+   - Commercial Deployment – Target
+2. **Institution-specific engagement – separate axis**
+   - Evidence Readiness Check – Entry gate
+   - Institution-specific validation – As agreed
+   - Paid Pilot – Contracted
+   - Commercial Deployment – Accepted
 
 The page hero must state that PoC is current/in progress. Existing shadow-mode,
 readiness criteria, boundaries, Q&A and contact form remain useful and should be
 preserved unless a direct contradiction is found.
 
-## 5. Investors — `/investors/index.html`
+## 5. Investors – `/investors/index.html`
 
 ### Current mismatch
 
@@ -112,7 +112,7 @@ preserved unless a direct contradiction is found.
   history or present a concise PoC → paid-pilot → target deployment path with
   correct labels.
 
-## 6. Shared CSS — `/assets/css/style.css`
+## 6. Shared CSS – `/assets/css/style.css`
 
 G3 may integrate the founder-approved hierarchy, spacing, card, badge, focus,
 touch-target, responsive and reduced-motion behaviour. New rules should be
@@ -121,8 +121,8 @@ must not be replaced wholesale.
 
 ## 7. Surfaces deliberately outside G1/G3
 
-- `/mis/` — archival artefact; untouched.
-- Czech and German placeholders — no translation or maturity update in this
+- `/mis/` – archival artefact; untouched.
+- Czech and German placeholders – no translation or maturity update in this
   bounded English implementation unless separately authorised.
-- Legal, privacy, security and imprint pages — no content change.
-- D4 evidence details — unavailable and must not be invented.
+- Legal, privacy, security and imprint pages – no content change.
+- D4 evidence details – unavailable and must not be invented.

@@ -112,10 +112,16 @@ assert.doesNotMatch(robots, /^Disallow:/m);
 const sitemap = await readRepositoryFile('sitemap.xml');
 const sitemapLocations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
 const sitemapDates = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(match => match[1]);
-const expectedSitemapDates = canonicalPages.map(([file]) =>
-  file === 'about/index.html' ? '2026-08-30' : '2026-08-28'
+const expectedSitemapLocations = canonicalPages.map(([, canonicalUrl]) => canonicalUrl);
+const validationIndex = expectedSitemapLocations.indexOf('https://www.3brain.ai/validation/');
+expectedSitemapLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
+const expectedSitemapDates = expectedSitemapLocations.map(canonicalUrl =>
+  canonicalUrl === 'https://www.3brain.ai/about/' ||
+  canonicalUrl === 'https://www.3brain.ai/evidence-packs/fischamend/'
+    ? '2026-08-30'
+    : '2026-08-28'
 );
-assert.deepEqual(sitemapLocations, canonicalPages.map(([, canonicalUrl]) => canonicalUrl));
+assert.deepEqual(sitemapLocations, expectedSitemapLocations);
 assert.deepEqual(sitemapDates, expectedSitemapDates);
 
 const llmsText = await readRepositoryFile('llms.txt');

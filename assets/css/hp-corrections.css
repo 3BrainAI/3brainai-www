@@ -1,13 +1,3 @@
-/* ============================================================
-   HP CORRECTION CANDIDATE M3 (visual only, content unchanged)
-   2026-08-30 – each rule is numbered for the web-tool handoff.
-   Revert = remove this file and its <link> from index.html.
-   ============================================================ */
-
-/* HP-FIX-1a: Lausitz/North Sea card – eliminate the 224px dead zone
-   in the left column: the last section (Recommended next step, on
-   surface-subtle background) grows to absorb the height difference
-   against the taller metadata sidebar. */
 .evidence-pack-content {
   display: flex;
   flex-direction: column;
@@ -25,8 +15,6 @@
   justify-content: center;
 }
 
-/* HP-FIX-1b: tighten the metadata sidebar so it stops forcing
-   the card taller than the content column needs. */
 .evidence-pack-metadata {
   padding: 16px 16px 12px;
 }
@@ -36,25 +24,17 @@
   padding-top: 12px;
 }
 
-/* HP-FIX-1c: header balance – vertically centre the WATCH status box
-   against the title block so it stops floating in the corner. */
 .evidence-pack-header {
   align-items: center;
   padding-top: 18px;
   padding-bottom: 16px;
 }
 
-/* HP-FIX-1d: historical prototypes read as full-width – narrow and
-   centre the archive block so it stays visually subordinate to the
-   primary Fischamend case above it. */
 .m2-archive-prototypes {
   max-width: 1060px;
   margin-inline: auto;
 }
 
-/* HP-FIX-2: timeline "A governed signal for human review" –
-   replace the wireframe look with a finished axis: single 2px baseline,
-   circular nodes on the line and filled navy Evidence Pack nodes. */
 .review-timeline {
   min-height: 148px;
   padding-top: 26px;
@@ -129,9 +109,6 @@
   }
 }
 
-/* HP-FIX-3: local headings inside boxes – 10–10.5px at low contrast
-   was getting lost above the body text. Raise to 12px, darker and
-   consistently weighted. */
 .evidence-section-label,
 .evidence-field-label,
 .evidence-meta-list dt,
@@ -143,13 +120,8 @@
   letter-spacing: 0.06em;
 }
 
-/* HP-FIX-4: mobile (<=720px) – stack Illustrative use and Source
-   attribution once the divider has changed to its mobile form. */
 @media (max-width: 720px) {
   .evidence-input-footer {
     grid-template-columns: 1fr;
   }
 }
-
-/* HP-FIX-5 is in index.html: the standalone Direction pill in the
-   dark Governance Layer section carries maturity-label--on-dark. */
