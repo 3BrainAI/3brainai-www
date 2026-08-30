@@ -1,8 +1,8 @@
-# Web R5 / M2 — G5 release handoff
+# Web R5 / M2 – G5 release handoff
 
 **Date:** 30 August 2026
 
-**State:** PREPARED — review handoff complete; no external repository action
+**State:** PREPARED – review handoff complete; no external repository action
 
 **Feature branch:** `feat/web-r5-m2-founder-lock-v0-3`
 
@@ -47,7 +47,7 @@ The handoff contains 24 repository files:
 - 6 new public route/asset files;
 - 7 new audit and gate records.
 
-### Public runtime surfaces — modified
+### Public runtime surfaces – modified
 
 - `assets/css/style.css`
 - `cri/index.html`
@@ -56,7 +56,7 @@ The handoff contains 24 repository files:
 - `llms.txt`
 - `validation/index.html`
 
-### Quality contracts — modified
+### Quality contracts – modified
 
 - `scripts/validate-ai-visibility.mjs`
 - `scripts/validate-site-polish.mjs`
@@ -64,7 +64,7 @@ The handoff contains 24 repository files:
 - `tests/r3-homepage.spec.mjs`
 - `tests/r3-navigation.spec.mjs`
 
-### Public route and evidence assets — new
+### Public route and evidence assets – new
 
 - `assets/img/cri/evidence/fischamend-t0-2023-08-20.png`
 - `assets/img/cri/evidence/fischamend-t1-2025-08-19.png`
@@ -73,7 +73,7 @@ The handoff contains 24 repository files:
 - `evidence-packs/fischamend/assets/fischamend_t0_T0_2023-08-20_visual.png`
 - `evidence-packs/fischamend/assets/fischamend_t1_T1_2025-08-19_visual.png`
 
-### Audit and gate records — new
+### Audit and gate records – new
 
 - `docs/web-r5-m2/00-g0-baseline.md`
 - `docs/web-r5-m2/01-g1-content-map.md`
@@ -97,7 +97,7 @@ package-lock or deployment-configuration file is changed.
 - Fischamend, Lower Austria is the primary recognisable bank case.
 - D4 remains a quiet secondary signal with no invented AOI, dates, evidence
   pair or finding.
-- `WATCH — EVIDENCE SUFFICIENCY` remains an evidence/workflow state, not a
+- `WATCH – EVIDENCE SUFFICIENCY` remains an evidence/workflow state, not a
   project or credit rating.
 - Public calls to action preserve the approved order: Austrian Evidence Pack,
   Evidence Readiness Check, controlled investor route.
@@ -114,8 +114,8 @@ package-lock or deployment-configuration file is changed.
 |---|---|---|
 | Fischamend T0 | `a0dafc4173b0a1800d43c738a97dccbbf555fe261929c5e5d019536bab41cb8f` | PASS |
 | Fischamend T1 | `b938f6be662e6ecc996634b854dd28ebfd7607ff37030d0aa0fe878cf5eca6fa` | PASS |
-| Accessible Evidence Pack HTML | `8abb3fd128f6c3ef245b9d12844004cb66a1d6822e7598f4783bcea33fa16f84` | PASS |
-| Two-page A4 Evidence Pack PDF | `9965d58e31d4039d72d9b0fc808ded13a449b4c3172e650a3e9123b19c80dcdf` | PASS |
+| Accessible Evidence Pack HTML, v0.1 public-safe release | `a68630279a8447e0cfea306f0b0abf5c50074b37e15b089ac1279264523460c7` | PASS |
+| Two-page A4 Evidence Pack PDF, v0.1 public-safe release | `525aba2f01b9d43c8c55d52349026ca5d2533747d46002bc8c3ed098cd0cfb05` | PASS |
 
 The two repository image placements preserve identical bytes. The standalone
 HTML, PDF and both local image references resolve without external runtime
@@ -148,15 +148,15 @@ non-blocking observations are recorded in
 
 | Check | G5 result |
 |---|---|
-| `npm run validate` | PASS — HTML, CSS, 12-page AI visibility and 34-entry site-polish contracts |
+| `npm run validate` | PASS – HTML, CSS, 12-page AI visibility and 34-entry site-polish contracts |
 | `git diff --check` | PASS |
-| Test discovery | PASS — 60 Playwright tests in three specifications |
-| Candidate versus deployed G4 implementation | PASS — exact common-file Git blob identity |
+| Test discovery | PASS – 60 Playwright tests in three specifications |
+| Candidate versus deployed G4 implementation | PASS – exact common-file Git blob identity |
 | Locked Evidence Pack hashes | PASS |
-| `/mis/` diff | PASS — empty |
-| G4 live browser matrix | PASS — five surfaces at 390, 768, 1024 and 1440 px |
-| G4 keyboard/interactions | PASS — menu state, skip link, focus, tabs, lazy assets and routes |
-| Runtime application console | PASS — no application warning/error entries |
+| `/mis/` diff | PASS – empty |
+| G4 live browser matrix | PASS – five surfaces at 390, 768, 1024 and 1440 px |
+| G4 keyboard/interactions | PASS – menu state, skip link, focus, tabs, lazy assets and routes |
+| Runtime application console | PASS – no application warning/error entries |
 
 ### Local browser-run environment note
 
@@ -195,7 +195,7 @@ The commit must contain exactly the 24 files in section 3. Before committing:
 **Title**
 
 ```text
-Web R5 / M2 — controlled-case PoC and Austrian Evidence Pack
+Web R5 / M2 – controlled-case PoC and Austrian Evidence Pack
 ```
 
 **Base / head**
@@ -221,7 +221,7 @@ main <- feat/web-r5-m2-founder-lock-v0-3
   assets under `/evidence-packs/fischamend/`
 - updates Homepage, CRI, Validation and Investors while preserving the earlier
   Lausitz and German North Sea prototypes
-- keeps `WATCH — EVIDENCE SUFFICIENCY` bounded to evidence state and keeps
+- keeps `WATCH – EVIDENCE SUFFICIENCY` bounded to evidence state and keeps
   `/mis/` unchanged
 - extends static and browser contracts for the new maturity, route, CTA and
   claim boundaries
@@ -235,17 +235,17 @@ compliance, payment or drawdown claims.
 
 ## Validation completed
 
-- `npm run validate` — PASS
-  - HTML — zero warnings
-  - CSS — PASS
-  - AI visibility — 12 canonical pages
-  - site polish — 34 HTML entry points
-- `git diff --check` — PASS
-- Evidence Pack HTML/PDF and dated T0/T1 hashes — PASS
-- `/mis/` — unchanged
-- G4 live browser matrix — PASS across five surfaces at 390, 768, 1024 and
+- `npm run validate` – PASS
+  - HTML – zero warnings
+  - CSS – PASS
+  - AI visibility – 12 canonical pages
+  - site polish – 34 HTML entry points
+- `git diff --check` – PASS
+- Evidence Pack HTML/PDF and dated T0/T1 hashes – PASS
+- `/mis/` – unchanged
+- G4 live browser matrix – PASS across five surfaces at 390, 768, 1024 and
   1440 px
-- keyboard, focus, mobile menu, tabs, imagery, links and application console —
+- keyboard, focus, mobile menu, tabs, imagery, links and application console –
   PASS
 
 ## QA evidence
@@ -272,18 +272,18 @@ from this PR without separate explicit founder approval.
 Because `main` has no branch protection or ruleset, the following process is
 mandatory even though GitHub will not enforce it automatically:
 
-1. **Stage and commit approval** — exact 24-file manifest only.
-2. **Push approval** — publish the feature branch; do not update `main`.
-3. **Draft PR approval** — open the proposal above against `main`.
-4. **CI gate** — require a green `R3 review checks` workflow and inspect its
+1. **Stage and commit approval** – exact 24-file manifest only.
+2. **Push approval** – publish the feature branch; do not update `main`.
+3. **Draft PR approval** – open the proposal above against `main`.
+4. **CI gate** – require a green `R3 review checks` workflow and inspect its
    screenshot/report artifacts.
-5. **Review gate** — verify the PR file list, claims boundary, Fischamend
+5. **Review gate** – verify the PR file list, claims boundary, Fischamend
    assets and `/mis/` no-change condition.
-6. **Ready-for-review/merge approval** — separate founder decision after CI.
-7. **Production verification** — after an approved squash merge, verify the
+6. **Ready-for-review/merge approval** – separate founder decision after CI.
+7. **Production verification** – after an approved squash merge, verify the
    live Homepage, CRI, Validation, Investors and Fischamend routes, their key
    assets and browser console.
-8. **Cleanup approval** — only after production verification, separately
+8. **Cleanup approval** – only after production verification, separately
    approve removal of the temporary Render service, QA branch and any retained
    historical feature branch.
 

@@ -1,6 +1,6 @@
 # R3 Review Infrastructure Checkpoint
 
-**Issue:** `R3 Review Infrastructure — deterministic CI validation and Playwright previews`
+**Issue:** `R3 Review Infrastructure – deterministic CI validation and Playwright previews`
 
 **Date:** 4 August 2026
 
@@ -43,13 +43,13 @@ The workflow runs only as a validation and rendering job. It has read-only repos
 
 - package installation: passed with the pinned lockfile;
 - HTML/CSS validation: passed;
-- Playwright test discovery: passed — 9 tests discovered in one specification file;
+- Playwright test discovery: passed – 9 tests discovered in one specification file;
 - first GitHub Actions run: failed before browser tests because the workflow used Node 20 while `html-validate@11.6.1` requires Node 22.22+ or Node 24.8+;
 - compatibility correction: workflow moved to Node 24 and the package runtime contract set to `>=24.8.0 <25`;
 - corrected GitHub Actions run: passed, including HTML/CSS validation, all 9 Playwright tests and artifact upload;
 - first full-page desktop and mobile artifacts: visually verified without duplicated page content;
 - expanded five-image review contract: passed in GitHub Actions run `30894915183`;
-- final artifact set: 7 PNG files — 2 full-page captures and 5 focused review captures — visually verified without duplicated or stale content.
+- final artifact set: 7 PNG files – 2 full-page captures and 5 focused review captures – visually verified without duplicated or stale content.
 
 ## Exact next step
 

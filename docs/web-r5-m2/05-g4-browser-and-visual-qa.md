@@ -1,8 +1,8 @@
-# Web R5 / M2 — G4 browser and visual QA
+# Web R5 / M2 – G4 browser and visual QA
 
 **Date:** 30 August 2026
 
-**State:** PASS — full live viewport, interaction and visual coverage complete
+**State:** PASS – full live viewport, interaction and visual coverage complete
 
 **Publication:** Not authorised
 
@@ -20,7 +20,7 @@ deploy the founder-lock feature branch and did not modify `main`, production or
 | Remote QA commit | PASS | `fce1289f786c16696c0bbd2fe18fa4803f27c854` |
 | Content tree identity | PASS | Remote tree `6e6119580eebe7f649618b659ad4ecd1672a64bb` equals the approved local QA tree |
 | Parent boundary | PASS | Built directly on `main` commit `f0ae3b37fdd595c625b46c7875c5b6314389809d` |
-| Render workspace | PASS | `My Workspace — prikryl@3brain.ai` (`tea-daa2lgijnfac73fbe4q0`) |
+| Render workspace | PASS | `My Workspace – prikryl@3brain.ai` (`tea-daa2lgijnfac73fbe4q0`) |
 | Render service | PASS | `brainai-web-r5-m2-g4-v03` (`srv-daa2u7tg1s2s73bvn8og`) |
 | Auto-deploy | PASS | Off |
 | PR previews | PASS | Off |
@@ -162,7 +162,7 @@ Render outage, application defect, bot challenge or page security issue.
 
 ## 8. Gate decision
 
-**Decision: PASS — G4 browser and visual QA is closed.**
+**Decision: PASS – G4 browser and visual QA is closed.**
 
 No confirmed implementation defect justified a CSS, HTML, copy, evidence-asset
 or founder-locked content change. The temporary QA branch and Render service

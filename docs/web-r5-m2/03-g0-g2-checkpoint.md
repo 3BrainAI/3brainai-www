@@ -1,4 +1,4 @@
-# Web R5 / M2 — G0–G2 checkpoint
+# Web R5 / M2 – G0–G2 checkpoint
 
 **Date:** 30 August 2026
 
@@ -25,16 +25,16 @@
 
 | Check | Result |
 |---|---|
-| Source/target hashes | PASS — all six repository copies match the founder-locked hashes |
-| Evidence Pack PDF | PASS — 2 pages, A4 |
-| HTML validation | PASS — zero warnings |
+| Source/target hashes | PASS – all six repository copies match the founder-locked hashes |
+| Evidence Pack PDF | PASS – 2 pages, A4 |
+| HTML validation | PASS – zero warnings |
 | CSS validation | PASS |
-| AI visibility contract | PASS — 12 canonical pages unchanged |
-| Site-polish contract | PASS — 34 HTML entry points covered |
-| Local HTTP route | PASS — HTML, PDF and four image paths returned HTTP 200 |
-| Local HTML image references | PASS — both resolve inside the route |
-| Existing evidence assets | PASS — no overwrite or deletion |
-| `/mis/` | PASS — untouched |
+| AI visibility contract | PASS – 12 canonical pages unchanged |
+| Site-polish contract | PASS – 34 HTML entry points covered |
+| Local HTTP route | PASS – HTML, PDF and four image paths returned HTTP 200 |
+| Local HTML image references | PASS – both resolve inside the route |
+| Existing evidence assets | PASS – no overwrite or deletion |
+| `/mis/` | PASS – untouched |
 
 The first full validation run stopped at the expected entry-count guard because
 the site gained its 34th HTML entry point. The guard was updated to recognise

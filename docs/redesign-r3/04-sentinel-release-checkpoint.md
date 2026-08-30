@@ -27,7 +27,7 @@ The card uses four compact rows:
 
 1. `Open-pit lignite mining area`
 2. `Sentinel-2 · Bílina, Northwest Czechia · 2 Aug 2026`
-3. `Illustrative EO context — not a validated CRI assessment.`
+3. `Illustrative EO context – not a validated CRI assessment.`
 4. `Contains modified Copernicus Sentinel data (2026).`
 
 The owner confirmed on 5 August 2026 that the selected image was captured from the current Sentinel Workspace dashboard view on 2 August 2026 and uploaded to Drive immediately afterwards. `2 Aug 2026` therefore supersedes the provisional month-only label used by the earlier placeholder.
@@ -53,10 +53,10 @@ The public label records the dashboard capture date. The file is correctly treat
 
 ## Provenance gate result
 
-- exact public capture date: confirmed — 2 August 2026;
-- source: confirmed by the owner — current Sentinel Workspace dashboard view;
+- exact public capture date: confirmed – 2 August 2026;
+- source: confirmed by the owner – current Sentinel Workspace dashboard view;
 - processing record: confirmed and documented above;
-- modified-data status: confirmed — yes;
+- modified-data status: confirmed – yes;
 - Copernicus attribution: included using the required modified-data notice.
 
 The underlying Sentinel product ID is not embedded in the screenshot and remains unavailable. The release claim is therefore intentionally limited to the dashboard capture and illustrative EO context; it does not claim a raw-product identifier, processing level or independently validated assessment.

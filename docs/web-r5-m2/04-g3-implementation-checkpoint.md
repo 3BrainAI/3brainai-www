@@ -1,4 +1,4 @@
-# Web R5 / M2 — G3 implementation checkpoint
+# Web R5 / M2 – G3 implementation checkpoint
 
 **Date:** 30 August 2026
 
@@ -11,7 +11,7 @@
 
 - founder-locked value proposition and current Proof of Concept state;
 - primary Fischamend Evidence Pack preview with dated T0/T1 imagery;
-- canonical two-line `WATCH — EVIDENCE SUFFICIENCY` evidence-state badge;
+- canonical two-line `WATCH – EVIDENCE SUFFICIENCY` evidence-state badge;
 - primary Austrian Evidence Pack and secondary Evidence Readiness Check actions;
 - restrained investor route;
 - new `#portfolio` hierarchy with Fischamend primary and D4 secondary;

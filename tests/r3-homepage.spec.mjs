@@ -73,7 +73,7 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#portfolio')).toHaveCount(1);
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
   await expect(page.locator('.m2-fischamend-hero')).toContainText('Fischamend, Lower Austria');
-  await expect(page.locator('.m2-watch-badge')).toHaveText(/WATCH\s+\u2014\s+EVIDENCE SUFFICIENCY/);
+  await expect(page.locator('.m2-watch-badge')).toHaveText(/WATCH\s+\u2013\s+EVIDENCE SUFFICIENCY/);
   await expect(page.locator('.m2-portfolio-card--secondary')).toContainText('D4 infrastructure example');
   await expect(page.getByRole('tablist', { name: 'Illustrative Evidence Pack prototypes' })).toBeVisible();
   await expect(page.getByRole('tab')).toHaveCount(2);

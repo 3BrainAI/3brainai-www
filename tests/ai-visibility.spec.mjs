@@ -144,11 +144,17 @@ test('sitemap contains exactly the live canonical pages with truthful release da
   const body = await response.text();
   const locations = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
   const lastModifiedDates = [...body.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(match => match[1]);
-  const expectedLastModifiedDates = canonicalPages.map(page =>
-    page.route === '/about/' ? '2026-08-30' : '2026-08-28'
+  const expectedLocations = canonicalPages.map(page => page.url);
+  const validationIndex = expectedLocations.indexOf('https://www.3brain.ai/validation/');
+  expectedLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
+  const expectedLastModifiedDates = expectedLocations.map(url =>
+    url === 'https://www.3brain.ai/about/' ||
+    url === 'https://www.3brain.ai/evidence-packs/fischamend/'
+      ? '2026-08-30'
+      : '2026-08-28'
   );
 
-  expect(locations).toEqual(canonicalPages.map(page => page.url));
+  expect(locations).toEqual(expectedLocations);
   expect(lastModifiedDates).toEqual(expectedLastModifiedDates);
 
   for (const canonicalPage of canonicalPages) {

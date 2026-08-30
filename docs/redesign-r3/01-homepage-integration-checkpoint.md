@@ -1,6 +1,6 @@
 # R3 Homepage Integration Checkpoint
 
-**Issue:** `R3 Homepage Integration — CRI-first structure below the approved hero`
+**Issue:** `R3 Homepage Integration – CRI-first structure below the approved hero`
 
 **Checkpoint date:** 4 August 2026
 
@@ -23,7 +23,7 @@ The approved CRI-first hero and public-safe Evidence Pack remain the primary hom
 3. Observed vs Declared
 4. How it works
 5. Validation path
-6. Governance Layer — secondary
+6. Governance Layer – secondary
 7. Founder/company proof
 8. Final CTA
 
@@ -35,7 +35,7 @@ The homepage navigation is CRI-first and uses existing routes or valid homepage 
 - approved CTA copy preserved;
 - approved Evidence Pack content preserved;
 - WATCH remains a restrained dot-plus-text status;
-- `Human review — Required` appears exactly once in Assessment metadata;
+- `Human review – Required` appears exactly once in Assessment metadata;
 - Findings and Uncertainty retain the approved visual hierarchy;
 - Sentinel remains an explicitly labelled placeholder;
 - no audit trail was added to the hero;
@@ -45,7 +45,7 @@ The homepage navigation is CRI-first and uses existing routes or valid homepage 
 
 Independent implementation review returned `APPROVE WITH P1 CORRECTIONS`.
 
-### K1 — resolved
+### K1 – resolved
 
 The Evidence Pack anchor evidence originally captured an intermediate smooth-scroll position. The source already contained a 96 px scroll margin, but the screenshot was taken before scrolling settled.
 
@@ -95,14 +95,14 @@ Passed checks:
 
 The CI artifact contains eight native Playwright captures:
 
-1. `r3-homepage-1280.png` — desktop full page
-2. `r3-homepage-390.png` — mobile full page
-3. `r3-homepage-desktop-1280.png` — desktop top viewport
-4. `r3-homepage-mobile-390.png` — mobile top viewport
-5. `r3-evidence-pack-mobile-390.png` — complete mobile Evidence Pack
-6. `r3-evidence-pack-target-desktop-1280.png` — corrected desktop anchor state
-7. `r3-evidence-pack-target-mobile-390.png` — corrected mobile anchor state
-8. `r3-evidence-pack-closeup-1280.png` — desktop component close-up
+1. `r3-homepage-1280.png` – desktop full page
+2. `r3-homepage-390.png` – mobile full page
+3. `r3-homepage-desktop-1280.png` – desktop top viewport
+4. `r3-homepage-mobile-390.png` – mobile top viewport
+5. `r3-evidence-pack-mobile-390.png` – complete mobile Evidence Pack
+6. `r3-evidence-pack-target-desktop-1280.png` – corrected desktop anchor state
+7. `r3-evidence-pack-target-mobile-390.png` – corrected mobile anchor state
+8. `r3-evidence-pack-closeup-1280.png` – desktop component close-up
 
 The two corrected anchor captures were opened and visually verified after the successful run. They show the Evidence Pack primary label, title and WATCH status once, below the sticky header.
 

@@ -186,7 +186,7 @@ After desktop and mobile screenshots exist:
 4. agree a staging or deploy-preview method;
 5. ask Dušan for an explicit production decision.
 
-## 10. Checkpoint — R3.1 first bounded block
+## 10. Checkpoint – R3.1 first bounded block
 
 **Checkpoint time:** 2 August 2026
 
@@ -249,7 +249,7 @@ No files have been staged or committed because commit, push and pull-request act
 
 Open the self-contained desktop/mobile-responsive HTML preview and capture one 1280 px and one 390 px screenshot. Then run the KIMI visual-review prompt against those two screenshots plus the Evidence Pack close-up. Do not extend the implementation or publish before that visual gate is complete.
 
-## 11. Checkpoint — approved KIMI corrections C1–C4
+## 11. Checkpoint – approved KIMI corrections C1–C4
 
 **Checkpoint time:** 2 August 2026
 
@@ -288,7 +288,7 @@ Open the self-contained desktop/mobile-responsive HTML preview and capture one 1
 
 Open the updated self-contained checkpoint in an approved external rendering environment, capture the five requested desktop/mobile review states, and verify C1–C4 visually. Replace the EO placeholder only after the approved Sentinel file is transferred locally and exact Copernicus attribution is confirmed. Do not stage, commit, push or publish before Dušan approves the review result.
 
-## 12. Checkpoint — final KIMI metadata correction
+## 12. Checkpoint – final KIMI metadata correction
 
 **Checkpoint time:** 2 August 2026
 
