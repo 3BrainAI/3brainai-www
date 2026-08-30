@@ -12,10 +12,11 @@
 ## Core product
 
 - [3BrainAI CRI](https://www.3brain.ai/cri/): Construction Risk Intelligence for governed institutional review.
-- [Evidence Pack sample](https://www.3brain.ai/#evidence-pack-sample): Synthetic public-safe example; not a live customer assessment.
-- [Validation](https://www.3brain.ai/validation/): Evidence Readiness Check, institution-specific PoC, Paid Pilot and target Commercial Deployment.
+- [Evidence Pack portfolio](https://www.3brain.ai/#portfolio): Fischamend is the primary Austrian public-safe case; earlier German prototypes remain accessible as historical concept evidence.
+- [Fischamend Evidence Pack](https://www.3brain.ai/evidence-packs/fischamend/): Illustrative public-safe draft for a synthetic review question; not a live customer assessment.
+- [Validation](https://www.3brain.ai/validation/): Complete product history and a separate institution-specific engagement path beginning with an Evidence Readiness Check.
 
-Current stage: product development and illustrative Evidence Pack prototypes. The next validation step is an institution-specific Proof of Concept. A PoC is normally run in shadow mode alongside existing controls.
+Current stage: controlled-case Proof of Concept validation of the governed Evidence Pack workflow is in progress. The next product gate is a contracted paid pilot. Product history remains visible from completed idea definition and illustrative prototype work through current PoC, next Paid Pilot and target Commercial Deployment. Institution-specific engagement is a separate axis beginning with an Evidence Readiness Check; institution-specific validation is normally run in shadow mode alongside existing controls.
 
 ## Company and verification
 
