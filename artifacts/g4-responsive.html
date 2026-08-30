@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3BrainAI G4 responsive QA harness</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; background: #e9edf2; color: #172033; }
+    header { max-width: 1120px; margin: 0 auto 16px; }
+    h1 { margin: 0 0 6px; font-size: 18px; }
+    p { margin: 0; font-size: 13px; }
+    .stage { margin: 0 auto; overflow: hidden; background: #fff; box-shadow: 0 16px 40px rgb(15 23 42 / 18%); }
+    .scaled { transform-origin: top left; }
+    iframe { display: block; border: 0; background: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>G4 responsive QA harness</h1>
+    <p id="status">Preparing viewport…</p>
+  </header>
+  <main class="stage" id="stage">
+    <div class="scaled" id="scaled">
+      <iframe id="candidate" title="3BrainAI candidate viewport"></iframe>
+    </div>
+  </main>
+  <script>
+    const allowedWidths = new Set([390, 768, 1024, 1440]);
+    const allowedPaths = new Set([
+      "/",
+      "/cri/",
+      "/validation/",
+      "/investors/",
+      "/evidence-packs/fischamend/"
+    ]);
+    const params = new URLSearchParams(window.location.search);
+    const requestedWidth = Number(params.get("width"));
+    const requestedPath = params.get("path") || "/";
+    const width = allowedWidths.has(requestedWidth) ? requestedWidth : 390;
+    const path = allowedPaths.has(requestedPath) ? requestedPath : "/";
+    const displayLimit = 1120;
+    const scale = Math.min(1, displayLimit / width);
+    const stage = document.querySelector("#stage");
+    const scaled = document.querySelector("#scaled");
+    const frame = document.querySelector("#candidate");
+    const status = document.querySelector("#status");
+
+    stage.style.width = `${Math.ceil(width * scale)}px`;
+    scaled.style.width = `${width}px`;
+    scaled.style.transform = `scale(${scale})`;
+    frame.style.width = `${width}px`;
+
+    frame.addEventListener("load", () => {
+      const documentHeight = Math.min(
+        frame.contentDocument.documentElement.scrollHeight,
+        20000
+      );
+      frame.style.height = `${documentHeight}px`;
+      scaled.style.height = `${documentHeight}px`;
+      stage.style.height = `${Math.ceil(documentHeight * scale)}px`;
+      status.textContent = `${path} at ${width}px (display scale ${scale.toFixed(3)})`;
+      document.body.dataset.ready = "true";
+    });
+
+    frame.src = path;
+  </script>
+</body>
+</html>

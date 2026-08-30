@@ -82,11 +82,11 @@
       },
       {
         "@type": "Report",
-        "@id": "https://www.3brain.ai/#evidence-pack-sample",
-        "name": "Illustrative European Evidence Pack prototypes",
-        "url": "https://www.3brain.ai/#evidence-pack-sample",
-        "description": "Illustrative, public-safe Evidence Pack samples using dated Copernicus observation pairs. They are not live customer assessments.",
-        "version": "0.2-public-demo",
+        "@id": "https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack",
+        "name": "Fischamend Evidence Pack public-safe draft",
+        "url": "https://www.3brain.ai/evidence-packs/fischamend/",
+        "description": "Illustrative, public-safe Evidence Pack draft using a dated Copernicus observation pair for a synthetic review question. It is not a live customer assessment.",
+        "version": "0.1-draft",
         "inLanguage": "en",
         "creator": {
           "@id": "https://www.3brain.ai/#organization"
@@ -100,10 +100,10 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="/assets/img/cri/evidence/lausitz-t0-2019-16x9.webp" type="image/webp">
-  <link rel="preload" as="image" href="/assets/img/cri/evidence/lausitz-t1-2026-16x9.webp" type="image/webp">
+  <link rel="preload" as="image" href="/assets/img/cri/evidence/fischamend-t0-2023-08-20.png" type="image/png">
+  <link rel="preload" as="image" href="/assets/img/cri/evidence/fischamend-t1-2025-08-19.png" type="image/png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="/assets/css/style.css?v=f87d840f">
+  <link rel="stylesheet" href="/assets/css/style.css?v=2cc56e54">
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-mark-v2-32.png">
   <link rel="shortcut icon" href="/assets/img/favicon-mark-v2.ico">
@@ -122,7 +122,7 @@
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
     <nav class="nav" aria-label="Main navigation">
       <a class="" href="/cri/">CRI</a>
-      <a class="" href="#evidence-pack-sample">Evidence Pack</a>
+      <a class="" href="#portfolio">Evidence Pack</a>
       <a class="" href="/validation/">Validation</a>
       <a class="" href="/investors/">Investors</a>
       <a class="" href="/about/">About</a>
@@ -137,12 +137,12 @@
   <div class="container r3-hero-grid">
     <div class="r3-hero-copy">
       <p class="kicker">For banks and institutional lenders</p>
-      <h1 id="r3-hero-title">Review-ready evidence for physical&#8209;asset risk.</h1>
-      <p class="lead">3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product for banks and institutional asset reviewers. CRI is designed to add a governed evidence state between formal review points through short, versioned Evidence Packs.</p>
+      <h1 id="r3-hero-title">Turn dated project evidence into a reviewable decision-support record.</h1>
+      <p class="lead">CRI is validating a governed Evidence Pack workflow for physical-asset risk review. It separates what was declared, what was observed and what still requires responsible human review.</p>
       <p class="r3-boundary-line">The target workflow supports human review. It is not intended to make autonomous credit decisions, replace bank policy or replace professional assessment.</p>
       <div class="maturity-marker maturity-marker--current">
-        <span class="maturity-label">Current – product development</span>
-        <span class="maturity-detail">Illustrative Evidence Pack prototypes</span>
+        <span class="maturity-label">Current &#8212; Proof of Concept</span>
+        <span class="maturity-detail">Controlled-case validation of the governed Evidence Pack workflow &#8212; in progress.</span>
       </div>
       <ul class="r3-buyer-strip" aria-label="Primary bank review contexts">
         <li>Credit risk &amp; portfolio monitoring</li>
@@ -150,16 +150,70 @@
         <li>Collateral &amp; progress review</li>
       </ul>
       <div class="ctas r3-hero-actions">
-        <a class="btn" href="#evidence-pack-sample" data-evidence-pack-trigger data-evidence-pack-destination="pack">View the Evidence Pack prototype</a>
-        <a class="btn secondary" href="/validation/">Discuss a PoC</a>
+        <a class="btn" href="#portfolio">View the Austrian Evidence Pack</a>
+        <a class="btn secondary" href="/validation/#readiness-form">Discuss an Evidence Readiness Check</a>
       </div>
-      <a class="r3-proof-link" href="#lausitz-evidence-input" data-evidence-pack-trigger data-evidence-pack-destination="input">View the evidence imagery in the active prototype <span aria-hidden="true">↓</span></a>
+      <a class="r3-proof-link" href="/investors/">Understand the product and commercial path <span aria-hidden="true">&#8594;</span></a>
     </div>
 
-    <div class="evidence-pack-showcase" id="evidence-pack-sample">
+    <article class="m2-fischamend-hero" aria-labelledby="fischamend-hero-title">
+      <header class="m2-case-head">
+        <div>
+          <p class="evidence-pack-label">Illustrative prototype · public-safe example</p>
+          <h2 id="fischamend-hero-title">Fischamend, Lower Austria &#8212; Vienna Airport logistics park observation area</h2>
+        </div>
+        <div class="m2-watch-badge" role="status" aria-label="Evidence status: WATCH &#8212; EVIDENCE SUFFICIENCY">
+          <span>WATCH &#8212;</span>
+          <span>EVIDENCE SUFFICIENCY</span>
+        </div>
+      </header>
+      <div class="m2-scene-pair" role="group" aria-label="Dated Fischamend observation pair">
+        <figure>
+          <img src="/assets/img/cri/evidence/fischamend-t0-2023-08-20.png" width="145" height="159" loading="eager" fetchpriority="high" decoding="async" alt="Sentinel-2 T0 crop of the Fischamend observation area on 20 August 2023">
+          <figcaption><strong>T0 · Baseline</strong><span>20 Aug 2023</span></figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/img/cri/evidence/fischamend-t1-2025-08-19.png" width="145" height="159" loading="eager" fetchpriority="high" decoding="async" alt="Sentinel-2 T1 crop of the Fischamend observation area on 19 August 2025">
+          <figcaption><strong>T1 · Observation</strong><span>19 Aug 2025</span></figcaption>
+        </figure>
+      </div>
+      <p class="m2-case-observation"><strong>Between 20 August 2023 and 19 August 2025, two large rectangular roofed structures became visible within the selected observation area, replacing predominantly bare or construction-affected surface.</strong></p>
+      <p class="m2-case-boundary">The imagery directionally supports the synthetic review question. It does not establish building completion, quality, fit-out, occupancy, environmental compliance, contractual acceptance or payment eligibility.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section m2-portfolio-section" id="portfolio" aria-labelledby="portfolio-title">
+  <div class="container">
+    <div class="section-title relationship-intro">
+      <p class="kicker">Evidence Pack portfolio logic</p>
+      <h2 id="portfolio-title">Recognisable bank case first. Strategic reach second.</h2>
+    </div>
+    <div class="m2-portfolio-grid">
+      <article class="m2-portfolio-card m2-portfolio-card--primary">
+        <span class="m2-portfolio-role">Primary bank case</span>
+        <h3>Fischamend, Lower Austria</h3>
+        <p>Vienna Airport logistics park observation area. Selected for a bounded, repeatable construction-review question and recognisable Austrian context.</p>
+        <p><strong>Public-safe conclusion:</strong> The dated public optical evidence supports a limited directional review of the synthetic question. Documentary and engineering evidence remain necessary before any institution-specific conclusion. Drawdown authorisation and credit decisions are outside this Evidence Pack.</p>
+        <a class="btn" href="/evidence-packs/fischamend/">View the Austrian Evidence Pack</a>
+      </article>
+      <article class="m2-portfolio-card m2-portfolio-card--secondary">
+        <span class="m2-portfolio-role">Secondary strategic case</span>
+        <h3>D4 infrastructure example</h3>
+        <p>A restrained signal of applicability beyond logistics real estate. It requires its own area of interest and evidence review and does not inherit the Fischamend validation result.</p>
+        <p class="m2-portfolio-boundary">No dated evidence pair or validated finding is asserted here.</p>
+      </article>
+    </div>
+
+    <div class="evidence-pack-showcase m2-archive-prototypes" id="evidence-pack-sample">
+      <div class="m2-archive-intro">
+        <p class="kicker">Earlier public-safe prototypes</p>
+        <h3>Historical concept evidence remains accessible.</h3>
+        <p>Lausitz and the German North Sea preserve earlier Evidence Pack design work. Fischamend is now the primary public bank case; these two records remain illustrative prototypes, not outputs from a deployed customer system.</p>
+      </div>
       <nav class="evidence-case-selector" aria-label="Evidence Pack case selector">
         <span class="evidence-case-selector-label">Case view</span>
-        <p class="evidence-case-selector-note">Two illustrative public-safe Evidence Pack prototypes. They show the intended record format; they are not outputs from a deployed customer system.</p>
+        <p class="evidence-case-selector-note">Two earlier public-safe Evidence Pack prototypes retained as historical concept evidence.</p>
         <div class="evidence-case-tabs" role="tablist" aria-label="Illustrative Evidence Pack prototypes">
           <button
             class="evidence-case-tab"
@@ -361,8 +415,7 @@
                     src="/assets/img/cri/evidence/lausitz-t0-2019-16x9.png"
                     width="1296"
                     height="729"
-                    loading="eager"
-                    fetchpriority="high"
+                    loading="lazy"
                     decoding="async"
                     alt="Sentinel-2 true-colour view of the Cottbuser Ostsee area on 18 June 2019, showing predominantly exposed surfaces"
                   >
@@ -381,8 +434,7 @@
                     src="/assets/img/cri/evidence/lausitz-t1-2026-16x9.png"
                     width="1296"
                     height="729"
-                    loading="eager"
-                    fetchpriority="high"
+                    loading="lazy"
                     decoding="async"
                     alt="Sentinel-2 true-colour view of the Cottbuser Ostsee area on 27 May 2026, showing a large water body"
                   >
@@ -639,7 +691,7 @@
       <p class="r3-section-kicker">Product proof</p>
       <h2 id="evidence-pack-proof-title">An Evidence Pack is a short, versioned review record.</h2>
       <p class="r3-section-lead">The visible prototype keeps status, reasons, uncertainty, provenance and review state attached to the evidence.</p>
-      <p><a class="r3-inline-link" href="#evidence-pack-sample">Return to the illustrative Evidence Pack</a></p>
+      <p><a class="r3-inline-link" href="#portfolio">Return to the Evidence Pack portfolio</a></p>
     </div>
     <ul class="r3-proof-points">
       <li>
@@ -798,9 +850,9 @@
   <div class="container r3-section-inner r3-reading">
     <p class="r3-section-kicker">Validation path</p>
     <h2 id="validation-path-title">Validate the workflow before operational use.</h2>
-    <p class="r3-section-lead">The Evidence Readiness Check scopes one bounded review question, available context and responsible reviewers. An institution-specific PoC can then run in shadow mode alongside existing controls. If its agreed criteria are met, the next step is a contracted paid pilot.</p>
+    <p class="r3-section-lead">The current Proof of Concept validates the governed workflow on controlled cases. An institution begins separately with an Evidence Readiness Check and may then agree a bounded validation in shadow mode. If its agreed criteria are met, the next step is a contracted paid pilot.</p>
     <div class="ctas r3-section-actions">
-      <a class="btn" href="mailto:cri@3brain.ai?subject=Discuss%20a%203BrainAI%20CRI%20PoC">Discuss a PoC</a>
+      <a class="btn" href="/validation/#readiness-form">Discuss an Evidence Readiness Check</a>
       <a class="btn secondary" href="/validation/">See validation overview</a>
     </div>
   </div>
@@ -871,7 +923,7 @@
       <article class="r3-next-step-card">
         <h3>Bank validation</h3>
         <p>Explore one bounded review question, controlled context and responsible review roles.</p>
-        <a class="btn" href="mailto:cri@3brain.ai?subject=Discuss%20a%203BrainAI%20CRI%20PoC">Discuss a PoC</a>
+        <a class="btn" href="/validation/#readiness-form">Discuss an Evidence Readiness Check</a>
       </article>
       <article class="r3-next-step-card">
         <h3>Investor review</h3>

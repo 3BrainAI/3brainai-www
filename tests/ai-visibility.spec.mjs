@@ -118,7 +118,8 @@ test('llms.txt is public-safe, bounded and internally resolvable', async ({ requ
   expect(body).toContain('3BrainAI Nexus s.r.o. is developing 3BrainAI CRI');
   expect(body).toContain('3BrainAI CRI');
   expect(body).toContain('3BrainAI is a European startup for institutional markets');
-  expect(body).toContain('Current stage: product development and illustrative Evidence Pack prototypes');
+  expect(body).toContain('Current stage: controlled-case Proof of Concept validation of the governed Evidence Pack workflow is in progress');
+  expect(body).toContain('Institution-specific engagement is a separate axis beginning with an Evidence Readiness Check');
   expect(body).toContain('Evidence Pack');
   expect(body).toContain('does not make autonomous credit decisions, replace bank policy or replace professional assessment');
   expect(body).toContain('Earth Observation is an input medium');
@@ -216,14 +217,14 @@ for (const canonicalPage of canonicalPages) {
   });
 }
 
-test('JSON-LD separates the brand, Nexus, CRI and Evidence Pack sample', async ({ page }) => {
+test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', async ({ page }) => {
   const expectedGraphs = {
     '/': [
       'https://www.3brain.ai/#brand',
       'https://www.3brain.ai/#organization',
       'https://www.3brain.ai/#website',
       'https://www.3brain.ai/cri/#product',
-      'https://www.3brain.ai/#evidence-pack-sample'
+      'https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack'
     ],
     '/cri/': [
       'https://www.3brain.ai/#brand',
@@ -279,9 +280,10 @@ test('JSON-LD separates the brand, Nexus, CRI and Evidence Pack sample', async (
   expect(homepageProduct.manufacturer['@id']).toBe('https://www.3brain.ai/#organization');
 
   const evidencePackSample = parsedGraphs['/'].find(
-    entity => entity['@id'] === 'https://www.3brain.ai/#evidence-pack-sample'
+    entity => entity['@id'] === 'https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack'
   );
-  expect(evidencePackSample.version).toBe('0.2-public-demo');
+  expect(evidencePackSample.version).toBe('0.1-draft');
+  expect(evidencePackSample.url).toBe('https://www.3brain.ai/evidence-packs/fischamend/');
   expect(evidencePackSample.creator['@id']).toBe('https://www.3brain.ai/#organization');
 
   const imprintOrganizations = parsedGraphs['/imprint/'].filter(entity => entity['@type'] === 'Organization');

@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="/assets/css/style.css?v=f87d840f">
+  <link rel="stylesheet" href="/assets/css/style.css?v=2cc56e54">
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-mark-v2-32.png">
   <link rel="shortcut icon" href="/assets/img/favicon-mark-v2.ico">
@@ -42,7 +42,7 @@
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
     <nav class="nav" aria-label="Main navigation">
       <a class="" href="/cri/">CRI</a>
-      <a class="" href="/#evidence-pack-sample">Evidence Pack</a>
+      <a class="" href="/#portfolio">Evidence Pack</a>
       <a class="active" href="/validation/">Validation</a>
       <a class="" href="/investors/">Investors</a>
       <a class="" href="/about/">About</a>
@@ -56,50 +56,88 @@
     <div class="container">
       <p class="kicker">Institution-specific validation</p>
       <h1>Test one bounded review question before operational use.</h1>
-      <p class="lead">The next validation stage is an institution-specific Proof of Concept (PoC): a bounded workflow-fit test with controlled context and responsible human reviewers.</p>
+      <p class="lead">A controlled-case Proof of Concept is in progress to validate the governed Evidence Pack workflow. An institution begins on a separate engagement path with an Evidence Readiness Check.</p>
       <p class="validation-boundary">Shadow mode means that CRI outputs are reviewed alongside existing controls without affecting live decisions.</p>
       <div class="ctas">
-        <a class="btn" href="#readiness-form">Discuss a PoC</a>
-        <a class="btn secondary" href="/#evidence-pack-sample">View the Evidence Pack prototype</a>
+        <a class="btn" href="#readiness-form">Discuss an Evidence Readiness Check</a>
+        <a class="btn secondary" href="/evidence-packs/fischamend/">View the Austrian Evidence Pack</a>
       </div>
     </div>
   </section>
 
-  <section class="section stage-path-section" aria-labelledby="validation-stage-title">
+  <section class="section stage-path-section" id="product-history" aria-labelledby="validation-stage-title">
     <div class="container">
       <div class="section-title relationship-intro">
-        <p class="kicker">A gated path</p>
-        <h2 id="validation-stage-title">From readiness to recurring use – one gate at a time.</h2>
+        <p class="kicker">Product maturity &#8212; complete history</p>
+        <h2 id="validation-stage-title">From idea to recurring use &#8212; current PoC, one gate at a time.</h2>
       </div>
-      <div class="relationship-card stage-rail-card">
-        <ol class="stage-rail" aria-label="CRI validation and adoption stages">
-          <li class="stage-current">
-            <span class="maturity-label">Current – product development</span>
-            <span>Illustrative Evidence Pack prototypes</span>
+      <div class="relationship-card m2-history-card">
+        <ol class="m2-history" aria-label="Complete CRI product maturity history">
+          <li class="m2-stage m2-stage--completed">
+            <span class="m2-stage-index">01</span>
+            <span class="m2-stage-state">Completed</span>
+            <h3>Idea and problem definition</h3>
+            <p>The problem and responsible decision boundary were defined.</p>
           </li>
-          <li class="stage-node">
-            <span class="stage-node-index">01</span>
-            <strong>Evidence Readiness Check</strong>
-            <span>Scope the review question, usable context and responsible reviewer.</span>
+          <li class="m2-stage m2-stage--completed">
+            <span class="m2-stage-index">02</span>
+            <span class="m2-stage-state">Completed</span>
+            <h3>Product concept and illustrative prototypes</h3>
+            <p>The intended Evidence Pack format and review grammar were made visible.</p>
           </li>
-          <li class="stage-node">
-            <span class="stage-node-index">02</span>
-            <strong>Proof of Concept</strong>
-            <span>Test one bounded workflow with controlled context in shadow mode.</span>
+          <li class="m2-stage m2-stage--current">
+            <span class="m2-stage-index">03</span>
+            <span class="m2-stage-state">Current</span>
+            <h3>Proof of Concept</h3>
+            <p>Controlled-case validation of the governed Evidence Pack workflow &#8212; in progress.</p>
           </li>
-          <li class="stage-node">
-            <span class="stage-node-index">03</span>
-            <strong>Paid Pilot</strong>
-            <span>Contract institution-specific configuration and calibration.</span>
+          <li class="m2-stage m2-stage--next">
+            <span class="m2-stage-index">04</span>
+            <span class="m2-stage-state">Next</span>
+            <h3>Paid Pilot</h3>
+            <p>Contracted institution-specific configuration and calibration after agreed gates.</p>
           </li>
-          <li class="stage-node">
-            <span class="stage-node-index">04</span>
-            <strong>Commercial Deployment</strong>
-            <span>Target recurring assisted SaaS workflow after agreed gates.</span>
+          <li class="m2-stage m2-stage--target">
+            <span class="m2-stage-index">05</span>
+            <span class="m2-stage-state">Target</span>
+            <h3>Commercial Deployment</h3>
+            <p>Recurring assisted workflow within an institution after agreed acceptance.</p>
           </li>
         </ol>
-        <p class="stage-transition-note">If the agreed PoC criteria are met, the next step is a contracted paid pilot.</p>
+        <p class="m2-axis-note"><strong>Current product state:</strong> Controlled-case validation of the governed Evidence Pack workflow &#8212; in progress. The earlier completed stages remain visible as part of the product record.</p>
       </div>
+
+      <section class="m2-engagement-block" id="institution-engagement" aria-labelledby="institution-engagement-title">
+        <div class="section-title relationship-intro">
+          <p class="kicker">Institution-specific engagement &#8212; a separate axis</p>
+          <h2 id="institution-engagement-title">A bank does not enter at the product's historical first step.</h2>
+        </div>
+        <div class="relationship-card m2-engagement-card">
+          <ol class="m2-engagement" aria-label="Institution-specific engagement path">
+            <li>
+              <span class="m2-engagement-state">Entry gate</span>
+              <h3>Evidence Readiness Check</h3>
+              <p>Scope one review question, usable context and a responsible reviewer.</p>
+            </li>
+            <li>
+              <span class="m2-engagement-state">As agreed</span>
+              <h3>Institution-specific validation</h3>
+              <p>Test a bounded workflow with controlled institution context.</p>
+            </li>
+            <li>
+              <span class="m2-engagement-state">Contracted</span>
+              <h3>Paid Pilot</h3>
+              <p>Configure, calibrate and evaluate against agreed criteria.</p>
+            </li>
+            <li>
+              <span class="m2-engagement-state">Accepted</span>
+              <h3>Commercial Deployment</h3>
+              <p>Move to recurring assisted use within the institution.</p>
+            </li>
+          </ol>
+          <p class="m2-axis-note">Evidence Readiness is the institution's entry gate. It does not replace or restart the product's completed history.</p>
+        </div>
+      </section>
     </div>
   </section>
 

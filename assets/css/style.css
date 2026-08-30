@@ -4847,3 +4847,422 @@ h3 {
     font-size: 11px;
   }
 }
+
+/* Web R5 / M2 founder lock: cross-surface content and visual architecture */
+#portfolio,
+#evidence-pack-sample,
+#product-history,
+#institution-engagement,
+#readiness-form {
+  scroll-margin-top: var(--r3-sticky-header-offset);
+  scroll-margin-block-start: var(--r3-sticky-header-offset);
+}
+
+.m2-fischamend-hero,
+.m2-portfolio-card {
+  border: 1px solid var(--r3-border);
+  border-radius: var(--r3-card-radius);
+  background: var(--r3-surface);
+  box-shadow: var(--r3-shadow);
+}
+
+.m2-fischamend-hero {
+  min-width: 0;
+  padding: clamp(22px, 3vw, 34px);
+}
+
+.m2-case-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--r3-space-5);
+  align-items: start;
+}
+
+.m2-case-head h2 {
+  max-width: 25ch;
+  margin: var(--r3-space-2) 0 0;
+  color: var(--r3-text);
+  font-size: clamp(24px, 2.3vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.m2-watch-badge {
+  display: grid;
+  gap: 2px;
+  min-width: 168px;
+  padding: 10px 12px;
+  border: 1px solid #a35a16;
+  border-radius: 7px;
+  background: #fff8ee;
+  color: #8a4b11;
+  font-family: var(--r3-metadata-font);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.m2-scene-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--r3-space-4);
+  margin-top: var(--r3-space-5);
+}
+
+.m2-scene-pair figure {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--r3-border);
+  border-radius: 8px;
+  background: var(--r3-surface-subtle);
+}
+
+.m2-scene-pair img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 145 / 159;
+  object-fit: cover;
+}
+
+.m2-scene-pair figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--r3-space-2);
+  padding: 9px 10px;
+  border-top: 1px solid var(--r3-border);
+  color: var(--r3-text-secondary);
+  font-family: var(--r3-metadata-font);
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+.m2-scene-pair figcaption strong {
+  color: var(--r3-text);
+}
+
+.m2-case-observation {
+  margin: var(--r3-space-5) 0 0;
+  color: var(--r3-text);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.m2-case-boundary,
+.m2-portfolio-boundary {
+  color: var(--r3-text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.m2-case-boundary {
+  margin: var(--r3-space-4) 0 0;
+  padding: var(--r3-space-4);
+  border-left: 2px solid #a35a16;
+  background: #fff8ee;
+}
+
+.m2-portfolio-section {
+  border-bottom: 1px solid var(--r3-border);
+  background: var(--r3-page-background);
+  scroll-margin-top: var(--r3-sticky-header-offset);
+}
+
+.m2-portfolio-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.8fr);
+  gap: var(--r3-space-5);
+}
+
+.m2-portfolio-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(22px, 3vw, 34px);
+}
+
+.m2-portfolio-card--primary {
+  border-color: var(--r3-action);
+}
+
+.m2-portfolio-card--secondary {
+  border-style: dashed;
+  background: var(--r3-surface-subtle);
+}
+
+.m2-portfolio-role,
+.m2-mechanism-index,
+.m2-stage-index,
+.m2-stage-state,
+.m2-engagement-state {
+  color: var(--r3-action);
+  font-family: var(--r3-metadata-font);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.m2-portfolio-card h3 {
+  margin: var(--r3-space-4) 0 var(--r3-space-3);
+  font-size: clamp(23px, 2.2vw, 32px);
+  line-height: 1.15;
+}
+
+.m2-portfolio-card p {
+  color: var(--r3-text-secondary);
+  line-height: 1.6;
+}
+
+.m2-portfolio-card .btn {
+  align-self: flex-start;
+  min-height: 46px;
+  margin-top: auto;
+}
+
+.m2-archive-prototypes {
+  margin-top: clamp(46px, 6vw, 76px);
+}
+
+.m2-archive-intro {
+  max-width: var(--r3-reading-width);
+  margin-bottom: var(--r3-space-5);
+}
+
+.m2-archive-intro h3 {
+  margin: var(--r3-space-2) 0 var(--r3-space-3);
+  font-size: clamp(24px, 2.4vw, 34px);
+}
+
+.m2-archive-intro p:last-child {
+  color: var(--r3-text-secondary);
+}
+
+.m2-mechanism {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--r3-space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.m2-mechanism li {
+  position: relative;
+  min-width: 0;
+  padding: var(--r3-space-5);
+  border: 1px solid var(--r3-border);
+  border-radius: var(--r3-card-radius);
+  background: var(--r3-surface);
+}
+
+.m2-mechanism li:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--r3-space-5) * -1);
+  z-index: 2;
+  width: var(--r3-space-5);
+  color: var(--r3-action);
+  font-family: var(--r3-metadata-font);
+  text-align: center;
+  transform: translateY(-50%);
+  content: "→";
+}
+
+.m2-mechanism-output {
+  border-color: var(--r3-action) !important;
+  background: #edf5fb !important;
+}
+
+.m2-mechanism h3,
+.m2-stage h3,
+.m2-engagement h3,
+.m2-investor-gate h3 {
+  margin: var(--r3-space-4) 0 var(--r3-space-2);
+  color: var(--r3-text);
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.m2-mechanism p,
+.m2-stage p,
+.m2-engagement p,
+.m2-investor-gate p {
+  margin: 0;
+  color: var(--r3-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.m2-history,
+.m2-engagement,
+.m2-investor-path {
+  display: grid;
+  gap: var(--r3-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.m2-history {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.m2-stage {
+  min-width: 0;
+  min-height: 204px;
+  padding: var(--r3-space-4);
+  border: 1px solid var(--r3-border);
+  border-radius: var(--r3-card-radius);
+  background: var(--r3-surface-subtle);
+}
+
+.m2-stage--completed {
+  background: var(--r3-surface);
+}
+
+.m2-stage--completed .m2-stage-state {
+  color: #47645a;
+}
+
+.m2-stage--current {
+  border: 2px solid var(--r3-action);
+  background: #edf5fb;
+}
+
+.m2-stage--next,
+.m2-stage--target {
+  border-style: dashed;
+}
+
+.m2-stage--target {
+  opacity: 0.82;
+}
+
+.m2-stage-index {
+  display: block;
+  margin-bottom: var(--r3-space-3);
+  color: var(--r3-text-secondary);
+}
+
+.m2-axis-note {
+  margin: var(--r3-space-5) 0 0;
+  padding-top: var(--r3-space-4);
+  border-top: 1px solid var(--r3-border);
+  color: var(--r3-text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.m2-engagement-block {
+  margin-top: clamp(46px, 6vw, 76px);
+}
+
+.m2-engagement {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.m2-engagement li {
+  min-width: 0;
+  min-height: 178px;
+  padding: var(--r3-space-5);
+  border: 1px dashed var(--r3-border);
+  border-radius: var(--r3-card-radius);
+  background: var(--r3-surface);
+}
+
+.m2-investor-path {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.m2-investor-gate {
+  min-width: 0;
+  min-height: 168px;
+  padding: var(--r3-space-5);
+  border: 1px solid var(--r3-border);
+  border-radius: var(--r3-card-radius);
+  background: var(--r3-surface-subtle);
+}
+
+.m2-investor-gate--current {
+  border: 2px solid var(--r3-action);
+  background: #edf5fb;
+}
+
+.m2-investor-gate--next,
+.m2-investor-gate--target {
+  border-style: dashed;
+}
+
+@media (max-width: 1100px) {
+  .m2-history {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .m2-history .m2-stage:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .m2-mechanism,
+  .m2-engagement {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .m2-mechanism li::after {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .m2-portfolio-grid,
+  .m2-investor-path {
+    grid-template-columns: 1fr;
+  }
+
+  .m2-portfolio-card .btn {
+    margin-top: var(--r3-space-4);
+  }
+}
+
+@media (max-width: 620px) {
+  .m2-case-head,
+  .m2-scene-pair,
+  .m2-mechanism,
+  .m2-history,
+  .m2-engagement {
+    grid-template-columns: 1fr;
+  }
+
+  .m2-history .m2-stage:last-child {
+    grid-column: auto;
+  }
+
+  .m2-watch-badge {
+    min-width: 0;
+  }
+
+  .m2-stage,
+  .m2-engagement li,
+  .m2-investor-gate {
+    min-height: 0;
+  }
+
+  .m2-scene-pair figcaption {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m2-fischamend-hero,
+  .m2-portfolio-card,
+  .m2-mechanism li,
+  .m2-stage,
+  .m2-engagement li,
+  .m2-investor-gate {
+    scroll-behavior: auto;
+  }
+}

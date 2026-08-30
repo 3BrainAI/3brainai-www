@@ -64,7 +64,7 @@ const expectedGraphIds = new Map([
     'https://www.3brain.ai/#organization',
     'https://www.3brain.ai/#website',
     'https://www.3brain.ai/cri/#product',
-    'https://www.3brain.ai/#evidence-pack-sample'
+    'https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack'
   ]],
   ['cri/index.html', [
     'https://www.3brain.ai/#brand',
@@ -122,8 +122,9 @@ assert.match(llmsText, /3BrainAI is the public brand/);
 assert.match(llmsText, /3BrainAI Nexus s\.r\.o\. is developing 3BrainAI CRI/);
 assert.match(llmsText, /3BrainAI CRI/);
 assert.match(llmsText, /3BrainAI is a European startup for institutional markets/);
-assert.match(llmsText, /Current stage: product development and illustrative Evidence Pack prototypes/);
-assert.match(llmsText, /Evidence Readiness Check, institution-specific PoC, Paid Pilot and target Commercial Deployment/);
+assert.match(llmsText, /Current stage: controlled-case Proof of Concept validation of the governed Evidence Pack workflow is in progress/);
+assert.match(llmsText, /Product history remains visible from completed idea definition and illustrative prototype work through current PoC, next Paid Pilot and target Commercial Deployment/);
+assert.match(llmsText, /Institution-specific engagement is a separate axis beginning with an Evidence Readiness Check/);
 assert.match(llmsText, /does not make autonomous credit decisions, replace bank policy or replace professional assessment/);
 assert.match(llmsText, /Earth Observation is an input medium/);
 assert.match(llmsText, /participating in the ESA Business Incubation Centre Czech Republic/);
@@ -156,6 +157,13 @@ const primaryNavigation = [
   ['Contact', '/contact/']
 ];
 
+const m2NavigationPages = new Set([
+  'index.html',
+  'cri/index.html',
+  'validation/index.html',
+  'investors/index.html'
+]);
+
 const approvedPublicMailboxes = new Set([
   'contact@3brain.ai',
   'cri@3brain.ai',
@@ -180,7 +188,9 @@ for (const file of publicEnglishPages) {
     .map(match => [match[2].trim(), match[1]]);
   const expectedNavigation = primaryNavigation.map(([label, href]) => [
     label,
-    file === 'index.html' && label === 'Evidence Pack' ? '#evidence-pack-sample' : href
+    label === 'Evidence Pack' && m2NavigationPages.has(file)
+      ? (file === 'index.html' ? '#portfolio' : '/#portfolio')
+      : href
   ]);
   assert.deepEqual(navigationLinks, expectedNavigation, `${file} has unexpected primary navigation`);
 
