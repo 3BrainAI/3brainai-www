@@ -40,7 +40,7 @@ const requiredIconLinks = [
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
 
-const releaseStylesheetVersion = '2cc56e54';
+const releaseStylesheetVersion = 'fa0883c5';
 const releaseScriptVersion = 'f87d840f';
 const m3HomepageCorrectionVersion = 'b7b7bad8';
 const aboutFounderVersion = 'f8700cdd';
@@ -136,6 +136,16 @@ for (const [relativePath, expectedHash] of founderPortraitHashes) {
   const value = await readFile(path.join(repositoryRoot, relativePath));
   const actualHash = createHash('sha256').update(value).digest('hex');
   assert.equal(actualHash, expectedHash, `${relativePath} must retain its supplied portrait bytes`);
+}
+
+const institutionalVisualHashes = new Map([
+  ['assets/img/ey-startup-academy-2025.jpg', '381d5a5674baf1d4b3dbd20f844b37089a970e51f994f65b3af89428c6623235']
+]);
+
+for (const [relativePath, expectedHash] of institutionalVisualHashes) {
+  const value = await readFile(path.join(repositoryRoot, relativePath));
+  const actualHash = createHash('sha256').update(value).digest('hex');
+  assert.equal(actualHash, expectedHash, `${relativePath} must retain its supplied source bytes`);
 }
 
 const fischamendArtifactHtml = await readFile(
@@ -259,7 +269,7 @@ assert.equal(
 );
 assert.match(
   homepageHtml,
-  /<h1 id="r3-hero-title">Turn dated project evidence into a reviewable decision-support record\.<\/h1>/
+  /<h1 id="r3-hero-title">Turn dated project evidence into a record built for accountable review\.<\/h1>/
 );
 assert.match(
   homepageHtml,
@@ -270,7 +280,8 @@ assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View the Austr
 assert.match(homepageHtml, /WATCH –<\/span>\s*<span>EVIDENCE SUFFICIENCY<\/span>/);
 assert.match(homepageHtml, /id="portfolio"/);
 assert.match(homepageHtml, /id="evidence-pack-sample"/);
-assert.match(homepageHtml, /D4 infrastructure example/);
+assert.match(homepageHtml, /D4 motorway – Czech Republic/);
+assert.match(homepageHtml, /The D4 is a motorway in the Czech Republic/);
 assert.match(homepageHtml, /does not inherit the Fischamend validation result/);
 assert.match(homepageHtml, /id="lausitz-evidence-input"[^>]*tabindex="-1"/);
 assert.match(homepageHtml, /id="north-sea-evidence-input"[^>]*tabindex="-1"/);
@@ -299,6 +310,12 @@ const reviewPackageHtml = (await Promise.all(
 const publicClaimSurface = `${(await Promise.all(
   canonicalEnglishPages.map(relativePath => readFile(path.join(repositoryRoot, relativePath), 'utf8'))
 )).join('\n')}\n${await readFile(path.join(repositoryRoot, 'llms.txt'), 'utf8')}`;
+
+assert.doesNotMatch(
+  publicClaimSurface,
+  /decision-support/i,
+  'Public claim surface must use accountable-review or review-support language instead of the retired compound'
+);
 
 assert.doesNotMatch(
   publicClaimSurface,
@@ -356,6 +373,21 @@ assert.match(investorsHtml, /class="commercial-equation"/);
 assert.doesNotMatch(investorsHtml, /Commercial Deployment/);
 assert.equal((investorsHtml.match(/data-contact-form/g) ?? []).length, 1);
 assert.equal((investorsHtml.match(/data-field-label=/g) ?? []).length, 4);
+assert.match(investorsHtml, /class="card cri card--content-centered"/);
+assert.match(investorsHtml, /src="\/assets\/img\/ey-startup-academy-2025\.jpg"/);
+assert.match(investorsHtml, /alt="EY Startup Academy 2025 programme artwork"/);
+assert.match(investorsHtml, /Download the forwardable 2-page PDF/);
+assert.match(investorsHtml, /financing plan and use of funds/);
+
+const misHtml = await readFile(path.join(repositoryRoot, 'mis/index.html'), 'utf8');
+assert.match(misHtml, /<p class="kicker">Target records layer<\/p>/);
+assert.match(misHtml, /A target reusable record layer designed to turn/);
+assert.match(misHtml, /The target Records layer is intended for organisations/);
+assert.doesNotMatch(misHtml, /use the Records layer/);
+
+const imprintHtml = await readFile(path.join(repositoryRoot, 'imprint/index.html'), 'utf8');
+assert.match(imprintHtml, /Accountable-review boundary/);
+assert.match(imprintHtml, /review-ready artefacts for accountable human review/);
 
 const governanceHtml = await readFile(path.join(repositoryRoot, 'governance-layer/index.html'), 'utf8');
 assert.match(governanceHtml, /class="governance-pipeline"/);
@@ -370,6 +402,9 @@ assert.match(stylesheet, /\.evidence-input-band:target\s*{/);
 assert.match(stylesheet, /\.m2-history\s*{/);
 assert.match(stylesheet, /\.m2-engagement\s*{/);
 assert.match(stylesheet, /\.m2-fischamend-hero\s*,/);
+assert.match(stylesheet, /\.card--content-centered\s*{[^}]*justify-content:\s*center;/s);
+assert.match(stylesheet, /\.institutional-card-visual--ey img\s*{[^}]*object-position:\s*center 78%;/s);
+assert.match(stylesheet, /\.theme-mis \.hero\.domain-hero\s*{[^}]*var\(--cri-navy\)/s);
 
 const homepageCorrections = await readFile(
   path.join(repositoryRoot, 'assets/css/hp-corrections.css'),

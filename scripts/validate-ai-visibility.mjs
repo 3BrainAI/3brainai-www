@@ -9,7 +9,7 @@ const repositoryRoot = path.resolve(scriptDirectory, '..');
 
 const canonicalPages = [
   ['index.html', 'https://www.3brain.ai/', '3BrainAI CRI | Construction Risk Intelligence for governed review', '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'],
-  ['mis/index.html', 'https://www.3brain.ai/mis/', '3BrainAI Records | Catalog &amp; Registry Record Layer', 'Governed records for consistent catalog, registry and institutional outputs.'],
+  ['mis/index.html', 'https://www.3brain.ai/mis/', '3BrainAI Records | Catalog &amp; Registry Record Layer', 'A target governed record layer for consistent catalog, registry and institutional outputs within the broader Trusted Data Plane direction.'],
   ['cri/index.html', 'https://www.3brain.ai/cri/', 'CRI – Construction Risk Intelligence | 3BrainAI Nexus', '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'],
   ['use-cases/index.html', 'https://www.3brain.ai/use-cases/', 'Use Cases | 3BrainAI', 'Model situations for CRI Evidence Packs, governed records, an Evidence Readiness Check and an institution-specific PoC run in shadow mode.'],
   ['governance-layer/index.html', 'https://www.3brain.ai/governance-layer/', 'Trusted Data Plane | 3BrainAI', 'The Trusted Data Plane is the intended reusable governed operating layer behind CRI, with a long-term direction toward an AI-ready data backbone for regulated decisions.'],
