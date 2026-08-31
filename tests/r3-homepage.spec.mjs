@@ -57,7 +57,7 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
 
   await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=b7b7bad8"]')).toHaveCount(1);
   await expect(page.locator('h1')).toHaveCount(1);
-  await expect(page.locator('h1')).toHaveText('Turn dated project evidence into a reviewable decision-support record.');
+  await expect(page.locator('h1')).toHaveText('Turn dated project evidence into a record built for accountable review.');
   await expect(page.locator('.r3-hero .kicker')).toHaveText('For banks and institutional lenders');
   await expect(page.locator('.r3-hero .lead')).toHaveText(
     'CRI is validating a governed Evidence Pack workflow for physical-asset risk review. It separates what was declared, what was observed and what still requires responsible human review.'
@@ -74,7 +74,8 @@ test('homepage preserves the approved review-safety invariants', async ({ page }
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
   await expect(page.locator('.m2-fischamend-hero')).toContainText('Fischamend, Lower Austria');
   await expect(page.locator('.m2-watch-badge')).toHaveText(/WATCH\s+\u2013\s+EVIDENCE SUFFICIENCY/);
-  await expect(page.locator('.m2-portfolio-card--secondary')).toContainText('D4 infrastructure example');
+  await expect(page.locator('.m2-portfolio-card--secondary')).toContainText('D4 motorway – Czech Republic');
+  await expect(page.locator('.m2-portfolio-card--secondary')).toContainText('motorway in the Czech Republic');
   await expect(page.getByRole('tablist', { name: 'Illustrative Evidence Pack prototypes' })).toBeVisible();
   await expect(page.getByRole('tab')).toHaveCount(2);
   await expect(page.locator('#tab-lausitz')).toHaveAttribute('aria-selected', 'true');

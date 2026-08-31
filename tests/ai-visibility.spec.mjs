@@ -15,7 +15,7 @@ const canonicalPages = [
     route: '/mis/',
     url: 'https://www.3brain.ai/mis/',
     title: '3BrainAI Records | Catalog & Registry Record Layer',
-    description: 'Governed records for consistent catalog, registry and institutional outputs.'
+    description: 'A target governed record layer for consistent catalog, registry and institutional outputs within the broader Trusted Data Plane direction.'
   },
   {
     route: '/cri/',

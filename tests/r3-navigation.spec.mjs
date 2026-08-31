@@ -142,6 +142,38 @@ test('every canonical navigation target resolves', async ({ page, request }) => 
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
 });
 
+test('review round 7 keeps institutional proof, records direction and review language explicit', async ({ page }) => {
+  await preparePage(page, 1440, 1000);
+  await openRoute(page, '/investors/');
+
+  const productBoundary = page.locator('.card--content-centered');
+  const eyVisual = page.locator('.institutional-card-visual--ey');
+  const eyImage = eyVisual.locator('img');
+
+  await expect(productBoundary).toHaveCSS('justify-content', 'center');
+  await expect(eyVisual).toBeVisible();
+  await expect(eyImage).toHaveCSS('object-position', '50% 78%');
+  expect(await eyImage.evaluate(image => image.naturalWidth)).toBe(1228);
+  expect(await eyImage.evaluate(image => image.naturalHeight)).toBe(1536);
+  await expect(page.getByRole('link', { name: 'Download the forwardable 2-page PDF' })).toHaveAttribute(
+    'href',
+    '/evidence-packs/fischamend/3BrainAI_CRI_Fischamend_Evidence_Pack_v0_1.pdf'
+  );
+  await expect(page.locator('#investor-materials')).toContainText('financing plan and use of funds');
+
+  await openRoute(page, '/mis/');
+  await expect(page.locator('.domain-hero .kicker')).toHaveText('Target records layer');
+  await expect(page.locator('.domain-hero .lead')).toContainText('A target reusable record layer designed to turn');
+  const recordsHeroBackground = await page.locator('.theme-mis .hero.domain-hero').evaluate(
+    element => getComputedStyle(element).backgroundImage
+  );
+  expect(recordsHeroBackground).toContain('rgb(7, 27, 51)');
+
+  await openRoute(page, '/imprint/');
+  await expect(page.locator('#imprint-boundary')).toHaveText('Accountable-review boundary');
+  await expect(page.locator('[aria-labelledby="imprint-boundary"]')).not.toContainText('decision-support');
+});
+
 test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
   await preparePage(page, 1280);
 
