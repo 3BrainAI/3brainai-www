@@ -142,7 +142,7 @@ test('every canonical navigation target resolves', async ({ page, request }) => 
   await expect(page.locator('#evidence-pack-sample')).toHaveCount(1);
 });
 
-test('review round 7 keeps institutional proof, records direction and review language explicit', async ({ page }) => {
+test('institutional proof visuals, records direction and review language remain explicit', async ({ page }) => {
   await preparePage(page, 1440, 1000);
   await openRoute(page, '/investors/');
 
@@ -153,6 +153,7 @@ test('review round 7 keeps institutional proof, records direction and review lan
   await expect(productBoundary).toHaveCSS('justify-content', 'center');
   await expect(eyVisual).toBeVisible();
   await expect(eyImage).toHaveCSS('object-position', '50% 78%');
+  await expect(eyImage).toHaveCSS('filter', 'none');
   expect(await eyImage.evaluate(image => image.naturalWidth)).toBe(1228);
   expect(await eyImage.evaluate(image => image.naturalHeight)).toBe(1536);
   await expect(page.getByRole('link', { name: 'Download the forwardable 2-page PDF' })).toHaveAttribute(
@@ -160,6 +161,15 @@ test('review round 7 keeps institutional proof, records direction and review lan
     '/evidence-packs/fischamend/3BrainAI_CRI_Fischamend_Evidence_Pack_v0_1.pdf'
   );
   await expect(page.locator('#investor-materials')).toContainText('financing plan and use of funds');
+
+  await openRoute(page, '/about/');
+  const aboutEyVisual = page.locator('.institutional-card-visual--ey');
+  const aboutEyImage = aboutEyVisual.locator('img');
+  await expect(aboutEyVisual).toBeVisible();
+  await expect(aboutEyImage).toHaveCSS('object-position', '50% 78%');
+  await expect(aboutEyImage).toHaveCSS('filter', 'none');
+  expect(await aboutEyImage.evaluate(image => image.naturalWidth)).toBe(1228);
+  expect(await aboutEyImage.evaluate(image => image.naturalHeight)).toBe(1536);
 
   await openRoute(page, '/mis/');
   await expect(page.locator('.domain-hero .kicker')).toHaveText('Target records layer');

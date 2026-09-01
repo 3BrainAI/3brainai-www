@@ -4022,7 +4022,7 @@ h3 {
   overflow: hidden;
   border: 1px solid var(--r3-border);
   border-radius: var(--r3-card-radius);
-  background: var(--cri-navy);
+  background: #f4f4f2;
 }
 
 .institutional-card-visual img {
@@ -4034,15 +4034,6 @@ h3 {
 
 .institutional-card-visual--ey img {
   object-position: center 78%;
-  filter: saturate(0.62) contrast(1.06) brightness(0.74);
-}
-
-.institutional-card-visual--ey::after {
-  position: absolute;
-  inset: 0;
-  background: rgba(7, 27, 51, 0.2);
-  content: "";
-  pointer-events: none;
 }
 
 .institutional-card .claim-qualification {

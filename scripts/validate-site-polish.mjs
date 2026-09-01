@@ -40,7 +40,7 @@ const requiredIconLinks = [
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
 
-const releaseStylesheetVersion = 'fa0883c5';
+const releaseStylesheetVersion = '0a7fb8bf';
 const releaseScriptVersion = 'f87d840f';
 const m3HomepageCorrectionVersion = 'b7b7bad8';
 const aboutFounderVersion = 'f8700cdd';
@@ -254,6 +254,8 @@ assert.match(
   aboutHtml,
   /<a class="founder-profile-link" href="https:\/\/www\.linkedin\.com\/in\/dusanprikryl\/" rel="noopener noreferrer">LinkedIn profile<\/a>/
 );
+assert.equal((aboutHtml.match(/src="\/assets\/img\/ey-startup-academy-2025\.jpg"/g) ?? []).length, 1);
+assert.match(aboutHtml, /alt="EY Startup Academy 2025 programme artwork"/);
 assert.doesNotMatch(aboutHtml, /Keller Grundbau|Vigona|United Energy|events and networks/i);
 
 const homepageHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
@@ -404,6 +406,8 @@ assert.match(stylesheet, /\.m2-engagement\s*{/);
 assert.match(stylesheet, /\.m2-fischamend-hero\s*,/);
 assert.match(stylesheet, /\.card--content-centered\s*{[^}]*justify-content:\s*center;/s);
 assert.match(stylesheet, /\.institutional-card-visual--ey img\s*{[^}]*object-position:\s*center 78%;/s);
+assert.doesNotMatch(stylesheet, /\.institutional-card-visual--ey img\s*{[^}]*filter:/s);
+assert.doesNotMatch(stylesheet, /\.institutional-card-visual--ey::after/);
 assert.match(stylesheet, /\.theme-mis \.hero\.domain-hero\s*{[^}]*var\(--cri-navy\)/s);
 
 const homepageCorrections = await readFile(
