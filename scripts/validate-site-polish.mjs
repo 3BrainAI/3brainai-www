@@ -390,6 +390,21 @@ assert.doesNotMatch(misHtml, /use the Records layer/);
 const imprintHtml = await readFile(path.join(repositoryRoot, 'imprint/index.html'), 'utf8');
 assert.match(imprintHtml, /Accountable-review boundary/);
 assert.match(imprintHtml, /review-ready artefacts for accountable human review/);
+assert.match(imprintHtml, /<strong>3BrainAI Nexus s\.r\.o\.<\/strong>[\s\S]*Company ID: 295 13 049/);
+assert.match(imprintHtml, /Brand and entity boundaries/);
+assert.match(imprintHtml, /including controlled ingestion and normalisation, uncertainty handling, versioning, audit trail and the first Trust Record concept/);
+assert.doesNotMatch(imprintHtml, /3BrainAI s\.r\.o\.|27865282|278 65 282|File 122643/);
+
+const privacyHtml = await readFile(path.join(repositoryRoot, 'privacy/index.html'), 'utf8');
+assert.match(privacyHtml, /<strong>3BrainAI Nexus s\.r\.o\.<\/strong>[\s\S]*Company ID: 295 13 049/);
+assert.match(privacyHtml, /Registered office: Korunní 2569\/108, Vinohrady, 101 00 Prague 10, Czech Republic/);
+assert.doesNotMatch(privacyHtml, /3BrainAI s\.r\.o\.|27865282|278 65 282/);
+
+for (const localizedImprintPath of ['cs/imprint/index.html', 'de/impressum/index.html']) {
+  const localizedImprint = await readFile(path.join(repositoryRoot, localizedImprintPath), 'utf8');
+  assert.match(localizedImprint, /http-equiv="refresh" content="0; url=https:\/\/www\.3brain\.ai\/imprint\/"/);
+  assert.match(localizedImprint, /rel="canonical" href="https:\/\/www\.3brain\.ai\/imprint\/"/);
+}
 
 const governanceHtml = await readFile(path.join(repositoryRoot, 'governance-layer/index.html'), 'utf8');
 assert.match(governanceHtml, /class="governance-pipeline"/);

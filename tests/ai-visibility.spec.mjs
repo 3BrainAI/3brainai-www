@@ -247,7 +247,6 @@ test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', asy
       'https://www.3brain.ai/about/#webpage'
     ],
     '/imprint/': [
-      'https://www.3brain.ai/#website-operator',
       'https://www.3brain.ai/#organization',
       'https://www.3brain.ai/#solutions',
       'https://www.3brain.ai/imprint/#webpage'
@@ -295,7 +294,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', asy
   expect(evidencePackSample.creator['@id']).toBe('https://www.3brain.ai/#organization');
 
   const imprintOrganizations = parsedGraphs['/imprint/'].filter(entity => entity['@type'] === 'Organization');
-  expect(imprintOrganizations.map(entity => entity.identifier)).toEqual(['27865282', '29513049', '23628847']);
+  expect(imprintOrganizations.map(entity => entity.identifier)).toEqual(['29513049', '23628847']);
 });
 
 test('IndexNow key is publishable and submission payload is deterministic in dry-run mode', async ({ request }) => {

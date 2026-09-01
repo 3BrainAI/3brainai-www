@@ -79,7 +79,6 @@ const expectedGraphIds = new Map([
     'https://www.3brain.ai/about/#webpage'
   ]],
   ['imprint/index.html', [
-    'https://www.3brain.ai/#website-operator',
     'https://www.3brain.ai/#organization',
     'https://www.3brain.ai/#solutions',
     'https://www.3brain.ai/imprint/#webpage'
@@ -93,6 +92,11 @@ for (const [file, expectedIds] of expectedGraphIds) {
   assert.deepEqual(document['@graph'].map(entity => entity['@id']), expectedIds, `${file} has unexpected entity IDs`);
   assert.doesNotMatch(JSON.stringify(document), /aggregateRating|offers|EY Praha|Google Cloud/);
 }
+
+const imprintOrganizations = structuredDataByFile.get('imprint/index.html')['@graph']
+  .filter(entity => entity['@type'] === 'Organization');
+assert.deepEqual(imprintOrganizations.map(entity => entity.identifier), ['29513049', '23628847']);
+assert.doesNotMatch(JSON.stringify(structuredDataByFile.get('imprint/index.html')), /3BrainAI s\.r\.o\.|27865282|122643/);
 
 const homepageGraph = structuredDataByFile.get('index.html')['@graph'];
 const criGraph = structuredDataByFile.get('cri/index.html')['@graph'];
@@ -116,10 +120,11 @@ const expectedSitemapLocations = canonicalPages.map(([, canonicalUrl]) => canoni
 const validationIndex = expectedSitemapLocations.indexOf('https://www.3brain.ai/validation/');
 expectedSitemapLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
 const expectedSitemapDates = expectedSitemapLocations.map(canonicalUrl =>
-  canonicalUrl === 'https://www.3brain.ai/about/' ||
-  canonicalUrl === 'https://www.3brain.ai/evidence-packs/fischamend/'
-    ? '2026-08-30'
-    : '2026-08-28'
+  ['https://www.3brain.ai/about/', 'https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(canonicalUrl)
+    ? '2026-09-01'
+    : canonicalUrl === 'https://www.3brain.ai/evidence-packs/fischamend/'
+      ? '2026-08-30'
+      : '2026-08-28'
 );
 assert.deepEqual(sitemapLocations, expectedSitemapLocations);
 assert.deepEqual(sitemapDates, expectedSitemapDates);
@@ -219,6 +224,9 @@ assert.match(aboutPage, /Siemens, GEA, Geberit and Hörmann/);
 assert.match(aboutPage, /practical experience in Germany helped shape his delivery model and he works professionally in German/);
 assert.match(aboutPage, /3BrainAI Solutions' completion of the EY Startup Academy Frankfurt 2025 programme/);
 assert.doesNotMatch(aboutPage, /Keller Grundbau|Vigona|United Energy|events and networks/i);
+assert.doesNotMatch(aboutPage, /<h3>3BrainAI<\/h3>/);
+assert.match(aboutPage, /Develops CRI and its governed Evidence Pack workflow for regulated physical-asset risk/);
+assert.match(aboutPage, /including the first Trust Record concept/);
 for (const [file, html] of [
   ['investors/index.html', investorPage],
   ['about/index.html', aboutPage]
