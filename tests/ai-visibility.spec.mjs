@@ -148,10 +148,11 @@ test('sitemap contains exactly the live canonical pages with truthful release da
   const validationIndex = expectedLocations.indexOf('https://www.3brain.ai/validation/');
   expectedLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
   const expectedLastModifiedDates = expectedLocations.map(url =>
-    url === 'https://www.3brain.ai/about/' ||
-    url === 'https://www.3brain.ai/evidence-packs/fischamend/'
-      ? '2026-08-30'
-      : '2026-08-28'
+    ['https://www.3brain.ai/about/', 'https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(url)
+      ? '2026-09-01'
+      : url === 'https://www.3brain.ai/evidence-packs/fischamend/'
+        ? '2026-08-30'
+        : '2026-08-28'
   );
 
   expect(locations).toEqual(expectedLocations);
@@ -247,7 +248,6 @@ test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', asy
       'https://www.3brain.ai/about/#webpage'
     ],
     '/imprint/': [
-      'https://www.3brain.ai/#website-operator',
       'https://www.3brain.ai/#organization',
       'https://www.3brain.ai/#solutions',
       'https://www.3brain.ai/imprint/#webpage'
@@ -295,7 +295,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', asy
   expect(evidencePackSample.creator['@id']).toBe('https://www.3brain.ai/#organization');
 
   const imprintOrganizations = parsedGraphs['/imprint/'].filter(entity => entity['@type'] === 'Organization');
-  expect(imprintOrganizations.map(entity => entity.identifier)).toEqual(['27865282', '29513049', '23628847']);
+  expect(imprintOrganizations.map(entity => entity.identifier)).toEqual(['29513049', '23628847']);
 });
 
 test('IndexNow key is publishable and submission payload is deterministic in dry-run mode', async ({ request }) => {
