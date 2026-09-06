@@ -16,7 +16,7 @@ export default defineConfig({
     trace: 'retain-on-failure'
   },
   webServer: {
-    command: 'npx http-server . -a 127.0.0.1 -p 4174 -c-1 --silent',
+    command: 'node scripts/static-test-server.mjs',
     url: 'http://127.0.0.1:4174',
     reuseExistingServer: !process.env.CI,
     timeout: 30_000

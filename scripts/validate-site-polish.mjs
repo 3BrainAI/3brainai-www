@@ -42,8 +42,8 @@ const requiredIconLinks = [
 
 const releaseStylesheetVersion = '0a7fb8bf';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'b7b7bad8';
-const aboutFounderVersion = 'f8700cdd';
+const m3HomepageCorrectionVersion = 'r4d-20260906';
+const aboutFounderVersion = 'r4-programmes-20260906';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 
 for (const file of htmlFiles) {
@@ -139,7 +139,11 @@ for (const [relativePath, expectedHash] of founderPortraitHashes) {
 }
 
 const institutionalVisualHashes = new Map([
-  ['assets/img/ey-startup-academy-2025.jpg', '381d5a5674baf1d4b3dbd20f844b37089a970e51f994f65b3af89428c6623235']
+  ['assets/img/ey-startup-academy-2025.jpg', '381d5a5674baf1d4b3dbd20f844b37089a970e51f994f65b3af89428c6623235'],
+  ['assets/img/homepage-r4d/fischamend-evidence-pack-page-1.png', '9d633c4b2acdae40383d7c2a2536433a0b89d7c196fcb9e7d91053a80e435831'],
+  ['assets/img/homepage-r4d/fischamend-evidence-pack-page-2.png', 'd79cba422e5a770d0e938a9502691d9336a4de039102ea5fac99a6de61fd2ca1'],
+  ['assets/img/homepage-r4d/google-wordmark.svg', 'f6928f264fd922ffd90a654a30c6ba541d8cbe05813f7ae6e8d1e0f9b2e19f81'],
+  ['assets/img/homepage-r4d/ovhcloud-logo.svg', 'e1be9a57b8f0590cbf3a5e7f35344825487ebfbaefe301d6ab58fc910ed142b7']
 ]);
 
 for (const [relativePath, expectedHash] of institutionalVisualHashes) {
@@ -256,47 +260,41 @@ assert.match(
 );
 assert.equal((aboutHtml.match(/src="\/assets\/img\/ey-startup-academy-2025\.jpg"/g) ?? []).length, 1);
 assert.match(aboutHtml, /alt="EY Startup Academy 2025 programme artwork"/);
+assert.match(aboutHtml, /id="institutional-milestones"/);
+assert.equal((aboutHtml.match(/class="card institutional-card about-programme-card"/g) ?? []).length, 4);
+assert.match(aboutHtml, /Google for Startups Cloud Program/);
+assert.match(aboutHtml, /OVHcloud Startup Program/);
+assert.match(aboutHtml, /EY Startup Academy Frankfurt 2025/);
 assert.doesNotMatch(aboutHtml, /Keller Grundbau|Vigona|United Energy|events and networks/i);
 
 const homepageHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
-assert.equal(
-  (homepageHtml.match(/Illustrative prototype · public-safe example/g) ?? []).length,
-  3,
-  'Fischamend and both earlier Evidence Pack cases must use the approved prototype label'
-);
-assert.equal(
-  (homepageHtml.match(/evidence-pack-state evidence-pack-state--featured/g) ?? []).length,
-  2,
-  'Both case headers must expose the featured status treatment'
-);
 assert.match(
   homepageHtml,
-  /<h1 id="r3-hero-title">Turn dated project evidence into a record built for accountable review\.<\/h1>/
-);
-assert.match(
-  homepageHtml,
-  /href="#portfolio">View the Austrian Evidence Pack<\/a>/
+  /<h1 id="r4-hero-title">The physical world does not wait for your next review\.<\/h1>/
 );
 assert.match(homepageHtml, /href="\/validation\/#readiness-form">Discuss an Evidence Readiness Check<\/a>/);
-assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View the Austrian Evidence Pack<\/a>/);
-assert.match(homepageHtml, /WATCH –<\/span>\s*<span>EVIDENCE SUFFICIENCY<\/span>/);
+assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View an Evidence Pack<\/a>/);
+assert.match(homepageHtml, /WATCH – Evidence sufficiency/);
 assert.match(homepageHtml, /id="portfolio"/);
 assert.match(homepageHtml, /id="evidence-pack-sample"/);
-assert.match(homepageHtml, /D4 motorway – Czech Republic/);
-assert.match(homepageHtml, /The D4 is a motorway in the Czech Republic/);
-assert.match(homepageHtml, /does not inherit the Fischamend validation result/);
-assert.match(homepageHtml, /id="lausitz-evidence-input"[^>]*tabindex="-1"/);
-assert.match(homepageHtml, /id="north-sea-evidence-input"[^>]*tabindex="-1"/);
 assert.equal((homepageHtml.match(/<link rel="preload" as="image"/g) ?? []).length, 2);
 assert.equal((homepageHtml.match(/loading="eager"/g) ?? []).length, 2);
-assert.equal((homepageHtml.match(/fetchpriority="high"/g) ?? []).length, 2);
-assert.equal((homepageHtml.match(/loading="lazy"/g) ?? []).length, 4);
-assert.equal((homepageHtml.match(/class="evidence-date-chip"/g) ?? []).length, 4);
-assert.match(homepageHtml, /class="review-timeline"/);
-assert.match(homepageHtml, /class="r3-flow"/);
-assert.match(
-  homepageHtml,
-  /class="maturity-label maturity-label--standalone maturity-label--on-dark">Direction<\/p>/
+assert.equal((homepageHtml.match(/fetchpriority="high"/g) ?? []).length, 1);
+assert.equal((homepageHtml.match(/class="r4-relationship-card"/g) ?? []).length, 4);
+assert.equal((homepageHtml.match(/class="r4-workflow-step"/g) ?? []).length, 4);
+assert.equal((homepageHtml.match(/class="r4-signpost"/g) ?? []).length, 2);
+assert.match(homepageHtml, /Authentic record · readable excerpt/);
+assert.match(homepageHtml, /Declared – synthetic/);
+assert.match(homepageHtml, /Observed – dated public evidence/);
+assert.match(homepageHtml, /Uncertainty and non-inference/);
+assert.match(homepageHtml, /WATCH refers to evidence sufficiency/);
+assert.match(homepageHtml, /it is not a negative project rating/);
+assert.match(homepageHtml, /id="governed-boundary"/);
+assert.match(homepageHtml, /id="founder-context"/);
+assert.doesNotMatch(
+  homepageHtml.match(/<main id="main">([\s\S]*?)<\/main>/)?.[1] ?? '',
+  /href="\/security\/"/,
+  'The R4-D homepage main content must not introduce a Security route'
 );
 
 const reviewPackageFiles = [
@@ -429,10 +427,10 @@ const homepageCorrections = await readFile(
   path.join(repositoryRoot, 'assets/css/hp-corrections.css'),
   'utf8'
 );
-assert.match(homepageCorrections, /\.m2-archive-prototypes\s*{[^}]*max-width:\s*1060px;/s);
-assert.match(homepageCorrections, /\.review-timeline::before\s*{[^}]*border-top:\s*2px solid/s);
-assert.match(homepageCorrections, /\.evidence-section-label[\s\S]*font-size:\s*12px;/);
-assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.evidence-input-footer\s*{[^}]*grid-template-columns:\s*1fr;/);
+assert.match(homepageCorrections, /\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*repeat\(4,/s);
+assert.match(homepageCorrections, /\.r4-home \.r4-record-folio\s*{[^}]*min-height:\s*920px;/s);
+assert.match(homepageCorrections, /\.r4-home \.r4-kicker,[\s\S]*font-size:\s*12px;/);
+assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*1fr 1fr;/);
 
 const aboutFounderStylesheet = await readFile(
   path.join(repositoryRoot, 'assets/css/about-founder.css'),
@@ -450,6 +448,8 @@ assert.match(
   aboutFounderStylesheet,
   /@media \(max-width:\s*860px\)[\s\S]*\.about-founder-photo\s*{[^}]*max-width:\s*280px;/
 );
+assert.match(aboutFounderStylesheet, /\.about-programme-grid\s*{[^}]*grid-template-columns:\s*repeat\(2,/s);
+assert.match(aboutFounderStylesheet, /\.about-programme-card\s*{[^}]*min-height:\s*470px;/s);
 
 const mainScript = await readFile(path.join(repositoryRoot, 'assets/js/main.js'), 'utf8');
 assert.match(mainScript, /dataset\.evidencePackDestination/);

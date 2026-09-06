@@ -148,11 +148,13 @@ test('sitemap contains exactly the live canonical pages with truthful release da
   const validationIndex = expectedLocations.indexOf('https://www.3brain.ai/validation/');
   expectedLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
   const expectedLastModifiedDates = expectedLocations.map(url =>
-    ['https://www.3brain.ai/about/', 'https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(url)
-      ? '2026-09-01'
-      : url === 'https://www.3brain.ai/evidence-packs/fischamend/'
-        ? '2026-08-30'
-        : '2026-08-28'
+    ['https://www.3brain.ai/', 'https://www.3brain.ai/about/'].includes(url)
+      ? '2026-09-06'
+      : ['https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(url)
+        ? '2026-09-01'
+        : url === 'https://www.3brain.ai/evidence-packs/fischamend/'
+          ? '2026-08-30'
+          : '2026-08-28'
   );
 
   expect(locations).toEqual(expectedLocations);

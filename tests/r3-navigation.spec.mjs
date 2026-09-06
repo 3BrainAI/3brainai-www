@@ -166,7 +166,7 @@ test('institutional proof visuals, records direction and review language remain 
   const aboutEyVisual = page.locator('.institutional-card-visual--ey');
   const aboutEyImage = aboutEyVisual.locator('img');
   await expect(aboutEyVisual).toBeVisible();
-  await expect(aboutEyImage).toHaveCSS('object-position', '50% 78%');
+  await expect(aboutEyImage).toHaveCSS('object-position', '50% 26%');
   await expect(aboutEyImage).toHaveCSS('filter', 'none');
   expect(await aboutEyImage.evaluate(image => image.naturalWidth)).toBe(1228);
   expect(await aboutEyImage.evaluate(image => image.naturalHeight)).toBe(1536);
@@ -209,7 +209,7 @@ test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
     if (route === '/about/') {
       const founderCopy = page.locator('.about-founder-copy');
       const founderImage = page.locator('.about-founder-photo img');
-      await expect(page.locator('link[href="/assets/css/about-founder.css?v=f8700cdd"]')).toHaveCount(1);
+      await expect(page.locator('link[href="/assets/css/about-founder.css?v=r4-programmes-20260906"]')).toHaveCount(1);
       await expect(founderCopy.locator('.about-founder-name')).toHaveText('Dušan Přikryl');
       await expect(founderCopy.locator('.about-founder-role')).toHaveText('Founder & CEO');
       await expect(founderCopy.locator('.about-founder-tags')).toHaveText(
