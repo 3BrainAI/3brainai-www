@@ -76,6 +76,8 @@
 }
 
 .evidence-archive-page .archive-record-section {
+  scroll-margin-top: var(--r3-sticky-header-offset);
+  scroll-margin-block-start: var(--r3-sticky-header-offset);
   padding: 48px 0 56px;
 }
 
