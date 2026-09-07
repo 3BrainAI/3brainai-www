@@ -14,6 +14,10 @@ const forbiddenCopyPattern = new RegExp(
 const standaloneArtifactPages = new Set([
   'evidence-packs/fischamend/index.html'
 ]);
+const evidenceArchivePages = new Set([
+  'evidence-packs/lausitz/index.html',
+  'evidence-packs/german-north-sea/index.html'
+]);
 
 async function collectFiles(directory, target = []) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -30,7 +34,7 @@ async function collectFiles(directory, target = []) {
 
 const files = await collectFiles(repositoryRoot);
 const htmlFiles = files.filter(file => path.extname(file) === '.html');
-assert.equal(htmlFiles.length, 34, 'All 34 public HTML entry points must remain covered');
+assert.equal(htmlFiles.length, 36, 'All 36 public HTML entry points must remain covered');
 
 const requiredIconLinks = [
   '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">',
@@ -42,7 +46,8 @@ const requiredIconLinks = [
 
 const releaseStylesheetVersion = '0a7fb8bf';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'r4d-20260906';
+const m3HomepageCorrectionVersion = 'wp0-20260907';
+const evidenceArchiveVersion = 'wp0-20260907';
 const aboutFounderVersion = 'r4-programmes-20260906';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 
@@ -82,6 +87,18 @@ for (const file of htmlFiles) {
       html,
       /about-founder\.css/,
       `${relativePath} must not load the About-only Founder redesign layer`
+    );
+  }
+  if (evidenceArchivePages.has(relativePath)) {
+    assert.ok(
+      html.includes(`<link rel="stylesheet" href="/assets/css/evidence-archive.css?v=${evidenceArchiveVersion}">`),
+      `${relativePath} must load the versioned Evidence Archive layer`
+    );
+  } else {
+    assert.doesNotMatch(
+      html,
+      /evidence-archive\.css/,
+      `${relativePath} must not load the Evidence Archive-only layer`
     );
   }
   for (const link of requiredIconLinks) {
@@ -191,6 +208,8 @@ const canonicalEnglishPages = [
   'about/index.html',
   'contact/index.html',
   'cri/index.html',
+  'evidence-packs/german-north-sea/index.html',
+  'evidence-packs/lausitz/index.html',
   'governance-layer/index.html',
   'how-it-works/index.html',
   'imprint/index.html',

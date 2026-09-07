@@ -26,7 +26,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
-  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=r4d-20260906"]')).toHaveCount(1);
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=wp0-20260907"]')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveText('The physical world does not wait for your next review.');
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveText('For banks & institutional lenders');
@@ -45,6 +45,18 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
     name: 'Discuss an Evidence Readiness Check'
   })).toHaveAttribute('href', '/validation/#readiness-form');
   await expect(page.locator('.r4-evidence-anchor')).toContainText('DEMO-EU-AT-FIS-01 · v0.1');
+
+  const folioLinks = page.locator('a.r4-folio-sheet');
+  await expect(folioLinks).toHaveCount(2);
+  for (const link of await folioLinks.all()) {
+    await expect(link).toHaveAttribute('href', '/evidence-packs/fischamend/');
+  }
+
+  const reviewInterval = page.locator('a.r4-review-interval');
+  await expect(reviewInterval).toHaveAttribute('href', '#workflow');
+  await expect(reviewInterval).toContainText('Explore');
+  await reviewInterval.click();
+  await expect(page).toHaveURL(/#workflow$/);
 
   const orderedSections = await page.evaluate(ids => {
     const sections = ids.map(id => document.getElementById(id));
@@ -153,7 +165,16 @@ test('Evidence Lens preserves the authentic record boundary and primary document
   await expect(details).toContainText('No actual project drawdown request');
 
   await expect(page.locator('.r4-signpost')).toHaveCount(2);
-  await expect(page.locator('.r4-signpost a, .r4-signpost button')).toHaveCount(0);
+  const archiveLinks = page.locator('.r4-signpost-action a');
+  await expect(archiveLinks).toHaveCount(2);
+  expect(await archiveLinks.evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual([
+    '/evidence-packs/lausitz/',
+    '/evidence-packs/german-north-sea/'
+  ]);
+  for (const link of await archiveLinks.all()) {
+    await expect(link).toBeVisible();
+    expect(await link.evaluate(element => element.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
+  }
 });
 
 test('R4-E desktop folio aligns both full pages without a dead vertical gap', async ({ page }) => {
