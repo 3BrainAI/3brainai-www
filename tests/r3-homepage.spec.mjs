@@ -59,6 +59,10 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   expect(await reviewInterval.locator(':scope > span').evaluateAll(labels => labels.map(label => (
     getComputedStyle(label).color
   )))).toEqual(['rgb(11, 82, 107)', 'rgb(11, 82, 107)', 'rgb(11, 82, 107)']);
+  await page.setViewportSize({ width: 1024, height: 900 });
+  expect(await reviewInterval.locator(':scope > span').evaluateAll(labels => labels.map(label => (
+    getComputedStyle(label).color
+  )))).toEqual(['rgb(188, 208, 220)', 'rgb(188, 208, 220)', 'rgb(188, 208, 220)']);
   await reviewInterval.click();
   await expect(page).toHaveURL(/#workflow$/);
 
