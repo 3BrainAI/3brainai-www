@@ -65,6 +65,8 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   const reviewAction = page.getByRole('link', { name: 'Explore the review cycle' });
   await expect(reviewAction).toHaveAttribute('href', '#workflow');
   await expect(page.locator('.r4-review-cycle').getByRole('link')).toHaveCount(1);
+  await expect(page.locator('.r4-review-cycle')).toHaveCSS('pointer-events', 'none');
+  await expect(reviewAction).toHaveCSS('pointer-events', 'auto');
   for (const width of [1440, 1024, 390]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await reviewInterval.locator('.r4-review-label').evaluateAll(labels => labels.map(label => ({
