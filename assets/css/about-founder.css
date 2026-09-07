@@ -89,3 +89,152 @@
     max-width: 280px;
   }
 }
+
+/* Institutional milestones – four equal signals with explicit role boundaries. */
+.about-programme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.about-programme-card {
+  display: flex;
+  min-height: 470px;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-top: 3px solid var(--cri-blue);
+}
+
+.about-programme-visual {
+  display: flex;
+  height: 150px;
+  min-height: 150px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 22px;
+  border-bottom: 1px solid var(--r3-border);
+  background: var(--white);
+  color: #000e9c;
+}
+
+.about-programme-visual > img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 92px;
+  object-fit: contain;
+}
+
+.about-programme-visual--ey {
+  padding: 0;
+}
+
+.about-programme-visual--ey img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  object-position: center 26%;
+}
+
+.about-programme-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.about-programme-lockup--google img {
+  width: 104px;
+  height: auto;
+}
+
+.about-programme-lockup > span {
+  color: var(--charcoal);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.about-programme-lockup small {
+  display: block;
+  margin-top: 8px;
+  color: var(--slate);
+  font-size: 12px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.about-programme-ovh {
+  width: 176px;
+  height: 42px;
+  color: #000e9c;
+}
+
+.about-programme-card > :not(.about-programme-visual) {
+  margin-right: 24px;
+  margin-left: 24px;
+}
+
+.about-programme-card .about-programme-role {
+  margin-top: 22px;
+  margin-bottom: 12px;
+  color: var(--cri-blue);
+  font-family: var(--r3-metadata-font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.about-programme-card h3 {
+  margin-bottom: 14px;
+}
+
+.about-programme-card .claim-qualification {
+  margin-top: auto;
+  margin-bottom: 24px;
+  padding-top: 16px;
+}
+
+.about-programme-qualifier {
+  max-width: 78ch;
+  margin: 22px 0 0;
+  color: var(--r3-text-secondary);
+  font-size: 14px;
+}
+
+#institutional-milestones {
+  scroll-margin-top: 92px;
+}
+
+@media (max-width: 720px) {
+  .about-programme-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-programme-card {
+    min-height: 0;
+  }
+
+  .about-programme-visual {
+    height: 112px;
+    min-height: 112px;
+  }
+
+  .about-programme-lockup--google img {
+    width: 86px;
+  }
+
+  .about-programme-lockup > span {
+    font-size: 19px;
+  }
+
+  .about-programme-ovh {
+    width: 142px;
+    height: 36px;
+  }
+}

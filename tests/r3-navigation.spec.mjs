@@ -69,6 +69,21 @@ async function openRoute(page, route) {
   await page.evaluate(() => document.fonts?.ready);
 }
 
+async function settleLazyImages(page) {
+  await page.evaluate(async () => {
+    const images = [...document.querySelectorAll('img[loading="lazy"]')];
+    for (const image of images) image.loading = 'eager';
+    await Promise.all(images.map(image =>
+      image.complete
+        ? Promise.resolve()
+        : new Promise(resolve => {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', resolve, { once: true });
+          })
+    ));
+  });
+}
+
 for (const routeContract of scopedRoutes) {
   test(`${routeContract.file} uses the canonical navigation and active state`, async ({ page }) => {
     await preparePage(page, 1280);
@@ -166,7 +181,7 @@ test('institutional proof visuals, records direction and review language remain 
   const aboutEyVisual = page.locator('.institutional-card-visual--ey');
   const aboutEyImage = aboutEyVisual.locator('img');
   await expect(aboutEyVisual).toBeVisible();
-  await expect(aboutEyImage).toHaveCSS('object-position', '50% 78%');
+  await expect(aboutEyImage).toHaveCSS('object-position', '50% 26%');
   await expect(aboutEyImage).toHaveCSS('filter', 'none');
   expect(await aboutEyImage.evaluate(image => image.naturalWidth)).toBe(1228);
   expect(await aboutEyImage.evaluate(image => image.naturalHeight)).toBe(1536);
@@ -209,7 +224,7 @@ test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
     if (route === '/about/') {
       const founderCopy = page.locator('.about-founder-copy');
       const founderImage = page.locator('.about-founder-photo img');
-      await expect(page.locator('link[href="/assets/css/about-founder.css?v=f8700cdd"]')).toHaveCount(1);
+      await expect(page.locator('link[href="/assets/css/about-founder.css?v=r4-programmes-20260906"]')).toHaveCount(1);
       await expect(founderCopy.locator('.about-founder-name')).toHaveText('Dušan Přikryl');
       await expect(founderCopy.locator('.about-founder-role')).toHaveText('Founder & CEO');
       await expect(founderCopy.locator('.about-founder-tags')).toHaveText(
@@ -375,6 +390,7 @@ test('creates deterministic fast-refresh screenshots for the six primary journey
 
     for (const { route, slug } of primaryJourneyRoutes) {
       await openRoute(page, route);
+      await settleLazyImages(page);
       await page.screenshot({
         path: path.join(outputDirectory, `fast-refresh-${slug}-${viewport.width}.png`),
         fullPage: true,
@@ -389,11 +405,17 @@ test('creates deterministic fast-refresh screenshots for the six primary journey
     { width: 1440, height: 900 }
   ]) {
     await page.setViewportSize(viewport);
-    await openRoute(page, '/about/');
-    await page.screenshot({
-      path: path.join(outputDirectory, `fast-refresh-about-${viewport.width}.png`),
-      fullPage: true,
-      animations: 'disabled'
-    });
+    for (const { route, slug } of [
+      { route: '/', slug: 'home' },
+      { route: '/about/', slug: 'about' }
+    ]) {
+      await openRoute(page, route);
+      await settleLazyImages(page);
+      await page.screenshot({
+        path: path.join(outputDirectory, `fast-refresh-${slug}-${viewport.width}.png`),
+        fullPage: true,
+        animations: 'disabled'
+      });
+    }
   }
 });

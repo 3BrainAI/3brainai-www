@@ -120,11 +120,13 @@ const expectedSitemapLocations = canonicalPages.map(([, canonicalUrl]) => canoni
 const validationIndex = expectedSitemapLocations.indexOf('https://www.3brain.ai/validation/');
 expectedSitemapLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
 const expectedSitemapDates = expectedSitemapLocations.map(canonicalUrl =>
-  ['https://www.3brain.ai/about/', 'https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(canonicalUrl)
-    ? '2026-09-01'
-    : canonicalUrl === 'https://www.3brain.ai/evidence-packs/fischamend/'
-      ? '2026-08-30'
-      : '2026-08-28'
+  ['https://www.3brain.ai/', 'https://www.3brain.ai/about/'].includes(canonicalUrl)
+    ? '2026-09-06'
+    : ['https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(canonicalUrl)
+      ? '2026-09-01'
+      : canonicalUrl === 'https://www.3brain.ai/evidence-packs/fischamend/'
+        ? '2026-08-30'
+        : '2026-08-28'
 );
 assert.deepEqual(sitemapLocations, expectedSitemapLocations);
 assert.deepEqual(sitemapDates, expectedSitemapDates);
@@ -186,7 +188,10 @@ const approvedPublicMailboxes = new Set([
 
 for (const file of publicEnglishPages) {
   const html = await readRepositoryFile(file);
-  assert.doesNotMatch(html, /EY Praha|Google Cloud|OVHcloud|Česká spořitelna/i, `${file} contains a locked public claim`);
+  const lockedClaimPattern = new Set(['index.html', 'about/index.html']).has(file)
+    ? /EY Praha|Google Cloud|Česká spořitelna/i
+    : /EY Praha|Google Cloud|OVHcloud|Česká spořitelna/i;
+  assert.doesNotMatch(html, lockedClaimPattern, `${file} contains a locked public claim`);
   assert.match(html, /3BrainAI Nexus s\.r\.o\. is participating in the ESA Business Incubation Centre Czech Republic\./, `${file} is missing the exact ESA participation statement`);
   assert.match(html, /href="https:\/\/www\.esa-bic\.cz\/"/, `${file} is missing the ESA BIC link`);
 
@@ -227,6 +232,10 @@ assert.doesNotMatch(aboutPage, /Keller Grundbau|Vigona|United Energy|events and 
 assert.doesNotMatch(aboutPage, /<h3>3BrainAI<\/h3>/);
 assert.match(aboutPage, /Develops CRI and its governed Evidence Pack workflow for regulated physical-asset risk/);
 assert.match(aboutPage, /including the first Trust Record concept/);
+assert.match(aboutPage, /Google for Startups Cloud Program/);
+assert.match(aboutPage, /OVHcloud Startup Program/);
+assert.match(aboutPage, /This does not validate CRI, its infrastructure or security\./);
+assert.match(aboutPage, /This does not imply security attestation, certification or customer validation\./);
 for (const [file, html] of [
   ['investors/index.html', investorPage],
   ['about/index.html', aboutPage]
@@ -244,7 +253,8 @@ assert.match(contactPage, /mailto:cri@3brain\.ai/);
 assert.match(contactPage, /mailto:investors@3brain\.ai/);
 
 const homepage = await readRepositoryFile('index.html');
-assert.match(homepage, /A WATCH status is intended to route evidence to human review without triggering a credit decision\./);
+assert.match(homepage, /WATCH refers to evidence sufficiency and the need for documentary review/);
+assert.match(homepage, /it is not a negative project rating and does not indicate delay, breach or default/);
 
 const indexNowKey = '4c359192cfa68f4af5c6a8dd38964897';
 assert.equal((await readRepositoryFile(`${indexNowKey}.txt`)).trim(), indexNowKey);
