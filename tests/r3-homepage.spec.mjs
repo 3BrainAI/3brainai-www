@@ -182,6 +182,38 @@ test('R4-D desktop folio uses the full ledger height without a dead vertical gap
   expect(geometry.interPageGap).toBeLessThan(100);
 });
 
+test('homepage images preserve their intended aspect ratios on desktop', async ({ page }) => {
+  await openHomepage(page, 1280);
+
+  const aspectRatios = await page.evaluate(() => {
+    const measure = selector => {
+      const image = document.querySelector(selector);
+      if (!image) return null;
+      const box = image.getBoundingClientRect();
+      const declaredWidth = Number(image.getAttribute('width'));
+      const declaredHeight = Number(image.getAttribute('height'));
+      return {
+        rendered: box.width / box.height,
+        intended: declaredWidth / declaredHeight
+      };
+    };
+
+    return {
+      evidencePack: measure('.r4-record-folio figure:first-child img'),
+      historicalObservation: measure('.r4-signpost:first-child img'),
+      founderPortrait: measure('.r4-founder-portrait')
+    };
+  });
+
+  for (const [name, ratio] of Object.entries(aspectRatios)) {
+    expect(ratio, `${name} should be present`).not.toBeNull();
+    expect(
+      Math.abs(ratio.rendered - ratio.intended),
+      `${name} should preserve its declared aspect ratio`
+    ).toBeLessThan(0.02);
+  }
+});
+
 test('homepage keeps governance and founder boundaries compact and explicit', async ({ page }) => {
   await openHomepage(page, 1280);
 
