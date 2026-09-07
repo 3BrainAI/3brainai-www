@@ -46,7 +46,7 @@ const requiredIconLinks = [
 
 const releaseStylesheetVersion = '0a7fb8bf';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'wp0-20260907';
+const m3HomepageCorrectionVersion = 'wp0-ux-20260907';
 const evidenceArchiveVersion = 'wp0-20260907';
 const aboutFounderVersion = 'r4-programmes-20260906';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
