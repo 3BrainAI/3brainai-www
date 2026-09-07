@@ -26,13 +26,15 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
-  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=wp0-20260907"]')).toHaveCount(1);
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=wp0-ux-20260907"]')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveText('The physical world does not wait for your next review.');
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveText('For banks & institutional lenders');
   await expect(page.locator('.r4-domain-rail')).toHaveText(
     'Construction finance · Real-estate collateral · Infrastructure'
   );
+  await expect(page.locator('.r4-hero .r4-kicker')).toHaveCSS('font-size', '22px');
+  await expect(page.locator('.r4-domain-rail')).toHaveCSS('font-size', '17px');
   await expect(page.locator('.r4-human-boundary')).toHaveText(
     'Evidence for the people who review, challenge and decide.'
   );
@@ -52,10 +54,17 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
     await expect(link).toHaveAttribute('href', '/evidence-packs/fischamend/');
   }
 
-  const reviewInterval = page.locator('a.r4-review-interval');
-  await expect(reviewInterval).toHaveAttribute('href', '#workflow');
-  await expect(reviewInterval).toHaveAccessibleName(/Formal review Evidence Pack Next review Explore/);
-  await expect(reviewInterval).toContainText('Explore');
+  const reviewInterval = page.locator('ol.r4-review-interval');
+  await expect(reviewInterval).toHaveAttribute('aria-label', 'Review interval');
+  await expect(reviewInterval.getByRole('listitem')).toHaveText([
+    'Formal review',
+    'Evidence Pack',
+    'Next review'
+  ]);
+  await expect(reviewInterval.getByRole('link')).toHaveCount(0);
+  const reviewAction = page.getByRole('link', { name: 'Explore the review cycle' });
+  await expect(reviewAction).toHaveAttribute('href', '#workflow');
+  await expect(page.locator('.r4-review-cycle').getByRole('link')).toHaveCount(1);
   for (const width of [1440, 1024, 390]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await reviewInterval.locator('.r4-review-label').evaluateAll(labels => labels.map(label => ({
@@ -66,7 +75,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
       color: 'rgb(7, 81, 107)'
     }));
   }
-  await reviewInterval.click();
+  await reviewAction.click();
   await expect(page).toHaveURL(/#workflow$/);
 
   const orderedSections = await page.evaluate(ids => {
