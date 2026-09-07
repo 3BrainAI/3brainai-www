@@ -346,6 +346,7 @@
   right: 10px;
   bottom: 0;
   left: 20px;
+  pointer-events: none;
 }
 
 .r4-home .r4-review-interval {
@@ -420,6 +421,7 @@
   font-weight: 750;
   letter-spacing: 0.04em;
   line-height: 1.25;
+  pointer-events: auto;
   text-decoration: none;
   text-transform: none;
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
