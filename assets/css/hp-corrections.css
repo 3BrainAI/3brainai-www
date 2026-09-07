@@ -250,12 +250,16 @@
 
 .r4-home .r4-hero .r4-kicker {
   color: #89c4d6;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
 }
 
 .r4-home .r4-domain-rail {
   margin-bottom: 26px;
   color: #bdccd7;
-  font-size: 13px;
+  font-size: 17px;
+  line-height: 1.45;
   letter-spacing: 0.025em;
 }
 
@@ -336,20 +340,24 @@
   transform: rotate(-0.4deg);
 }
 
-.r4-home .r4-review-interval {
+.r4-home .r4-review-cycle {
   position: absolute;
   z-index: 3;
   right: 10px;
   bottom: 0;
   left: 20px;
+}
+
+.r4-home .r4-review-interval {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  text-decoration: none;
-  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.r4-home .r4-review-interval > span {
+.r4-home .r4-review-interval > li {
   position: relative;
   padding-top: 18px;
   font-size: 12px;
@@ -359,7 +367,7 @@
   text-transform: uppercase;
 }
 
-.r4-home .r4-review-interval > span::before {
+.r4-home .r4-review-interval > li::before {
   content: "";
   position: absolute;
   top: 5px;
@@ -369,7 +377,7 @@
   background: #527187;
 }
 
-.r4-home .r4-review-interval > span::after {
+.r4-home .r4-review-interval > li::after {
   content: "";
   position: absolute;
   top: 0;
@@ -382,25 +390,28 @@
   transform: translateX(-50%);
 }
 
-.r4-home .r4-review-interval > span:nth-child(2)::after {
+.r4-home .r4-review-interval > li:nth-child(2)::after {
   background: #78c7ce;
 }
 
 .r4-home .r4-review-label {
   display: inline-block;
   padding: 2px 5px;
-  border: 1px solid rgba(131, 203, 211, 0.72);
-  border-radius: 4px;
+  border-radius: 1px;
   background: rgba(230, 245, 246, 0.96);
   color: #07516b;
   line-height: 1.3;
+  box-shadow: inset 0 -1px 0 rgba(131, 203, 211, 0.78);
 }
 
-.r4-home .r4-review-interval small {
-  display: block;
+.r4-home .r4-review-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: max-content;
-  margin: 6px auto 0;
-  padding: 3px 7px;
+  min-height: 32px;
+  margin: 7px auto 0;
+  padding: 4px 10px;
   border: 1px solid #83cbd3;
   border-radius: 999px;
   background: #e6f5f6;
@@ -408,19 +419,21 @@
   font-size: 12px;
   font-weight: 750;
   letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-decoration: none;
   text-transform: none;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 
-.r4-home .r4-review-interval:hover .r4-review-label,
-.r4-home .r4-review-interval:focus-visible .r4-review-label {
+.r4-home .r4-review-action:hover {
+  border-color: #ffffff;
   background: #ffffff;
   color: #063f55;
 }
 
-.r4-home .r4-review-interval:focus-visible {
-  border-radius: 4px;
+.r4-home .r4-review-action:focus-visible {
   outline: 3px solid var(--r4-teal-light);
-  outline-offset: 5px;
+  outline-offset: 3px;
 }
 
 /* K2 – programme and institutional context */
@@ -1315,11 +1328,13 @@
 
   .r4-home .r4-hero .r4-kicker {
     margin-bottom: 8px;
+    font-size: 18px;
+    letter-spacing: 0.09em;
   }
 
   .r4-home .r4-domain-rail {
     margin-bottom: 18px;
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .r4-home .r4-section h1 {
@@ -1376,13 +1391,16 @@
     transform: rotate(2deg) translateY(20px);
   }
 
-  .r4-home .r4-review-interval {
+  .r4-home .r4-review-cycle {
     right: 0;
     left: 0;
+  }
+
+  .r4-home .r4-review-interval {
     gap: 3px;
   }
 
-  .r4-home .r4-review-interval > span {
+  .r4-home .r4-review-interval > li {
     font-size: 12px;
     letter-spacing: 0.025em;
   }
