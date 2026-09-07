@@ -58,6 +58,12 @@ for (const archiveCase of archiveCases) {
     await expect(page.locator('.archive-watch-meaning')).toContainText('evidence sufficiency');
     await expect(page.locator('.archive-watch-meaning')).toContainText('not a negative project rating');
 
+    await page.getByRole('link', { name: 'Open the historical record' }).click();
+    await expect(page).toHaveURL(/#historical-record$/);
+    expect(await page.locator('#historical-record').evaluate(section => (
+      section.getBoundingClientRect().top
+    ))).toBeGreaterThanOrEqual(74);
+
     const labels = await page.locator('.evidence-pack-content .evidence-section-label').allTextContents();
     expect(labels).toEqual(analyticalSections);
 

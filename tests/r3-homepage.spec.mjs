@@ -54,7 +54,11 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
 
   const reviewInterval = page.locator('a.r4-review-interval');
   await expect(reviewInterval).toHaveAttribute('href', '#workflow');
+  await expect(reviewInterval).toHaveAccessibleName(/Formal review Evidence Pack Next review Explore/);
   await expect(reviewInterval).toContainText('Explore');
+  expect(await reviewInterval.locator(':scope > span').evaluateAll(labels => labels.map(label => (
+    getComputedStyle(label).color
+  )))).toEqual(['rgb(11, 82, 107)', 'rgb(11, 82, 107)', 'rgb(11, 82, 107)']);
   await reviewInterval.click();
   await expect(page).toHaveURL(/#workflow$/);
 

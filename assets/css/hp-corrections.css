@@ -345,7 +345,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  color: #bcd0dc;
+  color: #0b526b;
   text-decoration: none;
   cursor: pointer;
 }
@@ -402,17 +402,8 @@
   text-transform: none;
 }
 
-.r4-home .r4-review-interval span:nth-child(3) {
-  color: #0b526b;
-}
-
 .r4-home .r4-review-interval:hover,
 .r4-home .r4-review-interval:focus-visible {
-  color: #ffffff;
-}
-
-.r4-home .r4-review-interval:hover span:nth-child(3),
-.r4-home .r4-review-interval:focus-visible span:nth-child(3) {
   color: #063f55;
 }
 
