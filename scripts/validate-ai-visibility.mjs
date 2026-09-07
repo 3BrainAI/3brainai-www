@@ -150,6 +150,8 @@ const publicEnglishPages = [
   'about/index.html',
   'contact/index.html',
   'cri/index.html',
+  'evidence-packs/german-north-sea/index.html',
+  'evidence-packs/lausitz/index.html',
   'governance-layer/index.html',
   'how-it-works/index.html',
   'imprint/index.html',
@@ -255,6 +257,30 @@ assert.match(contactPage, /mailto:investors@3brain\.ai/);
 const homepage = await readRepositoryFile('index.html');
 assert.match(homepage, /WATCH refers to evidence sufficiency and the need for documentary review/);
 assert.match(homepage, /it is not a negative project rating and does not indicate delay, breach or default/);
+
+const historicalArchivePages = [
+  ['evidence-packs/lausitz/index.html', 'https://www.3brain.ai/evidence-packs/lausitz/'],
+  ['evidence-packs/german-north-sea/index.html', 'https://www.3brain.ai/evidence-packs/german-north-sea/']
+];
+
+for (const [file, canonicalUrl] of historicalArchivePages) {
+  const html = await readRepositoryFile(file);
+  assert.match(html, /<meta name="robots" content="noindex,follow">/, `${file} must remain outside the indexed canonical surface`);
+  assert.match(html, new RegExp(`<link rel="canonical" href="${canonicalUrl}">`), `${file} must use its self canonical`);
+  for (const marker of [
+    'Historical public-safe prototype',
+    'archive only',
+    'not a customer record',
+    'Synthetic review question',
+    'Observed vs Declared',
+    'Uncertainty and non-inference',
+    'Bounded conclusion',
+    'Human review',
+    'Interpretation of WATCH'
+  ]) {
+    assert.ok(html.includes(marker), `${file} is missing its archive boundary marker: ${marker}`);
+  }
+}
 
 const indexNowKey = '4c359192cfa68f4af5c6a8dd38964897';
 assert.equal((await readRepositoryFile(`${indexNowKey}.txt`)).trim(), indexNowKey);

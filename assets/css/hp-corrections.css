@@ -300,12 +300,22 @@
 .r4-home .r4-folio-sheet {
   position: absolute;
   top: 55px;
+  display: block;
   width: 385px;
   aspect-ratio: 1190 / 1684;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.48);
   background: var(--r4-white);
   box-shadow: 0 30px 65px rgba(0, 0, 0, 0.33);
+}
+
+.r4-home .r4-folio-sheet:focus-visible {
+  outline: 3px solid var(--r4-teal-light);
+  outline-offset: 5px;
+}
+
+.r4-home .r4-folio-sheet:hover {
+  border-color: var(--r4-teal-light);
 }
 
 .r4-home .r4-folio-sheet img {
@@ -328,6 +338,7 @@
 
 .r4-home .r4-review-interval {
   position: absolute;
+  z-index: 3;
   right: 10px;
   bottom: 0;
   left: 20px;
@@ -335,6 +346,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
   color: #bcd0dc;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .r4-home .r4-review-interval span {
@@ -372,6 +385,41 @@
 
 .r4-home .r4-review-interval span:nth-child(2)::after {
   background: #78c7ce;
+}
+
+.r4-home .r4-review-interval small {
+  display: block;
+  width: max-content;
+  margin: 6px auto 0;
+  padding: 3px 7px;
+  border: 1px solid #83cbd3;
+  border-radius: 999px;
+  background: #e6f5f6;
+  color: #07516b;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.r4-home .r4-review-interval span:nth-child(3) {
+  color: #0b526b;
+}
+
+.r4-home .r4-review-interval:hover,
+.r4-home .r4-review-interval:focus-visible {
+  color: #ffffff;
+}
+
+.r4-home .r4-review-interval:hover span:nth-child(3),
+.r4-home .r4-review-interval:focus-visible span:nth-child(3) {
+  color: #063f55;
+}
+
+.r4-home .r4-review-interval:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid var(--r4-teal-light);
+  outline-offset: 5px;
 }
 
 /* K2 – programme and institutional context */
@@ -905,6 +953,28 @@
   color: var(--r4-muted);
   font-size: 14px;
   line-height: 1.45;
+}
+
+.r4-home .r4-signpost-action {
+  margin: 0;
+  padding: 0 16px 15px;
+}
+
+.r4-home .r4-signpost-action a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  color: var(--r4-blue);
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.r4-home .r4-signpost-action a:hover,
+.r4-home .r4-signpost-action a:focus-visible {
+  color: var(--r4-navy);
 }
 
 /* K5 – governed boundary */

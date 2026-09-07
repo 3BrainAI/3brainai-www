@@ -1,0 +1,169 @@
+.evidence-archive-page {
+  background: var(--r3-page-background);
+}
+
+.evidence-archive-page .evidence-archive-hero {
+  padding: 48px 0 42px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    var(--cri-navy);
+  background-size: 52px 52px;
+  color: var(--white);
+}
+
+.evidence-archive-page .evidence-archive-hero .kicker {
+  color: #9edce3;
+}
+
+.evidence-archive-page .evidence-archive-hero h1 {
+  max-width: 17ch;
+  margin-bottom: 16px;
+  color: var(--white);
+}
+
+.evidence-archive-page .evidence-archive-hero .lead {
+  max-width: 76ch;
+  color: #d6e0e6;
+}
+
+.evidence-archive-page .evidence-archive-hero .btn.secondary {
+  border-color: rgba(255, 255, 255, 0.48);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+}
+
+.evidence-archive-page .evidence-archive-hero .btn.secondary:hover,
+.evidence-archive-page .evidence-archive-hero .btn.secondary:focus-visible {
+  border-color: rgba(255, 255, 255, 0.82);
+  background: var(--white);
+  color: var(--cri-navy);
+}
+
+.evidence-archive-page .reason-code-list li {
+  overflow-wrap: anywhere;
+}
+
+.evidence-archive-page .archive-boundary-section {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--r3-border);
+  background: #fffaf1;
+}
+
+.evidence-archive-page .archive-boundary-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.34fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  padding: 20px 22px;
+  border: 1px solid rgba(173, 92, 18, 0.32);
+  border-radius: var(--r3-card-radius);
+  background: rgba(255, 254, 251, 0.88);
+}
+
+.evidence-archive-page .archive-boundary-card h2 {
+  margin: 0;
+  color: #8b4f11;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.evidence-archive-page .archive-boundary-card p {
+  margin: 0;
+  color: var(--r3-text-secondary);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.evidence-archive-page .archive-record-section {
+  padding: 48px 0 56px;
+}
+
+.evidence-archive-page .archive-record-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.evidence-archive-page .archive-record-intro p {
+  max-width: 72ch;
+  margin: 0;
+  color: var(--r3-text-secondary);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.evidence-archive-page .archive-case-switch {
+  flex: 0 0 auto;
+  color: var(--r3-action);
+  font-size: 14px;
+  font-weight: 650;
+  text-underline-offset: 4px;
+}
+
+.evidence-archive-page .evidence-pack-label,
+.evidence-archive-page .evidence-pack-case-context,
+.evidence-archive-page .evidence-pack-state-label,
+.evidence-archive-page .evidence-pack-state-cadence,
+.evidence-archive-page .evidence-section-label,
+.evidence-archive-page .evidence-field-label,
+.evidence-archive-page .evidence-meta-list dt,
+.evidence-archive-page .evidence-meta-list dd,
+.evidence-archive-page .evidence-meta-group-title,
+.evidence-archive-page .reason-code-list,
+.evidence-archive-page .evidence-provenance ul,
+.evidence-archive-page .evidence-demo-note,
+.evidence-archive-page .evidence-input-header p:not(.evidence-section-label),
+.evidence-archive-page .evidence-input-context,
+.evidence-archive-page .evidence-input-mode,
+.evidence-archive-page .evidence-date-chip,
+.evidence-archive-page .evidence-input-figure figcaption,
+.evidence-archive-page .evidence-input-figure figcaption strong,
+.evidence-archive-page .evidence-input-footer,
+.evidence-archive-page .confidence-boundary {
+  font-size: 12px;
+}
+
+.evidence-archive-page .archive-watch-meaning {
+  margin: 0;
+  padding: 13px 16px;
+  border-top: 1px solid rgba(173, 92, 18, 0.25);
+  background: #fffaf1;
+  color: var(--r3-text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.evidence-archive-page .archive-watch-meaning strong {
+  color: #8b4f11;
+}
+
+.evidence-archive-page .archive-route-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+@media (max-width: 720px) {
+  .evidence-archive-page .evidence-archive-hero {
+    padding: 36px 0 34px;
+  }
+
+  .evidence-archive-page .archive-boundary-card {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 17px;
+  }
+
+  .evidence-archive-page .archive-record-section {
+    padding: 36px 0 44px;
+  }
+
+  .evidence-archive-page .archive-record-intro {
+    display: grid;
+    align-items: start;
+  }
+}

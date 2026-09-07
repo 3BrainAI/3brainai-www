@@ -59,6 +59,7 @@ jobs:
           name: r3-review-${{ github.run_id }}
           path: |
             artifacts/r3-preview/
+            artifacts/wp0-evidence-archive/
             playwright-report/
             test-results/
           if-no-files-found: warn

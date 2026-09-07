@@ -25,6 +25,8 @@ const scopedRoutes = [
   { route: '/about/', file: 'about/index.html', active: 'About' },
   { route: '/contact/', file: 'contact/index.html', active: 'Contact' },
   { route: '/cri/', file: 'cri/index.html', active: 'CRI', evidenceHref: '/#portfolio' },
+  { route: '/evidence-packs/german-north-sea/', file: 'evidence-packs/german-north-sea/index.html', active: null },
+  { route: '/evidence-packs/lausitz/', file: 'evidence-packs/lausitz/index.html', active: null },
   { route: '/governance-layer/', file: 'governance-layer/index.html', active: null },
   { route: '/how-it-works/', file: 'how-it-works/index.html', active: null },
   { route: '/imprint/', file: 'imprint/index.html', active: null },
@@ -41,6 +43,8 @@ const scopedRoutes = [
 const representativeRoutes = [
   ...primaryJourneyRoutes.map(({ route }) => route),
   '/governance-layer/',
+  '/evidence-packs/german-north-sea/',
+  '/evidence-packs/lausitz/',
   '/mis/',
   '/use-cases/',
   '/security/'
