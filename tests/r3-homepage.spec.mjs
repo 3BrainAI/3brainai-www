@@ -56,13 +56,16 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await expect(reviewInterval).toHaveAttribute('href', '#workflow');
   await expect(reviewInterval).toHaveAccessibleName(/Formal review Evidence Pack Next review Explore/);
   await expect(reviewInterval).toContainText('Explore');
-  expect(await reviewInterval.locator(':scope > span').evaluateAll(labels => labels.map(label => (
-    getComputedStyle(label).color
-  )))).toEqual(['rgb(11, 82, 107)', 'rgb(11, 82, 107)', 'rgb(11, 82, 107)']);
-  await page.setViewportSize({ width: 1024, height: 900 });
-  expect(await reviewInterval.locator(':scope > span').evaluateAll(labels => labels.map(label => (
-    getComputedStyle(label).color
-  )))).toEqual(['rgb(188, 208, 220)', 'rgb(188, 208, 220)', 'rgb(188, 208, 220)']);
+  for (const width of [1440, 1024, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(await reviewInterval.locator('.r4-review-label').evaluateAll(labels => labels.map(label => ({
+      background: getComputedStyle(label).backgroundColor,
+      color: getComputedStyle(label).color
+    })))).toEqual(Array(3).fill({
+      background: 'rgba(230, 245, 246, 0.96)',
+      color: 'rgb(7, 81, 107)'
+    }));
+  }
   await reviewInterval.click();
   await expect(page).toHaveURL(/#workflow$/);
 
