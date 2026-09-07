@@ -428,9 +428,29 @@ const homepageCorrections = await readFile(
   'utf8'
 );
 assert.match(homepageCorrections, /\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*repeat\(4,/s);
-assert.match(homepageCorrections, /\.r4-home \.r4-record-folio\s*{[^}]*min-height:\s*920px;/s);
+assert.match(
+  homepageCorrections,
+  /\.r4-home \.r4-record-folio figure\s*{[^}]*position:\s*static;[^}]*width:\s*100%;/s
+);
+assert.match(
+  homepageCorrections,
+  /\.r4-home \.r4-record-folio figure \+ figure\s*{[^}]*margin-top:\s*24px;/s
+);
+assert.doesNotMatch(
+  homepageCorrections,
+  /\.r4-home \.r4-record-folio\s*{[^}]*height:\s*210px;/s
+);
+assert.doesNotMatch(
+  homepageCorrections,
+  /\.r4-home \.r4-record-folio img\s*{[^}]*height:\s*174px;/s
+);
+assert.match(
+  homepageCorrections,
+  /\.r4-home \.r4-signpost\s*{[^}]*grid-template-rows:\s*auto 1fr auto;/s
+);
 assert.match(homepageCorrections, /\.r4-home \.r4-kicker,[\s\S]*font-size:\s*12px;/);
 assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*1fr 1fr;/);
+assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-historical-signposts\s*{[^}]*grid-template-columns:\s*1fr;/);
 
 const aboutFounderStylesheet = await readFile(
   path.join(repositoryRoot, 'assets/css/about-founder.css'),

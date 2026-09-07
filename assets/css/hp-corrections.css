@@ -1,4 +1,4 @@
-/* Homepage R4-D implementation layer.
+/* Homepage R4-E implementation layer.
    The selectors are scoped to the homepage so the established destination pages
    retain their current production styles. */
 
@@ -577,15 +577,15 @@
   grid-template-columns: 1.6fr 0.4fr;
   gap: 32px;
   align-items: end;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .r4-home .r4-record-head .r4-kicker {
-  margin-bottom: 9px;
+  margin-bottom: 12px;
 }
 
 .r4-home .r4-record-head h2 {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .r4-home .r4-entry-line {
@@ -608,9 +608,7 @@
   /* Clear the production 74 px sticky header while the folio follows the lens. */
   top: 92px;
   display: block;
-  min-height: 920px;
   align-self: stretch;
-  overflow: hidden;
   isolation: isolate;
   padding: 16px;
   background: var(--r4-navy);
@@ -618,22 +616,13 @@
 }
 
 .r4-home .r4-record-folio figure {
-  position: absolute;
+  position: static;
   margin: 0;
+  width: 100%;
 }
 
-.r4-home .r4-record-folio figure:first-child {
-  top: 16px;
-  left: 16px;
-  z-index: 2;
-  width: calc(100% - 58px);
-}
-
-.r4-home .r4-record-folio figure:nth-child(2) {
-  top: 49%;
-  right: 16px;
-  z-index: 2;
-  width: 76%;
+.r4-home .r4-record-folio figure + figure {
+  margin-top: 24px;
 }
 
 .r4-home .r4-record-folio img {
@@ -856,21 +845,18 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 
 .r4-home .r4-signpost {
   display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   border: 1px solid var(--r4-line);
   background: var(--r4-paper);
 }
 
 .r4-home .r4-signpost-head {
-  grid-column: 1;
-  grid-row: 1;
-  padding: 12px 15px 6px;
+  padding: 14px 16px 4px;
 }
 
 .r4-home .r4-signpost-head .r4-meta {
@@ -879,17 +865,14 @@
 
 .r4-home .r4-signpost-head h3 {
   margin-top: 8px;
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 
 .r4-home .r4-signpost-images {
-  grid-column: 2;
-  grid-row: 1 / 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 3px;
-  padding: 3px;
+  gap: 4px;
+  padding: 4px;
   background: var(--r4-navy);
 }
 
@@ -916,9 +899,9 @@
 }
 
 .r4-home .r4-signpost-note {
-  grid-column: 1;
-  grid-row: 2;
-  padding: 6px 15px 13px;
+  align-self: start;
+  margin: 0;
+  padding: 8px 16px 16px;
   color: var(--r4-muted);
   font-size: 14px;
   line-height: 1.45;
@@ -1112,7 +1095,7 @@
 
 .r4-home .r4-no-result {
   display: inline-block;
-  margin-top: 4px;
+  margin-top: 12px;
   padding: 8px 12px;
   border: 1px solid #668297;
   color: #d7e4e8;
@@ -1206,6 +1189,10 @@
   .r4-home .r4-record-folio figure:nth-child(2) {
     position: static;
     width: auto;
+  }
+
+  .r4-home .r4-record-folio figure + figure {
+    margin-top: 0;
   }
 }
 
@@ -1488,22 +1475,14 @@
 
   .r4-home .r4-record-folio {
     grid-template-columns: 1fr 1fr;
-    height: 210px;
     padding: 7px;
     gap: 6px;
-    overflow: hidden;
-  }
-
-  .r4-home .r4-record-folio img {
-    height: 174px;
-    object-fit: cover;
-    object-position: top;
   }
 
   .r4-home .r4-record-folio figcaption {
     margin-top: 5px;
     font-size: 12px;
-    line-height: 1.15;
+    line-height: 1.3;
   }
 
   .r4-home .r4-evidence-lens {
@@ -1626,8 +1605,8 @@
   }
 
   .r4-home .r4-historical-signposts {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 12px;
     margin-top: 20px;
   }
 

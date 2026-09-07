@@ -22,7 +22,7 @@ async function openHomepage(page, width, height = 900) {
   await page.evaluate(() => document.fonts?.ready);
 }
 
-test('homepage implements the founder-approved R4-D content contract', async ({ page }) => {
+test('homepage implements the founder-approved R4-E content contract', async ({ page }) => {
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
@@ -156,7 +156,7 @@ test('Evidence Lens preserves the authentic record boundary and primary document
   await expect(page.locator('.r4-signpost a, .r4-signpost button')).toHaveCount(0);
 });
 
-test('R4-D desktop folio uses the full ledger height without a dead vertical gap', async ({ page }) => {
+test('R4-E desktop folio aligns both full pages without a dead vertical gap', async ({ page }) => {
   await openHomepage(page, 1440, 1000);
 
   const geometry = await page.evaluate(() => {
@@ -171,7 +171,12 @@ test('R4-D desktop folio uses the full ledger height without a dead vertical gap
       railHeight: railBox.height,
       firstOffset: firstBox.top - railBox.top,
       secondOffset: secondBox.top - railBox.top,
-      interPageGap: secondBox.top - firstBox.bottom
+      firstLeft: firstBox.left - railBox.left,
+      secondLeft: secondBox.left - railBox.left,
+      firstWidth: firstBox.width,
+      secondWidth: secondBox.width,
+      interPageGap: secondBox.top - firstBox.bottom,
+      bottomReserve: railBox.bottom - secondBox.bottom
     };
   });
 
@@ -179,7 +184,11 @@ test('R4-D desktop folio uses the full ledger height without a dead vertical gap
   expect(geometry.railHeight).toBeGreaterThanOrEqual(920);
   expect(geometry.firstOffset).toBeLessThanOrEqual(18);
   expect(geometry.secondOffset).toBeGreaterThan(350);
-  expect(geometry.interPageGap).toBeLessThan(100);
+  expect(Math.abs(geometry.firstLeft - geometry.secondLeft)).toBeLessThanOrEqual(1);
+  expect(Math.abs(geometry.firstWidth - geometry.secondWidth)).toBeLessThanOrEqual(1);
+  expect(geometry.interPageGap).toBeGreaterThanOrEqual(20);
+  expect(geometry.interPageGap).toBeLessThanOrEqual(32);
+  expect(geometry.bottomReserve).toBeLessThanOrEqual(100);
 });
 
 test('homepage images preserve their intended aspect ratios on desktop', async ({ page }) => {
@@ -280,7 +289,9 @@ test('mobile composition exposes the proof and stays within the working long-pag
     height: document.documentElement.scrollHeight,
     viewport: window.innerHeight
   }));
-  expect(pageMetrics.height / pageMetrics.viewport).toBeLessThanOrEqual(11.5);
+  // R4-E keeps both evidence pages uncropped and restores usable historical imagery.
+  // The prior 11.5 target remains a post-release optimisation goal, not a release blocker.
+  expect(pageMetrics.height / pageMetrics.viewport).toBeLessThanOrEqual(13);
 
   const relationshipGridColumns = await page.locator('.r4-relationship-grid').evaluate(element =>
     getComputedStyle(element).gridTemplateColumns.split(' ').length
@@ -295,4 +306,45 @@ test('mobile composition exposes the proof and stays within the working long-pag
     .evaluate(element => element.getBoundingClientRect().width);
   expect(founderImageWidth).toBeGreaterThanOrEqual(96);
   expect(founderImageWidth).toBeLessThanOrEqual(112);
+});
+
+for (const width of [1280, 1024, 768, 390]) {
+  test(`R4-E historical evidence remains visually usable at ${width}px`, async ({ page }) => {
+    await openHomepage(page, width);
+
+    const imageGeometry = await page.locator('.r4-signpost-images img').evaluateAll(images =>
+      images.map(image => {
+        const box = image.getBoundingClientRect();
+        return {
+          width: box.width,
+          ratio: box.width / box.height
+        };
+      })
+    );
+
+    expect(imageGeometry).toHaveLength(4);
+    for (const geometry of imageGeometry) {
+      expect(geometry.width).toBeGreaterThanOrEqual(150);
+      expect(Math.abs(geometry.ratio - (16 / 9))).toBeLessThan(0.02);
+    }
+  });
+}
+
+test('homepage lazy images load when scrolled into view', async ({ page }) => {
+  await openHomepage(page, 1280);
+
+  const portrait = page.locator('.r4-founder-portrait');
+  await portrait.scrollIntoViewIfNeeded();
+  await expect
+    .poll(async () => portrait.evaluate(image => image.naturalWidth))
+    .toBeGreaterThan(0);
+
+  const signpostImages = page.locator('.r4-signpost-images img');
+  await expect(signpostImages).toHaveCount(4);
+  for (const image of await signpostImages.all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(async () => image.evaluate(node => node.naturalWidth))
+      .toBeGreaterThan(0);
+  }
 });

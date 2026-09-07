@@ -69,6 +69,21 @@ async function openRoute(page, route) {
   await page.evaluate(() => document.fonts?.ready);
 }
 
+async function settleLazyImages(page) {
+  await page.evaluate(async () => {
+    const images = [...document.querySelectorAll('img[loading="lazy"]')];
+    for (const image of images) image.loading = 'eager';
+    await Promise.all(images.map(image =>
+      image.complete
+        ? Promise.resolve()
+        : new Promise(resolve => {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', resolve, { once: true });
+          })
+    ));
+  });
+}
+
 for (const routeContract of scopedRoutes) {
   test(`${routeContract.file} uses the canonical navigation and active state`, async ({ page }) => {
     await preparePage(page, 1280);
@@ -375,6 +390,7 @@ test('creates deterministic fast-refresh screenshots for the six primary journey
 
     for (const { route, slug } of primaryJourneyRoutes) {
       await openRoute(page, route);
+      await settleLazyImages(page);
       await page.screenshot({
         path: path.join(outputDirectory, `fast-refresh-${slug}-${viewport.width}.png`),
         fullPage: true,
@@ -389,11 +405,17 @@ test('creates deterministic fast-refresh screenshots for the six primary journey
     { width: 1440, height: 900 }
   ]) {
     await page.setViewportSize(viewport);
-    await openRoute(page, '/about/');
-    await page.screenshot({
-      path: path.join(outputDirectory, `fast-refresh-about-${viewport.width}.png`),
-      fullPage: true,
-      animations: 'disabled'
-    });
+    for (const { route, slug } of [
+      { route: '/', slug: 'home' },
+      { route: '/about/', slug: 'about' }
+    ]) {
+      await openRoute(page, route);
+      await settleLazyImages(page);
+      await page.screenshot({
+        path: path.join(outputDirectory, `fast-refresh-${slug}-${viewport.width}.png`),
+        fullPage: true,
+        animations: 'disabled'
+      });
+    }
   }
 });
