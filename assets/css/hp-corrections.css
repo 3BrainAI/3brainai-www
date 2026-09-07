@@ -64,7 +64,6 @@
 .r4-home img {
   display: block;
   max-width: 100%;
-  height: auto;
 }
 
 .r4-home .r4-wrap {
@@ -409,6 +408,7 @@
 
 .r4-home .r4-relationship-media img {
   width: auto;
+  height: auto;
   max-height: 72px;
   object-fit: contain;
 }
@@ -638,6 +638,7 @@
 
 .r4-home .r4-record-folio img {
   width: 100%;
+  height: auto;
   border: 1px solid #6f8593;
   background: var(--r4-white);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
@@ -899,6 +900,7 @@
 
 .r4-home .r4-signpost-images img {
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
@@ -1064,6 +1066,7 @@
 
 .r4-home .r4-founder-portrait {
   width: 210px;
+  height: auto;
   aspect-ratio: 4 / 5;
   border: 1px solid #9daeb6;
   object-fit: cover;
