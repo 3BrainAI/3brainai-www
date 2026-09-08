@@ -107,38 +107,35 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   expect(missingAnchors).toEqual([]);
 });
 
-test('four relationship signals have equal hierarchy and explicit roles', async ({ page }) => {
+test('four current programmes and the historical EY context remain explicitly separated', async ({ page }) => {
   await openHomepage(page, 1440);
 
   const cards = page.locator('.r4-relationship-card');
   await expect(cards).toHaveCount(4);
   await expect(cards.locator('h3')).toHaveText([
     'ESA BIC Czech Republic',
-    'Google for Startups Cloud Program',
     'OVHcloud Startup Program',
-    'EY Startup Academy Frankfurt 2025'
+    'Google for Startups Cloud Program',
+    'NVIDIA Inception'
   ]);
   await expect(cards.locator('.r4-status-label')).toHaveText([
-    'Current programme involvement',
-    'Technology programme & infrastructure support',
-    'Technology programme & infrastructure support',
-    'Historical programme participation'
+    'Current incubation',
+    'European cloud infrastructure',
+    'AI & Earth Observation R&D',
+    'AI development programme'
   ]);
 
-  await expect(cards.nth(0)).toContainText(
-    'Participation does not imply ESA endorsement, product validation or customer status.'
-  );
-  await expect(cards.nth(1)).toContainText('Does not validate CRI, its infrastructure or security.');
-  await expect(cards.nth(2)).toContainText(
-    'Does not imply security attestation, certification or customer validation.'
-  );
-  await expect(cards.nth(3)).toContainText(
-    'Historical company context; not current CRI, product or customer validation.'
-  );
   await expect(cards.locator('a')).toHaveCount(0);
-  await expect(page.locator('.r4-relationships > .r4-wrap > .r4-text-link')).toHaveAttribute(
+  const history = page.locator('.r4-relationship-history');
+  await expect(history).toContainText('Historical programme');
+  await expect(history).toContainText('EY Startup Academy Frankfurt 2025');
+  await expect(history).toContainText('Completed by 3BrainAI Solutions · company history');
+  await expect(history.locator('.r4-relationship-history-link')).toHaveAttribute(
     'href',
     '/about/#institutional-milestones'
+  );
+  await expect(page.locator('.r4-relationship-qualifier')).toHaveText(
+    'Programme participation does not imply product validation, endorsement, production hosting or customer status.'
   );
 
   const geometry = await cards.evaluateAll(elements => elements.map(element => {
@@ -339,7 +336,7 @@ test('mobile composition exposes the proof and stays within the working long-pag
   const relationshipGridColumns = await page.locator('.r4-relationship-grid').evaluate(element =>
     getComputedStyle(element).gridTemplateColumns.split(' ').length
   );
-  expect(relationshipGridColumns).toBe(2);
+  expect(relationshipGridColumns).toBe(1);
 
   const openPack = page.getByRole('link', { name: 'Open full Evidence Pack' });
   const openPackBox = await openPack.evaluate(element => element.getBoundingClientRect());
