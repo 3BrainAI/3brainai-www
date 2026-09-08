@@ -223,7 +223,7 @@ for (const file of publicEnglishPages) {
 const investorPage = await readRepositoryFile('investors/index.html');
 assert.doesNotMatch(investorPage, /Indicative commercial scenarios|monthly recurring|annual recurring|€|\brevenue\b|\bburn\b|\brunway\b/i);
 
-const eyCompletionClaim = /3BrainAI Solutions was one of 11 startups in the EY Startup Academy Frankfurt 2025 cohort and completed the programme\./;
+const investorEyCompletionClaim = /3BrainAI Solutions was one of 11 startups in the EY Startup Academy Frankfurt 2025 cohort and completed the programme\./;
 const aboutPage = await readRepositoryFile('about/index.html');
 assert.match(aboutPage, /<h2 class="about-founder-name">Dušan Přikryl<\/h2>/);
 assert.match(aboutPage, /Owner-side CAPEX leadership · Tier-1 technology integration · German-speaking market experience/);
@@ -236,14 +236,11 @@ assert.match(aboutPage, /Develops CRI and its governed Evidence Pack workflow fo
 assert.match(aboutPage, /including the first Trust Record concept/);
 assert.match(aboutPage, /Google for Startups Cloud Program/);
 assert.match(aboutPage, /OVHcloud Startup Program/);
-assert.match(aboutPage, /This does not validate CRI, its infrastructure or security\./);
-assert.match(aboutPage, /This does not imply security attestation, certification or customer validation\./);
-for (const [file, html] of [
-  ['investors/index.html', investorPage],
-  ['about/index.html', aboutPage]
-]) {
-  assert.match(html, eyCompletionClaim, `${file} is missing the approved EY completion statement`);
-}
+assert.match(aboutPage, /NVIDIA Inception/);
+assert.match(aboutPage, /one of two projects selected for ESA BIC Czech Republic incubation in 2026/);
+assert.match(aboutPage, /one of 11 startups selected for the curated EY Startup Academy Frankfurt 2025 cohort/);
+assert.match(aboutPage, /These are programme, infrastructure and mentoring relationships, not customer references or certifications\./);
+assert.match(investorPage, investorEyCompletionClaim, 'investors/index.html is missing the approved EY completion statement');
 
 const validationPage = await readRepositoryFile('validation/index.html');
 assert.doesNotMatch(validationPage, /public-sector|insurers|corporates|technology partners|OVHcloud/i);
