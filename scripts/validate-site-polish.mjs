@@ -46,7 +46,7 @@ const requiredIconLinks = [
 
 const releaseStylesheetVersion = '0a7fb8bf';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'wp0-ux-20260907';
+const m3HomepageCorrectionVersion = 'wp0-programmes-20260908';
 const evidenceArchiveVersion = 'wp0-20260907';
 const aboutFounderVersion = 'r4-programmes-20260906';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
@@ -157,9 +157,13 @@ for (const [relativePath, expectedHash] of founderPortraitHashes) {
 
 const institutionalVisualHashes = new Map([
   ['assets/img/ey-startup-academy-2025.jpg', '381d5a5674baf1d4b3dbd20f844b37089a970e51f994f65b3af89428c6623235'],
+  ['assets/img/homepage-r4d/esa-bic-cz-tight.png', '20d8c9c5e6ee81f310a70bfebc2f324bdfa5d0fad17691e7c55abc68dde80485'],
   ['assets/img/homepage-r4d/fischamend-evidence-pack-page-1.png', '9d633c4b2acdae40383d7c2a2536433a0b89d7c196fcb9e7d91053a80e435831'],
   ['assets/img/homepage-r4d/fischamend-evidence-pack-page-2.png', 'd79cba422e5a770d0e938a9502691d9336a4de039102ea5fac99a6de61fd2ca1'],
+  ['assets/img/homepage-r4d/google-startups-lockup.svg', '9bd53e3d1a1ae463d6cd49e8f0a50430b4325e3d0607cda6bbd345210ded4190'],
   ['assets/img/homepage-r4d/google-wordmark.svg', 'f6928f264fd922ffd90a654a30c6ba541d8cbe05813f7ae6e8d1e0f9b2e19f81'],
+  ['assets/img/homepage-r4d/nvidia-inception.svg', '4839f5e913abfada9e42a550acb880bf608b03c6fb1eff5ad7a8d6f6c3ebe71e'],
+  ['assets/img/homepage-r4d/ovhcloud-startup-program.svg', '23a3dbc58e3326f5f2a9bae1494931368f361db205b5e66eb269f0cc508be83b'],
   ['assets/img/homepage-r4d/ovhcloud-logo.svg', 'e1be9a57b8f0590cbf3a5e7f35344825487ebfbaefe301d6ab58fc910ed142b7']
 ]);
 
@@ -300,6 +304,13 @@ assert.equal((homepageHtml.match(/<link rel="preload" as="image"/g) ?? []).lengt
 assert.equal((homepageHtml.match(/loading="eager"/g) ?? []).length, 2);
 assert.equal((homepageHtml.match(/fetchpriority="high"/g) ?? []).length, 1);
 assert.equal((homepageHtml.match(/class="r4-relationship-card"/g) ?? []).length, 4);
+assert.match(homepageHtml, /Incubation and technology programmes\./);
+assert.match(homepageHtml, /Google for Startups Cloud Program/);
+assert.match(homepageHtml, /NVIDIA Inception/);
+assert.match(homepageHtml, /Historical programme/);
+assert.match(homepageHtml, /EY Startup Academy Frankfurt 2025/);
+assert.match(homepageHtml, /href="\/about\/#institutional-milestones">Programme details in About<\/a>/);
+assert.doesNotMatch(homepageHtml, /Relationships, precisely named\./);
 assert.equal((homepageHtml.match(/class="r4-workflow-step"/g) ?? []).length, 4);
 assert.equal((homepageHtml.match(/class="r4-signpost"/g) ?? []).length, 2);
 assert.match(homepageHtml, /Authentic record · readable excerpt/);
@@ -447,6 +458,7 @@ const homepageCorrections = await readFile(
   'utf8'
 );
 assert.match(homepageCorrections, /\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*repeat\(4,/s);
+assert.match(homepageCorrections, /\.r4-home \.r4-relationship-history\s*{[^}]*grid-template-columns:/s);
 assert.match(
   homepageCorrections,
   /\.r4-home \.r4-record-folio figure\s*{[^}]*position:\s*static;[^}]*width:\s*100%;/s
@@ -468,7 +480,7 @@ assert.match(
   /\.r4-home \.r4-signpost\s*{[^}]*grid-template-rows:\s*auto 1fr auto;/s
 );
 assert.match(homepageCorrections, /\.r4-home \.r4-kicker,[\s\S]*font-size:\s*12px;/);
-assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*1fr 1fr;/);
+assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*1fr;/);
 assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-historical-signposts\s*{[^}]*grid-template-columns:\s*1fr;/);
 
 const aboutFounderStylesheet = await readFile(

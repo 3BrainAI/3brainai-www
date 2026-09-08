@@ -446,119 +446,140 @@
 .r4-home .r4-relationship-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
 .r4-home .r4-relationship-card {
-  display: flex;
-  min-height: 340px;
-  flex-direction: column;
+  min-width: 0;
+  min-height: 192px;
+  overflow: hidden;
   border: 1px solid var(--r4-line);
   border-top: 3px solid var(--r4-blue);
-  background: var(--r4-paper);
+  background: var(--r4-white);
 }
 
 .r4-home .r4-relationship-media {
   display: flex;
-  height: 100px;
+  height: 96px;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  padding: 16px;
+  padding: 17px 20px;
   border-bottom: 1px solid #d8e0e2;
   background: var(--r4-white);
-  color: #000e9c;
 }
 
 .r4-home .r4-relationship-media img {
+  display: block;
   width: auto;
   height: auto;
-  max-height: 72px;
   object-fit: contain;
 }
 
-.r4-home .r4-relationship-media-ey {
-  padding: 0;
+.r4-home .r4-relationship-media--esa img {
+  width: min(100%, 210px);
 }
 
-.r4-home .r4-relationship-media-ey img {
-  width: 100%;
-  height: 100%;
-  max-height: none;
-  object-fit: cover;
-  object-position: center 26%;
+.r4-home .r4-relationship-media--ovh img {
+  width: min(100%, 231px);
+  max-height: 63px;
 }
 
-.r4-home .r4-programme-lockup {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.r4-home .r4-relationship-media--google img {
+  width: min(100%, 216px);
+  max-height: 63px;
 }
 
-.r4-home .r4-google-lockup img {
-  width: 84px;
-  max-height: 34px;
-}
-
-.r4-home .r4-live-lockup {
-  font-size: 18px;
-  line-height: 1.05;
-  font-weight: 650;
-  letter-spacing: -0.02em;
-}
-
-.r4-home .r4-live-lockup small {
-  display: block;
-  margin-top: 7px;
-  color: var(--r4-muted);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.r4-home .r4-ovh-mark {
-  width: 126px;
-  height: 38px;
-  color: #000e9c;
+.r4-home .r4-relationship-media--nvidia img {
+  width: min(100%, 127px);
+  max-height: 68px;
 }
 
 .r4-home .r4-relationship-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 16px;
+  min-height: 95px;
+  padding: 14px 20px 18px;
 }
 
-.r4-home .r4-relationship-body .r4-status-label {
-  min-height: 34px;
-  margin-bottom: 12px;
+.r4-home .r4-relationship-body .r4-status-label,
+.r4-home .r4-relationship-history-copy .r4-status-label {
+  margin: 0;
   color: var(--r4-blue);
 }
 
-.r4-home .r4-relationship-body h3 {
-  min-height: 50px;
-  font-size: 19px;
+.r4-home .r4-relationship-body h3,
+.r4-home .r4-relationship-history-copy h3 {
+  min-height: 0;
+  margin: 7px 0 0;
+  font-size: 17px;
+  line-height: 1.24;
+  letter-spacing: -0.012em;
 }
 
-.r4-home .r4-relationship-body > p:not(.r4-status-label):not(.r4-entity-note) {
+.r4-home .r4-relationship-history {
+  display: grid;
+  grid-template-columns: minmax(360px, 440px) minmax(260px, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 27px;
+  padding-top: 22px;
+  border-top: 1px solid var(--r4-line);
+}
+
+.r4-home .r4-relationship-history-artwork {
+  height: 100px;
+  overflow: hidden;
+  background: #173653;
+}
+
+.r4-home .r4-relationship-history-artwork img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 76%;
+}
+
+.r4-home .r4-relationship-history-copy {
+  min-width: 0;
+}
+
+.r4-home .r4-relationship-history-copy > p:last-child {
+  margin: 4px 0 0;
   color: var(--r4-ink-soft);
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-.r4-home .r4-relationship-body .r4-entity-note {
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid #dce2e3;
-  color: var(--r4-muted);
-  font-size: 12px;
+.r4-home .r4-relationship-history-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  align-self: center;
+  gap: 8px;
+  padding-left: 10px;
+  border-bottom: 1px solid currentColor;
+  color: var(--r4-blue);
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.r4-home .r4-relationship-history-link::after {
+  content: "→";
+  font-size: 17px;
+}
+
+.r4-home .r4-relationship-history-link:focus-visible {
+  outline: 3px solid var(--r4-teal-light);
+  outline-offset: 3px;
 }
 
 .r4-home .r4-relationship-qualifier {
-  max-width: 970px;
-  margin: 18px 0 12px;
+  margin: 24px 0 0;
   color: var(--r4-muted);
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 /* K3 – workflow */
@@ -1244,8 +1265,14 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .r4-home .r4-relationship-card {
-    min-height: 310px;
+  .r4-home .r4-relationship-history {
+    grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+  }
+
+  .r4-home .r4-relationship-history-link {
+    grid-column: 2;
+    justify-self: start;
+    padding-left: 0;
   }
 
   .r4-home .r4-hero-grid {
@@ -1412,85 +1439,68 @@
   }
 
   .r4-home .r4-relationship-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
+    grid-template-columns: 1fr;
     gap: 8px;
   }
 
   .r4-home .r4-relationship-card {
-    min-height: 0;
+    min-height: 150px;
   }
 
   .r4-home .r4-relationship-media {
-    height: 60px;
-    min-height: 60px;
-    padding: 7px;
+    height: 80px;
+    padding-block: 12px;
   }
 
-  .r4-home .r4-relationship-media img {
-    max-height: 48px;
+  .r4-home .r4-relationship-media--esa img {
+    width: min(100%, 253px);
   }
 
-  .r4-home .r4-relationship-media-ey img {
-    height: 100%;
-    max-height: none;
-    object-position: 37% 26%;
+  .r4-home .r4-relationship-media--ovh img {
+    width: min(100%, 277px);
   }
 
-  .r4-home .r4-programme-lockup {
-    flex-direction: column;
-    gap: 3px;
-    text-align: center;
+  .r4-home .r4-relationship-media--google img {
+    width: min(100%, 260px);
   }
 
-  .r4-home .r4-google-lockup img {
-    width: 64px;
-  }
-
-  .r4-home .r4-live-lockup {
-    font-size: 13px;
-  }
-
-  .r4-home .r4-live-lockup small {
-    margin-top: 3px;
-    font-size: 12px;
-    letter-spacing: 0.025em;
-  }
-
-  .r4-home .r4-ovh-mark {
-    width: 86px;
-    height: 25px;
+  .r4-home .r4-relationship-media--nvidia img {
+    width: min(100%, 153px);
   }
 
   .r4-home .r4-relationship-body {
-    padding: 10px;
-  }
-
-  .r4-home .r4-relationship-body .r4-status-label {
-    min-height: 0;
-    margin-bottom: 7px;
-    font-size: 12px;
-    letter-spacing: 0.07em;
+    min-height: 69px;
+    padding: 12px 20px 14px;
   }
 
   .r4-home .r4-relationship-body h3 {
-    min-height: 0;
-    margin-bottom: 7px;
     font-size: 16px;
   }
 
-  .r4-home .r4-relationship-body > p:not(.r4-status-label):not(.r4-entity-note) {
-    margin-bottom: 8px;
-    font-size: 13px;
-    line-height: 1.4;
+  .r4-home .r4-relationship-history {
+    display: block;
+    margin-top: 24px;
+    padding-top: 20px;
   }
 
-  .r4-home .r4-relationship-body .r4-entity-note {
-    padding-top: 7px;
-    font-size: 12px;
+  .r4-home .r4-relationship-history-artwork {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4.4 / 1;
+  }
+
+  .r4-home .r4-relationship-history-copy {
+    margin-top: 16px;
+  }
+
+  .r4-home .r4-relationship-history-link {
+    min-height: 44px;
+    margin-top: 6px;
+    padding-left: 0;
   }
 
   .r4-home .r4-relationship-qualifier {
+    margin-top: 22px;
     font-size: 13px;
   }
 
