@@ -33,6 +33,9 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await expect(page.locator('.r4-domain-rail')).toHaveText(
     'Construction finance · Real-estate collateral · Infrastructure'
   );
+  await expect(page.locator('.r4-hero .r4-lead')).toContainText(
+    '3BrainAI’s Construction Risk Intelligence (CRI)'
+  );
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveCSS('font-size', '22px');
   await expect(page.locator('.r4-domain-rail')).toHaveCSS('font-size', '17px');
   await expect(page.locator('.r4-human-boundary')).toHaveText(
@@ -135,7 +138,7 @@ test('four current programmes and the historical EY context remain explicitly se
     '/about/#institutional-milestones'
   );
   await expect(page.locator('.r4-relationship-qualifier')).toHaveText(
-    'Programme participation does not imply product validation, endorsement, production hosting or customer status.'
+    'These are programme, infrastructure and mentoring relationships, not customer references or certifications.'
   );
 
   const geometry = await cards.evaluateAll(elements => elements.map(element => {

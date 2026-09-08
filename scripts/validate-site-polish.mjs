@@ -48,7 +48,7 @@ const releaseStylesheetVersion = '0a7fb8bf';
 const releaseScriptVersion = 'f87d840f';
 const m3HomepageCorrectionVersion = 'wp0-programmes-20260908';
 const evidenceArchiveVersion = 'wp0-20260907';
-const aboutFounderVersion = 'r4-programmes-20260906';
+const aboutFounderVersion = 'r5-programme-clusters-20260908';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 
 for (const file of htmlFiles) {
@@ -282,12 +282,17 @@ assert.match(
   /<a class="founder-profile-link" href="https:\/\/www\.linkedin\.com\/in\/dusanprikryl\/" rel="noopener noreferrer">LinkedIn profile<\/a>/
 );
 assert.equal((aboutHtml.match(/src="\/assets\/img\/ey-startup-academy-2025\.jpg"/g) ?? []).length, 1);
-assert.match(aboutHtml, /alt="EY Startup Academy 2025 programme artwork"/);
 assert.match(aboutHtml, /id="institutional-milestones"/);
-assert.equal((aboutHtml.match(/class="card institutional-card about-programme-card"/g) ?? []).length, 4);
+assert.equal((aboutHtml.match(/class="about-programme-cluster /g) ?? []).length, 2);
+assert.equal((aboutHtml.match(/class="about-programme-logo about-programme-logo--/g) ?? []).length, 4);
+assert.match(aboutHtml, /Different programmes\. Different roles\./);
+assert.match(aboutHtml, /one of two projects selected for ESA BIC Czech Republic incubation in 2026/);
 assert.match(aboutHtml, /Google for Startups Cloud Program/);
 assert.match(aboutHtml, /OVHcloud Startup Program/);
+assert.match(aboutHtml, /NVIDIA Inception/);
 assert.match(aboutHtml, /EY Startup Academy Frankfurt 2025/);
+assert.match(aboutHtml, /one of 11 startups selected for the curated EY Startup Academy Frankfurt 2025 cohort/);
+assert.match(aboutHtml, /These are programme, infrastructure and mentoring relationships, not customer references or certifications\./);
 assert.doesNotMatch(aboutHtml, /Keller Grundbau|Vigona|United Energy|events and networks/i);
 
 const homepageHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
@@ -295,6 +300,7 @@ assert.match(
   homepageHtml,
   /<h1 id="r4-hero-title">The physical world does not wait for your next review\.<\/h1>/
 );
+assert.match(homepageHtml, /3BrainAI’s Construction Risk Intelligence \(CRI\) combines/);
 assert.match(homepageHtml, /href="\/validation\/#readiness-form">Discuss an Evidence Readiness Check<\/a>/);
 assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View an Evidence Pack<\/a>/);
 assert.match(homepageHtml, /WATCH – Evidence sufficiency/);
@@ -310,6 +316,7 @@ assert.match(homepageHtml, /NVIDIA Inception/);
 assert.match(homepageHtml, /Historical programme/);
 assert.match(homepageHtml, /EY Startup Academy Frankfurt 2025/);
 assert.match(homepageHtml, /href="\/about\/#institutional-milestones">Programme details in About<\/a>/);
+assert.match(homepageHtml, /These are programme, infrastructure and mentoring relationships, not customer references or certifications\./);
 assert.doesNotMatch(homepageHtml, /Relationships, precisely named\./);
 assert.equal((homepageHtml.match(/class="r4-workflow-step"/g) ?? []).length, 4);
 assert.equal((homepageHtml.match(/class="r4-signpost"/g) ?? []).length, 2);
@@ -499,8 +506,10 @@ assert.match(
   aboutFounderStylesheet,
   /@media \(max-width:\s*860px\)[\s\S]*\.about-founder-photo\s*{[^}]*max-width:\s*280px;/
 );
-assert.match(aboutFounderStylesheet, /\.about-programme-grid\s*{[^}]*grid-template-columns:\s*repeat\(2,/s);
-assert.match(aboutFounderStylesheet, /\.about-programme-card\s*{[^}]*min-height:\s*470px;/s);
+assert.match(aboutFounderStylesheet, /\.about-programme-clusters\s*{[^}]*grid-template-columns:\s*repeat\(2,/s);
+assert.match(aboutFounderStylesheet, /\.about-programme-logo-pair\s*{[^}]*grid-template-columns:\s*repeat\(2,/s);
+assert.match(aboutFounderStylesheet, /\.about-programme-logo img\s*{[^}]*filter:\s*grayscale\(1\) saturate\(0\) contrast\(0\.78\);/s);
+assert.match(aboutFounderStylesheet, /\.about-programme-history\s*{[^}]*grid-template-columns:\s*minmax\(300px, 410px\) minmax\(0, 1fr\);/s);
 
 const mainScript = await readFile(path.join(repositoryRoot, 'assets/js/main.js'), 'utf8');
 assert.match(mainScript, /dataset\.evidencePackDestination/);

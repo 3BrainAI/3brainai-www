@@ -228,7 +228,7 @@ test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
     if (route === '/about/') {
       const founderCopy = page.locator('.about-founder-copy');
       const founderImage = page.locator('.about-founder-photo img');
-      await expect(page.locator('link[href="/assets/css/about-founder.css?v=r4-programmes-20260906"]')).toHaveCount(1);
+      await expect(page.locator('link[href="/assets/css/about-founder.css?v=r5-programme-clusters-20260908"]')).toHaveCount(1);
       await expect(founderCopy.locator('.about-founder-name')).toHaveText('Dušan Přikryl');
       await expect(founderCopy.locator('.about-founder-role')).toHaveText('Founder & CEO');
       await expect(founderCopy.locator('.about-founder-tags')).toHaveText(
@@ -272,6 +272,17 @@ test('primary journeys use a coherent heading hierarchy', async ({ page }) => {
         'https://www.linkedin.com/in/dusanprikryl/'
       );
       await expect(founderCopy.locator('.founder-profile-link')).toHaveAttribute('rel', 'noopener noreferrer');
+
+      const programmeSection = page.locator('#institutional-milestones');
+      await expect(programmeSection.locator('.about-programme-cluster')).toHaveCount(2);
+      await expect(programmeSection.locator('.about-programme-logo-pair')).toHaveCount(2);
+      await expect(programmeSection.locator('.about-programme-logo')).toHaveCount(4);
+      await expect(programmeSection).toContainText('one of two projects selected for ESA BIC Czech Republic incubation in 2026');
+      await expect(programmeSection).toContainText('Google for Startups Cloud Program & NVIDIA Inception');
+      await expect(programmeSection).toContainText('one of 11 startups selected for the curated EY Startup Academy Frankfurt 2025 cohort');
+      await expect(programmeSection.locator('.about-programme-qualifier')).toHaveText(
+        'These are programme, infrastructure and mentoring relationships, not customer references or certifications.'
+      );
     }
   }
 });
