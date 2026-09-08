@@ -1440,16 +1440,16 @@
 
   .r4-home .r4-relationship-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .r4-home .r4-relationship-card {
-    min-height: 158px;
+    min-height: 150px;
   }
 
   .r4-home .r4-relationship-media {
-    height: 84px;
-    padding-block: 14px;
+    height: 80px;
+    padding-block: 12px;
   }
 
   .r4-home .r4-relationship-media--esa img {
@@ -1469,8 +1469,8 @@
   }
 
   .r4-home .r4-relationship-body {
-    min-height: 73px;
-    padding: 13px 20px 16px;
+    min-height: 69px;
+    padding: 12px 20px 14px;
   }
 
   .r4-home .r4-relationship-body h3 {

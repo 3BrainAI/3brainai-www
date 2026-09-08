@@ -26,7 +26,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
-  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=wp0-ux-20260907"]')).toHaveCount(1);
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=wp0-programmes-20260908"]')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveText('The physical world does not wait for your next review.');
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveText('For banks & institutional lenders');
