@@ -182,11 +182,12 @@ test('institutional proof visuals, records direction and review language remain 
   await expect(page.locator('#investor-materials')).toContainText('financing plan and use of funds');
 
   await openRoute(page, '/about/');
-  const aboutEyVisual = page.locator('.institutional-card-visual--ey');
+  const aboutEyVisual = page.locator('.about-programme-history-artwork');
   const aboutEyImage = aboutEyVisual.locator('img');
   await expect(aboutEyVisual).toBeVisible();
-  await expect(aboutEyImage).toHaveCSS('object-position', '50% 26%');
-  await expect(aboutEyImage).toHaveCSS('filter', 'none');
+  await expect(aboutEyImage).toHaveCSS('object-position', '50% 76%');
+  await expect(aboutEyImage).toHaveCSS('filter', 'grayscale(1) saturate(0) contrast(0.82)');
+  await expect(aboutEyImage).toHaveCSS('opacity', '0.8');
   expect(await aboutEyImage.evaluate(image => image.naturalWidth)).toBe(1228);
   expect(await aboutEyImage.evaluate(image => image.naturalHeight)).toBe(1536);
 
