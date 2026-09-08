@@ -44,9 +44,9 @@ const requiredIconLinks = [
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
 
-const releaseStylesheetVersion = '0a7fb8bf';
+const releaseStylesheetVersion = 'footer-cri-20260908';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'wp0-programmes-20260908';
+const m3HomepageCorrectionVersion = 'footer-cri-20260908';
 const evidenceArchiveVersion = 'wp0-20260907';
 const aboutFounderVersion = 'r5-programme-clusters-20260908';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
@@ -233,9 +233,12 @@ for (const relativePath of canonicalEnglishPages) {
   assert.match(footer, /class="footer-main"/, `${relativePath} footer is missing the compact main grid`);
   assert.match(footer, /class="footer-navigation footer-navigation--primary"/);
   assert.match(footer, /class="footer-navigation footer-navigation--secondary"/);
+  assert.match(footer, /Governed evidence for a changing physical world\./);
   assert.match(footer, /European startup · Head office in Prague/);
   assert.match(footer, /Focused on DACH, Benelux and Central European institutional markets\./);
+  assert.match(footer, /class="footer-contact-link" href="\/contact\/">Contact 3BrainAI/);
   assert.match(footer, /class="footer-esa-proof"/);
+  assert.doesNotMatch(footer, /footer-esa-note|Participation identifies current programme involvement/);
 }
 
 const expectedPngDimensions = new Map([
@@ -316,7 +319,9 @@ assert.match(homepageHtml, /NVIDIA Inception/);
 assert.match(homepageHtml, /Historical programme/);
 assert.match(homepageHtml, /EY Startup Academy Frankfurt 2025/);
 assert.match(homepageHtml, /href="\/about\/#institutional-milestones">Programme details in About<\/a>/);
-assert.match(homepageHtml, /These are programme, infrastructure and mentoring relationships, not customer references or certifications\./);
+assert.doesNotMatch(homepageHtml, /r4-relationship-qualifier/);
+assert.match(homepageHtml, /How Construction Risk Intelligence works/);
+assert.match(homepageHtml, /A governed evidence workflow for accountable institutional review\./);
 assert.doesNotMatch(homepageHtml, /Relationships, precisely named\./);
 assert.equal((homepageHtml.match(/class="r4-workflow-step"/g) ?? []).length, 4);
 assert.equal((homepageHtml.match(/class="r4-signpost"/g) ?? []).length, 2);
