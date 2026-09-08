@@ -26,7 +26,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
-  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=wp0-programmes-20260908"]')).toHaveCount(1);
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=footer-cri-20260908"]')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveText('The physical world does not wait for your next review.');
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveText('For banks & institutional lenders');
@@ -137,9 +137,7 @@ test('four current programmes and the historical EY context remain explicitly se
     'href',
     '/about/#institutional-milestones'
   );
-  await expect(page.locator('.r4-relationship-qualifier')).toHaveText(
-    'These are programme, infrastructure and mentoring relationships, not customer references or certifications.'
-  );
+  await expect(page.locator('.r4-relationship-qualifier')).toHaveCount(0);
 
   const geometry = await cards.evaluateAll(elements => elements.map(element => {
     const box = element.getBoundingClientRect();

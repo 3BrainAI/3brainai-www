@@ -575,13 +575,6 @@
   outline-offset: 3px;
 }
 
-.r4-home .r4-relationship-qualifier {
-  margin: 24px 0 0;
-  color: var(--r4-muted);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
 /* K3 – workflow */
 .r4-home .r4-workflow {
   background: var(--r4-paper);
@@ -1497,11 +1490,6 @@
     min-height: 44px;
     margin-top: 6px;
     padding-left: 0;
-  }
-
-  .r4-home .r4-relationship-qualifier {
-    margin-top: 22px;
-    font-size: 13px;
   }
 
   .r4-home .r4-workflow-grid {

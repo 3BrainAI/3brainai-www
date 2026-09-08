@@ -125,13 +125,20 @@ for (const routeContract of scopedRoutes) {
 
     const footer = page.locator('.footer');
     await expect(footer.locator('.footer-navigation')).toHaveCount(2);
+    await expect(footer.locator('.footer-brand-column > p').first()).toHaveText(
+      'Governed evidence for a changing physical world.'
+    );
     await expect(footer.locator('.footer-europe')).toHaveText('European startup · Head office in Prague');
+    await expect(footer.locator('.footer-europe')).toHaveCSS('font-size', '15px');
     await expect(footer.locator('.footer-market-focus')).toHaveText(
       'Focused on DACH, Benelux and Central European institutional markets.'
     );
     await expect(footer.locator('.footer-esa-statement')).toHaveText(
       '3BrainAI Nexus s.r.o. is participating in the ESA Business Incubation Centre Czech Republic.'
     );
+    await expect(footer.locator('.footer-esa-note')).toHaveCount(0);
+    await expect(footer.locator('.footer-contact-link')).toHaveAttribute('href', '/contact/');
+    await expect(footer.locator('.footer-contact-link')).toContainText('Contact 3BrainAI');
     await expect(footer.locator('.footer-esa-link')).toHaveAttribute('href', 'https://www.esa-bic.cz/');
     await expect(footer.locator('.footer-esa-link img')).toHaveAttribute('src', '/assets/img/esa-bic-cz-white.png');
     await expect(footer.locator('.footer-navigation a', { hasText: 'Data Plane' })).toHaveAttribute(
@@ -332,7 +339,7 @@ for (const width of responsiveWidths) {
   });
 }
 
-test('footer is compact on desktop and preserves two-column navigation on mobile', async ({ page }) => {
+test('footer is compact and preserves its information hierarchy across breakpoints', async ({ page }) => {
   await preparePage(page, 1280, 900);
   await openRoute(page, '/');
 
@@ -348,6 +355,24 @@ test('footer is compact on desktop and preserves two-column navigation on mobile
   expect(desktop.height).toBeLessThan(380);
   expect(desktop.columnCount).toBe(4);
   expect(desktop.distinctColumnStarts).toBe(4);
+
+  await page.setViewportSize({ width: 768, height: 900 });
+  const tablet = await page.locator('.footer').evaluate(footer => {
+    const brand = footer.querySelector('.footer-brand-column')?.getBoundingClientRect();
+    const primary = footer.querySelector('.footer-navigation--primary')?.getBoundingClientRect();
+    const secondary = footer.querySelector('.footer-navigation--secondary')?.getBoundingClientRect();
+    const contact = footer.querySelector('.footer-contact')?.getBoundingClientRect();
+    if (!brand || !primary || !secondary || !contact) return null;
+    return {
+      brandAboveColumns: Math.max(primary.top, secondary.top, contact.top) >= brand.bottom - 1,
+      columnsAligned: Math.max(primary.top, secondary.top, contact.top) - Math.min(primary.top, secondary.top, contact.top) <= 1,
+      columnsSideBySide: secondary.left >= primary.right - 1 && contact.left >= secondary.right - 1
+    };
+  });
+  expect(tablet).not.toBeNull();
+  expect(tablet.brandAboveColumns).toBeTruthy();
+  expect(tablet.columnsAligned).toBeTruthy();
+  expect(tablet.columnsSideBySide).toBeTruthy();
 
   await page.setViewportSize({ width: 390, height: 844 });
   const mobile = await page.locator('.footer').evaluate(footer => {
