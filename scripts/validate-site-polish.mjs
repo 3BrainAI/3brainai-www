@@ -34,7 +34,7 @@ async function collectFiles(directory, target = []) {
 
 const files = await collectFiles(repositoryRoot);
 const htmlFiles = files.filter(file => path.extname(file) === '.html');
-assert.equal(htmlFiles.length, 36, 'All 36 public HTML entry points must remain covered');
+assert.equal(htmlFiles.length, 37, 'All 37 public HTML entry points, including the Evidence Pack hub, must remain covered');
 
 const requiredIconLinks = [
   '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">',
@@ -212,6 +212,7 @@ const canonicalEnglishPages = [
   'about/index.html',
   'contact/index.html',
   'cri/index.html',
+  'evidence-packs/index.html',
   'evidence-packs/german-north-sea/index.html',
   'evidence-packs/lausitz/index.html',
   'governance-layer/index.html',

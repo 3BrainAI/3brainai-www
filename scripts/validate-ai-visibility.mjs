@@ -19,7 +19,8 @@ const canonicalPages = [
   ['contact/index.html', 'https://www.3brain.ai/contact/', 'Contact | 3BrainAI CRI', 'Contact 3BrainAI for bank validation of CRI Evidence Packs or for a private investor conversation.'],
   ['privacy/index.html', 'https://www.3brain.ai/privacy/', 'Privacy | 3BrainAI', 'Privacy information for the 3BrainAI public website.'],
   ['imprint/index.html', 'https://www.3brain.ai/imprint/', 'Imprint | 3BrainAI', 'Legal and service information for the public 3BrainAI website.'],
-  ['security/index.html', 'https://www.3brain.ai/security/', 'Security | 3BrainAI', 'Public security posture and contact guidance for the 3BrainAI website.']
+  ['security/index.html', 'https://www.3brain.ai/security/', 'Security | 3BrainAI', 'Public security posture and contact guidance for the 3BrainAI website.'],
+  ['evidence-packs/index.html', 'https://www.3brain.ai/evidence-packs/', 'Evidence Pack &amp; The Brief | 3BrainAI CRI', 'Read the public CRI Evidence Pack and explore The Brief, an invitation-based walkthrough of evidence, uncertainty and human review.']
 ];
 
 const readRepositoryFile = relativePath => readFile(path.join(repositoryRoot, relativePath), 'utf8');
@@ -120,7 +121,9 @@ const expectedSitemapLocations = canonicalPages.map(([, canonicalUrl]) => canoni
 const validationIndex = expectedSitemapLocations.indexOf('https://www.3brain.ai/validation/');
 expectedSitemapLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
 const expectedSitemapDates = expectedSitemapLocations.map(canonicalUrl =>
-  ['https://www.3brain.ai/', 'https://www.3brain.ai/about/'].includes(canonicalUrl)
+  canonicalUrl === 'https://www.3brain.ai/evidence-packs/'
+    ? '2026-09-11'
+    : ['https://www.3brain.ai/', 'https://www.3brain.ai/about/'].includes(canonicalUrl)
     ? '2026-09-06'
     : ['https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(canonicalUrl)
       ? '2026-09-01'
@@ -150,6 +153,7 @@ const publicEnglishPages = [
   'about/index.html',
   'contact/index.html',
   'cri/index.html',
+  'evidence-packs/index.html',
   'evidence-packs/german-north-sea/index.html',
   'evidence-packs/lausitz/index.html',
   'governance-layer/index.html',
@@ -167,19 +171,13 @@ const publicEnglishPages = [
 
 const primaryNavigation = [
   ['CRI', '/cri/'],
-  ['Evidence Pack', '/#evidence-pack-sample'],
+  ['Evidence Pack', '/evidence-packs/'],
+  ['The Brief', '/evidence-packs/#brief-access'],
   ['Validation', '/validation/'],
   ['Investors', '/investors/'],
   ['About', '/about/'],
   ['Contact', '/contact/']
 ];
-
-const m2NavigationPages = new Set([
-  'index.html',
-  'cri/index.html',
-  'validation/index.html',
-  'investors/index.html'
-]);
 
 const approvedPublicMailboxes = new Set([
   'contact@3brain.ai',
@@ -206,12 +204,7 @@ for (const file of publicEnglishPages) {
   assert.ok(navigationMatch, `${file} is missing the primary navigation`);
   const navigationLinks = [...navigationMatch[1].matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
     .map(match => [match[2].trim(), match[1]]);
-  const expectedNavigation = primaryNavigation.map(([label, href]) => [
-    label,
-    label === 'Evidence Pack' && m2NavigationPages.has(file)
-      ? (file === 'index.html' ? '#portfolio' : '/#portfolio')
-      : href
-  ]);
+  const expectedNavigation = primaryNavigation;
   assert.deepEqual(navigationLinks, expectedNavigation, `${file} has unexpected primary navigation`);
 
   const footerMatch = html.match(/<footer class="footer">([\s\S]*?)<\/footer>/);

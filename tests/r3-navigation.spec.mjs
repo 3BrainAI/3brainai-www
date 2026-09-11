@@ -4,7 +4,8 @@ import path from 'node:path';
 
 const canonicalNavigation = [
   { label: 'CRI', href: '/cri/' },
-  { label: 'Evidence Pack', href: '/#evidence-pack-sample' },
+  { label: 'Evidence Pack', href: '/evidence-packs/' },
+  { label: 'The Brief', href: '/evidence-packs/#brief-access' },
   { label: 'Validation', href: '/validation/' },
   { label: 'Investors', href: '/investors/' },
   { label: 'About', href: '/about/' },
@@ -14,6 +15,7 @@ const canonicalNavigation = [
 const primaryJourneyRoutes = [
   { route: '/', slug: 'home' },
   { route: '/cri/', slug: 'cri' },
+  { route: '/evidence-packs/', slug: 'evidence-hub' },
   { route: '/validation/', slug: 'validation' },
   { route: '/investors/', slug: 'investors' },
   { route: '/about/', slug: 'about' },
@@ -21,23 +23,24 @@ const primaryJourneyRoutes = [
 ];
 
 const scopedRoutes = [
-  { route: '/', file: 'index.html', active: null, evidenceHref: '#portfolio' },
+  { route: '/', file: 'index.html', active: null },
   { route: '/about/', file: 'about/index.html', active: 'About' },
   { route: '/contact/', file: 'contact/index.html', active: 'Contact' },
-  { route: '/cri/', file: 'cri/index.html', active: 'CRI', evidenceHref: '/#portfolio' },
+  { route: '/cri/', file: 'cri/index.html', active: 'CRI' },
+  { route: '/evidence-packs/', file: 'evidence-packs/index.html', active: 'Evidence Pack' },
   { route: '/evidence-packs/german-north-sea/', file: 'evidence-packs/german-north-sea/index.html', active: null },
   { route: '/evidence-packs/lausitz/', file: 'evidence-packs/lausitz/index.html', active: null },
   { route: '/governance-layer/', file: 'governance-layer/index.html', active: null },
   { route: '/how-it-works/', file: 'how-it-works/index.html', active: null },
   { route: '/imprint/', file: 'imprint/index.html', active: null },
-  { route: '/investors/', file: 'investors/index.html', active: 'Investors', evidenceHref: '/#portfolio' },
+  { route: '/investors/', file: 'investors/index.html', active: 'Investors' },
   { route: '/mis/', file: 'mis/index.html', active: null },
   { route: '/pilots/', file: 'pilots/index.html', active: 'Validation' },
   { route: '/privacy/', file: 'privacy/index.html', active: null },
   { route: '/product/', file: 'product/index.html', active: null },
   { route: '/security/', file: 'security/index.html', active: null },
   { route: '/use-cases/', file: 'use-cases/index.html', active: null },
-  { route: '/validation/', file: 'validation/index.html', active: 'Validation', evidenceHref: '/#portfolio' }
+  { route: '/validation/', file: 'validation/index.html', active: 'Validation' }
 ];
 
 const representativeRoutes = [
@@ -100,12 +103,7 @@ for (const routeContract of scopedRoutes) {
       label: anchor.textContent?.trim(),
       href: anchor.getAttribute('href')
     })));
-    const expected = canonicalNavigation.map(item => ({
-      label: item.label,
-      href: item.label === 'Evidence Pack' && routeContract.evidenceHref
-        ? routeContract.evidenceHref
-        : item.href
-    }));
+    const expected = canonicalNavigation;
     expect(actual).toEqual(expected);
 
     const activeLinks = page.locator('.nav[aria-label="Main navigation"] > a.active');
