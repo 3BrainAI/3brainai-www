@@ -6,7 +6,11 @@ This change adds `/evidence-packs/`, aligns navigation and footers across 18 can
 
 ## Current state: contact route
 
-All links in this draft resolve. The new hub describes The Brief and routes enquiries to the existing Contact page. It does not display a working invitation login or pretend to accept a request. Invited visitors are directed to the address accompanying their invitation.
+All links in this draft resolve. The new hub describes The Brief and routes enquiries to `/contact/#brief-access-enquiry`. That dedicated section explains the current email channel, useful context (organisation, sector and purpose), the lack of an automatic reference or grant of access, and the exclusion of passwords, invitation codes and confidential project documents from the enquiry. Invited visitors are directed to the sign-in page provided with their invitation.
+
+Before activation, the hero's public CTA opens the frozen Fischamend release. Its secondary CTA opens `#brief-access` on this hub. The five contextual entries and the shared navigation open `/evidence-packs/#brief-access`. None points to an unverified application domain.
+
+The Contact route is ordinary email correspondence, separate from future database-backed access requests. Before merge, the founder must verify the mailbox reaches its intended operator and the temporary handling procedure is in effect. The PR does not configure mailbox permissions, delivery, automatic deletion or a CRM import. The dedicated Contact section and Privacy text do not claim that the form's retention schedule applies to email.
 
 The live invitation system and request form are a separate service. Its final origin, intake and deployment are not verified by this pull request. Keep this pull request as a draft until the agreed review and launch checks have been completed.
 

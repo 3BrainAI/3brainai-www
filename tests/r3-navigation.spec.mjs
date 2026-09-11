@@ -150,6 +150,29 @@ for (const routeContract of scopedRoutes) {
   });
 }
 
+test('The Brief preactivation route preserves the public sample and explains the email enquiry', async ({ page, request }) => {
+  await preparePage(page, 1280, 900);
+  await openRoute(page, '/evidence-packs/');
+  const publicPack = page.getByRole('link', { name: 'Read the public Evidence Pack', exact: true });
+  await expect(publicPack).toHaveAttribute('href', '/evidence-packs/fischamend/');
+  expect((await request.get('/evidence-packs/fischamend/')).ok()).toBeTruthy();
+  await page.getByRole('link', { name: 'Explore The Brief', exact: true }).click();
+  await expect(page).toHaveURL(/\/evidence-packs\/#brief-access$/);
+  await expect(page.locator('#brief-access')).toBeVisible();
+  await page.getByRole('link', { name: 'Ask about access by email', exact: true }).click();
+  await expect(page).toHaveURL(/\/contact\/#brief-access-enquiry$/);
+  const enquiry = page.locator('#brief-access-enquiry');
+  await expect(enquiry).toBeVisible();
+  await expect(enquiry).toContainText('Sending an email does not grant access');
+  await expect(enquiry).toContainText('does not issue an automatic request reference or an invitation');
+  await expect(enquiry).toContainText('your sector');
+  await expect(enquiry).toContainText('Do not include passwords, invitation codes');
+  await expect(enquiry.locator('form')).toHaveCount(0);
+  const mailLink = enquiry.getByRole('link', { name: 'Email contact@3brain.ai about The Brief', exact: true });
+  await expect(mailLink).toHaveAttribute('href', 'mailto:contact@3brain.ai?subject=The%20Brief%20access%20enquiry');
+  // Inspect the mailto destination; this test must never send a real email.
+});
+
 test('every canonical navigation target resolves', async ({ page, request }) => {
   await preparePage(page, 1280);
 
