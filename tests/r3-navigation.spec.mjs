@@ -4,7 +4,8 @@ import path from 'node:path';
 
 const canonicalNavigation = [
   { label: 'CRI', href: '/cri/' },
-  { label: 'Evidence Pack', href: '/#evidence-pack-sample' },
+  { label: 'Evidence Pack', href: '/evidence-packs/' },
+  { label: 'The Brief', href: '/evidence-packs/#brief-access' },
   { label: 'Validation', href: '/validation/' },
   { label: 'Investors', href: '/investors/' },
   { label: 'About', href: '/about/' },
@@ -14,6 +15,7 @@ const canonicalNavigation = [
 const primaryJourneyRoutes = [
   { route: '/', slug: 'home' },
   { route: '/cri/', slug: 'cri' },
+  { route: '/evidence-packs/', slug: 'evidence-hub' },
   { route: '/validation/', slug: 'validation' },
   { route: '/investors/', slug: 'investors' },
   { route: '/about/', slug: 'about' },
@@ -21,23 +23,24 @@ const primaryJourneyRoutes = [
 ];
 
 const scopedRoutes = [
-  { route: '/', file: 'index.html', active: null, evidenceHref: '#portfolio' },
+  { route: '/', file: 'index.html', active: null },
   { route: '/about/', file: 'about/index.html', active: 'About' },
   { route: '/contact/', file: 'contact/index.html', active: 'Contact' },
-  { route: '/cri/', file: 'cri/index.html', active: 'CRI', evidenceHref: '/#portfolio' },
+  { route: '/cri/', file: 'cri/index.html', active: 'CRI' },
+  { route: '/evidence-packs/', file: 'evidence-packs/index.html', active: 'Evidence Pack' },
   { route: '/evidence-packs/german-north-sea/', file: 'evidence-packs/german-north-sea/index.html', active: null },
   { route: '/evidence-packs/lausitz/', file: 'evidence-packs/lausitz/index.html', active: null },
   { route: '/governance-layer/', file: 'governance-layer/index.html', active: null },
   { route: '/how-it-works/', file: 'how-it-works/index.html', active: null },
   { route: '/imprint/', file: 'imprint/index.html', active: null },
-  { route: '/investors/', file: 'investors/index.html', active: 'Investors', evidenceHref: '/#portfolio' },
+  { route: '/investors/', file: 'investors/index.html', active: 'Investors' },
   { route: '/mis/', file: 'mis/index.html', active: null },
   { route: '/pilots/', file: 'pilots/index.html', active: 'Validation' },
   { route: '/privacy/', file: 'privacy/index.html', active: null },
   { route: '/product/', file: 'product/index.html', active: null },
   { route: '/security/', file: 'security/index.html', active: null },
   { route: '/use-cases/', file: 'use-cases/index.html', active: null },
-  { route: '/validation/', file: 'validation/index.html', active: 'Validation', evidenceHref: '/#portfolio' }
+  { route: '/validation/', file: 'validation/index.html', active: 'Validation' }
 ];
 
 const representativeRoutes = [
@@ -100,12 +103,7 @@ for (const routeContract of scopedRoutes) {
       label: anchor.textContent?.trim(),
       href: anchor.getAttribute('href')
     })));
-    const expected = canonicalNavigation.map(item => ({
-      label: item.label,
-      href: item.label === 'Evidence Pack' && routeContract.evidenceHref
-        ? routeContract.evidenceHref
-        : item.href
-    }));
+    const expected = canonicalNavigation;
     expect(actual).toEqual(expected);
 
     const activeLinks = page.locator('.nav[aria-label="Main navigation"] > a.active');
@@ -151,6 +149,29 @@ for (const routeContract of scopedRoutes) {
     );
   });
 }
+
+test('The Brief preactivation route preserves the public sample and explains the email enquiry', async ({ page, request }) => {
+  await preparePage(page, 1280, 900);
+  await openRoute(page, '/evidence-packs/');
+  const publicPack = page.getByRole('link', { name: 'Read the public Evidence Pack', exact: true });
+  await expect(publicPack).toHaveAttribute('href', '/evidence-packs/fischamend/');
+  expect((await request.get('/evidence-packs/fischamend/')).ok()).toBeTruthy();
+  await page.getByRole('link', { name: 'Explore The Brief', exact: true }).click();
+  await expect(page).toHaveURL(/\/evidence-packs\/#brief-access$/);
+  await expect(page.locator('#brief-access')).toBeVisible();
+  await page.getByRole('link', { name: 'Ask about access by email', exact: true }).click();
+  await expect(page).toHaveURL(/\/contact\/#brief-access-enquiry$/);
+  const enquiry = page.locator('#brief-access-enquiry');
+  await expect(enquiry).toBeVisible();
+  await expect(enquiry).toContainText('Sending an email does not grant access');
+  await expect(enquiry).toContainText('does not issue an automatic request reference or an invitation');
+  await expect(enquiry).toContainText('your sector');
+  await expect(enquiry).toContainText('Do not include passwords, invitation codes');
+  await expect(enquiry.locator('form')).toHaveCount(0);
+  const mailLink = enquiry.getByRole('link', { name: 'Email contact@3brain.ai about The Brief', exact: true });
+  await expect(mailLink).toHaveAttribute('href', 'mailto:contact@3brain.ai?subject=The%20Brief%20access%20enquiry');
+  // Inspect the mailto destination; this test must never send a real email.
+});
 
 test('every canonical navigation target resolves', async ({ page, request }) => {
   await preparePage(page, 1280);

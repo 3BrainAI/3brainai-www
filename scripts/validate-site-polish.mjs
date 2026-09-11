@@ -34,7 +34,7 @@ async function collectFiles(directory, target = []) {
 
 const files = await collectFiles(repositoryRoot);
 const htmlFiles = files.filter(file => path.extname(file) === '.html');
-assert.equal(htmlFiles.length, 36, 'All 36 public HTML entry points must remain covered');
+assert.equal(htmlFiles.length, 37, 'All 37 public HTML entry points, including the Evidence Pack hub, must remain covered');
 
 const requiredIconLinks = [
   '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">',
@@ -212,6 +212,7 @@ const canonicalEnglishPages = [
   'about/index.html',
   'contact/index.html',
   'cri/index.html',
+  'evidence-packs/index.html',
   'evidence-packs/german-north-sea/index.html',
   'evidence-packs/lausitz/index.html',
   'governance-layer/index.html',
@@ -299,6 +300,11 @@ assert.match(aboutHtml, /These are programme, infrastructure and mentoring relat
 assert.doesNotMatch(aboutHtml, /Keller Grundbau|Vigona|United Energy|events and networks/i);
 
 const homepageHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
+assert.doesNotMatch(
+  homepageHtml.match(/<main id="main">([\s\S]*?)<\/main>/)?.[1] ?? '',
+  /\b(?:PoC|proof[ -]of[ -]concept|TRL\s*[0-9]|pre[ -]seed|maturity|paid pilot)\b/i,
+  'Homepage main content must not introduce maturity or delivery-stage labels'
+);
 assert.match(
   homepageHtml,
   /<h1 id="r4-hero-title">The physical world does not wait for your next review\.<\/h1>/
@@ -346,6 +352,18 @@ const reviewPackageFiles = [
   'investors/index.html',
   'governance-layer/index.html'
 ];
+const briefEntryFiles = ['index.html', 'evidence-packs/index.html', 'cri/index.html', 'validation/index.html', 'investors/index.html', 'use-cases/index.html'];
+for (const file of briefEntryFiles) {
+  const html = await readFile(path.join(repositoryRoot, file), 'utf8');
+  const metadataSurface = (html.match(/<head>([\s\S]*?)<\/head>/i)?.[1] ?? '')
+    .replace(/&(?:ndash|mdash);|&#(?:45|8208|8209|8211|8212);|[\u{2010}-\u{2014}]/gu, '-')
+    .replace(/&nbsp;|&#160;/g, ' ').replace(/\s+/g, ' ');
+  assert.doesNotMatch(
+    metadataSurface,
+    /\b(?:continuous[ -]monitoring|real[ -]time[ -]monitoring|automated[ -]decisioning|ground[ -]truth|legally[ -]defensible|compliance[ -]ready|bank[ -]grade)\b/i,
+    `${file} metadata contains a prohibited capability claim`
+  );
+}
 const reviewPackageHtml = (await Promise.all(
   reviewPackageFiles.map(relativePath => readFile(path.join(repositoryRoot, relativePath), 'utf8'))
 )).join('\n');
