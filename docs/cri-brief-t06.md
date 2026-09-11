@@ -29,6 +29,7 @@ Before publishing, verify the request form with its four required fields, confir
 - Local links, asset paths and fragment destinations on the 18 changed HTML pages were checked.
 - Browser checks covered the hub, its section link and the contact destination on desktop, plus a 390 px iframe for the narrow layout and menu. This is a responsive layout check, not an actual mobile-device test.
 - The hub's menu now closes after choosing a section link and supports Escape. This fixes content being covered after selecting The Brief in narrow layouts.
+- The homepage places its contextual entry beside the review record to preserve the existing mobile length limit. The footer keeps Contact in its dedicated column rather than repeating it in the primary list; the existing compact-height limit is preserved.
 - The repository's existing CI navigation fixtures include the new hub and target. The remote browser suite is a separate result; do not infer its completion from the local static checks.
 
 Founder merge remains manual. No private runtime source, visitor data, credentials or confidential documents are included in this change.

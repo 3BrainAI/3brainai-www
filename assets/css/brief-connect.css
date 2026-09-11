@@ -8,7 +8,10 @@
 .brief-connect a { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 2.875rem; padding: 0.7rem 1rem; border: 1px solid #15567a; border-radius: 2px; background: #15567a; color: #fff; font-size: 1rem; font-weight: 600; text-decoration: none; }
 .brief-connect a:hover { background: #0e425f; }
 .brief-connect a:focus-visible { outline: 3px solid #94500e; outline-offset: 3px; }
+.brief-connect-inline { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; }
+.brief-connect-inline p { margin: 0; font-size: 0.875rem; }
 @media (max-width: 720px) {
   .brief-connect-inner { flex-direction: column; align-items: start; gap: 1.25rem; }
   .brief-connect a { max-width: 100%; }
+  .brief-connect-inline { flex-direction: column; align-items: start; gap: 0.5rem; }
 }

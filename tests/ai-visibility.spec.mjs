@@ -76,6 +76,12 @@ const canonicalPages = [
     url: 'https://www.3brain.ai/security/',
     title: 'Security | 3BrainAI',
     description: 'Public security posture and contact guidance for the 3BrainAI website.'
+  },
+  {
+    route: '/evidence-packs/',
+    url: 'https://www.3brain.ai/evidence-packs/',
+    title: 'Evidence Pack & The Brief | 3BrainAI CRI',
+    description: 'Read the public CRI Evidence Pack and explore The Brief, an invitation-based walkthrough of evidence, uncertainty and human review.'
   }
 ];
 
@@ -154,7 +160,9 @@ test('sitemap contains exactly the live canonical pages with truthful release da
         ? '2026-09-01'
         : url === 'https://www.3brain.ai/evidence-packs/fischamend/'
           ? '2026-08-30'
-          : '2026-08-28'
+          : url === 'https://www.3brain.ai/evidence-packs/'
+            ? '2026-09-11'
+            : '2026-08-28'
   );
 
   expect(locations).toEqual(expectedLocations);
