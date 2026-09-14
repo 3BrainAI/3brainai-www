@@ -24,6 +24,12 @@ This branch integrates the founder-approved R3.2 public website over main at `51
 
 The Playwright expectations have been updated and syntax checked. They were **not executed in this session**. A prior local preview URL was rejected by browser security policy; no alternate renderer was used to bypass it. This source validation is not a new visual, real-device, font/network, email-delivery or protected Brief sign-in test. Existing repository CI remains unchanged.
 
+## Mobile composition check after the first CI run
+
+The first GitHub Actions run passed 69 of 70 browser tests. Its only failure was the old 13.1-screen total-height budget at 390 × 844: the approved R3.2 homepage measured 13.206 screens. Compared with main, homepage source changes are confined to the approved navigation and the expanded two-step Brief journey. The old action row reserved 108px (two 48px buttons plus a 12px gap); the new labels, explanatory text and Brief button allocate approximately 293px in the existing CSS.
+
+The follow-up changes the test only, with no website HTML, CSS, assets or copy changes. It independently caps the approved journey at 300px, checks that its explanations remain visible, and retains the original 13.1-screen budget after normalizing that one block to its former 108px allowance. Added spacing elsewhere still fails the original budget, and an oversized journey fails its own cap. Measured geometry is attached to the test report. The full CI rerun determines the result; this note alone does not claim it passed.
+
 ## Release and rollback
 
 The founder merges this branch after reviewing the exact commit and required repository checks. PR #40 is an older draft; this branch carries the later approved direction, so both should not be merged independently. This change does not modify or close PR #40.
