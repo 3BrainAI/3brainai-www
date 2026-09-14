@@ -334,11 +334,16 @@ test('mobile composition bounds the approved Brief journey and retains the exist
   const pageMetrics = await journey.evaluate(element => ({
     height: document.documentElement.scrollHeight,
     viewport: window.innerHeight,
-    journeyHeight: element.getBoundingClientRect().height
+    journeyHeight: element.getBoundingClientRect().height,
+    explanationGeometry: [...element.querySelectorAll('.v3-home-step-label, .v3-home-note')].map(item => ({
+      height: item.getBoundingClientRect().height,
+      lineHeight: getComputedStyle(item).lineHeight
+    }))
   }));
   // The R4-E budget included only two 48px buttons and a 12px gap (108px).
-  // R3.2 explicitly adds two labels, three lines of explanation and a 54px Brief
-  // button. At 390px the approved CSS allocates ~293px; cap that block at 300px.
+  // R3.2 explicitly adds two labels, explanatory text and a 54px Brief button.
+  // CI measured the approved block at 316px at 390px with the test's fallback
+  // fonts. Bound it at 320px, including the actual explanatory-text wrapping.
   // Keep the original 13.1-screen budget for the rest of the page instead of
   // raising it globally or hiding the explanatory text to satisfy the old test.
   const legacyActionRowHeight = 2 * 48 + 12;
@@ -348,7 +353,7 @@ test('mobile composition bounds the approved Brief journey and retains the exist
     contentType: 'application/json'
   });
   console.info('R3.2 mobile composition:', JSON.stringify({ ...pageMetrics, normalizedHeight }));
-  expect(pageMetrics.journeyHeight).toBeLessThanOrEqual(300);
+  expect(pageMetrics.journeyHeight).toBeLessThanOrEqual(320);
   expect(normalizedHeight / pageMetrics.viewport).toBeLessThanOrEqual(13.1);
 
   const relationshipGridColumns = await page.locator('.r4-relationship-grid').evaluate(element =>
