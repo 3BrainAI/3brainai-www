@@ -1,0 +1,164 @@
+{
+  "reviewed_on": "2026-09-14",
+  "scope": "Four public aerial images on CRI and Investors",
+  "source_metadata": "Retained T38 orientation records and N2 extraction metadata",
+  "source_metadata_sha256": "70a7192dd5e07ba6794e5a47708324ac5cf11837927cd775e0595297d4040869",
+  "interpretation": "Retained provider provenance plus official product terms supports this public use. Missing acquisition receipts are not conditions of CC BY 4.0. Hash continuity alone does not independently prove upstream authorship.",
+  "licence": "CC BY 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+  "official_product_terms": {
+    "cuzk": "https://geoportal.cuzk.gov.cz/Default.aspx?lng=CZ&mapid=83&menu=23&metadataID=CZ-CUZK-ORTOFOTO-R&metadataXSL=metadata&mode=TextMeta&side=ortofoto",
+    "basemap": "https://basemap.at/en/",
+    "beeldmateriaal": "https://www.beeldmateriaal.nl/dataroom"
+  },
+  "new_upstream_raster_download_performed": false,
+  "assets": [
+    {
+      "case": "smichov",
+      "site_file": "assets/cri-web-r2/smichov-aerial.webp",
+      "site_sha256": "03f8b1592a986656bbee8c8e5cf5df229f1357802dad8bd5067b8bc3faec91ae",
+      "retained_raster_sha256": "4cee0b48b84a2f7ad2a43d0058508e54ae03fb0406287556515030946ad656dc",
+      "retained_expected_sha256": "4cee0b48b84a2f7ad2a43d0058508e54ae03fb0406287556515030946ad656dc",
+      "retained_raster_matches_declared_hash": true,
+      "retained_original_matches_embedded_raster": true,
+      "site_matches_retained_record": true,
+      "provider_credit": "© ČÚZK",
+      "retained_source_url": "https://ags.cuzk.gov.cz/arcgis1/rest/services/ORTOFOTO/MapServer",
+      "retained_download_request": "https://ags.cuzk.gov.cz/arcgis1/services/ORTOFOTO/MapServer/WMSServer?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=0&STYLES=&SRS=EPSG%3A3857&BBOX=1603000.6674231396%2C6455286.199920552%2C1604559.1402942452%2C6458407.444894317&WIDTH=1200&HEIGHT=1800&FORMAT=image%2Fpng",
+      "retained_source_grid": {
+        "bbox": [
+          1603000.6674231396,
+          6455286.199920552,
+          1604559.1402942452,
+          6458407.444894317
+        ],
+        "width": 1200,
+        "height": 1800,
+        "crs": "EPSG:3857",
+        "url": "https://ags.cuzk.gov.cz/arcgis1/services/ORTOFOTO/MapServer/WMSServer?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=0&STYLES=&SRS=EPSG%3A3857&BBOX=1603000.6674231396%2C6455286.199920552%2C1604559.1402942452%2C6458407.444894317&WIDTH=1200&HEIGHT=1800&FORMAT=image%2Fpng"
+      },
+      "retained_retrieval_note": "The current WMS image was retrieved 10 Sep 2026. Product-year attribution is from the S5 ATOM feed; feed update time is not image capture time.",
+      "retained_date_limit": "Product reference: Praha 7-2, 2025. Exact acquisition day unverified.",
+      "precise_capture_day_verified": false,
+      "retained_processing": "S5 WMS raster reprojected into EPSG:32633 with bilinear display resampling. SMI-W01 copied unchanged from S5 working geometry.",
+      "display_transformations": [
+        "Fit inside 640×480 px; no enlargement; WebP quality 82 effort 5"
+      ],
+      "publication_assessment": "No additional image permission requested on the recorded provider provenance and verified official product terms",
+      "documentation_limits": [
+        "Upstream raster predates reprojection and is not included. Recorded product-year ATOM feed could not be read by the web lookup; no fresh verification of that feed is claimed."
+      ]
+    },
+    {
+      "case": "brno",
+      "site_file": "assets/cri-web-r31/brno-aerial.webp",
+      "site_sha256": "4b8d1c9310ae136676615d2573cc7106921fd425736441e46f4aa0bd9091a843",
+      "retained_raster_sha256": "8f24cb58ec49316d13902f88a5e5e3ef2e19671b2fedd24facdb248b60bf36a7",
+      "retained_expected_sha256": "8f24cb58ec49316d13902f88a5e5e3ef2e19671b2fedd24facdb248b60bf36a7",
+      "retained_raster_matches_declared_hash": true,
+      "retained_original_matches_embedded_raster": true,
+      "site_matches_retained_record": true,
+      "provider_credit": "© ČÚZK",
+      "retained_source_url": "https://geoportal.cuzk.gov.cz/",
+      "retained_download_request": null,
+      "retained_source_grid": {
+        "bbox": [
+          1851305.0585873104,
+          6309456.113853267,
+          1851921.479810744,
+          6309978.811731672
+        ],
+        "crs": "EPSG:3857"
+      },
+      "retained_retrieval_note": null,
+      "retained_date_limit": "Capture date has not been verified for this retained aerial reference.",
+      "precise_capture_day_verified": false,
+      "retained_processing": "Original retained PNG embedded unchanged; working outline transformed into its display grid. No sharpening, generative edit or simulated finding on the raster.",
+      "display_transformations": [
+        "Fit inside 640×480 px; no enlargement; WebP quality 82 effort 5"
+      ],
+      "publication_assessment": "No additional image permission requested on the recorded provider provenance and verified official product terms",
+      "documentation_limits": [
+        "Exact original download request and tile/product identifier unavailable; provider identification relies on retained metadata."
+      ]
+    },
+    {
+      "case": "ctp_vienna",
+      "site_file": "assets/cri-web-r31/ctp_vienna-aerial.webp",
+      "site_sha256": "192eb73499e1f1f2ebf41c1ec264005de96948cf4eef39a3595a521201063a13",
+      "retained_raster_sha256": "a330e3fd47b454ad1c50aa363dbcebb85bfa0956cb9211a59dab2523dc15f728",
+      "retained_expected_sha256": "a330e3fd47b454ad1c50aa363dbcebb85bfa0956cb9211a59dab2523dc15f728",
+      "retained_raster_matches_declared_hash": true,
+      "retained_original_matches_embedded_raster": true,
+      "site_matches_retained_record": true,
+      "provider_credit": "Datenquelle: basemap.at, CC BY 4.0",
+      "retained_source_url": "https://basemap.at/",
+      "retained_download_request": null,
+      "retained_source_grid": {
+        "file": "ctp_vienna-ortho-context.png",
+        "bounds_3857": [
+          1862923.2533663139,
+          6110376.04111699,
+          1864146.2458188795,
+          6111599.033569552
+        ],
+        "bounds_wgs84": [
+          16.734924316406236,
+          48.02116128565783,
+          16.74591064453126,
+          48.028509034432986
+        ],
+        "layer": "bmaporthofoto30cm",
+        "capture_year": "Inspect tile watermark; exact capture date unknown",
+        "attribution": "basemap.at, CC BY 4.0"
+      },
+      "retained_retrieval_note": null,
+      "retained_date_limit": "Visible source watermark: 2022. This is historical orientation; exact acquisition day unverified.",
+      "precise_capture_day_verified": false,
+      "retained_processing": "Original retained PNG embedded unchanged; working outline transformed into its display grid. No sharpening, generative edit or simulated finding on the raster.",
+      "display_transformations": [
+        "Fit inside 640×480 px; no enlargement; WebP quality 82 effort 5"
+      ],
+      "publication_assessment": "No additional image permission requested on the recorded provider provenance and verified official product terms",
+      "documentation_limits": [
+        "Exact original tile-download request unavailable; recorded product is bmaporthofoto30cm."
+      ]
+    },
+    {
+      "case": "hh1",
+      "site_file": "assets/cri-web-r31/hh1-aerial-original.jpg",
+      "site_sha256": "af6312ba4d9a74096f4afd9f2356c6b5c167804cbec4887eab1d08178dd12328",
+      "retained_raster_sha256": "af6312ba4d9a74096f4afd9f2356c6b5c167804cbec4887eab1d08178dd12328",
+      "retained_expected_sha256": "af6312ba4d9a74096f4afd9f2356c6b5c167804cbec4887eab1d08178dd12328",
+      "retained_raster_matches_declared_hash": true,
+      "retained_original_matches_embedded_raster": true,
+      "site_matches_retained_record": true,
+      "provider_credit": "Beeldmateriaal Nederland / PDOK, CC BY 4.0",
+      "retained_source_url": "https://www.pdok.nl/introductie/-/article/luchtfoto-rgb",
+      "retained_download_request": "https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=2025_ortho25&STYLES=&SRS=EPSG%3A3857&BBOX=443430.0596259259%2C6786629.989592196%2C444276.0877559549%2C6787677.025405963&WIDTH=1100&HEIGHT=1350&FORMAT=image%2Fpng",
+      "retained_source_grid": {
+        "bbox": [
+          443430.0596259259,
+          6786629.989592196,
+          444276.0877559549,
+          6787677.025405963
+        ],
+        "width": 1100,
+        "height": 1350,
+        "crs": "EPSG:3857",
+        "url": "https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=2025_ortho25&STYLES=&SRS=EPSG%3A3857&BBOX=443430.0596259259%2C6786629.989592196%2C444276.0877559549%2C6787677.025405963&WIDTH=1100&HEIGHT=1350&FORMAT=image%2Fpng"
+      },
+      "retained_retrieval_note": null,
+      "retained_date_limit": "PDOK 2025 orthophoto layer. Exact acquisition day unverified.",
+      "precise_capture_day_verified": false,
+      "retained_processing": "Original retained PNG embedded unchanged; working outline transformed into its display grid. No sharpening, generative edit or simulated finding on the raster.",
+      "display_transformations": [
+        "Source raster bytes unchanged"
+      ],
+      "publication_assessment": "No additional image permission requested on the recorded provider provenance and verified official product terms",
+      "documentation_limits": [
+        "Exact capture day unavailable; year refers to the recorded 2025_ortho25 layer."
+      ]
+    }
+  ]
+}

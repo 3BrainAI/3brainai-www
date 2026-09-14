@@ -1,0 +1,68 @@
+/* Every selector stays inside an editable About section. The programmes
+   section, its logo assets, typography, spacing and footer remain frozen. */
+.about-page > .hero,
+.about-page .about-founder-section,
+.about-page .about-boundaries-section,
+.about-page .about-operating-section,
+.about-page .about-bridge-section {
+ color:#14202c; padding:64px 0;
+}
+.about-page > .hero { padding:72px 0 56px; background:#f7f8f5; border-bottom:1px solid #dde5e1; font-family:Inter,Arial,sans-serif; }
+.about-page > .hero h1 { color:#14202c; font-size:clamp(38px,4.2vw,61px); font-weight:700; line-height:1.07; letter-spacing:-.043em; max-width:24ch; }
+.about-page > .hero .lead { color:#14202c; font-size:20px; font-weight:400; line-height:1.65; max-width:62ch; margin-top:28px; }
+.about-page > .hero .european-scope-copy { color:#496170; font-size:16px; line-height:1.6; letter-spacing:0; text-transform:none; font-weight:400; margin-top:18px; }
+.about-page > .hero .kicker { color:#496170; font-size:15px; line-height:1.6; font-weight:600; letter-spacing:.045em; margin-bottom:25px; }
+.about-page > .hero .ctas { margin-top:30px; gap:12px; }
+.about-page > .hero .btn { border-radius:0; min-height:48px; padding:13px 19px; background:#1b6069; border:1px solid #1b6069; color:white; font:600 16px/1.4 Inter,Arial,sans-serif; letter-spacing:0; box-shadow:none; text-align:center; }
+.about-page > .hero .btn.secondary { background:white; border-color:#667e90; color:#14202c; }
+.about-page > .hero .btn:hover,
+.about-page > .hero .btn:active { background:#124a52; border-color:#124a52; box-shadow:none; }
+.about-page > .hero .btn.secondary:hover,
+.about-page > .hero .btn.secondary:active { background:#edf4f3; border-color:#667e90; }
+.about-page > .hero .btn:focus-visible { outline:3px solid #1b6069; outline-offset:4px; }
+.about-page .about-founder-section { background:white; }
+.about-page .about-boundaries-section,
+.about-page .about-operating-section { background:#edf4f3; }
+.about-page .about-bridge-section { background:white; }
+.about-page .about-boundaries-section h2,
+.about-page .about-operating-section h2 { color:#14202c; font-size:clamp(30px,3vw,42px); line-height:1.15; letter-spacing:-.025em; }
+.about-page .about-boundaries-section .kicker,
+.about-page .about-operating-section .kicker { color:#496170; font-size:15px; line-height:1.5; letter-spacing:.045em; }
+.about-page .about-boundaries-section .card,
+.about-page .about-operating-section .card {
+ border:0; border-top:1px solid #c7d7d5; border-radius:0; box-shadow:none;
+ padding:24px 0 0; background:transparent;
+}
+.about-page .about-boundaries-section .grid,
+.about-page .about-operating-section .grid { gap:36px; align-items:start; }
+.about-page .about-boundaries-section .card h3 { font-size:22px; line-height:1.3; color:#14202c; }
+.about-page .about-boundaries-section .card p,
+.about-page .about-operating-section .card p { color:#496170; font-size:17px; line-height:1.65; }
+.about-page .about-founder-section .about-founder-copy { background:transparent; border:0; border-radius:0; box-shadow:none; }
+.about-page .about-founder-section .about-founder-copy p:not(.kicker):not(.about-founder-role):not(.about-founder-tags) { font-size:16px; line-height:1.65; color:#496170; }
+.about-page .about-founder-section .v31-experience { background:#f7f8f5; }
+.about-page .about-bridge-section .about-bridge-note { border:0; padding:0; font-size:17px; color:#496170; }
+.about-page .about-bridge-section a { color:#1b6069; }
+.about-page .about-founder-section .v32-responsive-detail { margin:0; }
+.about-page .about-founder-section .v32-responsive-detail > summary { display:none; }
+.about-page .about-founder-section .v32-responsive-detail p { margin-top:16px; }
+.about-page .about-founder-section .v32-responsive-detail p:first-child { margin-top:16px; }
+@media(max-width:640px) {
+ .about-page > .hero,
+ .about-page .about-founder-section,
+ .about-page .about-boundaries-section,
+ .about-page .about-operating-section,
+ .about-page .about-bridge-section { padding:44px 0; }
+ .about-page > .hero .lead { font-size:18px; }
+ .about-page > .hero .ctas { flex-direction:column; align-items:stretch; }
+ .about-page > .hero .btn { width:100%; }
+ .about-page .about-founder-section .v31-experience { display:none; }
+ .about-page .about-founder-section .about-founder-grid { grid-template-columns:minmax(0,1fr); gap:0; }
+ .about-page .about-founder-section .v32-responsive-detail > summary {
+  display:list-item; min-height:48px; padding:14px 0; margin-top:18px;
+  font-size:17px; font-weight:600; line-height:1.5; color:#1b6069; cursor:pointer; list-style-position:inside;
+ }
+ .about-page .about-founder-section .v32-responsive-detail[open] > summary { border-bottom:1px solid #c7d7d5; }
+ .about-page .about-boundaries-section .grid,
+ .about-page .about-operating-section .grid { grid-template-columns:minmax(0,1fr); gap:28px; }
+}

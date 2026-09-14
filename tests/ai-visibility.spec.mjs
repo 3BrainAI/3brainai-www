@@ -1,83 +1,11 @@
+import {readFileSync} from 'node:fs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { expect, test } from '@playwright/test';
 
 const execFileAsync = promisify(execFile);
 
-const canonicalPages = [
-  {
-    route: '/',
-    url: 'https://www.3brain.ai/',
-    title: '3BrainAI CRI | Construction Risk Intelligence for governed review',
-    description: '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'
-  },
-  {
-    route: '/mis/',
-    url: 'https://www.3brain.ai/mis/',
-    title: '3BrainAI Records | Catalog & Registry Record Layer',
-    description: 'A target governed record layer for consistent catalog, registry and institutional outputs within the broader Trusted Data Plane direction.'
-  },
-  {
-    route: '/cri/',
-    url: 'https://www.3brain.ai/cri/',
-    title: 'CRI – Construction Risk Intelligence | 3BrainAI Nexus',
-    description: '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'
-  },
-  {
-    route: '/use-cases/',
-    url: 'https://www.3brain.ai/use-cases/',
-    title: 'Use Cases | 3BrainAI',
-    description: 'Model situations for CRI Evidence Packs, governed records, an Evidence Readiness Check and an institution-specific PoC run in shadow mode.'
-  },
-  {
-    route: '/governance-layer/',
-    url: 'https://www.3brain.ai/governance-layer/',
-    title: 'Trusted Data Plane | 3BrainAI',
-    description: 'The Trusted Data Plane is the intended reusable governed operating layer behind CRI, with a long-term direction toward an AI-ready data backbone for regulated decisions.'
-  },
-  {
-    route: '/about/',
-    url: 'https://www.3brain.ai/about/',
-    title: 'About | 3BrainAI',
-    description: 'Founder-led 3BrainAI Nexus develops governed CRI Evidence Packs for accountable bank review and participates in ESA BIC Czech Republic.'
-  },
-  {
-    route: '/validation/',
-    url: 'https://www.3brain.ai/validation/',
-    title: 'Proof of Concept path | 3BrainAI CRI',
-    description: 'A bounded path from Evidence Readiness Check to institution-specific PoC, paid pilot and target commercial deployment, with CRI outputs reviewed in shadow mode.'
-  },
-  {
-    route: '/investors/',
-    url: 'https://www.3brain.ai/investors/',
-    title: 'Investors | 3BrainAI CRI',
-    description: 'Investor overview of 3BrainAI Nexus, the CRI Evidence Pack product design and the gated path from institution-specific PoC to paid pilot and target commercial deployment.'
-  },
-  {
-    route: '/contact/',
-    url: 'https://www.3brain.ai/contact/',
-    title: 'Contact | 3BrainAI CRI',
-    description: 'Contact 3BrainAI for bank validation of CRI Evidence Packs or for a private investor conversation.'
-  },
-  {
-    route: '/privacy/',
-    url: 'https://www.3brain.ai/privacy/',
-    title: 'Privacy | 3BrainAI',
-    description: 'Privacy information for the 3BrainAI public website.'
-  },
-  {
-    route: '/imprint/',
-    url: 'https://www.3brain.ai/imprint/',
-    title: 'Imprint | 3BrainAI',
-    description: 'Legal and service information for the public 3BrainAI website.'
-  },
-  {
-    route: '/security/',
-    url: 'https://www.3brain.ai/security/',
-    title: 'Security | 3BrainAI',
-    description: 'Public security posture and contact guidance for the 3BrainAI website.'
-  }
-];
+const canonicalPages = JSON.parse(readFileSync(new URL('../scripts/r32-canonical-pages.json', import.meta.url),'utf8')).map(([file,url,title,description,lastmod])=>({route:new URL(url).pathname,url,title:title.replaceAll('&amp;','&'),description:description.replaceAll('&amp;','&'),lastmod}));
 
 const expectedCrawlerAgents = [
   'OAI-SearchBot',
@@ -145,17 +73,9 @@ test('sitemap contains exactly the live canonical pages with truthful release da
   const locations = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
   const lastModifiedDates = [...body.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(match => match[1]);
   const expectedLocations = canonicalPages.map(page => page.url);
-  const validationIndex = expectedLocations.indexOf('https://www.3brain.ai/validation/');
+  const validationIndex = expectedLocations.indexOf('https://www.3brain.ai/evidence-packs/');
   expectedLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
-  const expectedLastModifiedDates = expectedLocations.map(url =>
-    ['https://www.3brain.ai/', 'https://www.3brain.ai/about/'].includes(url)
-      ? '2026-09-06'
-      : ['https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(url)
-        ? '2026-09-01'
-        : url === 'https://www.3brain.ai/evidence-packs/fischamend/'
-          ? '2026-08-30'
-          : '2026-08-28'
-  );
+  const expectedLastModifiedDates = expectedLocations.map(url=>canonicalPages.find(p=>p.url===url)?.lastmod ?? '2026-08-30');
 
   expect(locations).toEqual(expectedLocations);
   expect(lastModifiedDates).toEqual(expectedLastModifiedDates);

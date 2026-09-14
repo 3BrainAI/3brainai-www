@@ -47,8 +47,8 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
     '/evidence-packs/fischamend/'
   );
   await expect(page.locator('.r4-hero').getByRole('link', {
-    name: 'Discuss an Evidence Readiness Check'
-  })).toHaveAttribute('href', '/validation/#readiness-form');
+    name: 'Explore The Brief'
+  })).toHaveAttribute('href', '/cri/#the-brief');
   await expect(page.locator('.r4-evidence-anchor')).toContainText('DEMO-EU-AT-FIS-01 · v0.1');
 
   const folioLinks = page.locator('a.r4-folio-sheet');
@@ -321,18 +321,40 @@ for (const width of responsiveWidths) {
   });
 }
 
-test('mobile composition exposes the proof and stays within the working long-page envelope', async ({ page }) => {
+test('mobile composition bounds the approved Brief journey and retains the existing page envelope', async ({ page }, testInfo) => {
   await openHomepage(page, 390, 844);
 
   const heroProof = page.locator('.r4-evidence-anchor');
   await expect(heroProof).toBeVisible();
-  const pageMetrics = await page.evaluate(() => ({
+  const journey = page.locator('.v3-home-journey');
+  await expect(journey.locator('.v3-home-step')).toHaveCount(2);
+  for (const explanation of await journey.locator('.v3-home-step-label, .v3-home-note').all()) {
+    await expect(explanation).toBeVisible();
+  }
+  const pageMetrics = await journey.evaluate(element => ({
     height: document.documentElement.scrollHeight,
-    viewport: window.innerHeight
+    viewport: window.innerHeight,
+    journeyHeight: element.getBoundingClientRect().height,
+    explanationGeometry: [...element.querySelectorAll('.v3-home-step-label, .v3-home-note')].map(item => ({
+      height: item.getBoundingClientRect().height,
+      lineHeight: getComputedStyle(item).lineHeight
+    }))
   }));
-  // R4-E keeps both evidence pages uncropped, restores usable historical imagery and
-  // now explains CRI at first use. Keep a bounded envelope without penalising that copy.
-  expect(pageMetrics.height / pageMetrics.viewport).toBeLessThanOrEqual(13.1);
+  // The R4-E budget included only two 48px buttons and a 12px gap (108px).
+  // R3.2 explicitly adds two labels, explanatory text and a 54px Brief button.
+  // CI measured the approved block at 316px at 390px with the test's fallback
+  // fonts. Bound it at 320px, including the actual explanatory-text wrapping.
+  // Keep the original 13.1-screen budget for the rest of the page instead of
+  // raising it globally or hiding the explanatory text to satisfy the old test.
+  const legacyActionRowHeight = 2 * 48 + 12;
+  const normalizedHeight = pageMetrics.height - pageMetrics.journeyHeight + legacyActionRowHeight;
+  await testInfo.attach('homepage-mobile-composition.json', {
+    body: JSON.stringify({ ...pageMetrics, legacyActionRowHeight, normalizedHeight }, null, 2),
+    contentType: 'application/json'
+  });
+  console.info('R3.2 mobile composition:', JSON.stringify({ ...pageMetrics, normalizedHeight }));
+  expect(pageMetrics.journeyHeight).toBeLessThanOrEqual(320);
+  expect(normalizedHeight / pageMetrics.viewport).toBeLessThanOrEqual(13.1);
 
   const relationshipGridColumns = await page.locator('.r4-relationship-grid').evaluate(element =>
     getComputedStyle(element).gridTemplateColumns.split(' ').length

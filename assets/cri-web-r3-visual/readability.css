@@ -1,0 +1,57 @@
+/* R3 generated readability overrides. Original reference CSS is preserved. */
+.cri-n4.cri-web-r3 .nav a{font-size:15px;}
+.cri-n4.cri-web-r3 .eyebrow{font-size:15px;}
+.cri-n4.cri-web-r3 .domain{font-size:15px;}
+.cri-n4.cri-web-r3 .micro{font-size:15px;}
+.cri-n4.cri-web-r3 .stage{font-size:15px;}
+.cri-n4.cri-web-r3 .record-top{font-size:15px;}
+.cri-n4.cri-web-r3 .record-label{font-size:15px;}
+.cri-n4.cri-web-r3 .badge{font-size:15px;}
+.cri-n4.cri-web-r3 .folio-caption{font-size:15px;}
+.cri-n4.cri-web-r3 figcaption{font-size:15px;}
+.cri-n4.cri-web-r3 .site-footer p{font-size:15px;}
+.cri-n4.cri-web-r3 .footer-links a{font-size:15px;}
+.cri-n4.cri-web-r3 .help{font-size:15px;}
+.cri-n4.cri-web-r3 .field-error{font-size:15px;}
+.cri-n4.cri-web-r3 .email-draft textarea{font:400 15px/1.55 ui-monospace,monospace;}
+.cri-n4.cri-web-r3 .review-only{font:400 15px/1.5 var(--cri-font);}
+.cri-n4.cri-web-r3 .review-controls button{font:600 15px var(--cri-font);}
+@media(max-width:760px){
+.cri-n4.cri-web-r3 .data-table td::before{font-size:15px;}
+}
+.cri-n4.cri-web-r3 .r2-retained .cri-key-question-row-label{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .cri-key-question-row-text{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .evaluation-label{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .evaluation-disclaimer{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .commercial-term > span{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .badge{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .evidence-pack-title-line--context{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .investors-milestones span{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .parallel-rail-label{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .parallel-rail-node{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .relationship-caption{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .product-chain strong + span{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .node-maturity{font-size:15px;}
+@media (max-width: 720px){
+.cri-n4.cri-web-r3 .r2-retained .parallel-rail-node{font-size:15px;}
+}
+.cri-n4.cri-web-r3 .r2-retained .m2-mechanism-index,
+.cri-n4.cri-web-r3 .r2-retained .m2-stage-index,
+.cri-n4.cri-web-r3 .r2-retained .m2-stage-state,
+.cri-n4.cri-web-r3 .r2-retained .m2-engagement-state{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-retained .m2-mechanism p,
+.cri-n4.cri-web-r3 .r2-retained .m2-stage p,
+.cri-n4.cri-web-r3 .r2-retained .m2-engagement p,
+.cri-n4.cri-web-r3 .r2-retained .m2-investor-gate p{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-aerial figcaption{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-outcome .record-top{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-outcome .record-label{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-outcome .micro{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-outcome .badge{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-number{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-access-label{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-thesis-visual span{font-size:15px;}
+@media(max-width:760px){
+.cri-n4.cri-web-r3 .r2-aerial figcaption{font-size:15px;}
+.cri-n4.cri-web-r3 .r2-outcome .micro{font-size:15px;}
+}

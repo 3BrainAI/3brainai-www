@@ -1,0 +1,31 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const K=path.resolve(__dirname,'..');
+const configs=Object.fromEntries(['validation','investors','contact'].map(route=>{const text=fs.readFileSync(path.join(K,route,'index.html'),'utf8');return [route,JSON.parse(text.match(/<script type="application\/json" id="n4-config">([\s\S]*?)<\/script>/)[1])];}));
+const D={common:{form_copy:configs.validation.form_copy},forms:Object.fromEntries(Object.entries(configs).map(([route,cfg])=>[route,cfg.form]))};
+const R=require('../assets/cri-web-r2/CRI_WEB_R2_form_rules.js'),copy=D.common.form_copy,tests=[];
+const baseline={email:'reviewer@example.org',organisation:'Example institution',role:'Risk reviewer',purpose:'brief',question:'Assess whether the prepared review distinguishes evidence quality and the scope of the reply.',context:''};
+function validate(changes={},form='validation'){return R.validate({...baseline,...changes},D.forms[form],copy);}
+function test(name,fn){try{fn();tests.push({name,status:'PASS'});}catch(error){tests.push({name,status:'FAIL',message:error.message});}}
+test('Brief request accepts a professional question without a named asset',()=>assert.equal(validate().valid,true));
+test('Independent professional work contact is not rejected by provider',()=>assert.equal(validate({email:'analyst@gmail.com',organisation:'Independent practice'}).valid,true));
+test('Readiness requires asset or portfolio context',()=>assert.equal(validate({purpose:'readiness'}).errors.context,copy.context_required));
+test('Anonymised readiness context is sufficient',()=>assert.equal(validate({purpose:'readiness',context:'An anonymised logistics construction phase.'}).valid,true));
+test('Required fields are validated independently',()=>assert.deepEqual(Object.keys(validate({email:'',organisation:'',role:'',question:''}).errors).sort(),['email','organisation','question','role']));
+test('A very short question is rejected',()=>assert.equal(validate({question:'Hi'}).errors.question,copy.question_short));
+test('Unknown purpose cannot choose a recipient or access route',()=>assert.equal(validate({purpose:'instant-access'}).errors.purpose,copy.purpose_invalid));
+test('A malformed email is rejected',()=>assert.equal(validate({email:'reviewer@'}).errors.email,copy.email_invalid));
+test('Email header line breaks are rejected',()=>assert.equal(validate({email:'reviewer@example.org\nBcc: stranger@example.org'}).valid,false));
+test('Header-shaped organisation and role line breaks are rejected',()=>assert.equal(validate({organisation:'Bank\nSubject: fake',role:'Review\rBcc: fake'}).valid,false));
+test('Every bounded field rejects excess input',()=>{for(const [key,limit]of Object.entries(R.limits))assert.ok(validate({[key]:'x'.repeat(limit+1)}).errors[key],key);});
+test('Question and context at their boundaries remain valid',()=>assert.equal(validate({question:'q'.repeat(1200),context:'c'.repeat(500)}).valid,true));
+test('Unicode professional names are retained',()=>{const x=validate({organisation:'Česká odborná praxe',role:'Analytik / Prüfer'});assert.equal(x.valid,true);assert.ok(R.draft(x,D.forms.validation).includes('Česká odborná praxe'));});
+test('Surrounding whitespace is normalised',()=>assert.equal(validate({email:'  reviewer@example.org  '}).values.email,'reviewer@example.org'));
+test('Invalid result cannot generate an email draft',()=>assert.throws(()=>R.draft(validate({question:''}),D.forms.validation)));
+test('Investor draft uses the dedicated fixed recipient',()=>assert.match(R.draft(validate({purpose:'investor'},'investors'),D.forms.investors),/^To: investors@3brain\.ai\n/));
+test('Collaboration draft uses the company contact recipient',()=>assert.match(R.draft(validate({purpose:'technical'},'contact'),D.forms.contact),/^To: contact@3brain\.ai\n/));
+test('No context is invented when none is supplied',()=>assert.ok(!R.draft(validate(),D.forms.validation).includes('Asset or portfolio context')));
+test('Brief anchor explicitly selects the Brief purpose',()=>assert.equal(R.purposeFromAnchor('#brief-request',D.forms.validation),'brief'));
+test('Readiness anchor explicitly selects readiness, including repeat navigation',()=>assert.equal(R.purposeFromAnchor('#readiness-form',D.forms.validation),'readiness'));
+test('A readiness URL cannot change the investor purpose',()=>assert.equal(R.purposeFromAnchor('#readiness-form',D.forms.investors),null));
+const result={run_on:'2026-09-13',runtime:'Node.js '+process.version,scope:'Pure validation and draft composition only; not browser form interactions.',tests,passed:tests.filter(t=>t.status==='PASS').length,failed:tests.filter(t=>t.status==='FAIL').length};
+console.log(JSON.stringify({passed:result.passed,failed:result.failed}));if(result.failed)process.exitCode=1;

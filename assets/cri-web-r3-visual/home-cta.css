@@ -1,0 +1,17 @@
+/* Explicit new user authorisation: the existing homepage CTA pair only.
+   All selectors are scoped to this unique row; existing shared styles are untouched. */
+.r4-home .v3-home-journey { gap:20px; align-items:flex-start; }
+.r4-home .v3-home-step { display:flex; flex-direction:column; align-items:stretch; max-width:360px; }
+.r4-home .v3-home-step-label { display:block; font-size:15px; line-height:1.5; font-weight:600; color:#c6d4df; margin-bottom:12px; letter-spacing:.025em; }
+.r4-home .v3-home-step-label strong { color:#fff; margin-right:8px; }
+.r4-home .v3-home-note { display:block; font-size:15px; line-height:1.55; font-weight:400; color:#c6d4df; margin-top:13px; max-width:32ch; }
+.r4-home .v3-home-journey .v3-brief-cta { display:inline-flex; align-items:center; justify-content:space-between; gap:22px; background:#c8ece5; border:1px solid #c8ece5; color:#071b2e; font-size:16px; min-height:54px; box-shadow:0 0 0 4px #c8ece512; transition:background-color 160ms,box-shadow 160ms,transform 160ms; }
+.r4-home .v3-home-journey .v3-brief-cta svg { width:23px; height:23px; flex:none; }
+.r4-home .v3-home-journey .v3-brief-cta:hover { background:#e4f7f0; color:#071b2e; border-color:#e4f7f0; box-shadow:0 4px 20px #c8ece522; transform:translateY(-2px); }
+.r4-home .v3-home-journey .v3-brief-cta:focus-visible { outline:3px solid #9cc9eb; outline-offset:5px; }
+@media(max-width:680px) {
+ .r4-home .v3-home-journey { flex-direction:column; gap:26px; }
+ .r4-home .v3-home-step { width:100%; max-width:390px; }
+ .r4-home .v3-home-note { max-width:38ch; }
+}
+@media(prefers-reduced-motion:reduce) { .r4-home .v3-home-journey .v3-brief-cta { transition:none; transform:none; } }

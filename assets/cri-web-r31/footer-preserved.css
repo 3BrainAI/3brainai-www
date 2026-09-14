@@ -1,0 +1,319 @@
+/* Canonical footer styles, declaration values and order preserved. */
+.v31-canonical-footer {
+  --charcoal: #1B1F2A;
+  --slate: #475467;
+  --ice: #f4f6f9;
+  --surface-warm: #faf9f7;
+  --surface-soft: #f0f4f8;
+  --white: #FFFFFF;
+  --steel: #D9E1EA;
+  --ink: #121722;
+
+  --panel-navy: #142033;
+  --panel-slate: #1a2d4a;
+  --panel-deep: #1e3a5f;
+  --accent-cyan: #3aa7b5;
+  --accent-cyan-soft: rgba(58, 167, 181, 0.14);
+
+  --mis-burgundy: #5A1637;
+  --mis-plum: #3B1F5C;
+  --mis-violet: #7A3E9D;
+  --mis-lilac: #F4EEF7;
+  --mis-ivory: #FAF7F2;
+
+  --cri-navy: #071B33;
+  --cri-blue: #123C69;
+  --cri-cyan: #3AA7B5;
+  --cri-ice: #F3F7FB;
+  --cri-steel: #D8E1EA;
+
+  --success: #2F7D6D;
+  --warning: #C58A2A;
+  --danger: #A43A3A;
+
+  --maxw: 1160px;
+  --radius: 22px;
+  --shadow: 0 22px 60px rgba(27, 31, 42, 0.12);
+
+  --section-pad-y: 56px;
+  --section-pad-y-compact: 36px;
+  --hero-pad-top: 72px;
+  --hero-pad-bottom: 56px;
+  --hero-pad-top-md: 50px;
+  --hero-pad-bottom-md: 40px;
+  --hero-grid-gap: 36px;
+  --logo-max-hero-core: 160px;
+  --logo-max-panel-core: 215px;
+  --logo-max-domain-hero: 340px;
+
+  /* R3 Controlled Site Ledger roles */
+  --r3-page-background: #f1f2ef;
+  --r3-surface: #fffefb;
+  --r3-surface-subtle: #f5f5f1;
+  --r3-text: #182125;
+  --r3-text-secondary: #58666b;
+  --r3-border: #cfd6d5;
+  --r3-action: #123c69;
+  --r3-status-ok: #24765e;
+  --r3-status-watch: #ad5c12;
+  --r3-status-investigate: #993b45;
+  --r3-uncertainty-background: #fffaf1;
+  --r3-focus: #1f6ec2;
+  --r3-content-width: 1360px;
+  --r3-reading-width: 720px;
+  --r3-space-1: 4px;
+  --r3-space-2: 8px;
+  --r3-space-3: 12px;
+  --r3-space-4: 16px;
+  --r3-space-5: 24px;
+  --r3-space-6: 32px;
+  --r3-space-7: 48px;
+  --r3-section-space: 72px;
+  --r3-card-radius: 10px;
+  --r3-border-width: 1px;
+  --r3-shadow: 0 18px 50px rgba(24, 33, 37, 0.07);
+  --r3-metadata-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --r3-sticky-header-offset: 96px;
+}
+.v31-canonical-footer * {
+  box-sizing: border-box;
+}
+.v31-canonical-footer strong {
+  font-weight: 600;
+}
+.v31-canonical-footer {
+  margin: 0;
+  background: var(--surface-warm);
+  color: var(--charcoal);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.58;
+  font-weight: 400;
+  letter-spacing: 0.004em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.v31-canonical-footer a {
+  color: inherit;
+}
+.v31-canonical-footer .container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.v31-canonical-footer .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: max-content;
+}
+.v31-canonical-footer .brand-mark {
+  display: block;
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+}
+.v31-canonical-footer .brand-text {
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  font-size: 21px;
+}
+.v31-canonical-footer .footer .brand-text {
+  color: rgba(255, 255, 255, 0.94);
+}
+.v31-canonical-footer .footer {
+  background: linear-gradient(160deg, var(--panel-navy) 0%, var(--panel-slate) 100%);
+  color: var(--white);
+  padding: 28px 0 24px;
+}
+.v31-canonical-footer .footer a {
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+}
+.v31-canonical-footer .footer small,
+.v31-canonical-footer .footer p {
+  color: rgba(255, 255, 255, 0.62);
+}
+.v31-canonical-footer .footer-location {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+}
+.v31-canonical-footer .footer-address-label {
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.v31-canonical-footer .footer-address {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  line-height: 1.55;
+}
+@media (max-width: 640px) {
+.v31-canonical-footer .container {
+    padding: 0 18px;
+  }
+.v31-canonical-footer .brand-text {
+    font-size: 20px;
+  }
+}
+.v31-canonical-footer .footer-shell {
+  display: grid;
+  gap: 0;
+}
+.v31-canonical-footer .footer-main {
+  display: grid;
+  grid-template-columns: minmax(250px, 1.25fr) minmax(130px, 0.58fr) minmax(130px, 0.58fr) minmax(210px, 0.9fr);
+  gap: 30px;
+  align-items: start;
+}
+.v31-canonical-footer .footer-brand-column > p {
+  margin-bottom: 0;
+}
+.v31-canonical-footer .footer .footer-europe {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.v31-canonical-footer .footer .footer-market-focus {
+  max-width: 34ch;
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+.v31-canonical-footer .footer-esa-proof {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.5fr) minmax(260px, 2.1fr);
+  gap: 24px;
+  align-items: center;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+.v31-canonical-footer .footer-esa-link {
+  display: inline-flex;
+  width: fit-content;
+}
+.v31-canonical-footer .footer-esa-link img {
+  display: block;
+  width: min(205px, 100%);
+  height: auto;
+}
+.v31-canonical-footer .footer .footer-esa-statement {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.v31-canonical-footer .footer-navigation {
+  display: block;
+}
+.v31-canonical-footer .footer .footer-heading {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.v31-canonical-footer .footer-link-list {
+  display: grid;
+  gap: 8px;
+}
+.v31-canonical-footer .footer-link-list a {
+  width: fit-content;
+  font-size: 14px;
+}
+.v31-canonical-footer .footer-link-list a:hover,
+.v31-canonical-footer .footer-link-list a:focus-visible {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.v31-canonical-footer .footer-contact .footer-heading {
+  margin-bottom: 12px;
+}
+.v31-canonical-footer .footer-contact .footer-location {
+  margin-bottom: 8px;
+}
+.v31-canonical-footer .footer-contact-link {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+.v31-canonical-footer .footer-contact-link:hover,
+.v31-canonical-footer .footer-contact-link:focus-visible {
+  color: var(--white) !important;
+}
+@media (max-width: 980px) {
+.v31-canonical-footer .footer-main {
+    grid-template-columns: minmax(90px, 0.55fr) minmax(90px, 0.55fr) minmax(190px, 1.25fr);
+    gap: 24px 28px;
+  }
+.v31-canonical-footer .footer-brand-column {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+.v31-canonical-footer .footer-navigation--primary {
+    grid-column: 1;
+    grid-row: 2;
+  }
+.v31-canonical-footer .footer-navigation--secondary {
+    grid-column: 2;
+    grid-row: 2;
+  }
+.v31-canonical-footer .footer-contact {
+    grid-column: 3;
+    grid-row: 2;
+  }
+.v31-canonical-footer .footer-esa-proof {
+    grid-template-columns: minmax(170px, 0.55fr) minmax(0, 1fr);
+    gap: 14px 24px;
+  }
+}
+@media (max-width: 520px) {
+.v31-canonical-footer .footer {
+    padding: 24px 0 22px;
+  }
+.v31-canonical-footer .footer-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 20px;
+  }
+.v31-canonical-footer .footer-brand-column {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+.v31-canonical-footer .footer-navigation--primary {
+    grid-column: 1;
+    grid-row: 2;
+  }
+.v31-canonical-footer .footer-navigation--secondary {
+    grid-column: 2;
+    grid-row: 2;
+  }
+.v31-canonical-footer .footer-contact {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+.v31-canonical-footer .footer-esa-proof {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+}
+.v31-canonical-footer { font-size:16px; }

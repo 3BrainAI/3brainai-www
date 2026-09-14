@@ -1,0 +1,101 @@
+/* R2 additions. N1 tokens retained; original diagrams have a separate scoped stylesheet. */
+.cri-n4 .hero-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:40px}
+.cri-n4 .hero h1{font-size:clamp(48px,4.6vw,66px);line-height:1.02}
+.cri-n4 .r2-scene{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1fr);gap:14px;align-items:start}
+.cri-n4 .r2-aerial img{width:100%;height:auto;border:1px solid var(--cri-control-line)}
+.cri-n4 .r2-aerial figcaption{font-size:13px;line-height:1.5;margin-top:12px}
+.cri-n4 .dark .r2-aerial a{color:var(--cri-tagline)}
+.cri-n4 .r2-outcome .record-top{padding:14px 18px;font-size:12px;background:#153448}
+.cri-n4 .r2-outcome .record-body{padding:22px}
+.cri-n4 .r2-outcome h3{font-size:25px;line-height:1.12}
+.cri-n4 .r2-outcome p{font-size:15px;margin-top:16px}
+.cri-n4 .r2-outcome .record-label{margin-top:20px;font-size:13px}
+.cri-n4 .r2-outcome .micro{font-size:12px;margin-top:18px;padding-top:16px}
+.cri-n4 .r2-outcome .badge{font-size:12px;margin-top:16px}
+.cri-n4 .r2-story{display:grid;grid-template-columns:1fr 1fr;border-block:1px solid var(--cri-control-line)}
+.cri-n4 .r2-story article{padding:30px 30px 30px 0}
+.cri-n4 .r2-story article+article{border-left:1px solid var(--cri-line);padding-left:30px}
+.cri-n4 .r2-story p{margin-top:18px;max-width:60ch}
+.cri-n4 .r2-number{display:block;color:var(--cri-muted);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+.cri-n4 .r2-detail{margin-top:26px;border-block:1px solid var(--cri-control-line);max-width:1000px}
+.cri-n4 .r2-detail summary{padding:20px 12px;font-size:18px;font-weight:600;cursor:pointer;min-height:48px}
+.cri-n4 .r2-basis{padding:0 24px 26px;max-width:900px}
+.cri-n4 .r2-access{display:grid;grid-template-columns:1.1fr 1fr;background:var(--cri-navy);color:white;border:1px solid var(--cri-navy)}
+.cri-n4 .r2-access-intro{padding:36px;border-right:1px solid var(--cri-control-line)}
+.cri-n4 .r2-access-intro h3{font-size:32px;line-height:1.1;max-width:20ch}
+.cri-n4 .r2-access-intro p{margin-top:22px;color:#e8f1f9}
+.cri-n4 .r2-access-label{display:block;font-size:12px;letter-spacing:.08em;color:var(--cri-tagline);margin-bottom:25px}
+.cri-n4 .r2-access .button{margin-top:26px;background:white;color:var(--cri-navy);border-color:white}
+.cri-n4 .r2-access .button:hover{background:var(--cri-dialog)}
+.cri-n4 .r2-access :focus-visible{outline-color:var(--cri-focus-dark)}
+.cri-n4 .r2-access-steps{padding:36px}
+.cri-n4 .r2-access-steps ol{list-style:decimal-leading-zero;padding:0 0 0 32px;margin:0}
+.cri-n4 .r2-access-steps li{padding:0 0 25px 12px;margin-bottom:25px;border-bottom:1px solid var(--cri-control-line)}
+.cri-n4 .r2-access-steps li:last-child{margin-bottom:0}
+.cri-n4 .r2-access-steps li::marker{color:var(--cri-tagline);font-size:18px}
+.cri-n4 .r2-access-steps strong{display:block;font-size:21px;line-height:1.25}
+.cri-n4 .r2-access-steps span{display:block;color:#e8f1f9;margin-top:12px}
+.cri-n4 .r2-access .micro{color:var(--cri-tagline)}
+.cri-n4 .r2-value-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:28px;border:1px solid var(--cri-line);background:white}
+.cri-n4 .r2-value-row article{padding:28px;min-width:0}
+.cri-n4 .r2-value-row article+article{border-left:1px solid var(--cri-line)}
+.cri-n4 .r2-value-row p{margin-top:16px;color:var(--cri-muted)}
+.cri-n4 .r2-split{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:start}
+.cri-n4 .r2-split h3{margin-bottom:24px}
+.cri-n4 .r2-retained{min-width:0;max-width:100%;font-family:var(--cri-font);color:var(--r3-text)}
+/* Disclosed R2 contrast correction: retained target-stage content remains exact. */
+.cri-n4 .r2-retained .m2-stage--target{opacity:1}
+.cri-n4 .r2-editorial{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.cri-n4 .r2-editorial article{border-top:2px solid var(--cri-navy);padding-top:24px}
+.cri-n4 .r2-editorial h3{font-size:27px;line-height:1.14}
+.cri-n4 .r2-editorial p{margin-top:20px;color:var(--cri-muted)}
+.cri-n4 .r2-thesis-visual{border:1px solid var(--cri-control-line);background:white}
+.cri-n4 .r2-thesis-visual>div{padding:26px 30px;border-bottom:1px solid var(--cri-line)}
+.cri-n4 .r2-thesis-visual span{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.cri-n4 .r2-thesis-visual strong{display:block;font-size:25px;line-height:1.2}
+.cri-n4 .r2-thesis-visual .r2-thesis-core{background:var(--cri-navy);color:white;padding-block:34px}
+.cri-n4 .r2-thesis-core span,.cri-n4 .r2-thesis-core p{color:var(--cri-tagline)}
+.cri-n4 .r2-thesis-core p{margin-top:22px;line-height:1.8}
+.cri-n4 .r2-thesis-visual>.micro{padding:22px 30px;margin:0}
+.cri-n4 .r2-founder{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1fr);gap:48px;align-items:start}
+.cri-n4 .r2-founder figure{max-width:355px}
+.cri-n4 .r2-founder img{width:100%;height:auto}
+.cri-n4 .r2-founder h3{font-size:32px;line-height:1.14;margin-bottom:26px}
+.cri-n4 .r2-investment-focus{max-width:950px;border-left:4px solid var(--cri-accent);padding:12px 0 12px 30px}
+.cri-n4 .r2-investment-focus p{margin-top:20px}
+.cri-n4 .r2-investment-focus .button{margin-top:28px}
+/* Current diagram node copy is retained; new wrappers only manage composition. */
+@media(max-width:1100px){
+ .cri-n4 .r2-scene{grid-template-columns:1fr}
+ .cri-n4 .r2-aerial{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+ .cri-n4 .r2-aerial figcaption{margin-top:0}
+ .cri-n4 .r2-outcome .record-body{padding:22px}
+ .cri-n4 .r2-editorial{gap:24px}
+}
+@media(max-width:760px){
+ .cri-n4 .hero-grid{grid-template-columns:1fr;gap:30px}
+ .cri-n4 .hero h1{font-size:42px;line-height:1.04}
+ .cri-n4 .r2-scene{gap:22px}
+ .cri-n4 .r2-aerial{grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:18px}
+ .cri-n4 .r2-aerial figcaption{font-size:12px}
+ .cri-n4 .r2-outcome .micro{font-size:13px}
+ .cri-n4 .r2-story,.cri-n4 .r2-access,.cri-n4 .r2-value-row,.cri-n4 .r2-split,.cri-n4 .r2-editorial,.cri-n4 .r2-founder{grid-template-columns:1fr;gap:0}
+ .cri-n4 .r2-story article{padding:26px 0}
+ .cri-n4 .r2-story article+article{padding:26px 0;border-left:0;border-top:1px solid var(--cri-line)}
+ .cri-n4 .r2-access-intro,.cri-n4 .r2-access-steps{padding:26px 22px}
+ .cri-n4 .r2-access-intro{border-right:0;border-bottom:1px solid var(--cri-control-line)}
+ .cri-n4 .r2-access-intro h3{font-size:28px}
+ .cri-n4 .r2-access .button{width:100%;min-height:48px}
+ .cri-n4 .r2-access-steps ol{padding-left:26px}
+ .cri-n4 .r2-value-row article{padding:24px}
+ .cri-n4 .r2-value-row article+article{border-left:0;border-top:1px solid var(--cri-line)}
+ .cri-n4 .r2-split>div+div{margin-top:35px}
+ .cri-n4 .r2-editorial article{padding:24px 0 32px}
+ .cri-n4 .r2-founder{gap:28px}
+ .cri-n4 .r2-founder figure{max-width:240px}
+ .cri-n4 .r2-founder h3{font-size:28px}
+ .cri-n4 .r2-thesis-visual>div{padding:24px}
+ .cri-n4 .r2-thesis-visual strong{font-size:23px}
+ .cri-n4 .r2-investment-focus{padding-left:20px}
+}
+@media(prefers-reduced-motion:reduce){.cri-n4 *{scroll-behavior:auto!important}}

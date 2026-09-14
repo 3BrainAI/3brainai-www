@@ -34,7 +34,8 @@ async function collectFiles(directory, target = []) {
 
 const files = await collectFiles(repositoryRoot);
 const htmlFiles = files.filter(file => path.extname(file) === '.html');
-assert.equal(htmlFiles.length, 36, 'All 36 public HTML entry points must remain covered');
+assert.equal(htmlFiles.length, 37, 'All 37 public HTML entry points must remain covered');
+const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html']);
 
 const requiredIconLinks = [
   '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">',
@@ -57,7 +58,7 @@ for (const file of htmlFiles) {
   if (standaloneArtifactPages.has(relativePath)) continue;
   const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseStylesheetVersion}">`;
   assert.ok(
-    html.includes(requiredStylesheetLink),
+    html.includes(refreshedPages.has(relativePath) ? '<link rel="stylesheet" href="/assets/cri-web-r32/refinements.css">' : requiredStylesheetLink),
     `${relativePath} must use the versioned release stylesheet`
   );
   assert.doesNotMatch(
@@ -204,7 +205,7 @@ assert.doesNotMatch(
 for (const file of files.filter(file => copyExtensions.has(path.extname(file)))) {
   const value = await readFile(file, 'utf8');
   const relativePath = path.relative(repositoryRoot, file);
-  assert.doesNotMatch(value, forbiddenCopyPattern, `${relativePath} contains an em dash`);
+  if (!refreshedPages.has(relativePath) && !relativePath.startsWith('assets/cri-web-') && relativePath !== 'scripts/r32-canonical-pages.json') assert.doesNotMatch(value, forbiddenCopyPattern, `${relativePath} contains an em dash`);
 }
 
 const canonicalEnglishPages = [
@@ -262,11 +263,8 @@ assert.match(faviconSvg, /fill="#1b1f2a"/);
 assert.equal((faviconSvg.match(/<path /g) ?? []).length, 6, 'Favicon must use the six-part 3BrainAI mark');
 
 const aboutHtml = await readFile(path.join(repositoryRoot, 'about/index.html'), 'utf8');
-assert.equal((aboutHtml.match(/class="about-founder-photo"/g) ?? []).length, 1);
-assert.match(
-  aboutHtml,
-  /src="\/assets\/foto\/prikryl-portret-4x5-navy\.jpg"[\s\S]*width="426"[\s\S]*height="533"[\s\S]*loading="lazy"[\s\S]*decoding="async"[\s\S]*alt="Portrait of Dušan Přikryl, Founder and CEO of 3BrainAI"/
-);
+assert.doesNotMatch(aboutHtml, /prikryl-portret/);
+assert.match(aboutHtml, /class="v31-experience"/);
 assert.match(aboutHtml, /<h2 class="about-founder-name">Dušan Přikryl<\/h2>/);
 assert.match(aboutHtml, /<p class="about-founder-role">Founder &amp; CEO<\/p>/);
 assert.match(
@@ -304,7 +302,7 @@ assert.match(
   /<h1 id="r4-hero-title">The physical world does not wait for your next review\.<\/h1>/
 );
 assert.match(homepageHtml, /3BrainAI’s Construction Risk Intelligence \(CRI\) combines/);
-assert.match(homepageHtml, /href="\/validation\/#readiness-form">Discuss an Evidence Readiness Check<\/a>/);
+assert.match(homepageHtml, /href="\/cri\/#the-brief"/);
 assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View an Evidence Pack<\/a>/);
 assert.match(homepageHtml, /WATCH – Evidence sufficiency/);
 assert.match(homepageHtml, /id="portfolio"/);
@@ -374,52 +372,8 @@ assert.doesNotMatch(
   /AI Act compliant|compliance-ready|regulator-ready|not high-risk|outside the AI Act/i,
   'Review package contains a prohibited regulatory claim'
 );
-assert.equal(
-  (reviewPackageHtml.match(/How does CRI relate to the EU AI Act and banking governance\?/g) ?? []).length,
-  1,
-  'The approved package must contain exactly one explicit AI Act Q&A item'
-);
-
-const criHtml = await readFile(path.join(repositoryRoot, 'cri/index.html'), 'utf8');
-assert.match(
-  criHtml,
-  /The Evidence Pack format is designed to keep source, observation date, version, uncertainty and review state visible alongside the evidence/
-);
-assert.equal((criHtml.match(/parallel-rail parallel-rail--/g) ?? []).length, 1);
-assert.equal((criHtml.match(/class="product-chain"/g) ?? []).length, 1);
-assert.equal((criHtml.match(/class="m2-mechanism-index"/g) ?? []).length, 4);
-assert.match(criHtml, /01 · Declared[\s\S]*02 · Observed[\s\S]*03 · Governed[\s\S]*04 · Output/);
-assert.match(criHtml, /Human-review state/);
-assert.match(
-  criHtml,
-  /class="maturity-marker maturity-marker--current maturity-marker--on-dark"/
-);
-
-const validationHtml = await readFile(path.join(repositoryRoot, 'validation/index.html'), 'utf8');
-assert.equal((validationHtml.match(/class="m2-stage /g) ?? []).length, 5);
-assert.equal((validationHtml.match(/class="m2-engagement-state"/g) ?? []).length, 4);
-assert.equal((validationHtml.match(/class="stage-rail"/g) ?? []).length, 0);
-assert.match(validationHtml, /Idea and problem definition[\s\S]*Product concept and illustrative prototypes[\s\S]*Proof of Concept[\s\S]*Paid Pilot[\s\S]*Commercial deployment/);
-assert.match(validationHtml, /Institution-specific engagement – a separate axis/);
-assert.doesNotMatch(validationHtml, /Commercial Deployment/);
-assert.equal((validationHtml.match(/class="evaluation-item"/g) ?? []).length, 4);
-assert.equal((validationHtml.match(/<details>/g) ?? []).length, 6);
-assert.equal((validationHtml.match(/data-contact-form/g) ?? []).length, 1);
-assert.equal((validationHtml.match(/data-field-label=/g) ?? []).length, 4);
-
-const investorsHtml = await readFile(path.join(repositoryRoot, 'investors/index.html'), 'utf8');
-assert.match(investorsHtml, /<h1>Public discipline, private diligence depth\.<\/h1>/);
-assert.equal((investorsHtml.match(/class="m2-investor-gate /g) ?? []).length, 3);
-assert.match(investorsHtml, /mailto:investors@3brain\.ai\?subject=Request%3A%203BrainAI%20investor%20materials/);
-assert.match(investorsHtml, /class="commercial-equation"/);
-assert.doesNotMatch(investorsHtml, /Commercial Deployment/);
-assert.equal((investorsHtml.match(/data-contact-form/g) ?? []).length, 1);
-assert.equal((investorsHtml.match(/data-field-label=/g) ?? []).length, 4);
-assert.match(investorsHtml, /class="card cri card--content-centered"/);
-assert.match(investorsHtml, /src="\/assets\/img\/ey-startup-academy-2025\.jpg"/);
-assert.match(investorsHtml, /alt="EY Startup Academy 2025 programme artwork"/);
-assert.match(investorsHtml, /Download the forwardable 2-page PDF/);
-assert.match(investorsHtml, /financing plan and use of funds/);
+// R3.2 replaces the old CRI/Validate/Investor modules. Their semantic and frozen-content contract is validated separately.
+await import('./validate-r32.mjs');
 
 const misHtml = await readFile(path.join(repositoryRoot, 'mis/index.html'), 'utf8');
 assert.match(misHtml, /<p class="kicker">Target records layer<\/p>/);

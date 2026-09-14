@@ -1,0 +1,5 @@
+/* Approved larger navigation and active underline; header links only.
+   Homepage and About retain their own header colour and layout. */
+.site-header.v31-header .nav a { font-size:15px; font-weight:600; min-height:44px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; border-radius:0; background:transparent; box-shadow:none; text-decoration:none; }
+.site-header.v31-header .nav a.active,.site-header.v31-header .nav a[aria-current=page],.site-header.v31-header .nav a:hover { border-bottom-color:currentColor; }
+.site-header.v31-header .nav a:focus-visible { outline:3px solid currentColor; outline-offset:4px; }
