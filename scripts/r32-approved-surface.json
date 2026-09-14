@@ -1,0 +1,37 @@
+{
+  "index.html": {
+    "main": "fd56f966569411f48316e4717074ed91cd8343f0c261bf4e46f602690ac71918",
+    "header": "2156361c4700f94c3df2cbbd7e20bb18bfccf46df5ab410c958e0b53a04fc5e8",
+    "footer": "d7376409ac474263236007024367beec0af5bbc9bd10d878aac64ba7a8746425"
+  },
+  "about/index.html": {
+    "main": "cf761aaeb2de9b26ffab3dd1cef97d99f0932f310b7aaf0347d130c4cc89e83f",
+    "header": "56dcfd4c3189e71bdef3ac1f6927bcccce281d49cece13b9c3acaa60321dab78",
+    "footer": "d7376409ac474263236007024367beec0af5bbc9bd10d878aac64ba7a8746425"
+  },
+  "investors/index.html": {
+    "main": "933dd6b15690e385bcb1745d3fa7bba1a07d158d469f1c0968c8eecd861e9d11",
+    "header": "3d3492392412990c0e3bca5a95053a3efaa206e2e0b99dc17843054153843065",
+    "footer": "d7376409ac474263236007024367beec0af5bbc9bd10d878aac64ba7a8746425"
+  },
+  "cri/index.html": {
+    "main": "c4679007416843c4f00255dfef18fd4c7557730c4d4bc921f3a54490ae017801",
+    "header": "a0418fd91bbefbac5c5a9f02c8680f8dca538b903d6f0b8a3ebe7284ffb17176",
+    "footer": "d7376409ac474263236007024367beec0af5bbc9bd10d878aac64ba7a8746425"
+  },
+  "evidence-packs/index.html": {
+    "main": "d5577a26f3c8486d90c48fd5b3af631c32f1fbf3cd83bc8d0b203c62a0c87212",
+    "header": "b7f16c61090880b6e8108850e4ce2699326237be46d2905a00a0ac23126f4d79",
+    "footer": "d7376409ac474263236007024367beec0af5bbc9bd10d878aac64ba7a8746425"
+  },
+  "contact/index.html": {
+    "main": "1b08bf71d703d03e2967d2fe18f6c7a11a99fdb260d0f2aebd956bddfe05fbdb",
+    "header": "03a4b2889ecd9a9b19307e509f852e4cb53da47ece25401e79f49b947c522d90",
+    "footer": "d7376409ac474263236007024367beec0af5bbc9bd10d878aac64ba7a8746425"
+  },
+  "validation/index.html": {
+    "main": "5daef1997908da64050cd5b24da244103e10c0511efab2ae0e63671f03273287",
+    "header": "a6b8753d557856772cb4356edd5f9bb1debdb22b27405f8b031ae14209084908",
+    "footer": "d7376409ac474263236007024367beec0af5bbc9bd10d878aac64ba7a8746425"
+  }
+}

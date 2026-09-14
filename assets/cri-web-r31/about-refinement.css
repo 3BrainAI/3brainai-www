@@ -1,0 +1,12 @@
+/* About: only the founder block; institutional milestones remain untouched. */
+.about-founder-section .v31-experience { margin:0; padding:28px 26px; border:1px solid #c7d7d5; background:#f4f7f3; color:#14202c; }
+.about-founder-section .v31-experience-label { color:#1b6069; font-size:15px; font-weight:600; line-height:1.5; margin:0 0 25px; }
+.about-founder-section .v31-experience-title { font-size:29px; line-height:1.15; letter-spacing:-.025em; margin:0 0 28px; }
+.about-founder-section .v31-experience ol { list-style:none; padding:0; margin:0; }
+.about-founder-section .v31-experience li { border-top:1px solid #c7d7d5; padding:20px 0; display:grid; grid-template-columns:30px 1fr; gap:10px; }
+.about-founder-section .v31-experience li span { font-size:15px; font-weight:600; line-height:1.7; color:#1b6069; }
+.about-founder-section .v31-experience li strong { display:block; font-size:18px; line-height:1.4; font-weight:600; }
+.about-founder-section .v31-experience li p { margin:6px 0 0; font-size:16px; line-height:1.55; color:#496170; }
+.about-founder-section .v31-experience figcaption { border-top:1px solid #c7d7d5; padding-top:20px; font-size:15px; line-height:1.5; color:#496170; }
+.about-founder-section .about-founder-copy .kicker,.about-founder-section .about-founder-copy .about-founder-role,.about-founder-section .about-founder-copy .about-founder-tags { font-size:15px; letter-spacing:.025em; }
+@media(max-width:860px) { .about-founder-section .v31-experience { max-width:none; } }

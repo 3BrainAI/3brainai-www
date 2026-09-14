@@ -47,8 +47,8 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
     '/evidence-packs/fischamend/'
   );
   await expect(page.locator('.r4-hero').getByRole('link', {
-    name: 'Discuss an Evidence Readiness Check'
-  })).toHaveAttribute('href', '/validation/#readiness-form');
+    name: 'Explore The Brief'
+  })).toHaveAttribute('href', '/cri/#the-brief');
   await expect(page.locator('.r4-evidence-anchor')).toContainText('DEMO-EU-AT-FIS-01 · v0.1');
 
   const folioLinks = page.locator('a.r4-folio-sheet');

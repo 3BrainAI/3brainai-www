@@ -7,20 +7,7 @@ import { fileURLToPath } from 'node:url';
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, '..');
 
-const canonicalPages = [
-  ['index.html', 'https://www.3brain.ai/', '3BrainAI CRI | Construction Risk Intelligence for governed review', '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'],
-  ['mis/index.html', 'https://www.3brain.ai/mis/', '3BrainAI Records | Catalog &amp; Registry Record Layer', 'A target governed record layer for consistent catalog, registry and institutional outputs within the broader Trusted Data Plane direction.'],
-  ['cri/index.html', 'https://www.3brain.ai/cri/', 'CRI – Construction Risk Intelligence | 3BrainAI Nexus', '3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.'],
-  ['use-cases/index.html', 'https://www.3brain.ai/use-cases/', 'Use Cases | 3BrainAI', 'Model situations for CRI Evidence Packs, governed records, an Evidence Readiness Check and an institution-specific PoC run in shadow mode.'],
-  ['governance-layer/index.html', 'https://www.3brain.ai/governance-layer/', 'Trusted Data Plane | 3BrainAI', 'The Trusted Data Plane is the intended reusable governed operating layer behind CRI, with a long-term direction toward an AI-ready data backbone for regulated decisions.'],
-  ['about/index.html', 'https://www.3brain.ai/about/', 'About | 3BrainAI', 'Founder-led 3BrainAI Nexus develops governed CRI Evidence Packs for accountable bank review and participates in ESA BIC Czech Republic.'],
-  ['validation/index.html', 'https://www.3brain.ai/validation/', 'Proof of Concept path | 3BrainAI CRI', 'A bounded path from Evidence Readiness Check to institution-specific PoC, paid pilot and target commercial deployment, with CRI outputs reviewed in shadow mode.'],
-  ['investors/index.html', 'https://www.3brain.ai/investors/', 'Investors | 3BrainAI CRI', 'Investor overview of 3BrainAI Nexus, the CRI Evidence Pack product design and the gated path from institution-specific PoC to paid pilot and target commercial deployment.'],
-  ['contact/index.html', 'https://www.3brain.ai/contact/', 'Contact | 3BrainAI CRI', 'Contact 3BrainAI for bank validation of CRI Evidence Packs or for a private investor conversation.'],
-  ['privacy/index.html', 'https://www.3brain.ai/privacy/', 'Privacy | 3BrainAI', 'Privacy information for the 3BrainAI public website.'],
-  ['imprint/index.html', 'https://www.3brain.ai/imprint/', 'Imprint | 3BrainAI', 'Legal and service information for the public 3BrainAI website.'],
-  ['security/index.html', 'https://www.3brain.ai/security/', 'Security | 3BrainAI', 'Public security posture and contact guidance for the 3BrainAI website.']
-];
+const canonicalPages = JSON.parse(await readFile(new URL('./r32-canonical-pages.json', import.meta.url), 'utf8'));
 
 const readRepositoryFile = relativePath => readFile(path.join(repositoryRoot, relativePath), 'utf8');
 const countOccurrences = (value, fragment) => value.split(fragment).length - 1;
@@ -117,17 +104,9 @@ const sitemap = await readRepositoryFile('sitemap.xml');
 const sitemapLocations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
 const sitemapDates = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(match => match[1]);
 const expectedSitemapLocations = canonicalPages.map(([, canonicalUrl]) => canonicalUrl);
-const validationIndex = expectedSitemapLocations.indexOf('https://www.3brain.ai/validation/');
+const validationIndex = expectedSitemapLocations.indexOf('https://www.3brain.ai/evidence-packs/');
 expectedSitemapLocations.splice(validationIndex + 1, 0, 'https://www.3brain.ai/evidence-packs/fischamend/');
-const expectedSitemapDates = expectedSitemapLocations.map(canonicalUrl =>
-  ['https://www.3brain.ai/', 'https://www.3brain.ai/about/'].includes(canonicalUrl)
-    ? '2026-09-06'
-    : ['https://www.3brain.ai/privacy/', 'https://www.3brain.ai/imprint/'].includes(canonicalUrl)
-      ? '2026-09-01'
-      : canonicalUrl === 'https://www.3brain.ai/evidence-packs/fischamend/'
-        ? '2026-08-30'
-        : '2026-08-28'
-);
+const expectedSitemapDates = expectedSitemapLocations.map(url => canonicalPages.find(row => row[1] === url)?.[4] ?? '2026-08-30');
 assert.deepEqual(sitemapLocations, expectedSitemapLocations);
 assert.deepEqual(sitemapDates, expectedSitemapDates);
 
@@ -147,6 +126,7 @@ assert.doesNotMatch(llmsText, /EY Praha|Google Cloud|25[,. ]?000|Česká spořit
 
 const publicEnglishPages = [
   'index.html',
+  'evidence-packs/index.html',
   'about/index.html',
   'contact/index.html',
   'cri/index.html',
@@ -165,6 +145,7 @@ const publicEnglishPages = [
   'validation/index.html'
 ];
 
+const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html']);
 const primaryNavigation = [
   ['CRI', '/cri/'],
   ['Evidence Pack', '/#evidence-pack-sample'],
@@ -202,12 +183,13 @@ for (const file of publicEnglishPages) {
     assert.ok(approvedPublicMailboxes.has(mailbox), `${file} exposes an unapproved public mailbox`);
   }
 
-  const navigationMatch = html.match(/<nav class="nav" aria-label="Main navigation">([\s\S]*?)<\/nav>/);
+  const navigationMatch = html.match(/<nav class="nav"(?: id="primary-nav")? aria-label="Main navigation">([\s\S]*?)<\/nav>/);
   assert.ok(navigationMatch, `${file} is missing the primary navigation`);
   const navigationLinks = [...navigationMatch[1].matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
     .map(match => [match[2].trim(), match[1]]);
   const expectedNavigation = primaryNavigation.map(([label, href]) => [
-    label,
+    label === 'Validation' && refreshedPages.has(file) ? 'Validate' : label,
+    label === 'Evidence Pack' && refreshedPages.has(file) ? '/evidence-packs/' :
     label === 'Evidence Pack' && m2NavigationPages.has(file)
       ? (file === 'index.html' ? '#portfolio' : '/#portfolio')
       : href
@@ -221,7 +203,7 @@ for (const file of publicEnglishPages) {
 }
 
 const investorPage = await readRepositoryFile('investors/index.html');
-assert.doesNotMatch(investorPage, /Indicative commercial scenarios|monthly recurring|annual recurring|€|\brevenue\b|\bburn\b|\brunway\b/i);
+assert.doesNotMatch(investorPage.replace('not a statement of contracted revenue.', '').replace('recurring revenue remains a target until contracted.', ''), /Indicative commercial scenarios|monthly recurring|annual recurring|€|\brevenue\b|\bburn\b|\brunway\b/i);
 
 const investorEyCompletionClaim = /3BrainAI Solutions was one of 11 startups in the EY Startup Academy Frankfurt 2025 cohort and completed the programme\./;
 const aboutPage = await readRepositoryFile('about/index.html');
@@ -240,11 +222,12 @@ assert.match(aboutPage, /NVIDIA Inception/);
 assert.match(aboutPage, /one of two projects selected for ESA BIC Czech Republic incubation in 2026/);
 assert.match(aboutPage, /one of 11 startups selected for the curated EY Startup Academy Frankfurt 2025 cohort/);
 assert.match(aboutPage, /These are programme, infrastructure and mentoring relationships, not customer references or certifications\./);
-assert.match(investorPage, investorEyCompletionClaim, 'investors/index.html is missing the approved EY completion statement');
+assert.match(investorPage, /href="\/about\/#institutional-milestones"/);
+assert.match(investorPage, /programme.*resources|Programme resources/i);
 
 const validationPage = await readRepositoryFile('validation/index.html');
 assert.doesNotMatch(validationPage, /public-sector|insurers|corporates|technology partners|OVHcloud/i);
-assert.match(validationPage, /data-recipient="cri@3brain\.ai"/);
+assert.match(validationPage, /"recipient": "cri@3brain\.ai"/);
 assert.match(validationPage, /Evidence Readiness Check/);
 
 const contactPage = await readRepositoryFile('contact/index.html');

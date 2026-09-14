@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.3brain.ai/</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/mis/</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://www.3brain.ai/cri/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-13</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/use-cases/</loc>
@@ -22,11 +22,15 @@
   </url>
   <url>
     <loc>https://www.3brain.ai/about/</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-13</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/validation/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-13</lastmod>
+  </url>
+  <url>
+    <loc>https://www.3brain.ai/evidence-packs/</loc>
+    <lastmod>2026-09-13</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/evidence-packs/fischamend/</loc>
@@ -34,11 +38,11 @@
   </url>
   <url>
     <loc>https://www.3brain.ai/investors/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-13</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/contact/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-13</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/privacy/</loc>
