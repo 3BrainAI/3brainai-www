@@ -34,6 +34,8 @@ The follow-up changes the test and this note only, with no website HTML, CSS, as
 
 The founder merges this branch after reviewing the exact commit and required repository checks. PR #40 is an older draft; this branch carries the later approved direction, so both should not be merged independently. This change does not modify or close PR #40.
 
-Before merge, confirm source/media release records and that the contact addresses receive a real manually sent test message. Verify the public host's cache/indexing behaviour after deployment. Do not submit IndexNow before the matching release is live. Private Brief operations and authentication are a separate release surface.
+The [14 September aerial-image review](AERIAL_SOURCES.md) resolves the earlier additional-receipt requirement for the four public aerial images using retained source records and official CC BY 4.0 product terms. Missing exact download requests or capture days remain documentation limits, not automatic blockers. This conclusion does not extend the aerial-image licences to other media or private Brief content.
+
+Before merge, confirm that the contact addresses receive a real manually sent test message. Preserve applicable credits for other retained media. Verify the public host's cache/indexing behaviour after deployment. Do not submit IndexNow before the matching release is live. Private Brief operations and authentication are a separate release surface.
 
 If a published regression is confirmed, revert the R3.2 merge through a reviewed revert PR and verify the deployed commit. Do not reset main, delete history, or point the public site at a private Brief bundle. A website rollback does not restore a database or revoke invitations.
