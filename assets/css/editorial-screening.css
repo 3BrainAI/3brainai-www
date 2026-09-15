@@ -3,6 +3,7 @@
 .r4-home .r38-product-key {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
   gap: 12px;
   margin: 0;
   padding-top: 0;
@@ -10,13 +11,9 @@
 }
 
 .r4-home .r38-term-strip {
-  padding: 20px 0;
+  padding: 28px 0;
   border-top: 1px solid rgba(185, 212, 222, 0.22);
   background: #102438;
-}
-
-.r4-home .r38-term-strip .r38-product-key {
-  padding-top: 16px;
 }
 
 .r4-home .r38-product-key div {
@@ -43,6 +40,38 @@
   color: var(--r4-muted);
   font-size: 13px !important;
   line-height: 1.45;
+}
+
+.r4-home .v3-brief-note {
+  max-width: none;
+}
+
+.r4-home .v3-brief-note abbr {
+  text-decoration: none;
+}
+
+/* Share a bottom edge above the two-line notes on the desktop hero. */
+@media (min-width: 981px) {
+  .r4-home .r4-hero-grid {
+    --r39-note-size: 14px;
+    --r39-note-leading: 1.45;
+    --r39-note-gap: 8px;
+  }
+
+  .r4-home .r4-hero-copy,
+  .r4-home .r4-folio-stage {
+    align-self: end;
+  }
+
+  .r4-home .r4-folio-stage {
+    margin-bottom: calc(var(--r39-note-gap) + 2 * var(--r39-note-size) * var(--r39-note-leading));
+  }
+
+  .r4-home .v3-home-note {
+    margin-top: var(--r39-note-gap);
+    font-size: var(--r39-note-size);
+    line-height: var(--r39-note-leading);
+  }
 }
 
 .cri-n4.cri-web-r3 .r38-at-glance {
@@ -138,10 +167,18 @@
     font-size: 13px;
   }
 
-  .r4-home .v3-home-note {
-    margin-top: 6px;
-    font-size: 13px;
-    line-height: 1.35;
+  .r4-home .r4-hero-grid {
+    --r39-note-size: 13px;
+    --r39-note-leading: 1.35;
+    --r39-note-gap: 6px;
+  }
+
+  .r4-home .r4-folio-stage {
+    height: min(504px, calc(100svh - 152px));
+  }
+
+  .r4-home .r4-folio-sheet {
+    width: min(318px, calc((100svh - 252px) * .70665));
   }
 }
 
@@ -162,12 +199,13 @@
   }
 
   .r4-home .r38-term-strip {
-    padding-block: 16px;
+    padding-block: 24px;
   }
 
   .r4-home .r38-product-key div {
     display: grid;
     grid-template-columns: 104px minmax(0, 1fr);
+    align-items: center;
     gap: 10px;
   }
 
