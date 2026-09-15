@@ -24,6 +24,8 @@ test('homepage answers the skeptical-editor screening questions without claim co
     'The versioned review record.',
     'A private walkthrough of prepared situations.'
   ]);
+  await expect(page.locator('.r38-term-strip')).toHaveCSS('border-top-width', '1px');
+  await expect(page.locator('.r38-product-key')).toHaveCSS('border-top-width', '0px');
 });
 
 test('CRI exposes a concise orientation layer and removes internal display codes', async ({ page }) => {
