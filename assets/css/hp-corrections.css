@@ -439,33 +439,43 @@
 }
 
 /* K2 – programme and institutional context */
-.r4-home .r4-relationships {
+.r4-home .r4-section.r4-relationships {
+  padding: 36px 0;
   background: var(--r4-mist);
+}
+
+.r4-home .r4-relationships .r4-section-head {
+  max-width: none;
+  margin-bottom: 16px;
+}
+
+.r4-home .r4-relationships h2 {
+  margin-bottom: 0;
+  font-size: clamp(24px, 2.2vw, 32px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .r4-home .r4-relationship-grid {
   display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 
 .r4-home .r4-relationship-card {
   min-width: 0;
-  min-height: 192px;
   overflow: hidden;
-  border: 1px solid var(--r4-line);
-  border-top: 3px solid var(--r4-blue);
-  background: var(--r4-white);
 }
 
 .r4-home .r4-relationship-media {
   display: flex;
-  height: 96px;
+  height: 80px;
   align-items: center;
   justify-content: center;
-  padding: 17px 20px;
-  border-bottom: 1px solid #d8e0e2;
-  background: var(--r4-white);
+  padding: 12px 16px;
 }
 
 .r4-home .r4-relationship-media img {
@@ -473,6 +483,8 @@
   width: auto;
   height: auto;
   object-fit: contain;
+  filter: grayscale(1) saturate(0) contrast(0.78);
+  opacity: 0.78;
 }
 
 .r4-home .r4-relationship-media--esa img {
@@ -494,18 +506,11 @@
   max-height: 68px;
 }
 
-.r4-home .r4-relationship-body {
-  min-height: 95px;
-  padding: 14px 20px 18px;
-}
-
-.r4-home .r4-relationship-body .r4-status-label,
 .r4-home .r4-relationship-history-copy .r4-status-label {
   margin: 0;
   color: var(--r4-blue);
 }
 
-.r4-home .r4-relationship-body h3,
 .r4-home .r4-relationship-history-copy h3 {
   min-height: 0;
   margin: 7px 0 0;
@@ -516,16 +521,16 @@
 
 .r4-home .r4-relationship-history {
   display: grid;
-  grid-template-columns: minmax(360px, 440px) minmax(260px, 1fr) auto;
+  grid-template-columns: minmax(240px, 330px) minmax(240px, 1fr) auto;
   gap: 24px;
   align-items: center;
-  margin-top: 27px;
-  padding-top: 22px;
+  margin-top: 16px;
+  padding-top: 20px;
   border-top: 1px solid var(--r4-line);
 }
 
 .r4-home .r4-relationship-history-artwork {
-  height: 100px;
+  aspect-ratio: 4.4 / 1;
   overflow: hidden;
   background: #173653;
 }
@@ -1254,12 +1259,8 @@
 }
 
 @media (max-width: 1100px) {
-  .r4-home .r4-relationship-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .r4-home .r4-relationship-history {
-    grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
   }
 
   .r4-home .r4-relationship-history-link {
@@ -1432,42 +1433,13 @@
   }
 
   .r4-home .r4-relationship-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  .r4-home .r4-relationship-card {
-    min-height: 150px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 12px;
   }
 
   .r4-home .r4-relationship-media {
-    height: 80px;
-    padding-block: 12px;
-  }
-
-  .r4-home .r4-relationship-media--esa img {
-    width: min(100%, 253px);
-  }
-
-  .r4-home .r4-relationship-media--ovh img {
-    width: min(100%, 277px);
-  }
-
-  .r4-home .r4-relationship-media--google img {
-    width: min(100%, 260px);
-  }
-
-  .r4-home .r4-relationship-media--nvidia img {
-    width: min(100%, 153px);
-  }
-
-  .r4-home .r4-relationship-body {
-    min-height: 69px;
-    padding: 12px 20px 14px;
-  }
-
-  .r4-home .r4-relationship-body h3 {
-    font-size: 16px;
+    height: 68px;
+    padding: 8px;
   }
 
   .r4-home .r4-relationship-history {

@@ -47,9 +47,9 @@ const requiredIconLinks = [
 
 const releaseStylesheetVersion = 'footer-cri-20260908';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'footer-cri-20260908';
+const m3HomepageCorrectionVersion = 'r37-programme-strip';
 const evidenceArchiveVersion = 'wp0-20260907';
-const aboutFounderVersion = 'r5-programme-clusters-20260908';
+const aboutFounderVersion = 'r37-programme-colour';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 
 for (const file of htmlFiles) {
@@ -457,7 +457,7 @@ assert.match(
   /\.r4-home \.r4-signpost\s*{[^}]*grid-template-rows:\s*auto 1fr auto;/s
 );
 assert.match(homepageCorrections, /\.r4-home \.r4-kicker,[\s\S]*font-size:\s*12px;/);
-assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*1fr;/);
+assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*repeat\(2,/);
 assert.match(homepageCorrections, /@media \(max-width:\s*720px\)[\s\S]*\.r4-home \.r4-historical-signposts\s*{[^}]*grid-template-columns:\s*1fr;/);
 
 const aboutFounderStylesheet = await readFile(
@@ -478,7 +478,7 @@ assert.match(
 );
 assert.match(aboutFounderStylesheet, /\.about-programme-clusters\s*{[^}]*grid-template-columns:\s*repeat\(2,/s);
 assert.match(aboutFounderStylesheet, /\.about-programme-logo-pair\s*{[^}]*grid-template-columns:\s*repeat\(2,/s);
-assert.match(aboutFounderStylesheet, /\.about-programme-logo img\s*{[^}]*filter:\s*grayscale\(1\) saturate\(0\) contrast\(0\.78\);/s);
+assert.match(aboutFounderStylesheet, /\.about-programme-logo img\s*{[^}]*filter:\s*none;/s);
 assert.match(aboutFounderStylesheet, /\.about-programme-history\s*{[^}]*grid-template-columns:\s*minmax\(300px, 410px\) minmax\(0, 1fr\);/s);
 
 const mainScript = await readFile(path.join(repositoryRoot, 'assets/js/main.js'), 'utf8');
