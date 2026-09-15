@@ -50,13 +50,12 @@ const expectedGraphIds = new Map([
     'https://www.3brain.ai/#brand',
     'https://www.3brain.ai/#organization',
     'https://www.3brain.ai/#website',
-    'https://www.3brain.ai/cri/#product',
+    'https://www.3brain.ai/cri/#webpage',
     'https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack'
   ]],
   ['cri/index.html', [
     'https://www.3brain.ai/#brand',
     'https://www.3brain.ai/#organization',
-    'https://www.3brain.ai/cri/#product',
     'https://www.3brain.ai/cri/#webpage'
   ]],
   ['about/index.html', [
@@ -78,6 +77,7 @@ for (const [file, expectedIds] of expectedGraphIds) {
   assert.equal(document['@context'], 'https://schema.org', `${file} must use the Schema.org context`);
   assert.deepEqual(document['@graph'].map(entity => entity['@id']), expectedIds, `${file} has unexpected entity IDs`);
   assert.doesNotMatch(JSON.stringify(document), /aggregateRating|offers|EY Praha|Google Cloud/);
+  assert.doesNotMatch(JSON.stringify(document), /"@type":"Product"|\/cri\/#product/);
 }
 
 const imprintOrganizations = structuredDataByFile.get('imprint/index.html')['@graph']
@@ -87,10 +87,14 @@ assert.doesNotMatch(JSON.stringify(structuredDataByFile.get('imprint/index.html'
 
 const homepageGraph = structuredDataByFile.get('index.html')['@graph'];
 const criGraph = structuredDataByFile.get('cri/index.html')['@graph'];
-const homepageProduct = homepageGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/cri/#product');
-const criProduct = criGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/cri/#product');
-assert.deepEqual(criProduct, homepageProduct, 'Homepage and CRI must describe one stable Product entity');
-assert.equal(homepageProduct.areaServed, 'Europe');
+const homepageCriPage = homepageGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/cri/#webpage');
+const criPage = criGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/cri/#webpage');
+assert.deepEqual(criPage, homepageCriPage, 'Homepage and CRI must describe one stable CRI WebPage');
+assert.equal(criPage['@type'], 'WebPage');
+assert.equal(criPage.publisher['@id'], 'https://www.3brain.ai/#organization');
+assert.equal(criPage.isPartOf['@id'], 'https://www.3brain.ai/#website');
+assert.ok(!Object.hasOwn(criPage, 'mainEntity'), 'CRI must not refer to the removed Product');
+assert.equal(homepageGraph.find(entity => entity['@type'] === 'Report').about['@id'], criPage['@id']);
 assert.equal(homepageGraph.find(entity => entity['@id'] === 'https://www.3brain.ai/#organization').areaServed, 'Europe');
 
 const robots = await readRepositoryFile('robots.txt');

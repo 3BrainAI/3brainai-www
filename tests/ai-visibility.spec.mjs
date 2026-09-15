@@ -148,19 +148,18 @@ for (const canonicalPage of canonicalPages) {
   });
 }
 
-test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', async ({ page }) => {
+test('JSON-LD separates the brand, Nexus, CRI page and Fischamend Evidence Pack', async ({ page }) => {
   const expectedGraphs = {
     '/': [
       'https://www.3brain.ai/#brand',
       'https://www.3brain.ai/#organization',
       'https://www.3brain.ai/#website',
-      'https://www.3brain.ai/cri/#product',
+      'https://www.3brain.ai/cri/#webpage',
       'https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack'
     ],
     '/cri/': [
       'https://www.3brain.ai/#brand',
       'https://www.3brain.ai/#organization',
-      'https://www.3brain.ai/cri/#product',
       'https://www.3brain.ai/cri/#webpage'
     ],
     '/about/': [
@@ -187,6 +186,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', asy
     expect(graphDocument['@context']).toBe('https://schema.org');
     expect(graphDocument['@graph'].map(entity => entity['@id'])).toEqual(expectedIds);
     expect(JSON.stringify(graphDocument)).not.toMatch(/aggregateRating|offers|EY Praha|Google Cloud/);
+    expect(JSON.stringify(graphDocument)).not.toMatch(/"@type":"Product"|\/cri\/#product/);
     parsedGraphs[route] = graphDocument['@graph'];
   }
 
@@ -198,16 +198,19 @@ test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', asy
   expect(homepageOrganization.areaServed).toBe('Europe');
   expect(homepageOrganization.sameAs).toContain('https://www.linkedin.com/company/3brainai-nexus/');
 
-  const homepageProduct = parsedGraphs['/'].find(
-    entity => entity['@id'] === 'https://www.3brain.ai/cri/#product'
+  const homepageCriPage = parsedGraphs['/'].find(
+    entity => entity['@id'] === 'https://www.3brain.ai/cri/#webpage'
   );
-  const criProduct = parsedGraphs['/cri/'].find(
-    entity => entity['@id'] === 'https://www.3brain.ai/cri/#product'
+  const criPage = parsedGraphs['/cri/'].find(
+    entity => entity['@id'] === 'https://www.3brain.ai/cri/#webpage'
   );
-  expect(criProduct).toEqual(homepageProduct);
-  expect(homepageProduct.brand['@id']).toBe('https://www.3brain.ai/#brand');
-  expect(homepageProduct.areaServed).toBe('Europe');
-  expect(homepageProduct.manufacturer['@id']).toBe('https://www.3brain.ai/#organization');
+  expect(criPage).toEqual(homepageCriPage);
+  expect(criPage['@type']).toBe('WebPage');
+  expect(criPage.url).toBe('https://www.3brain.ai/cri/');
+  expect(criPage.name).toBe('CRI – Construction Risk Intelligence | 3BrainAI Nexus');
+  expect(criPage.publisher['@id']).toBe('https://www.3brain.ai/#organization');
+  expect(criPage.isPartOf['@id']).toBe('https://www.3brain.ai/#website');
+  expect(criPage).not.toHaveProperty('mainEntity');
 
   const evidencePackSample = parsedGraphs['/'].find(
     entity => entity['@id'] === 'https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack'
@@ -215,6 +218,7 @@ test('JSON-LD separates the brand, Nexus, CRI and Fischamend Evidence Pack', asy
   expect(evidencePackSample.version).toBe('0.1-draft');
   expect(evidencePackSample.url).toBe('https://www.3brain.ai/evidence-packs/fischamend/');
   expect(evidencePackSample.creator['@id']).toBe('https://www.3brain.ai/#organization');
+  expect(evidencePackSample.about['@id']).toBe(criPage['@id']);
 
   const imprintOrganizations = parsedGraphs['/imprint/'].filter(entity => entity['@type'] === 'Organization');
   expect(imprintOrganizations.map(entity => entity.identifier)).toEqual(['29513049', '23628847']);

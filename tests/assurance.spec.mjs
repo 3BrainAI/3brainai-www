@@ -45,8 +45,10 @@ test('Assurance is reachable from existing footers and section links land on rea
  await expect(page).toHaveURL(/\/assurance\/$/);
  await page.getByRole('navigation',{name:'On this page'}).getByRole('link',{name:'Due diligence',exact:true}).click();
  await expect(page).toHaveURL(/#due-diligence$/);
- const top=await page.locator('#dd-title').evaluate(n=>n.getBoundingClientRect().top);
- expect(top).toBeGreaterThan(60);expect(top).toBeLessThan(300);
+ await expect.poll(async()=>page.locator('#dd-title').evaluate(n=>{
+  const top=n.getBoundingClientRect().top;return top>60&&top<300;
+ })).toBe(true);
+ expect(await page.evaluate(()=>getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
 });
 
 test('keyboard entry exposes the skip link and focused controls have a visible outline',async ({page})=>{

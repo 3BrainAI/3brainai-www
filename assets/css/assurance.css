@@ -55,5 +55,5 @@
  .assurance-page details { padding-inline:16px; }
  .assurance-page .assurance-result { padding:14px; }
 }
-@media(prefers-reduced-motion:reduce) { .assurance-page { scroll-behavior:auto; } }
+@media(prefers-reduced-motion:reduce) { html.assurance-document { scroll-behavior:auto; } }
 @media print { .assurance-page .assurance-nav,.assurance-page .assurance-actions,.assurance-page details { display:none; } }
