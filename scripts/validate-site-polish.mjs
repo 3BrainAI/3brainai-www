@@ -55,6 +55,8 @@ const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const relativePath = path.relative(repositoryRoot, file);
+  assert.equal(html.split('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r33">').length, 2, `${relativePath}: shared loading style`);
+  assert.equal(html.split('<script src="/assets/js/document-feedback.js?v=r33" defer></script>').length, 2, `${relativePath}: shared loading script`);
   if (standaloneArtifactPages.has(relativePath)) continue;
   const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseStylesheetVersion}">`;
   assert.ok(
@@ -139,7 +141,13 @@ const fischamendPublicReleaseHashes = new Map([
 
 for (const [relativePath, expectedHash] of fischamendPublicReleaseHashes) {
   const value = await readFile(path.join(repositoryRoot, relativePath));
-  const actualHash = createHash('sha256').update(value).digest('hex');
+  // 15 September: founder requested shared loading feedback on every document.
+  // Remove only those exact two head includes before verifying the original
+  // approved HTML bytes. All document content, styling and PDF bytes stay locked.
+  const original = relativePath.endsWith('/index.html')
+    ? value.toString().replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r33">\n<script src="/assets/js/document-feedback.js?v=r33" defer></script>\n', '')
+    : value;
+  const actualHash = createHash('sha256').update(original).digest('hex');
   assert.equal(actualHash, expectedHash, `${relativePath} must retain its founder-approved public-release bytes`);
 }
 
