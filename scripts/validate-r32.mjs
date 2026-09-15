@@ -9,7 +9,14 @@ const approved=JSON.parse(await read('scripts/r32-approved-surface.json'));
 for(const [file,parts] of Object.entries(approved)) {
  const html=await read(file);
  for(const [name,pattern] of [['main',/<main\b[\s\S]*?<\/main>/],['header',/<header class="site-header[\s\S]*?<\/header>/],['footer',/<footer\b[\s\S]*?<\/footer>/]]) {
-  assert.equal(createHash('sha256').update(html.match(pattern)?.[0]??'').digest('hex'),parts[name],`${file}: approved ${name} drift`);
+  let surface=html.match(pattern)?.[0]??'';
+  if(name==='footer') {
+   // The Assurance addition is the only authorised change to these footers.
+   const link='<a href="/assurance/">Assurance</a>';
+   assert.equal(surface.split(link).length,2,`${file}: one Assurance footer link required`);
+   surface=surface.replace(link,'');
+  }
+  assert.equal(createHash('sha256').update(surface).digest('hex'),parts[name],`${file}: approved ${name} drift`);
  }
 }
 const cri=await read('cri/index.html'),validation=await read('validation/index.html');
