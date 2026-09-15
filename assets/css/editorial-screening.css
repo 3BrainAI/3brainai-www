@@ -57,6 +57,30 @@
   margin-bottom: 8px;
 }
 
+/* The Brief is a direct entry point from the homepage, with no sticky header. */
+.cri-n4.cri-web-r3 #the-brief {
+  padding-block-start: 28px;
+  scroll-margin-top: 0;
+}
+
+.cri-n4.cri-web-r3 #the-brief .section-head {
+  margin-bottom: 28px;
+}
+
+.cri-n4.cri-web-r3 .r38-editorial-access {
+  margin: 12px 0 0;
+  color: var(--v3-muted);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.cri-n4.cri-web-r3 .r38-editorial-access a {
+  color: var(--v3-teal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .cri-n4.cri-web-r3 .r38-reading-guide .section-head {
   max-width: 880px;
 }
