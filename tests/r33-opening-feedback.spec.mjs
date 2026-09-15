@@ -53,12 +53,20 @@ test('slow record navigation immediately acknowledges click and resets on Back',
  const gate = new Promise(resolve=>{release=resolve;});
  await page.route(`**${record}`,async route=>{await gate;await route.continue();});
  await page.goto('/');
- const click = page.getByRole('link',{name:'View an Evidence Pack',exact:true}).click();
+ // Freeze only the animation clock: assertions must happen before Playwright
+ // starts waiting for the intentionally withheld navigation response.
+ await page.clock.install({time:new Date('2026-09-15T10:00:00Z')});
+ await page.clock.pauseAt(new Date('2026-09-15T10:00:01Z'));
+ await page.getByRole('link',{name:'View an Evidence Pack',exact:true}).click();
  try {
   await expect(status(page)).toBeVisible();
   await expect(status(page).getByRole('status')).toHaveText('Opening document...');
+  const request=page.waitForRequest(`**${record}`);
+  await page.clock.runFor(50);
+  await request;
+  // Read the old document directly while the new HTML response is pending.
+  expect(await page.evaluate(()=>!document.querySelector('.document-feedback').hidden)).toBe(true);
  } finally { release(); }
- await click;
  await page.waitForURL(`**${record}`);
  await page.goBack();
  await expect(status(page)).toBeHidden();
