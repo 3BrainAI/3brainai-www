@@ -2,9 +2,9 @@
   [
     "index.html",
     "https://www.3brain.ai/",
-    "3BrainAI CRI | Construction Risk Intelligence for governed review",
-    "3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.",
-    "2026-09-13"
+    "3BrainAI CRI | Satellite evidence for bank review",
+    "3BrainAI is developing CRI to combine dated satellite observations and project records in Evidence Packs for human review of construction finance and collateral.",
+    "2026-09-15"
   ],
   [
     "mis/index.html",
@@ -16,16 +16,37 @@
   [
     "cri/index.html",
     "https://www.3brain.ai/cri/",
-    "Construction Risk Intelligence for bank review | 3BrainAI",
-    "Continue the CRI review story: dated evidence, a scoped technical response and human acceptance. Explore The Brief, a paid professional section with individually reviewed access.",
-    "2026-09-13"
+    "CRI: construction finance and satellite evidence | 3BrainAI",
+    "Explore how CRI is being developed to connect satellite observations, project records and uncertainty in Evidence Packs for accountable bank review.",
+    "2026-09-15"
   ],
   [
     "use-cases/index.html",
     "https://www.3brain.ai/use-cases/",
-    "Use Cases | 3BrainAI",
-    "Model situations for CRI Evidence Packs, governed records, an Evidence Readiness Check and an institution-specific PoC run in shadow mode.",
-    "2026-08-28"
+    "Bank review use cases: construction and collateral | 3BrainAI",
+    "Explore bank review questions on construction drawdowns, collateral changes and the limits of satellite evidence, with an illustrative CRI Evidence Pack.",
+    "2026-09-15"
+  ],
+  [
+    "use-cases/construction-loan-drawdown-review/index.html",
+    "https://www.3brain.ai/use-cases/construction-loan-drawdown-review/",
+    "Construction loan review with satellite evidence | 3BrainAI",
+    "See where dated satellite observations can support a construction drawdown review, which records remain necessary and how CRI structures the evidence.",
+    "2026-09-15"
+  ],
+  [
+    "use-cases/real-estate-collateral-review/index.html",
+    "https://www.3brain.ai/use-cases/real-estate-collateral-review/",
+    "Real-estate collateral review and satellite evidence | 3BrainAI",
+    "Explore how dated site observations can inform a collateral review, where uncertainty remains and why valuation and expert assessment are still required.",
+    "2026-09-15"
+  ],
+  [
+    "use-cases/satellite-evidence-limits/index.html",
+    "https://www.3brain.ai/use-cases/satellite-evidence-limits/",
+    "Satellite evidence for bank review: uses and limits | 3BrainAI",
+    "Understand what dated satellite imagery can show, how resolution and observation gaps affect interpretation, and when a bank reviewer needs other evidence.",
+    "2026-09-15"
   ],
   [
     "governance-layer/index.html",
@@ -51,9 +72,9 @@
   [
     "evidence-packs/index.html",
     "https://www.3brain.ai/evidence-packs/",
-    "Evidence Pack: the record, basis and next step | 3BrainAI",
-    "See the structure of a CRI Evidence Pack. Open the public Fischamend record or request The Brief for a private walkthrough of prepared model reviews.",
-    "2026-09-13"
+    "CRI Evidence Packs for construction finance review | 3BrainAI",
+    "Inspect an illustrative CRI Evidence Pack: dated observations, project context, uncertainty and the next documentary review step for a bank reviewer.",
+    "2026-09-15"
   ],
   [
     "investors/index.html",

@@ -1,0 +1,26 @@
+/* Reading layout for the public bank review hub and its three guides. */
+.bank-review-page .bank-review-reading { max-width:900px; }
+.bank-review-page .bank-review-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.bank-review-page .bank-review-card { padding:24px; border:1px solid #c5d2d9; background:#f5f8f6; min-width:0; }
+.bank-review-page .bank-review-card h3 { font-size:23px; }
+.bank-review-page .bank-review-card p:last-child { margin-bottom:0; }
+.bank-review-page .bank-review-breadcrumb { font-size:15px; margin-bottom:26px; }
+.bank-review-page .bank-review-breadcrumb a { display:inline-flex; align-items:center; min-height:44px; }
+.bank-review-page .bank-review-related { display:flex; flex-wrap:wrap; gap:6px 24px; padding-top:24px; }
+.bank-review-page .bank-review-related a { display:inline-flex; align-items:center; min-height:44px; }
+.bank-review-page .bank-review-callout { padding:22px; border-left:3px solid #1b6069; background:#eef6f4; margin-bottom:24px; }
+.bank-review-page .bank-review-callout p { margin-bottom:0; }
+.bank-review-page .bank-review-table { width:100%; border-collapse:collapse; table-layout:fixed; margin:24px 0; font-size:16px; }
+.bank-review-page .bank-review-table caption { text-align:left; font-weight:600; padding-bottom:12px; }
+.bank-review-page .bank-review-table th,.bank-review-page .bank-review-table td { text-align:left; vertical-align:top; padding:15px; border:1px solid #c5d2d9; }
+.bank-review-page .bank-review-table th { background:#f5f8f6; font-weight:600; }
+.bank-review-page .bank-review-table th:first-child { width:25%; }
+.bank-review-page .assurance-section h3:not(:first-child) { margin-top:30px; }
+.bank-review-page li { margin-bottom:12px; }
+.bank-review-page a { overflow-wrap:anywhere; }
+@media(max-width:900px) { .bank-review-page .bank-review-cards { grid-template-columns:1fr; } }
+@media(max-width:760px) {
+ .bank-review-page .bank-review-card { padding:20px; }
+ .bank-review-page .bank-review-table th,.bank-review-page .bank-review-table td { padding:10px; overflow-wrap:anywhere; }
+ .bank-review-page .bank-review-table th:first-child { width:30%; }
+}

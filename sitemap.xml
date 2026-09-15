@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.3brain.ai/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-15</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/mis/</loc>
@@ -10,11 +10,23 @@
   </url>
   <url>
     <loc>https://www.3brain.ai/cri/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-15</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/use-cases/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-15</lastmod>
+  </url>
+  <url>
+    <loc>https://www.3brain.ai/use-cases/construction-loan-drawdown-review/</loc>
+    <lastmod>2026-09-15</lastmod>
+  </url>
+  <url>
+    <loc>https://www.3brain.ai/use-cases/real-estate-collateral-review/</loc>
+    <lastmod>2026-09-15</lastmod>
+  </url>
+  <url>
+    <loc>https://www.3brain.ai/use-cases/satellite-evidence-limits/</loc>
+    <lastmod>2026-09-15</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/governance-layer/</loc>
@@ -30,7 +42,7 @@
   </url>
   <url>
     <loc>https://www.3brain.ai/evidence-packs/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-15</lastmod>
   </url>
   <url>
     <loc>https://www.3brain.ai/evidence-packs/fischamend/</loc>

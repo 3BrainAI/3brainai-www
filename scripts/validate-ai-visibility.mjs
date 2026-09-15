@@ -147,6 +147,9 @@ const publicEnglishPages = [
   'product/index.html',
   'security/index.html',
   'use-cases/index.html',
+  'use-cases/construction-loan-drawdown-review/index.html',
+  'use-cases/real-estate-collateral-review/index.html',
+  'use-cases/satellite-evidence-limits/index.html',
   'validation/index.html'
 ];
 

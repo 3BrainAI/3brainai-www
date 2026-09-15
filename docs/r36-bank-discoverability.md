@@ -1,0 +1,80 @@
+# R36: bank review discoverability
+
+Prepared 15 September 2026 from main `77a9f3cbf2b4d5c84613320aa30b768162894698`.
+
+## Purpose and scope
+
+The bank use-case page was disconnected from the main public journey and contained older fixed cadence/pilot examples. Relevant page metadata did not identify satellite evidence. This release implements the founder-supplied discoverability brief with useful, distinct public answers and contextual HTML links.
+
+| Surface | Change |
+| --- | --- |
+| Homepage | Bank/satellite metadata; a short input clarification and a link to use cases in the existing workflow section. |
+| CRI | Matching metadata and an explanatory section after the opening model review scenario, before The Brief. |
+| Evidence Packs | Matching metadata and a contextual link to bank review questions. |
+| Use cases | Refresh of the existing URL into a bank review hub. Legacy anchors `physical-asset-evidence` and `evidence-readiness` remain. Broader Records/Data Plane directions remain linked with their target-stage qualification. |
+| Three guides | Construction drawdown review, real-estate collateral review, and satellite evidence limits. Each has a different question, direct answer, supporting explanation, boundaries and next step. |
+| Discovery files | Four sets of metadata, three new canonical entries, truthful lastmod dates and topic links in llms.txt. The same CRI WebPage identity is preserved in both JSON-LD graphs. |
+
+New routes:
+
+- `/use-cases/construction-loan-drawdown-review/`
+- `/use-cases/real-estate-collateral-review/`
+- `/use-cases/satellite-evidence-limits/`
+
+All explanatory content and internal links are present in HTML. The guides reuse the published Assurance reading styles with a small stylesheet scoped to these four pages. No new script or service is introduced.
+
+The homepage hero, H1, button order, images and opening layout are unchanged. Main navigation, existing routes, forms, access terms, private Brief content and the approved Fischamend HTML/PDF/images are unchanged. No pricing, customer claims, performance claims, new Product/FAQ schema, ratings or offers are introduced.
+
+## Content basis
+
+- CRI is the review-support product being developed; an Evidence Pack is its versioned review record. Current stage remains controlled-case Proof of Concept.
+- Drawdown guide: the existing public Fischamend v0.1 release supplies the synthetic declaration, two dated observations, uncertainty, WATCH meaning and documentary follow-up. It is not a live loan, milestone acceptance or customer pilot.
+- Collateral guide: a generic proposed review scenario, without a property valuation, LTV or credit-risk score. Fischamend is linked only as an illustration of the format and its boundaries.
+- Confidence: the Fischamend HIGH label applies only to the visible roofed-footprint change. DQU is explained as source limitations and suitability; no new scoring methodology or accuracy percentage is asserted.
+- Sensor explanations describe source capabilities, not a claim of operational CRI service availability. Technical sources are linked next to the relevant paragraphs.
+
+Primary sources checked 15 September 2026:
+
+- [Copernicus Sentinel-2 mission and instrument](https://sentiwiki.copernicus.eu/web/s2-mission): optical instrument and native spatial resolutions.
+- [Copernicus Sentinel-2 products](https://sentiwiki.copernicus.eu/web/s2-products): quality indicators and their documented limitations.
+- [Copernicus Sentinel-1 mission](https://sentiwiki.copernicus.eu/web/s1-mission): SAR capability and factors affecting backscatter.
+- [USGS orthophoto explanation](https://www.usgs.gov/faqs/what-a-digital-orthophoto-quadrangle-doq-or-orthoimage): corrected aerial photographs.
+- [Google AI features and your website](https://developers.google.com/search/docs/appearance/ai-features): crawlable text, internal links, consistent structured data and ordinary SEO remain relevant; special AI markup is not required and indexing is not guaranteed.
+
+No named specialist review or new CTO sign-off is claimed. Additional KIMI review is not required to implement this bounded, source-backed brief.
+
+## Validation and review evidence
+
+- `npm run validate`: HTML, CSS, 17 tracked canonical pages, 41 HTML entry points, existing product/form/Assurance contracts. The sitemap contains 18 URLs including the separately tracked Fischamend artifact.
+- Three updated main-content hashes in `r32-approved-surface.json` cover only the requested homepage, CRI and Evidence Pack additions. All header/footer hashes, other approved main sections and immutable evidence hashes remain in force.
+- Existing metadata tests automatically cover the new canonical pages.
+- `tests/bank-discoverability.spec.mjs`: direct access without JavaScript, contextual links from the three main surfaces, all local guide links and fragment targets, mobile/desktop overflow and anchors below the sticky header at 320, 768 and 1366 px.
+- Browser screenshots are generated by the existing CI workflow into `artifacts/r3-preview/bank-review-*.png` and included in its review artifact. CI results on the PR are the authority for whether browser checks passed.
+- Existing tests also cover the preserved homepage opening, document-loading feedback, main navigation and forms.
+
+## Publication and measurement
+
+Founder merges the reviewed PR. After successful GitHub Pages deployment:
+
+1. Check the seven changed/new URLs for HTTP success, visible HTML, canonical, metadata and the readiness form destination. Check the new reading pages in the live browser.
+2. Verify that the sitemap has the three new routes. Use the existing Search Console property for sitemap/priority URL inspection where access is available. A discovered URL is not proof of indexing.
+3. Submit the seven URLs through the existing IndexNow script and record its actual HTTP response. Until that is done, no submission is claimed. An accepted request is not proof of indexing and does not submit to Google.
+4. Repeat the same search queries after processing, then assess Search Console impressions, non-branded queries and clicks over approximately 2–4 weeks. This is a measurement interval, not a performance promise.
+
+Prepared submission command, to run only after publication:
+
+```sh
+npm run indexnow -- https://www.3brain.ai/ https://www.3brain.ai/cri/ https://www.3brain.ai/evidence-packs/ https://www.3brain.ai/use-cases/ https://www.3brain.ai/use-cases/construction-loan-drawdown-review/ https://www.3brain.ai/use-cases/real-estate-collateral-review/ https://www.3brain.ai/use-cases/satellite-evidence-limits/
+```
+
+Repeatable query set:
+
+- `satellite construction progress monitoring lenders`
+- `satellite data construction monitoring banks collateral`
+- `satelitní monitoring staveb bankovní zástavy`
+- `Satellitendaten Baufortschritt Banken Sicherheiten`
+- `satellite evidence construction loan drawdown review`
+- `real estate collateral review satellite data`
+- `limits satellite imagery construction finance`
+
+For each observation record the date, tool, query, language/location, inspected result range, found URL and actual citation. Keep technical availability, indexing, ranking, brand mention and AI citation separate. No new measurement of search performance or AI citation is claimed by this implementation.
