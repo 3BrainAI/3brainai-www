@@ -1,4 +1,4 @@
-# Assurance page: first publication candidate
+# Assurance page: first public release
 
 This change prepares `/assurance/` in the existing website. It adds a footer link,
 retains `/security/`, preserves the homepage and primary navigation, and uses the
@@ -30,15 +30,18 @@ disclosure remain separate operational steps.
 
 ## Review and publication
 
-The candidate is deliberately `noindex,follow` and is not added to the sitemap.
-It has no invented last-reviewed date or completed technical-review claim.
-The supplied Public Assurance Page Contract requires exact-copy and evidence
-review before publication. Founder merge follows the separate review record.
+The Founder approved this first public version on 15 September 2026 and confirmed
+the CTO role and prior alignment on the scope. The separate review record
+attributes publication approval to the Founder; it does not invent a new CTO
+sign-off. The published role descriptions remain limited to Founder and CTO.
 
-After that review, the release update must add its actual last-reviewed date,
-change this page to `index,follow`, and add its final metadata and review date to
-`scripts/r32-canonical-pages.json` and `sitemap.xml`. Then run the review suite,
-merge through the founder and verify Pages deployment and public links.
+The review stamp records that content approval date. The page is `index,follow`,
+with matching metadata in `scripts/r32-canonical-pages.json`, a sitemap entry,
+and an Assurance reference in `llms.txt`. The manual enquiry model remains
+explicit and makes no automatic-access or operational service-level promise.
+
+Release through the existing pull-request and Pages process, then verify the
+public page, review date, footer link and enquiry controls after deployment.
 
 ## Verification
 

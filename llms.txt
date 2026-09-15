@@ -27,6 +27,7 @@ Current stage: controlled-case Proof of Concept validation of the governed Evide
 - [Investors](https://www.3brain.ai/investors/): Public-safe bank-first investor overview; detailed materials remain private.
 - [Contact](https://www.3brain.ai/contact/): Separate bank-validation and investor routes.
 - [Imprint](https://www.3brain.ai/imprint/): Legal entities and website operator.
+- [Security, Governance & Assurance](https://www.3brain.ai/assurance/): Product boundaries, accountable roles and contact routes for scoped due diligence and security enquiries.
 
 ## Boundaries
 

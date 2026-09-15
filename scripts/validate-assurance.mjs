@@ -4,6 +4,8 @@ const html=await readFile('assurance/index.html','utf8');
 assert.match(html, /<title>Security, Governance &amp; Assurance \| 3BrainAI Nexus<\/title>/);
 assert.match(html, /<link rel="canonical" href="https:\/\/www\.3brain\.ai\/assurance\/">/);
 assert.match(html, /connect-src 'none'; form-action 'none'/);
+assert.match(html, /<meta name="robots" content="index,follow">/);
+assert.match(html, /Last reviewed: <time datetime="2026-09-15">15 September 2026<\/time>/);
 assert.equal([...html.matchAll(/<h1\b/g)].length,1);
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);
 assert.equal(new Set(ids).size,ids.length,'IDs must be unique');
