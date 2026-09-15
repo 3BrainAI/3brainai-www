@@ -176,7 +176,7 @@ test('institutional proof visuals, records direction and review language remain 
   await openRoute(page, '/investors/');
 
   await expect(page.locator('.v31-fan-front img')).toHaveAttribute('src', '/assets/cri-web-r31/hh1-aerial-original.jpg');
-  await expect(page.locator('.hero')).not.toContainText('Dušan Přikryl');
+  await expect(page.locator('.hero')).not.toContainText('Dusan Prikryl');
   await expect(page.locator('.v32-credits')).toContainText('Beeldmateriaal Nederland / PDOK');
   await expect(page.getByRole('link', {name:'View programme context'})).toHaveAttribute('href','/about/#institutional-milestones');
 
@@ -217,7 +217,7 @@ test('primary journeys retain their page and section headings and founder bounda
   await openRoute(page,'/about/');
   await expect(page.locator('.about-founder-photo')).toHaveCount(0);
   await expect(page.locator('.v31-experience')).toBeVisible();
-  await expect(page.locator('.about-founder-name')).toHaveText('Dušan Přikryl');
+  await expect(page.locator('.about-founder-name')).toHaveText('Dusan Prikryl');
   await expect(page.locator('#institutional-milestones .about-programme-logo')).toHaveCount(4);
   await expect(page.locator('.about-programme-qualifier')).toHaveText('These are programme, infrastructure and mentoring relationships, not customer references or certifications.');
   await expect(page.locator('.about-page > .hero .btn').first()).toHaveCSS('border-radius','0px');
