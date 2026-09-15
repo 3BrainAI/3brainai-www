@@ -42,7 +42,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
     'Evidence for the people who review, challenge and decide.'
   );
   await expect(page.locator('.r4-hero .r4-lead')).toContainText(
-    'initial focus on DACH, Benelux and Central Europe'
+    'Initial focus: DACH, Benelux and Central Europe'
   );
 
   await expect(page.getByRole('link', { name: 'View an Evidence Pack' })).toHaveAttribute(
@@ -53,7 +53,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
     name: 'Explore The Brief'
   })).toHaveAttribute('href', '/cri/#the-brief');
   await expect(page.locator('.r4-hero')).toContainText('Public example · 2 pages · No sign-in.');
-  await expect(page.locator('.r4-hero')).toContainText('Editorial evaluation: free and individually reviewed.');
+  await expect(page.locator('.r4-hero')).toContainText('Free editorial evaluation.');
   await expect(page.locator('.r4-evidence-anchor')).toHaveText(
     'Public example · real Copernicus data · synthetic scenario'
   );

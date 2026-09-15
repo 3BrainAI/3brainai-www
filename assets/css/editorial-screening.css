@@ -109,7 +109,13 @@
 }
 
 @media (min-width: 981px) and (max-height: 700px) {
+  .r4-home .v3-home-step-label {
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+
   .r4-home .v3-home-note {
+    margin-top: 6px;
     font-size: 13px;
     line-height: 1.35;
   }
@@ -143,6 +149,18 @@
 
   .r4-home .r38-product-key dd {
     margin-top: 0;
+  }
+
+  .r4-home .v3-home-journey {
+    gap: 20px;
+  }
+
+  .r4-home .v3-home-step-label {
+    margin-bottom: 6px;
+  }
+
+  .r4-home .v3-home-note {
+    margin-top: 6px;
   }
 
   .cri-n4.cri-web-r3 .r38-at-glance {

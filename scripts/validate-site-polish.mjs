@@ -343,12 +343,12 @@ assert.match(
   homepageHtml,
   /<h1 id="r4-hero-title">The physical world does not wait for your next review\.<\/h1>/
 );
-assert.match(homepageHtml, /3BrainAI’s Construction Risk Intelligence \(CRI\) combines/);
+assert.match(homepageHtml, /3BrainAI’s Construction Risk Intelligence \(CRI\) turns/);
 assert.match(homepageHtml, /href="\/cri\/#the-brief"/);
 assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View an Evidence Pack<\/a>/);
 assert.match(homepageHtml, /Public example · 2 pages · No sign-in\./);
-assert.match(homepageHtml, /initial focus on DACH, Benelux and Central Europe/);
-assert.match(homepageHtml, /Editorial evaluation: free and individually reviewed\./);
+assert.match(homepageHtml, /Initial focus: DACH, Benelux and Central Europe/);
+assert.match(homepageHtml, /Free editorial evaluation\./);
 assert.match(homepageHtml, /<dt>CRI<\/dt><dd>The review-support product\.<\/dd>/);
 assert.doesNotMatch(homepageHtml, /Real Evidence Pack|Authentic record|Paid professional access|public-safe draft|0\.1-draft/);
 assert.match(homepageHtml, /WATCH – Evidence sufficiency/);

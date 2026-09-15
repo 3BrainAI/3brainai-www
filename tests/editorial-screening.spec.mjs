@@ -13,9 +13,9 @@ test('homepage answers the skeptical-editor screening questions without claim co
 
   const hero = page.locator('.r4-hero');
   await expect(hero).toContainText('For banks & institutional lenders');
-  await expect(hero).toContainText('initial focus on DACH, Benelux and Central Europe');
+  await expect(hero).toContainText('Initial focus: DACH, Benelux and Central Europe');
   await expect(hero).toContainText('Public example · 2 pages · No sign-in.');
-  await expect(hero).toContainText('Editorial evaluation: free and individually reviewed.');
+  await expect(hero).toContainText('Free editorial evaluation.');
   await expect(hero).not.toContainText(/Paid professional access|Real Evidence Pack|Authentic record/);
 
   await expect(page.locator('.r38-product-key dt')).toHaveText(['CRI', 'Evidence Pack', 'The Brief']);
@@ -77,6 +77,7 @@ test('released Fischamend record keeps its body and gains external context navig
     'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png'
   );
   await expect(page.locator('main')).toContainText('v0.1 PUBLIC-SAFE RELEASE');
-  await expect(page.locator('main')).toContainText('ILLUSTRATIVE PROTOTYPE - PUBLIC-SAFE EXAMPLE - HUMAN REVIEW REQUIRED');
+  await expect(page.locator('main')).toContainText('Illustrative Prototype - Public-Safe Example');
+  await expect(page.locator('main')).toContainText('PUBLIC-SAFE EXAMPLE - HUMAN REVIEW REQUIRED');
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
 });
