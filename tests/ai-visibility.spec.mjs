@@ -35,6 +35,12 @@ test('robots policy explicitly permits the approved crawler set', async ({ reque
   expect(body).not.toMatch(/^Disallow:/m);
 });
 
+test('root favicon fallback is publicly available', async ({ request }) => {
+  const response = await request.get('/favicon.ico');
+  expect(response.ok()).toBeTruthy();
+  expect(response.headers()['content-type']).toMatch(/image\/(?:x-icon|vnd\.microsoft\.icon)/);
+});
+
 test('llms.txt is public-safe, bounded and internally resolvable', async ({ request }) => {
   const response = await request.get('/llms.txt');
   expect(response.ok()).toBeTruthy();
@@ -140,6 +146,10 @@ for (const canonicalPage of canonicalPages) {
     await expect(page.locator('head link[rel="icon"][sizes="32x32"]')).toHaveAttribute(
       'href',
       '/assets/img/favicon-mark-v2-32.png'
+    );
+    await expect(page.locator('head link[rel="shortcut icon"]')).toHaveAttribute(
+      'href',
+      '/favicon.ico'
     );
     await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
       'href',

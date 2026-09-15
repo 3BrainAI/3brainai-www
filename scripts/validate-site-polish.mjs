@@ -40,7 +40,7 @@ const refreshedPages = new Set(['cri/index.html','validation/index.html','invest
 const requiredIconLinks = [
   '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">',
   '<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-mark-v2-32.png">',
-  '<link rel="shortcut icon" href="/assets/img/favicon-mark-v2.ico">',
+  '<link rel="shortcut icon" href="/favicon.ico">',
   '<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon-mark-v2.png">',
   '<link rel="manifest" href="/assets/manifest.json">'
 ];
@@ -272,6 +272,14 @@ const faviconSvg = await readFile(path.join(repositoryRoot, 'assets/img/favicon-
 assert.doesNotMatch(faviconSvg, /<rect\b/, 'Favicon must keep a transparent background');
 assert.match(faviconSvg, /fill="#1b1f2a"/);
 assert.equal((faviconSvg.match(/<path /g) ?? []).length, 6, 'Favicon must use the six-part 3BrainAI mark');
+
+const rootFavicon = await readFile(path.join(repositoryRoot, 'favicon.ico'));
+const approvedFallbackFavicon = await readFile(path.join(repositoryRoot, 'assets/img/favicon.ico'));
+assert.deepEqual(
+  rootFavicon,
+  approvedFallbackFavicon,
+  'Root /favicon.ico must match the approved multi-size 3BrainAI fallback icon'
+);
 
 const aboutHtml = await readFile(path.join(repositoryRoot, 'about/index.html'), 'utf8');
 assert.doesNotMatch(aboutHtml, /prikryl-portret/);
