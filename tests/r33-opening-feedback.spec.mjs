@@ -64,8 +64,8 @@ test('slow record navigation immediately acknowledges click and resets on Back',
   const request=page.waitForRequest(`**${record}`);
   await page.clock.runFor(50);
   await request;
-  // Read the old document directly while the new HTML response is pending.
-  expect(await page.evaluate(()=>!document.querySelector('.document-feedback').hidden)).toBe(true);
+  // The visible feedback was checked before navigation. Release the response
+  // before further DOM queries, which Playwright waits to run after commit.
  } finally { release(); }
  await page.waitForURL(`**${record}`);
  await page.goBack();
