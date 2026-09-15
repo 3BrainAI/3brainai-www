@@ -218,7 +218,12 @@ assert.doesNotMatch(investorPage.replace('not a statement of contracted revenue.
 
 const investorEyCompletionClaim = /3BrainAI Solutions was one of 11 startups in the EY Startup Academy Frankfurt 2025 cohort and completed the programme\./;
 const aboutPage = await readRepositoryFile('about/index.html');
-assert.match(aboutPage, /<h2 class="about-founder-name">Dušan Přikryl<\/h2>/);
+const founderEntity = structuredDataByFile.get('about/index.html')['@graph']
+  .find(entity => entity['@id'] === 'https://www.3brain.ai/about/#founder');
+assert.equal(founderEntity.name, 'Dusan Prikryl');
+assert.equal(founderEntity.alternateName, 'Dušan Přikryl');
+assert.deepEqual(founderEntity.sameAs, ['https://www.linkedin.com/in/dusanprikryl/']);
+assert.match(aboutPage, /<h2 class="about-founder-name">Dusan Prikryl<\/h2>/);
 assert.match(aboutPage, /Owner-side CAPEX leadership · Tier-1 technology integration · German-speaking market experience/);
 assert.match(aboutPage, /Siemens, GEA, Geberit and Hörmann/);
 assert.match(aboutPage, /practical experience in Germany helped shape his delivery model and he works professionally in German/);

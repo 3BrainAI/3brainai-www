@@ -307,14 +307,14 @@ assert.deepEqual(
 const aboutHtml = await readFile(path.join(repositoryRoot, 'about/index.html'), 'utf8');
 assert.doesNotMatch(aboutHtml, /prikryl-portret/);
 assert.match(aboutHtml, /class="v31-experience"/);
-assert.match(aboutHtml, /<h2 class="about-founder-name">Dušan Přikryl<\/h2>/);
+assert.match(aboutHtml, /<h2 class="about-founder-name">Dusan Prikryl<\/h2>/);
 assert.match(aboutHtml, /<p class="about-founder-role">Founder &amp; CEO<\/p>/);
 assert.match(
   aboutHtml,
   /<p class="about-founder-tags">Owner-side CAPEX leadership · Tier-1 technology integration · German-speaking market experience<\/p>/
 );
 for (const approvedFounderCopy of [
-  'Dušan Přikryl is a shareholder-mandated crisis and CAPEX transformation leader with direct owner-side responsibility for complex industrial and energy investments. From 2003 to 2009, under mandates linked to Expandia, Schouw &amp; Co./Fibertex and J&amp;T/EPH, he restructured project delivery around a small accountable owner-side core and directly coordinated Tier-1 European technology suppliers, including Siemens, GEA, Geberit and Hörmann.',
+  'Dusan Prikryl is a shareholder-mandated crisis and CAPEX transformation leader with direct owner-side responsibility for complex industrial and energy investments. From 2003 to 2009, under mandates linked to Expandia, Schouw &amp; Co./Fibertex and J&amp;T/EPH, he restructured project delivery around a small accountable owner-side core and directly coordinated Tier-1 European technology suppliers, including Siemens, GEA, Geberit and Hörmann.',
   "His professional connection to German-speaking markets is long-standing: practical experience in Germany helped shape his delivery model and he works professionally in German. 3BrainAI's DACH engagement includes 3BrainAI Solutions' completion of the EY Startup Academy Frankfurt 2025 programme.",
   'He later added a second professional layer across digital product development, data operations, analytics and AI. CRI brings these layers together: first-hand responsibility for complex physical assets and the product discipline required to turn fragmented inputs into governed, review-ready evidence for institutional decision support.'
 ]) {
