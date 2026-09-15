@@ -185,8 +185,12 @@ test('institutional proof visuals, records direction and review language remain 
   const aboutEyImage = aboutEyVisual.locator('img');
   await expect(aboutEyVisual).toBeVisible();
   await expect(aboutEyImage).toHaveCSS('object-position', '50% 76%');
-  await expect(aboutEyImage).toHaveCSS('filter', 'grayscale(1) saturate(0) contrast(0.82)');
-  await expect(aboutEyImage).toHaveCSS('opacity', '0.8');
+  await expect(aboutEyImage).toHaveCSS('filter', 'none');
+  for (const logo of await page.locator('.about-programme-logo img').all()) {
+    await expect(logo).toHaveCSS('filter', 'none');
+    await expect(logo).toHaveCSS('opacity', '1');
+  }
+  await expect(aboutEyImage).toHaveCSS('opacity', '1');
   expect(await aboutEyImage.evaluate(image => image.naturalWidth)).toBe(1228);
   expect(await aboutEyImage.evaluate(image => image.naturalHeight)).toBe(1536);
 

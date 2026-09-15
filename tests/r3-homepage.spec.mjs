@@ -26,7 +26,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
-  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=footer-cri-20260908"]')).toHaveCount(1);
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=r37-programme-strip"]')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveText('The physical world does not wait for your next review.');
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveText('For banks & institutional lenders');
@@ -115,21 +115,20 @@ test('four current programmes and the historical EY context remain explicitly se
 
   const cards = page.locator('.r4-relationship-card');
   await expect(cards).toHaveCount(4);
-  await expect(cards.locator('h3')).toHaveText([
-    'ESA BIC Czech Republic',
+  expect(await cards.locator('img').evaluateAll(images => images.map(img => img.alt))).toEqual([
+    'ESA Business Incubation Centre Czech Republic',
     'OVHcloud Startup Program',
     'Google for Startups Cloud Program',
-    'NVIDIA Inception'
+    'NVIDIA Inception Program'
   ]);
-  await expect(cards.locator('.r4-status-label')).toHaveText([
-    'Current incubation',
-    'European cloud infrastructure',
-    'AI & Earth Observation R&D',
-    'AI development programme'
-  ]);
+  await expect(cards.locator('.r4-relationship-body')).toHaveCount(0);
+  for (const logo of await cards.locator('img').all()) {
+    await expect(logo).toHaveCSS('filter', 'grayscale(1) saturate(0) contrast(0.78)');
+  }
 
   await expect(cards.locator('a')).toHaveCount(0);
   const history = page.locator('.r4-relationship-history');
+  await expect(history.locator('img')).toHaveCSS('filter', 'none');
   await expect(history).toContainText('Historical programme');
   await expect(history).toContainText('EY Startup Academy Frankfurt 2025');
   await expect(history).toContainText('Completed by 3BrainAI Solutions · company history');
@@ -143,6 +142,8 @@ test('four current programmes and the historical EY context remain explicitly se
     const box = element.getBoundingClientRect();
     return { width: Math.round(box.width), height: Math.round(box.height) };
   }));
+  expect(Math.max(...geometry.map(item => item.height))).toBeLessThanOrEqual(80);
+  expect(await page.locator('#relationships').evaluate(el => el.getBoundingClientRect().height)).toBeLessThanOrEqual(340);
   expect(new Set(geometry.map(item => item.width)).size).toBe(1);
   expect(Math.max(...geometry.map(item => item.height)) - Math.min(...geometry.map(item => item.height)))
     .toBeLessThanOrEqual(1);
@@ -359,7 +360,8 @@ test('mobile composition bounds the approved Brief journey and retains the exist
   const relationshipGridColumns = await page.locator('.r4-relationship-grid').evaluate(element =>
     getComputedStyle(element).gridTemplateColumns.split(' ').length
   );
-  expect(relationshipGridColumns).toBe(1);
+  expect(relationshipGridColumns).toBe(2);
+  await expect(page.locator('#relationships-title')).toHaveCSS('font-size', '24px');
 
   const openPack = page.getByRole('link', { name: 'Open full Evidence Pack' });
   const openPackBox = await openPack.evaluate(element => element.getBoundingClientRect());
