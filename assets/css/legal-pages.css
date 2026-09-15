@@ -1,0 +1,10 @@
+/* Scoped reading layout shared by Privacy, Security and Imprint. */
+.legal-page h2[id] { scroll-margin-top:110px; }
+.legal-page .assurance-section > p { max-width:850px; }
+.legal-page .assurance-section p:last-child { margin-bottom:0; }
+.legal-page .legal-entity-block { max-width:850px; padding:22px; margin-top:20px; background:#f5f8f6; border-left:2px solid #88adb2; }
+.legal-page .legal-related { display:flex; flex-wrap:wrap; gap:10px 24px; }
+.legal-page .legal-related a { display:inline-flex; align-items:center; min-height:44px; }
+.legal-page .legal-related [aria-current=page] { color:#17232f; font-weight:600; }
+.legal-page a { overflow-wrap:anywhere; }
+@media(max-width:760px) { .legal-page .legal-entity-block { padding:18px; } }

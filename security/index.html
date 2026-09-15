@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="assurance-document">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Security | 3BrainAI</title>
-  <meta name="description" content="Public security posture and contact guidance for the 3BrainAI website.">
+  <meta name="description" content="Security contact, responsible disclosure guidance and the boundary between the public 3BrainAI website and controlled access.">
   <link rel="canonical" href="https://www.3brain.ai/security/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Security | 3BrainAI">
-  <meta property="og:description" content="Public security posture and contact guidance for the 3BrainAI website.">
+  <meta property="og:description" content="Security contact, responsible disclosure guidance and the boundary between the public 3BrainAI website and controlled access.">
   <meta property="og:url" content="https://www.3brain.ai/security/">
   <meta property="og:site_name" content="3BrainAI">
   <meta property="og:image" content="https://www.3brain.ai/assets/img/og_3brainai.png">
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="3BrainAI – governed evidence workflows">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Security | 3BrainAI">
-  <meta name="twitter:description" content="Public security posture and contact guidance for the 3BrainAI website.">
+  <meta name="twitter:description" content="Security contact, responsible disclosure guidance and the boundary between the public 3BrainAI website and controlled access.">
   <meta name="twitter:image" content="https://www.3brain.ai/assets/img/og_3brainai.png">
   <meta name="twitter:image:alt" content="3BrainAI – governed evidence workflows">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +32,11 @@
   <link rel="manifest" href="/assets/manifest.json">
 <link rel="stylesheet" href="/assets/css/document-feedback.css?v=r33">
 <script src="/assets/js/document-feedback.js?v=r33" defer></script>
+<meta name="robots" content="index,follow">
+<link rel="stylesheet" href="/assets/css/assurance.css?v=r34">
+<link rel="stylesheet" href="/assets/css/legal-pages.css?v=r35">
 </head>
-<body class="">
+<body>
 
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
@@ -54,52 +57,38 @@
   </div>
 </header>
 
-<main id="main" class="service-page">
-  <div class="container service-content">
-    <header class="service-header">
-      <h1 class="service-title">Security</h1>
-      <p class="service-subtitle">
-        High-level security posture for the public site and safe ways to reach the team about security topics.
-      </p>
-    </header>
-
-    <section class="service-section" aria-labelledby="security-approach">
-      <h2 class="service-section-title" id="security-approach">Governance-first approach</h2>
-      <p>
-        3BrainAI follows a governance-first security and risk posture oriented around traceability, review-first outputs,
-        controlled publishing and auditability. This framing applies to how product surfaces are designed to be operated,
-        not to detailed implementation on this public page.
-      </p>
-    </section>
-
-    <section class="service-section" aria-labelledby="security-public-site">
-      <h2 class="service-section-title" id="security-public-site">What this public website is not</h2>
-      <p>
-        The public website does not provide access to internal systems, customer environments, pilots, archives or data
-        rooms. Do not rely on public email to exchange sensitive operational or contractual materials unless you already
-        have an agreement that defines how those materials should be transferred and handled.
-      </p>
-    </section>
-
-    <section class="service-section" aria-labelledby="security-contact">
-      <h2 class="service-section-title" id="security-contact">Security-related contact</h2>
-      <p>
-        For responsible disclosure or other security-related contact, email
-        <a href="mailto:contact@3brain.ai?subject=Security%20inquiry%20-%203BrainAI">contact@3brain.ai</a> with the subject line
-        <code>Security inquiry - 3BrainAI</code>.
-      </p>
-    </section>
-
-    <section class="service-section" aria-labelledby="security-principles">
-      <h2 class="service-section-title" id="security-principles">Product security principles</h2>
-      <p>
-        Across product surfaces, baseline expectations include least privilege access, traceable access patterns, a controlled
-        release process, deliberate human review where it matters for risk, and an infrastructure posture oriented toward EU
-        hosting paths where feasible. Detailed architecture, tooling choices and procedural documentation are intentionally
-        not published here.
-      </p>
-    </section>
-  </div>
+<main id="main" class="assurance-page legal-page">
+<section class="assurance-hero" aria-labelledby="security-title"><div class="assurance-wrap">
+<p class="assurance-eyebrow">3BrainAI Nexus</p>
+<h1 id="security-title">Security</h1>
+<p class="assurance-lead">How to report a security concern and arrange the appropriate channel for sensitive information.</p>
+<div class="assurance-actions"><a class="assurance-button" href="mailto:contact@3brain.ai?subject=Security%20inquiry%20-%203BrainAI">Report a security concern</a><a class="assurance-button secondary" href="/assurance/">Security, Governance &amp; Assurance</a></div>
+</div></section>
+<div class="assurance-wrap">
+<nav class="assurance-nav" aria-label="On this page"><a href="#security-contact">Report a concern</a><a href="#security-public-site">Public &amp; private access</a><a href="#security-approach">Accountable review</a><a href="#security-principles">Assurance</a></nav>
+<section class="assurance-section" aria-labelledby="security-contact"><div class="assurance-reading">
+<h2 id="security-contact">Report a security concern</h2>
+<p>Email <a href="mailto:contact@3brain.ai?subject=Security%20inquiry%20-%203BrainAI">contact@3brain.ai</a> with the subject <strong>Security inquiry - 3BrainAI</strong>.</p>
+<p>In your first message, identify the affected public page or service and briefly describe the concern. Include a way to contact you. Do not include customer data, passwords, access tokens or exploit details; ask to agree an appropriate channel before sharing sensitive technical information.</p>
+<p>This is an email contact route. Sending a message does not authorise access to systems or security testing.</p>
+</div></section><section class="assurance-section" aria-labelledby="security-public-site"><div class="assurance-reading">
+<h2 id="security-public-site">Public information and controlled access</h2>
+<p>The public website contains product information and illustrative Evidence Packs. Its enquiry forms prepare email drafts locally; they do not upload files, provision accounts or grant access to internal systems or customer environments.</p>
+<p>The Brief is a separate professional section with individually agreed access. A public link or an access enquiry does not bypass its sign-in or access requirements. Customer pilots and exchanges of sensitive material require a separately agreed scope and channel.</p>
+<a href="/privacy/">How the public website handles information</a>
+</div></section><section class="assurance-section" aria-labelledby="security-approach"><div class="assurance-reading">
+<h2 id="security-approach">Accountable review</h2>
+<p>Construction Risk Intelligence (CRI) is designed to organise evidence and its limitations for professional review. The institution retains its own decision-making authority.</p>
+<p>The current workflow is in controlled-case Proof of Concept validation. Public examples illustrate the review approach; they do not establish production deployment, certification or an independent security assessment.</p>
+</div></section><section class="assurance-section" aria-labelledby="security-principles"><div class="assurance-reading">
+<h2 id="security-principles">Governance and due diligence</h2>
+<p>For product boundaries, accountable roles and scoped due-diligence enquiries, see <a href="/assurance/">Security, Governance &amp; Assurance</a>.</p>
+<p>Detailed architecture and sensitive operational documents are discussed individually, with purpose, scope and confidentiality terms agreed before disclosure. An enquiry does not automatically provide access to documents or systems.</p>
+<a href="/assurance/#due-diligence">Request assurance information</a>
+</div></section>
+<div class="assurance-stamp"><p>Last updated: <time datetime="2026-09-15">15 September 2026</time><br>Website operator: 3BrainAI Nexus s.r.o.</p>
+<nav class="legal-related" aria-label="Related information"><a href="/assurance/">Assurance</a><a href="/privacy/">Privacy</a><a href="/security/" aria-current="page">Security</a><a href="/imprint/">Imprint</a></nav></div>
+</div>
 </main>
 
 <footer class="footer">
