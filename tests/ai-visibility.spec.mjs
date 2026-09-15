@@ -41,6 +41,22 @@ test('root favicon fallback is publicly available', async ({ request }) => {
   expect(response.headers()['content-type']).toMatch(/image\/(?:x-icon|vnd\.microsoft\.icon)/);
 });
 
+test('Fischamend pages expose the evidence-led social preview', async ({ request }) => {
+  const imageUrl = 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png';
+  const imageResponse = await request.get('/assets/img/og_fischamend_evidence_pack.png');
+  expect(imageResponse.ok()).toBeTruthy();
+  expect(imageResponse.headers()['content-type']).toContain('image/png');
+  expect((await imageResponse.body()).byteLength).toBeGreaterThan(100_000);
+
+  for (const route of ['/evidence-packs/', '/evidence-packs/fischamend/']) {
+    const response = await request.get(route);
+    expect(response.ok()).toBeTruthy();
+    const html = await response.text();
+    expect(html).toContain(`<meta property="og:image" content="${imageUrl}">`);
+    expect(html).toContain(`<meta name="twitter:image" content="${imageUrl}">`);
+  }
+});
+
 test('llms.txt is public-safe, bounded and internally resolvable', async ({ request }) => {
   const response = await request.get('/llms.txt');
   expect(response.ok()).toBeTruthy();
@@ -58,6 +74,8 @@ test('llms.txt is public-safe, bounded and internally resolvable', async ({ requ
   expect(body).toContain('does not make autonomous credit decisions, replace bank policy or replace professional assessment');
   expect(body).toContain('Earth Observation is an input medium');
   expect(body).toContain('participating in the ESA Business Incubation Centre Czech Republic');
+  expect(body).toContain('nine prepared model situations across Austria, Czechia and the Netherlands');
+  expect(body).toContain('Editorial evaluation access is free and individually reviewed');
   expect(body).not.toMatch(/EY Praha|Google Cloud|25[,. ]?000|Česká spořitelna/i);
 
   const linkedUrls = [...body.matchAll(/\(https:\/\/www\.3brain\.ai\/(?:[^)#]*)?(?:#[^)]+)?\)/g)]
@@ -113,15 +131,17 @@ for (const canonicalPage of canonicalPages) {
     );
     await expect(page.locator('head meta[property="og:url"]')).toHaveAttribute('content', canonicalPage.url);
     await expect(page.locator('head meta[property="og:site_name"]')).toHaveAttribute('content', '3BrainAI');
-    await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute(
-      'content',
-      'https://www.3brain.ai/assets/img/og_3brainai.png'
-    );
+    const evidencePackImage = 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png';
+    const defaultImage = 'https://www.3brain.ai/assets/img/og_3brainai.png';
+    const expectedImage = canonicalPage.route === '/evidence-packs/' ? evidencePackImage : defaultImage;
+    await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute('content', expectedImage);
     await expect(page.locator('head meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
     await expect(page.locator('head meta[property="og:image:height"]')).toHaveAttribute('content', '630');
     await expect(page.locator('head meta[property="og:image:alt"]')).toHaveAttribute(
       'content',
-      '3BrainAI – governed evidence workflows'
+      canonicalPage.route === '/evidence-packs/'
+        ? 'Fischamend public Evidence Pack: two dated Copernicus scenes and a bounded review finding'
+        : '3BrainAI – governed evidence workflows'
     );
     await expect(page.locator('head meta[name="twitter:card"]')).toHaveAttribute(
       'content',
@@ -135,10 +155,7 @@ for (const canonicalPage of canonicalPages) {
       'content',
       canonicalPage.description
     );
-    await expect(page.locator('head meta[name="twitter:image"]')).toHaveAttribute(
-      'content',
-      'https://www.3brain.ai/assets/img/og_3brainai.png'
-    );
+    await expect(page.locator('head meta[name="twitter:image"]')).toHaveAttribute('content', expectedImage);
     await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute(
       'href',
       '/assets/img/favicon-mark-v2.svg'
@@ -225,7 +242,7 @@ test('JSON-LD separates the brand, Nexus, CRI page and Fischamend Evidence Pack'
   const evidencePackSample = parsedGraphs['/'].find(
     entity => entity['@id'] === 'https://www.3brain.ai/evidence-packs/fischamend/#evidence-pack'
   );
-  expect(evidencePackSample.version).toBe('0.1-draft');
+  expect(evidencePackSample.version).toBe('0.1');
   expect(evidencePackSample.url).toBe('https://www.3brain.ai/evidence-packs/fischamend/');
   expect(evidencePackSample.creator['@id']).toBe('https://www.3brain.ai/#organization');
   expect(evidencePackSample.about['@id']).toBe(criPage['@id']);

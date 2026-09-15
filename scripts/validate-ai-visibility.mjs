@@ -15,6 +15,9 @@ const countOccurrences = (value, fragment) => value.split(fragment).length - 1;
 const structuredDataByFile = new Map();
 for (const [file, canonicalUrl, title, description] of canonicalPages) {
   const html = await readRepositoryFile(file);
+  const socialImage = file === 'evidence-packs/index.html'
+    ? 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png'
+    : 'https://www.3brain.ai/assets/img/og_3brainai.png';
   const requiredFragments = [
     `<title>${title}</title>`,
     `<meta name="description" content="${description}">`,
@@ -24,13 +27,13 @@ for (const [file, canonicalUrl, title, description] of canonicalPages) {
     `<meta property="og:description" content="${description}">`,
     `<meta property="og:url" content="${canonicalUrl}">`,
     '<meta property="og:site_name" content="3BrainAI">',
-    '<meta property="og:image" content="https://www.3brain.ai/assets/img/og_3brainai.png">',
+    `<meta property="og:image" content="${socialImage}">`,
     '<meta property="og:image:width" content="1200">',
     '<meta property="og:image:height" content="630">',
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${title}">`,
     `<meta name="twitter:description" content="${description}">`,
-    '<meta name="twitter:image" content="https://www.3brain.ai/assets/img/og_3brainai.png">'
+    `<meta name="twitter:image" content="${socialImage}">`
   ];
 
   for (const fragment of requiredFragments) {
@@ -157,7 +160,7 @@ const refreshedPages = new Set(['cri/index.html','validation/index.html','invest
 const primaryNavigation = [
   ['CRI', '/cri/'],
   ['Evidence Pack', '/#evidence-pack-sample'],
-  ['Validation', '/validation/'],
+  ['For banks', '/validation/'],
   ['Investors', '/investors/'],
   ['About', '/about/'],
   ['Contact', '/contact/']
@@ -196,7 +199,7 @@ for (const file of publicEnglishPages) {
   const navigationLinks = [...navigationMatch[1].matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
     .map(match => [match[2].trim(), match[1]]);
   const expectedNavigation = primaryNavigation.map(([label, href]) => [
-    label === 'Validation' && refreshedPages.has(file) ? 'Validate' : label,
+    label,
     label === 'Evidence Pack' && refreshedPages.has(file) ? '/evidence-packs/' :
     label === 'Evidence Pack' && m2NavigationPages.has(file)
       ? (file === 'index.html' ? '#portfolio' : '/#portfolio')
@@ -277,5 +280,8 @@ assert.match(await readRepositoryFile('scripts/submit-indexnow.mjs'), new RegExp
 const ogImage = await readFile(path.join(repositoryRoot, 'assets/img/og_3brainai.png'));
 assert.equal(ogImage.readUInt32BE(16), 1200, 'Open Graph image width must be 1200');
 assert.equal(ogImage.readUInt32BE(20), 630, 'Open Graph image height must be 630');
+const evidencePackOgImage = await readFile(path.join(repositoryRoot, 'assets/img/og_fischamend_evidence_pack.png'));
+assert.equal(evidencePackOgImage.readUInt32BE(16), 1200, 'Evidence Pack Open Graph image width must be 1200');
+assert.equal(evidencePackOgImage.readUInt32BE(20), 630, 'Evidence Pack Open Graph image height must be 630');
 
 process.stdout.write(`AI visibility contract validated for ${canonicalPages.length} canonical pages.\n`);

@@ -20,9 +20,9 @@ for(const [file,parts] of Object.entries(approved)) {
  }
 }
 const cri=await read('cri/index.html'),validation=await read('validation/index.html');
-assert.ok(cri.includes('Selected evaluation invitations may be offered free of charge.'));
-assert.ok(validation.includes('selected free evaluation invitations'));
-assert.ok(cri.includes('any applicable fee'));
+assert.ok(cri.includes('Editorial evaluation access to The Brief is free and individually reviewed.'));
+assert.ok(validation.includes('Editorial evaluation access to The Brief is free and individually reviewed.'));
+assert.ok(cri.includes('Commercial terms, where applicable, are handled separately.'));
 for(const file of ['contact/index.html','validation/index.html','investors/index.html']) {
  const html=await read(file);
  const cfg=JSON.parse(html.match(/<script type="application\/json" id="n4-config">([\s\S]*?)<\/script>/)[1]);

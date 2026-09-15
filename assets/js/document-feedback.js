@@ -41,6 +41,14 @@
  window.addEventListener('pagehide', hide);
  window.addEventListener('pageshow', event => { if (event.persisted) hide(); });
 
+ if (/^\/evidence-packs\/fischamend\/(?:index\.html)?$/.test(location.pathname)) {
+  const contextNav = document.createElement('nav');
+  contextNav.className = 'evidence-pack-context-nav';
+  contextNav.setAttribute('aria-label', 'Evidence Pack context');
+  contextNav.innerHTML = '<a href="/evidence-packs/#reading-guide">Reading guide</a><a href="/cri/">What is CRI?</a><a href="/about/">About</a><a href="/contact/">Contact</a>';
+  document.body.prepend(contextNav);
+ }
+
  document.addEventListener('click', event => {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   const link = event.target.closest?.('a[href]');

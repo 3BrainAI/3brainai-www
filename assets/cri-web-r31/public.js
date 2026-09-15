@@ -10,6 +10,16 @@
  const desktop=window.matchMedia('(min-width: 761px)');
  function mountDesktop(){if(desktop.matches)document.querySelectorAll('template[data-desktop-only]').forEach(t=>{t.replaceWith(t.content.cloneNode(true));});}
  mountDesktop();desktop.addEventListener('change',mountDesktop);
+ document.querySelectorAll('[data-copy-link]').forEach(button=>button.addEventListener('click',async()=>{
+  const status=button.nextElementSibling;
+  const url=new URL(button.dataset.copyLink,location.origin).href;
+  try{
+   await navigator.clipboard.writeText(url);
+   if(status)status.textContent='Link copied.';
+  }catch{
+   if(status)status.textContent='Copy this link: '+url;
+  }
+ }));
  const form=document.querySelector('form[data-n4-form]');
  let prepare=null,setPurposeFromHash=null;
  if(form){
