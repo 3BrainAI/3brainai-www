@@ -361,6 +361,7 @@ test('mobile composition bounds the approved Brief journey and retains the exist
     getComputedStyle(element).gridTemplateColumns.split(' ').length
   );
   expect(relationshipGridColumns).toBe(2);
+  await expect(page.locator('#relationships-title')).toHaveCSS('font-size', '24px');
 
   const openPack = page.getByRole('link', { name: 'Open full Evidence Pack' });
   const openPackBox = await openPack.evaluate(element => element.getBoundingClientRect());

@@ -449,7 +449,7 @@
   margin-bottom: 16px;
 }
 
-.r4-home .r4-relationships h2 {
+.r4-home .r4-section.r4-relationships h2 {
   margin-bottom: 0;
   font-size: clamp(24px, 2.2vw, 32px);
   line-height: 1.2;
