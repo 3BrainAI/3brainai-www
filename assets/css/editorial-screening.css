@@ -172,6 +172,14 @@
     --r39-note-leading: 1.35;
     --r39-note-gap: 6px;
   }
+
+  .r4-home .r4-folio-stage {
+    height: min(504px, calc(100svh - 152px));
+  }
+
+  .r4-home .r4-folio-sheet {
+    width: min(318px, calc((100svh - 252px) * .70665));
+  }
 }
 
 @media (max-width: 760px) {

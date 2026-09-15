@@ -20,7 +20,7 @@ for (const [width, height] of [[1280,650], [1366,668], [1440,780], [1536,760], [
    return {
     viewport:innerHeight,
     buttons:[...document.querySelectorAll('.v3-home-journey a')].map(el=>el.getBoundingClientRect().toJSON()),
-    copy:rect('.r4-hero-copy'), folio:rect('.r4-folio-stage'),
+    copy:rect('.r4-hero-copy'), folio:rect('.r4-folio-stage'), reviewAction:rect('.r4-review-action'),
     sheets:[...document.querySelectorAll('.r4-folio-sheet')].map(el=>el.getBoundingClientRect().toJSON()),
     overflow:document.documentElement.scrollWidth-innerWidth
    };
@@ -31,7 +31,8 @@ for (const [width, height] of [[1280,650], [1366,668], [1440,780], [1536,760], [
   expect(Math.abs(metrics.buttons[0].top-metrics.buttons[1].top)).toBeLessThanOrEqual(1);
   expect(metrics.buttons[1].left).toBeGreaterThanOrEqual(metrics.buttons[0].right);
   expect(metrics.copy.bottom).toBeLessThanOrEqual(height-12);
-  expect(Math.abs(metrics.folio.top-metrics.copy.top)).toBeLessThanOrEqual(1);
+  // The founder now aligns the action bottoms, rather than the two column tops.
+  for (const button of metrics.buttons) expect(Math.abs(metrics.reviewAction.bottom-button.bottom)).toBeLessThanOrEqual(1);
   expect(metrics.folio.bottom).toBeLessThanOrEqual(height-12);
   for (const box of [...metrics.buttons,...metrics.sheets]) expect(box.bottom).toBeLessThanOrEqual(height-12);
   for (const box of metrics.buttons) expect(box.height).toBeGreaterThanOrEqual(44);
