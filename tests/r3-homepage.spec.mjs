@@ -41,6 +41,9 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await expect(page.locator('.r4-human-boundary')).toHaveText(
     'Evidence for the people who review, challenge and decide.'
   );
+  await expect(page.locator('.r4-hero .r4-lead')).toContainText(
+    'Initial focus: DACH, Benelux and Central Europe'
+  );
 
   await expect(page.getByRole('link', { name: 'View an Evidence Pack' })).toHaveAttribute(
     'href',
@@ -49,7 +52,12 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await expect(page.locator('.r4-hero').getByRole('link', {
     name: 'Explore The Brief'
   })).toHaveAttribute('href', '/cri/#the-brief');
-  await expect(page.locator('.r4-evidence-anchor')).toContainText('DEMO-EU-AT-FIS-01 · v0.1');
+  await expect(page.locator('.r4-hero')).toContainText('Public example · 2 pages · No sign-in.');
+  await expect(page.locator('.r4-hero')).toContainText('Free editorial evaluation.');
+  await expect(page.locator('.r4-evidence-anchor')).toHaveText(
+    'Public example · real Copernicus data · synthetic scenario'
+  );
+  await expect(page.locator('.r38-product-key dt')).toHaveText(['CRI', 'Evidence Pack', 'The Brief']);
 
   const folioLinks = page.locator('a.r4-folio-sheet');
   await expect(folioLinks).toHaveCount(2);
@@ -149,11 +157,11 @@ test('four current programmes and the historical EY context remain explicitly se
     .toBeLessThanOrEqual(1);
 });
 
-test('Evidence Lens preserves the authentic record boundary and primary document route', async ({ page }) => {
+test('Evidence Lens makes the real-data and synthetic-scenario boundary explicit', async ({ page }) => {
   await openHomepage(page, 1440);
 
   const lens = page.locator('.r4-evidence-lens');
-  await expect(lens).toContainText('Authentic record · readable excerpt');
+  await expect(lens).toContainText('Real Copernicus data · synthetic scenario');
   await expect(lens).toContainText('DEMO-EU-AT-FIS-01 · v0.1 public-safe release');
   await expect(lens).toContainText('Human review required');
   await expect(lens).toContainText('WATCH – Evidence sufficiency');
@@ -165,6 +173,8 @@ test('Evidence Lens preserves the authentic record boundary and primary document
   await expect(lens).toContainText('WATCH refers to evidence sufficiency');
   await expect(lens).toContainText('it is not a negative project rating');
   await expect(lens).toContainText('Modified Copernicus Sentinel data 2023 and 2025');
+  await expect(lens).toContainText('Did large roofed structures become visible');
+  await expect(lens).toContainText('The released pack retains the full synthetic review question');
 
   const fullPack = lens.getByRole('link', { name: 'Open full Evidence Pack' });
   await expect(fullPack).toHaveAttribute('href', '/evidence-packs/fischamend/');

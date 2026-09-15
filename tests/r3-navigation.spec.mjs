@@ -6,7 +6,7 @@ const refreshedRoutes = new Set(['/cri/','/validation/','/investors/','/contact/
 const canonicalNavigation = [
   { label: 'CRI', href: '/cri/' },
   { label: 'Evidence Pack', href: '/#evidence-pack-sample' },
-  { label: 'Validation', href: '/validation/' },
+  { label: 'For banks', href: '/validation/' },
   { label: 'Investors', href: '/investors/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' }
@@ -35,12 +35,12 @@ const scopedRoutes = [
   { route: '/imprint/', file: 'imprint/index.html', active: null },
   { route: '/investors/', file: 'investors/index.html', active: 'Investors', evidenceHref: '/#portfolio' },
   { route: '/mis/', file: 'mis/index.html', active: null },
-  { route: '/pilots/', file: 'pilots/index.html', active: 'Validation' },
+  { route: '/pilots/', file: 'pilots/index.html', active: 'For banks' },
   { route: '/privacy/', file: 'privacy/index.html', active: null },
   { route: '/product/', file: 'product/index.html', active: null },
   { route: '/security/', file: 'security/index.html', active: null },
   { route: '/use-cases/', file: 'use-cases/index.html', active: null },
-  { route: '/validation/', file: 'validation/index.html', active: 'Validation', evidenceHref: '/#portfolio' }
+  { route: '/validation/', file: 'validation/index.html', active: 'For banks', evidenceHref: '/#portfolio' }
 ];
 
 const representativeRoutes = [
@@ -104,7 +104,7 @@ for (const routeContract of scopedRoutes) {
       href: anchor.getAttribute('href')
     })));
     const expected = canonicalNavigation.map(item => ({
-      label: item.label === 'Validation' && refreshedRoutes.has(routeContract.route) ? 'Validate' : item.label,
+      label: item.label,
       href: item.label === 'Evidence Pack' && refreshedRoutes.has(routeContract.route) ? '/evidence-packs/' : item.label === 'Evidence Pack' && routeContract.evidenceHref
         ? routeContract.evidenceHref
         : item.href
@@ -114,7 +114,7 @@ for (const routeContract of scopedRoutes) {
     const activeLinks = page.locator('.nav[aria-label="Main navigation"] > a:is(.active, [aria-current="page"])');
     if (routeContract.active) {
       await expect(activeLinks).toHaveCount(1);
-      await expect(activeLinks).toHaveText(routeContract.active === 'Validation' && refreshedRoutes.has(routeContract.route) ? 'Validate' : routeContract.active);
+      await expect(activeLinks).toHaveText(routeContract.active);
     } else {
       await expect(activeLinks).toHaveCount(0);
     }

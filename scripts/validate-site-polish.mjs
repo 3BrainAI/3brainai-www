@@ -48,6 +48,7 @@ const requiredIconLinks = [
 const releaseStylesheetVersion = 'footer-cri-20260908';
 const releaseScriptVersion = 'f87d840f';
 const m3HomepageCorrectionVersion = 'r37-programme-strip';
+const editorialScreeningVersion = 'r38';
 const evidenceArchiveVersion = 'wp0-20260907';
 const aboutFounderVersion = 'r37-programme-colour';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
@@ -78,6 +79,12 @@ for (const file of htmlFiles) {
       html,
       /hp-corrections\.css/,
       `${relativePath} must not load the homepage-only correction layer`
+    );
+  }
+  if (['index.html', 'cri/index.html', 'validation/index.html', 'evidence-packs/index.html'].includes(relativePath)) {
+    assert.ok(
+      html.includes(`<link rel="stylesheet" href="/assets/css/editorial-screening.css?v=${editorialScreeningVersion}">`),
+      `${relativePath} must load the editorial-screening layer`
     );
   }
   if (relativePath === 'about/index.html') {
@@ -145,7 +152,16 @@ for (const [relativePath, expectedHash] of fischamendPublicReleaseHashes) {
   // Remove only those exact two head includes before verifying the original
   // approved HTML bytes. All document content, styling and PDF bytes stay locked.
   const original = relativePath.endsWith('/index.html')
-    ? value.toString().replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r33">\n<script src="/assets/js/document-feedback.js?v=r33" defer></script>\n', '')
+    ? value.toString()
+      .replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r33">\n<script src="/assets/js/document-feedback.js?v=r33" defer></script>\n', '')
+      .replace(
+        '<meta property="og:image" content="https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png">',
+        '<meta property="og:image" content="https://www.3brain.ai/assets/img/og_3brainai.png">'
+      )
+      .replace(
+        '<meta name="twitter:image" content="https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png">',
+        '<meta name="twitter:image" content="https://www.3brain.ai/assets/img/og_3brainai.png">'
+      )
     : value;
   const actualHash = createHash('sha256').update(original).digest('hex');
   assert.equal(actualHash, expectedHash, `${relativePath} must retain its founder-approved public-release bytes`);
@@ -173,7 +189,8 @@ const institutionalVisualHashes = new Map([
   ['assets/img/homepage-r4d/google-wordmark.svg', 'f6928f264fd922ffd90a654a30c6ba541d8cbe05813f7ae6e8d1e0f9b2e19f81'],
   ['assets/img/homepage-r4d/nvidia-inception.svg', '4839f5e913abfada9e42a550acb880bf608b03c6fb1eff5ad7a8d6f6c3ebe71e'],
   ['assets/img/homepage-r4d/ovhcloud-startup-program.svg', '23a3dbc58e3326f5f2a9bae1494931368f361db205b5e66eb269f0cc508be83b'],
-  ['assets/img/homepage-r4d/ovhcloud-logo.svg', 'e1be9a57b8f0590cbf3a5e7f35344825487ebfbaefe301d6ab58fc910ed142b7']
+  ['assets/img/homepage-r4d/ovhcloud-logo.svg', 'e1be9a57b8f0590cbf3a5e7f35344825487ebfbaefe301d6ab58fc910ed142b7'],
+  ['assets/img/og_fischamend_evidence_pack.png', '8628ad4e710bb1baab71cb4e174d1ba8196ce66eedad065da3b128a424195250']
 ]);
 
 for (const [relativePath, expectedHash] of institutionalVisualHashes) {
@@ -181,6 +198,12 @@ for (const [relativePath, expectedHash] of institutionalVisualHashes) {
   const actualHash = createHash('sha256').update(value).digest('hex');
   assert.equal(actualHash, expectedHash, `${relativePath} must retain its supplied source bytes`);
 }
+
+const fischamendSocialPreview = await readFile(
+  path.join(repositoryRoot, 'assets/img/og_fischamend_evidence_pack.png')
+);
+assert.equal(fischamendSocialPreview.readUInt32BE(16), 1200, 'Fischamend social preview width');
+assert.equal(fischamendSocialPreview.readUInt32BE(20), 630, 'Fischamend social preview height');
 
 const fischamendArtifactHtml = await readFile(
   path.join(repositoryRoot, 'evidence-packs/fischamend/index.html'),
@@ -320,9 +343,14 @@ assert.match(
   homepageHtml,
   /<h1 id="r4-hero-title">The physical world does not wait for your next review\.<\/h1>/
 );
-assert.match(homepageHtml, /3BrainAI’s Construction Risk Intelligence \(CRI\) combines/);
+assert.match(homepageHtml, /3BrainAI’s Construction Risk Intelligence \(CRI\) turns/);
 assert.match(homepageHtml, /href="\/cri\/#the-brief"/);
 assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View an Evidence Pack<\/a>/);
+assert.match(homepageHtml, /Public example · 2 pages · No sign-in\./);
+assert.match(homepageHtml, /Initial focus: DACH, Benelux and Central Europe/);
+assert.match(homepageHtml, /Free editorial evaluation\./);
+assert.match(homepageHtml, /<dt>CRI<\/dt><dd>The review-support product\.<\/dd>/);
+assert.doesNotMatch(homepageHtml, /Real Evidence Pack|Authentic record|Paid professional access|public-safe draft|0\.1-draft/);
 assert.match(homepageHtml, /WATCH – Evidence sufficiency/);
 assert.match(homepageHtml, /id="portfolio"/);
 assert.match(homepageHtml, /id="evidence-pack-sample"/);
@@ -342,7 +370,7 @@ assert.match(homepageHtml, /A governed evidence workflow for accountable institu
 assert.doesNotMatch(homepageHtml, /Relationships, precisely named\./);
 assert.equal((homepageHtml.match(/class="r4-workflow-step"/g) ?? []).length, 4);
 assert.equal((homepageHtml.match(/class="r4-signpost"/g) ?? []).length, 2);
-assert.match(homepageHtml, /Authentic record · readable excerpt/);
+assert.match(homepageHtml, /Real Copernicus data · synthetic scenario/);
 assert.match(homepageHtml, /Declared – synthetic/);
 assert.match(homepageHtml, /Observed – dated public evidence/);
 assert.match(homepageHtml, /Uncertainty and non-inference/);
