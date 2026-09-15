@@ -22,6 +22,33 @@ async function openHomepage(page, width, height = 900) {
   await page.evaluate(() => document.fonts?.ready);
 }
 
+async function checkHeroFraming(page, width) {
+  const geometry = await page.evaluate(() => {
+    const note = document.querySelector('.v3-brief-note');
+    const strip = document.querySelector('.r38-term-strip').getBoundingClientRect();
+    const folioAction = document.querySelector('.r4-review-action').getBoundingClientRect();
+    return {
+      noteLines: note.getBoundingClientRect().height / parseFloat(getComputedStyle(note).lineHeight),
+      stripCentre: (strip.top + strip.bottom) / 2,
+      termCentres: [...document.querySelectorAll('.r38-product-key > div')].map(item => {
+        const box = item.getBoundingClientRect();
+        return (box.top + box.bottom) / 2;
+      }),
+      buttonOffsets: [...document.querySelectorAll('.v3-home-journey .r4-button')]
+        .map(button => button.getBoundingClientRect().bottom - folioAction.bottom)
+    };
+  });
+  expect(geometry.noteLines).toBeCloseTo(2, 1);
+  if (width > 760) {
+    for (const centre of geometry.termCentres) {
+      expect(Math.abs(centre - geometry.stripCentre)).toBeLessThanOrEqual(1);
+    }
+  }
+  if (width >= 981) {
+    for (const offset of geometry.buttonOffsets) expect(Math.abs(offset)).toBeLessThanOrEqual(1);
+  }
+}
+
 test('homepage implements the founder-approved R4-E content contract', async ({ page }) => {
   await openHomepage(page, 1440);
 
@@ -329,6 +356,11 @@ for (const width of responsiveWidths) {
 
     expect(audit.overflow).toBeLessThanOrEqual(1);
     expect(audit.undersized).toEqual([]);
+    await checkHeroFraming(page, width);
+    if (width >= 981) {
+      await page.setViewportSize({ width, height: 700 });
+      await checkHeroFraming(page, width);
+    }
   });
 }
 
