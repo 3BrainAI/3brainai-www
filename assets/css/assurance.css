@@ -1,0 +1,59 @@
+/* The assurance document uses the site's type, colour and footer vocabulary. */
+.assurance-page { color:#17232f; background:#fff; font:400 17px/1.65 Inter,"Segoe UI",Arial,sans-serif; }
+.assurance-page * { box-sizing:border-box; }
+.assurance-page .assurance-wrap { width:min(1120px,calc(100% - 48px)); margin-inline:auto; }
+.assurance-page .assurance-hero { padding:60px 0 36px; background:#f5f8f6; border-bottom:1px solid #c5d2d9; }
+.assurance-page .assurance-eyebrow { color:#405d70; font-size:14px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin:0 0 14px; }
+.assurance-page h1 { font-size:clamp(34px,4.1vw,56px); font-weight:600; line-height:1.1; letter-spacing:-.035em; max-width:880px; margin:0 0 22px; }
+.assurance-page .assurance-lead { max-width:830px; font-size:20px; line-height:1.55; }
+.assurance-page p { margin:0 0 18px; }
+.assurance-page h2 { font-size:clamp(26px,2.4vw,34px); line-height:1.2; font-weight:600; letter-spacing:-.02em; margin:0 0 22px; }
+.assurance-page h3 { font-size:19px; line-height:1.35; font-weight:600; margin:0 0 12px; }
+.assurance-page a { color:#185e68; text-decoration:underline; text-underline-offset:4px; }
+.assurance-page .assurance-actions { display:flex; flex-wrap:wrap; gap:12px; margin:24px 0 0; }
+.assurance-page .assurance-button { display:inline-flex; align-items:center; justify-content:center; min-height:48px; border:1px solid #1b6069; border-radius:0; background:#1b6069; color:#fff; padding:11px 20px; font:600 16px/1.4 Inter,"Segoe UI",Arial,sans-serif; text-decoration:none; cursor:pointer; }
+.assurance-page .assurance-button.secondary { color:#17232f; background:#fff; border-color:#6b8294; }
+.assurance-page .assurance-button:disabled { opacity:.6; cursor:not-allowed; }
+.assurance-page :focus-visible { outline:3px solid #186f80; outline-offset:4px; }
+.assurance-page .assurance-nav { display:flex; flex-wrap:wrap; gap:4px 22px; padding-block:22px; border-bottom:1px solid #c5d2d9; }
+.assurance-page .assurance-nav a { display:inline-flex; align-items:center; min-height:44px; font-size:15px; font-weight:600; }
+.assurance-page .assurance-section { padding:42px 0; border-bottom:1px solid #c5d2d9; scroll-margin-top:110px; }
+.assurance-page .assurance-reading { max-width:850px; }
+.assurance-page .assurance-facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.assurance-page .assurance-fact { padding-left:20px; border-left:2px solid #88adb2; min-width:0; }
+.assurance-page .assurance-fact p { font-size:16px; }
+.assurance-page .assurance-small { color:#405d70; font-size:15px; line-height:1.55; }
+.assurance-page .assurance-roles { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin:0; }
+.assurance-page .assurance-roles div { padding:22px; background:#f5f8f6; border:1px solid #c5d2d9; }
+.assurance-page .assurance-roles dt { font-weight:600; margin-bottom:10px; }
+.assurance-page .assurance-roles dd { margin:0; }
+.assurance-page details { border:1px solid #c5d2d9; margin-top:24px; padding:0 22px; }
+.assurance-page summary { cursor:pointer; padding:16px 0; font-weight:600; min-height:48px; }
+.assurance-page .assurance-form { margin:12px 0 24px; }
+.assurance-page .assurance-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.assurance-page .assurance-field { min-width:0; }
+.assurance-page .assurance-wide { grid-column:1/-1; }
+.assurance-page label,.assurance-page legend { display:block; font-size:16px; font-weight:600; margin-bottom:7px; }
+.assurance-page input:not([type=checkbox]),.assurance-page select,.assurance-page textarea { width:100%; min-height:48px; padding:10px 12px; border:1px solid #6b8294; border-radius:0; background:#fff; color:#17232f; font:400 16px/1.5 Inter,"Segoe UI",Arial,sans-serif; }
+.assurance-page textarea { min-height:120px; resize:vertical; }
+.assurance-page fieldset { min-width:0; padding:16px; margin:0; border:1px solid #c5d2d9; }
+.assurance-page .assurance-check { display:flex; align-items:flex-start; gap:10px; font-weight:400; min-height:44px; margin:0; padding-block:9px; }
+.assurance-page input[type=checkbox] { width:20px; height:20px; flex:none; margin:3px 0 0; accent-color:#1b6069; }
+.assurance-page .assurance-result { margin-top:24px; border-left:3px solid #1b6069; padding:16px 20px; background:#eef6f4; }
+.assurance-page .assurance-result textarea { min-height:330px; }
+.assurance-page .assurance-status { margin-top:16px; font-weight:600; }
+.assurance-page .assurance-stamp { padding:28px 0 44px; color:#405d70; font-size:15px; }
+.assurance-page [hidden] { display:none !important; }
+@media(max-width:760px) {
+ .assurance-page .assurance-wrap { width:calc(100% - 40px); }
+ .assurance-page .assurance-hero { padding:36px 0 28px; }
+ .assurance-page .assurance-lead { font-size:18px; }
+ .assurance-page .assurance-section { padding:30px 0; }
+ .assurance-page .assurance-facts,.assurance-page .assurance-roles,.assurance-page .assurance-fields { grid-template-columns:1fr; }
+ .assurance-page .assurance-actions { flex-direction:column; }
+ .assurance-page .assurance-nav { gap:0 18px; }
+ .assurance-page details { padding-inline:16px; }
+ .assurance-page .assurance-result { padding:14px; }
+}
+@media(prefers-reduced-motion:reduce) { html.assurance-document { scroll-behavior:auto; } }
+@media print { .assurance-page .assurance-nav,.assurance-page .assurance-actions,.assurance-page details { display:none; } }

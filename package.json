@@ -8,14 +8,15 @@
   },
   "scripts": {
     "dev": "http-server . -c-1",
-    "validate": "npm run validate:html && npm run validate:css && npm run validate:ai && npm run validate:polish && npm run validate:forms",
+    "validate": "npm run validate:html && npm run validate:css && npm run validate:ai && npm run validate:polish && npm run validate:forms && npm run validate:assurance",
     "validate:html": "html-validate --max-warnings=0 \"**/*.html\"",
     "validate:css": "csstree-validator assets/css/style.css && csstree-validator assets/css/hp-corrections.css && csstree-validator assets/css/about-founder.css && csstree-validator assets/css/evidence-archive.css",
     "validate:ai": "node scripts/validate-ai-visibility.mjs",
     "validate:polish": "node scripts/validate-site-polish.mjs",
     "test:r3": "playwright test",
     "indexnow": "node scripts/submit-indexnow.mjs",
-    "validate:forms": "node scripts/check-r32-forms.cjs"
+    "validate:forms": "node scripts/check-r32-forms.cjs",
+    "validate:assurance": "node --check assets/js/assurance-request.js && csstree-validator assets/css/assurance.css && node scripts/validate-assurance.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",

@@ -34,7 +34,7 @@ async function collectFiles(directory, target = []) {
 
 const files = await collectFiles(repositoryRoot);
 const htmlFiles = files.filter(file => path.extname(file) === '.html');
-assert.equal(htmlFiles.length, 37, 'All 37 public HTML entry points must remain covered');
+assert.equal(htmlFiles.length, 38, 'All 38 public HTML entry points must remain covered, including Assurance');
 const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html']);
 
 const requiredIconLinks = [

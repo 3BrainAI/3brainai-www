@@ -129,6 +129,7 @@ assert.match(llmsText, /participating in the ESA Business Incubation Centre Czec
 assert.doesNotMatch(llmsText, /EY Praha|Google Cloud|25[,. ]?000|Česká spořitelna/i);
 
 const publicEnglishPages = [
+  'assurance/index.html',
   'index.html',
   'evidence-packs/index.html',
   'about/index.html',
