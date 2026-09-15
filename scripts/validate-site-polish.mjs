@@ -34,7 +34,7 @@ async function collectFiles(directory, target = []) {
 
 const files = await collectFiles(repositoryRoot);
 const htmlFiles = files.filter(file => path.extname(file) === '.html');
-assert.equal(htmlFiles.length, 38, 'All 38 public HTML entry points must remain covered, including Assurance');
+assert.equal(htmlFiles.length, 41, 'All 41 public HTML entry points must remain covered, including the three bank review guides');
 const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html']);
 
 const requiredIconLinks = [
@@ -233,6 +233,9 @@ const canonicalEnglishPages = [
   'product/index.html',
   'security/index.html',
   'use-cases/index.html',
+  'use-cases/construction-loan-drawdown-review/index.html',
+  'use-cases/real-estate-collateral-review/index.html',
+  'use-cases/satellite-evidence-limits/index.html',
   'validation/index.html'
 ];
 

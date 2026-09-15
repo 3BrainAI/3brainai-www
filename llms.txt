@@ -1,6 +1,6 @@
 # 3BrainAI
 
-> 3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product designed to add governed, versioned Evidence Packs between formal institutional review points.
+> 3BrainAI Nexus is developing CRI – Construction Risk Intelligence, a review-support product combining dated satellite observations and authorised project records in versioned Evidence Packs for bank review.
 
 ## Primary audience
 
@@ -13,10 +13,17 @@
 
 - [3BrainAI CRI](https://www.3brain.ai/cri/): Construction Risk Intelligence for governed institutional review.
 - [Evidence Pack portfolio](https://www.3brain.ai/#portfolio): Fischamend is the primary Austrian public-safe case; earlier German prototypes remain accessible as historical concept evidence.
-- [Fischamend Evidence Pack](https://www.3brain.ai/evidence-packs/fischamend/): Illustrative public-safe draft for a synthetic review question; not a live customer assessment.
+- [Fischamend Evidence Pack](https://www.3brain.ai/evidence-packs/fischamend/): Illustrative public-safe release for a synthetic construction review question; not a live customer assessment.
 - [Validation](https://www.3brain.ai/validation/): Complete product history and a separate institution-specific engagement path beginning with an Evidence Readiness Check.
 
 Current stage: controlled-case Proof of Concept validation of the governed Evidence Pack workflow is in progress. The next product gate is a contracted paid pilot. Product history remains visible from completed idea definition and illustrative prototype work through current PoC, next Paid Pilot and target Commercial Deployment. Institution-specific engagement is a separate axis beginning with an Evidence Readiness Check; institution-specific validation is normally run in shadow mode alongside existing controls.
+
+## Bank review questions
+
+- [Bank review use cases](https://www.3brain.ai/use-cases/): intended workflows and evidence boundaries for construction finance and collateral.
+- [Construction loan drawdown review](https://www.3brain.ai/use-cases/construction-loan-drawdown-review/): Compare a declared milestone with dated observations and the records needed for a scoped technical review.
+- [Real-estate collateral review](https://www.3brain.ai/use-cases/real-estate-collateral-review/): Separate a visible change near a property from a conclusion about its value, condition or credit risk.
+- [Satellite evidence: uses and limits](https://www.3brain.ai/use-cases/satellite-evidence-limits/): Understand acquisition dates, optical and radar observations, aerial context and the point at which interpretation must stop.
 
 ## Company and verification
 
@@ -34,7 +41,7 @@ Current stage: controlled-case Proof of Concept validation of the governed Evide
 - CRI supports accountable human review. It does not make autonomous credit decisions, replace bank policy or replace professional assessment.
 - In shadow mode, CRI outputs are reviewed alongside existing processes and do not affect live financial, operational or risk decisions; existing controls remain in place.
 - Public Evidence Pack content is synthetic or clearly identified as illustrative.
-- Earth Observation is an input medium; the product is the governed Evidence Pack and review workflow.
+- Earth Observation is an input medium. CRI is the review-support product being developed; the Evidence Pack is its versioned review record.
 - Source, observation date, version, uncertainty and review state are designed to remain attached to each Evidence Pack record.
 
 ## Professional evaluation
