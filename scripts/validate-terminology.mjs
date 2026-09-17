@@ -29,5 +29,9 @@ export function validateTerminology() {
       .replace('<h2 id="archive-boundary-title">Archive boundary</h2>', '<h2 id="archive-boundary-title">Archive boundary</h2>\n        <p>Terminology revision, 17 September 2026. Observations, findings and qualifications are unchanged. <a href="/evidence-packs/archive/public-records-before-terminology-2026-09-17.zip" download>Download the original records and sources (ZIP)</a>.</p>');
     assert.equal(readFileSync(name, 'utf8'), expected, `${slug}: preserve all other record content`);
   }
+  const rendered = JSON.parse(readFileSync('scripts/r42-rendered-assets.json', 'utf8'));
+  for (const [name, expected] of Object.entries(rendered)) {
+    assert.equal(sha(readFileSync(name)), expected, `${name}: reviewed render or archive changed`);
+  }
   console.log('Terminology revisions match the exact approved map; original records are retained.');
 }

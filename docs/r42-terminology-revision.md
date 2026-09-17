@@ -30,7 +30,8 @@ New social artwork has an editable SVG source. It embeds the original dated obse
 - Public HTML and `llms.txt` contain no remaining use of synthetic except the technical term synthetic aperture radar.
 - Original release and image hashes remain checked; the archive sources retain their original bytes.
 - The browser print check now validates the exact terminology map, two A4 pages and separation of page content from the document footers. It exports a PDF and screenshot for review.
-- The new PDF and its page previews must be visually reviewed after the browser render is available. The final PR body records the completed CI result.
+- CI run 35256309832 passed all 112 browser tests on the first attempt. Its Chromium PDF is the published v0.2 file; both page previews are rendered from that exact PDF. The PDF, mobile header, homepage and example heading were visually inspected.
+- Final binary checksums are recorded in `scripts/r42-rendered-assets.json`. The final PR body records the last CI result.
 
 ## Scope and publication
 
