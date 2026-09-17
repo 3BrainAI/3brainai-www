@@ -48,7 +48,7 @@ const requiredIconLinks = [
 const releaseStylesheetVersion = 'footer-cri-20260908';
 const releaseScriptVersion = 'f87d840f';
 const m3HomepageCorrectionVersion = 'r37-programme-strip';
-const editorialScreeningVersion = 'r38';
+const editorialScreeningVersion = 'r40';
 const evidenceArchiveVersion = 'wp0-20260907';
 const aboutFounderVersion = 'r37-programme-colour';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
@@ -56,8 +56,9 @@ const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const relativePath = path.relative(repositoryRoot, file);
-  assert.equal(html.split('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r33">').length, 2, `${relativePath}: shared loading style`);
-  assert.equal(html.split('<script src="/assets/js/document-feedback.js?v=r33" defer></script>').length, 2, `${relativePath}: shared loading script`);
+  const feedbackVersion = standaloneArtifactPages.has(relativePath) ? 'r40' : 'r33';
+  assert.equal(html.split(`<link rel="stylesheet" href="/assets/css/document-feedback.css?v=${feedbackVersion}">`).length, 2, `${relativePath}: shared loading style`);
+  assert.equal(html.split(`<script src="/assets/js/document-feedback.js?v=${feedbackVersion}" defer></script>`).length, 2, `${relativePath}: shared loading script`);
   if (standaloneArtifactPages.has(relativePath)) continue;
   const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseStylesheetVersion}">`;
   assert.ok(
@@ -148,12 +149,15 @@ const fischamendPublicReleaseHashes = new Map([
 
 for (const [relativePath, expectedHash] of fischamendPublicReleaseHashes) {
   const value = await readFile(path.join(repositoryRoot, relativePath));
-  // 15 September: founder requested shared loading feedback on every document.
-  // Remove only those exact two head includes before verifying the original
-  // approved HTML bytes. All document content, styling and PDF bytes stay locked.
+  // Approved website context: shared feedback (15 Sep), static header/footer
+  // (P0 v1.1, 17 Sep), and the separately approved social preview. Strip only
+  // these additions before comparing the ORIGINAL release hash. The record,
+  // embedded document styles, qualifications and PDF remain locked.
   const original = relativePath.endsWith('/index.html')
     ? value.toString()
-      .replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r33">\n<script src="/assets/js/document-feedback.js?v=r33" defer></script>\n', '')
+      .replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r40">\n<script src="/assets/js/document-feedback.js?v=r40" defer></script>\n', '')
+      .replace(/\n  <header class="ep-web-header">[\s\S]*?<\/header>/, '')
+      .replace(/\n  <footer class="ep-web-footer" aria-labelledby="ep-web-continue">[\s\S]*?<\/footer>/, '')
       .replace(
         '<meta property="og:image" content="https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png">',
         '<meta property="og:image" content="https://www.3brain.ai/assets/img/og_3brainai.png">'

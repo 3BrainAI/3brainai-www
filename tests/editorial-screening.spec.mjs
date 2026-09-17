@@ -1,4 +1,7 @@
 import { expect, test } from '@playwright/test';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { mkdir, readFile } from 'node:fs/promises';
 
 async function prepare(page, width = 1280) {
   await page.route('https://fonts.googleapis.com/**', route => route.abort());
@@ -68,18 +71,104 @@ test('Evidence Pack guide separates observation, scenario and next review action
     .toBe('http://127.0.0.1:4174/evidence-packs/#public-finding');
 });
 
-test('released Fischamend record keeps its body and gains external context navigation', async ({ page }) => {
-  await prepare(page, 390);
-  await page.goto('/evidence-packs/fischamend/');
+for (const javaScriptEnabled of [true, false]) {
+  test(`Fischamend has one static context route with JavaScript ${javaScriptEnabled ? 'on' : 'off'}`, async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled });
+    const page = await context.newPage();
+    try {
+      await prepare(page, 390);
+      await page.goto('/evidence-packs/fischamend/');
+      const navigation = page.getByRole('navigation', { name: 'Evidence Pack context', exact: true });
+      await expect(navigation).toHaveCount(1);
+      await expect(navigation.getByRole('link')).toHaveText(['CRI', 'Evidence Pack', 'For banks', 'About', 'Contact']);
+      await expect(page.locator('.ep-web-header')).toBeVisible();
+      await expect(page.locator('.ep-web-footer')).toBeVisible();
+      await expect(page.locator('main .ep-web-header, main .ep-web-footer')).toHaveCount(0);
+      await expect(page.locator('.ep-web-brand-line')).toHaveText('Evidence for the people who review, challenge and decide.');
+      await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute(
+        'content', 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png'
+      );
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
 
-  const navigation = page.getByRole('navigation', { name: 'Evidence Pack context' });
-  await expect(navigation.getByRole('link')).toHaveText(['Reading guide', 'What is CRI?', 'About', 'Contact']);
-  await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute(
-    'content',
-    'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png'
-  );
-  await expect(page.locator('main')).toContainText('v0.1 PUBLIC-SAFE RELEASE');
-  await expect(page.locator('main')).toContainText('Illustrative Prototype - Public-Safe Example');
-  await expect(page.locator('main')).toContainText('PUBLIC-SAFE EXAMPLE - HUMAN REVIEW REQUIRED');
+      // Use the actual footer links to check both continuation anchors.
+      for (const [name, pathname, hash] of [
+        ['How to read an Evidence Pack', '/evidence-packs/', '#reading-guide'],
+        ['Request editorial access to The Brief', '/validation/', '#brief-request']
+      ]) {
+        await page.goto('/evidence-packs/fischamend/');
+        await page.locator('.ep-web-footer').getByRole('link', { name, exact: true }).click();
+        expect(new URL(page.url()).pathname).toBe(pathname);
+        expect(new URL(page.url()).hash).toBe(hash);
+        await expect(page.locator(hash)).toBeAttached();
+        const y = await page.locator(hash).evaluate(el => el.getBoundingClientRect().top);
+        expect(y).toBeGreaterThanOrEqual(-1);
+        expect(y).toBeLessThan(900);
+      }
+    } finally {
+      await context.close();
+    }
+  });
+}
+
+test('released Fischamend main stays byte-identical and prints as the same two A4 pages', async ({ page }, info) => {
+  const artifactPath = 'evidence-packs/fischamend/index.html';
+  const current = await readFile(artifactPath, 'utf8');
+  const baseline = execFileSync('git', ['show', `origin/${process.env.GITHUB_BASE_REF || 'main'}:${artifactPath}`], { encoding: 'utf8' });
+  const main = html => html.match(/<main\b[\s\S]*?<\/main>/)[0];
+  const sha = value => createHash('sha256').update(value).digest('hex');
+  expect(sha(main(current))).toBe('13813d23bf18616eda561407fcbcd004a660d38a8938ef8e2d7a67a5d469fd30');
+  expect(main(current)).toBe(main(baseline));
+  await prepare(page, 1440);
+  await page.emulateMedia({ media: 'print' });
+  await mkdir('artifacts/r3-preview', { recursive: true });
+  const record = '/evidence-packs/fischamend/';
+  const pdfOptions = { format: 'A4', preferCSSPageSize: true, printBackground: true };
+  await page.route(`**${record}`, route => route.fulfill({ contentType: 'text/html', body: baseline }));
+  await page.goto(record);
+  const beforeImage = await page.locator('main').screenshot();
+  const beforePdf = await page.pdf({ ...pdfOptions, path: 'artifacts/r3-preview/p0-fischamend-before.pdf' });
+  await page.unroute(`**${record}`);
+  await page.reload();
+  await expect(page.locator('.ep-web-header')).toBeHidden();
+  await expect(page.locator('.ep-web-footer')).toBeHidden();
+  const afterImage = await page.locator('main').screenshot({ path: 'artifacts/r3-preview/p0-fischamend-print.png' });
+  const afterPdf = await page.pdf({ ...pdfOptions, path: 'artifacts/r3-preview/p0-fischamend-after.pdf' });
+  // Chromium's page objects are uncompressed; avoid counting the Pages root.
+  for (const pdf of [beforePdf, afterPdf]) expect((pdf.toString('latin1').match(/\/Type\s*\/Page\b/g) || []).length).toBe(2);
+  expect(sha(afterImage)).toBe(sha(beforeImage));
+  await info.attach('print-verification.json', { body: JSON.stringify({ mainSha256: sha(main(current)), printPixelsIdentical: true, pagesBefore: 2, pagesAfter: 2 }), contentType: 'application/json' });
+});
+
+test('P0 layouts preserve readable entry points at narrow and wide widths', async ({ page }) => {
+  await mkdir('artifacts/r3-preview', { recursive: true });
+  for (const width of [320, 390, 1440, 1920]) {
+    await prepare(page, width);
+    await page.goto('/');
+    await page.screenshot({ path: `artifacts/r3-preview/p0-home-${width}.png` });
+    await page.locator('.r4-record-head').screenshot({ path: `artifacts/r3-preview/p0-example-intro-${width}.png` });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+    if (width >= 1440) {
+      const note = await page.locator('.v3-brief-note').evaluate(el => ({ height: el.getBoundingClientRect().height, line: parseFloat(getComputedStyle(el).lineHeight) }));
+      expect(Math.abs(note.height - 2 * note.line)).toBeLessThanOrEqual(1);
+    }
+    await page.goto('/evidence-packs/fischamend/');
+    await page.locator('.ep-web-header').screenshot({ path: `artifacts/r3-preview/p0-pack-header-${width}.png` });
+    await page.locator('.ep-web-footer').screenshot({ path: `artifacts/r3-preview/p0-pack-footer-${width}.png` });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  }
+  // Explicit 200% text enlargement of the new web context, without altering
+  // the released record. Capture sizes first to avoid compounding inheritance.
+  await prepare(page, 390);
+  await page.reload();
+  await page.evaluate(() => {
+    const sizes = [...document.querySelectorAll('.ep-web-header, .ep-web-header *, .ep-web-footer, .ep-web-footer *')].map(el => ({ el, size: parseFloat(getComputedStyle(el).fontSize) }));
+    for (const { el, size } of sizes) el.style.fontSize = `${size * 2}px`;
+  });
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  await page.locator('.ep-web-header').screenshot({ path: 'artifacts/r3-preview/p0-pack-header-text-200.png' });
+  await page.locator('.ep-web-footer').screenshot({ path: 'artifacts/r3-preview/p0-pack-footer-text-200.png' });
+  const firstLink = page.locator('.ep-web-brand');
+  await firstLink.press('Tab');
+  await expect(page.locator('.ep-web-nav a').first()).toBeFocused();
+  await expect(page.locator('.ep-web-nav a').first()).toHaveCSS('outline-style', 'solid');
 });
