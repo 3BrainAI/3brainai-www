@@ -47,7 +47,7 @@ const requiredIconLinks = [
 
 const releaseStylesheetVersion = 'footer-cri-20260908';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'r37-programme-strip';
+const m3HomepageCorrectionVersion = 'r41-hypothetical-scenario';
 const editorialScreeningVersion = 'r40';
 const evidenceArchiveVersion = 'wp0-20260907';
 const aboutFounderVersion = 'r37-programme-colour';
