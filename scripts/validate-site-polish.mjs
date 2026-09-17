@@ -57,7 +57,8 @@ for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const relativePath = path.relative(repositoryRoot, file);
   const feedbackVersion = standaloneArtifactPages.has(relativePath) ? 'r40' : 'r33';
-  assert.equal(html.split(`<link rel="stylesheet" href="/assets/css/document-feedback.css?v=${feedbackVersion}">`).length, 2, `${relativePath}: shared loading style`);
+  const feedbackStyleVersion = standaloneArtifactPages.has(relativePath) ? 'r41' : 'r33';
+  assert.equal(html.split(`<link rel="stylesheet" href="/assets/css/document-feedback.css?v=${feedbackStyleVersion}">`).length, 2, `${relativePath}: shared loading style`);
   assert.equal(html.split(`<script src="/assets/js/document-feedback.js?v=${feedbackVersion}" defer></script>`).length, 2, `${relativePath}: shared loading script`);
   if (standaloneArtifactPages.has(relativePath)) continue;
   const requiredStylesheetLink = `<link rel="stylesheet" href="/assets/css/style.css?v=${releaseStylesheetVersion}">`;
@@ -150,12 +151,21 @@ const fischamendPublicReleaseHashes = new Map([
 for (const [relativePath, expectedHash] of fischamendPublicReleaseHashes) {
   const value = await readFile(path.join(repositoryRoot, relativePath));
   // Approved website context: shared feedback (15 Sep), static header/footer
-  // (P0 v1.1, 17 Sep), and the separately approved social preview. Strip only
+  // (P0 v1.1, 17 Sep), reader terminology and metadata (17 Sep), and the
+  // separately approved social preview. Strip only
   // these additions before comparing the ORIGINAL release hash. The record,
   // embedded document styles, qualifications and PDF remain locked.
   const original = relativePath.endsWith('/index.html')
     ? value.toString()
-      .replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r40">\n<script src="/assets/js/document-feedback.js?v=r40" defer></script>\n', '')
+      .replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r41">\n<script src="/assets/js/document-feedback.js?v=r40" defer></script>\n', '')
+      .replace(
+        'A public 3BrainAI CRI Evidence Pack using real dated Copernicus data and a hypothetical construction drawdown review scenario in Fischamend, Lower Austria. Human review required.',
+        'A public-safe illustrative 3BrainAI CRI Evidence Pack showing a governed, human-reviewed construction drawdown evidence workflow for a synthetic project context in Fischamend, Lower Austria.'
+      )
+      .replaceAll(
+        'Real Copernicus data. Hypothetical review scenario. Human review required.',
+        'Public-safe illustrative Evidence Pack. Synthetic project context. Human review required.'
+      )
       .replace(/\n  <header class="ep-web-header">[\s\S]*?<\/header>/, '')
       .replace('  <div class="ep-web-record">\n', '')
       .replace('  </main>\n  </div>', '  </main>')
@@ -376,8 +386,8 @@ assert.match(homepageHtml, /A governed evidence workflow for accountable institu
 assert.doesNotMatch(homepageHtml, /Relationships, precisely named\./);
 assert.equal((homepageHtml.match(/class="r4-workflow-step"/g) ?? []).length, 4);
 assert.equal((homepageHtml.match(/class="r4-signpost"/g) ?? []).length, 2);
-assert.match(homepageHtml, /Real Copernicus data · synthetic scenario/);
-assert.match(homepageHtml, /Declared – synthetic/);
+assert.match(homepageHtml, /Real Copernicus data · hypothetical review scenario/);
+assert.match(homepageHtml, /Declared – hypothetical/);
 assert.match(homepageHtml, /Observed – dated public evidence/);
 assert.match(homepageHtml, /Uncertainty and non-inference/);
 assert.match(homepageHtml, /WATCH refers to evidence sufficiency/);

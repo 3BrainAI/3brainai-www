@@ -57,7 +57,7 @@ test('Evidence Pack guide separates observation, scenario and next review action
 
   const guide = page.locator('#reading-guide');
   await expect(guide).toContainText('Everything observed is real and checkable.');
-  await expect(guide).toContainText('Everything about the financing scenario is synthetic.');
+  await expect(guide).toContainText('The financing review scenario is hypothetical.');
   await expect(guide.locator('.card')).toHaveCount(3);
   await expect(guide.locator('.card h3')).toHaveText([
     'What the images show',

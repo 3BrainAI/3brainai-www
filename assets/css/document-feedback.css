@@ -21,6 +21,11 @@
  display:inline-flex; align-items:center; min-height:44px;
  color:#e1ebef; font-size:15px; font-weight:600; text-decoration:none;
 }
+.ep-web-header .ep-web-scenario-note {
+ flex-basis:100%; min-width:0; margin:4px 0 0;
+ color:#c1d5de; font-size:14px; line-height:1.5;
+}
+.ep-web-header .ep-web-scenario-note strong { color:#e1ebef; }
 .ep-web-footer { padding-block:32px 40px; border-top:1px solid #7899ac; }
 .ep-web-footer .ep-web-end {
  margin:0 0 12px; color:#9fd2d4; font-size:13px; font-weight:600;
