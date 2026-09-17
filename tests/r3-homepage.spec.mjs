@@ -78,9 +78,9 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   );
   await expect(page.locator('.r4-hero').getByRole('link', {
     name: 'Explore The Brief'
-  })).toHaveAttribute('href', '/cri/#the-brief');
+  })).toHaveAttribute('href', '/brief/');
   await expect(page.locator('.r4-hero')).toContainText('Public example · 2 pages · No sign-in.');
-  await expect(page.locator('.r4-hero')).toContainText('Free editorial evaluation.');
+  await expect(page.locator('.r4-hero')).toContainText('Free access by invitation.');
   await expect(page.locator('.r4-evidence-anchor')).toHaveText(
     'Public example · Real Copernicus data · Hypothetical review scenario'
   );

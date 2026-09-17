@@ -37,8 +37,8 @@ async function collectFiles(directory, target = []) {
 
 const files = await collectFiles(repositoryRoot);
 const htmlFiles = files.filter(file => path.extname(file) === '.html');
-assert.equal(htmlFiles.length, 41, 'All 41 public HTML entry points must remain covered, including the three bank review guides');
-const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html']);
+assert.equal(htmlFiles.length, 42, 'All 42 public HTML entry points must remain covered, including The Brief entry');
+const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html','brief/index.html']);
 
 const requiredIconLinks = [
   '<link rel="icon" type="image/svg+xml" href="/assets/img/favicon-mark-v2.svg">',
@@ -365,11 +365,11 @@ assert.match(
   /<h1 id="r4-hero-title">The physical world does not wait for your next review\.<\/h1>/
 );
 assert.match(homepageHtml, /3BrainAI’s Construction Risk Intelligence \(CRI\) turns/);
-assert.match(homepageHtml, /href="\/cri\/#the-brief"/);
+assert.match(homepageHtml, /href="\/brief\/"/);
 assert.match(homepageHtml, /href="\/evidence-packs\/fischamend\/">View an Evidence Pack<\/a>/);
 assert.match(homepageHtml, /Public example · 2 pages · No sign-in\./);
 assert.match(homepageHtml, /Initial focus: DACH, Benelux and Central Europe/);
-assert.match(homepageHtml, /Free editorial evaluation\./);
+assert.match(homepageHtml, /Free access by invitation\./);
 assert.match(homepageHtml, /<dt>CRI<\/dt><dd>The review-support product\.<\/dd>/);
 assert.doesNotMatch(homepageHtml, /Real Evidence Pack|Authentic record|Paid professional access|public-safe draft|0\.1-draft/);
 assert.match(homepageHtml, /WATCH – Evidence sufficiency/);

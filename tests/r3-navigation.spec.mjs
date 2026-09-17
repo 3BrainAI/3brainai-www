@@ -2,10 +2,11 @@ import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
-const refreshedRoutes = new Set(['/cri/','/validation/','/investors/','/contact/','/evidence-packs/']);
+const refreshedRoutes = new Set(['/cri/','/validation/','/investors/','/contact/','/evidence-packs/', '/brief/']);
 const canonicalNavigation = [
   { label: 'CRI', href: '/cri/' },
   { label: 'Evidence Pack', href: '/#evidence-pack-sample' },
+  { label: 'The Brief', href: '/brief/' },
   { label: 'For banks', href: '/validation/' },
   { label: 'Investors', href: '/investors/' },
   { label: 'About', href: '/about/' },
@@ -14,6 +15,7 @@ const canonicalNavigation = [
 
 const primaryJourneyRoutes = [
   { route: '/', slug: 'home' },
+  { route: '/brief/', slug: 'brief' },
   { route: '/evidence-packs/', slug: 'evidence-pack' },
   { route: '/cri/', slug: 'cri' },
   { route: '/validation/', slug: 'validation' },
@@ -23,6 +25,7 @@ const primaryJourneyRoutes = [
 ];
 
 const scopedRoutes = [
+  { route: '/brief/', file: 'brief/index.html', active: 'The Brief' },
   { route: '/evidence-packs/', file: 'evidence-packs/index.html', active: 'Evidence Pack' },
   { route: '/', file: 'index.html', active: null, evidenceHref: '#portfolio' },
   { route: '/about/', file: 'about/index.html', active: 'About' },
@@ -97,13 +100,14 @@ for (const routeContract of scopedRoutes) {
     await openRoute(page, routeContract.route);
 
     const links = page.locator('.nav[aria-label="Main navigation"] > a');
-    await expect(links).toHaveCount(canonicalNavigation.length);
+    const routeNavigation = canonicalNavigation.filter(item => item.label !== 'The Brief' || !['/evidence-packs/lausitz/', '/evidence-packs/german-north-sea/'].includes(routeContract.route));
+    await expect(links).toHaveCount(routeNavigation.length);
 
     const actual = await links.evaluateAll(anchors => anchors.map(anchor => ({
       label: anchor.textContent?.trim(),
       href: anchor.getAttribute('href')
     })));
-    const expected = canonicalNavigation.map(item => ({
+    const expected = routeNavigation.map(item => ({
       label: item.label,
       href: item.label === 'Evidence Pack' && refreshedRoutes.has(routeContract.route) ? '/evidence-packs/' : item.label === 'Evidence Pack' && routeContract.evidenceHref
         ? routeContract.evidenceHref
@@ -353,6 +357,7 @@ test('creates deterministic fast-refresh screenshots for the six primary journey
     await page.setViewportSize(viewport);
     for (const { route, slug } of [
       { route: '/', slug: 'home' },
+  { route: '/brief/', slug: 'brief' },
   { route: '/evidence-packs/', slug: 'evidence-pack' },
       { route: '/about/', slug: 'about' }
     ]) {

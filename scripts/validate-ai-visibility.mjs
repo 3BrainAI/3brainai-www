@@ -153,13 +153,15 @@ const publicEnglishPages = [
   'use-cases/construction-loan-drawdown-review/index.html',
   'use-cases/real-estate-collateral-review/index.html',
   'use-cases/satellite-evidence-limits/index.html',
-  'validation/index.html'
+  'validation/index.html',
+  'brief/index.html'
 ];
 
-const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html']);
+const refreshedPages = new Set(['cri/index.html','validation/index.html','investors/index.html','contact/index.html','evidence-packs/index.html','brief/index.html']);
 const primaryNavigation = [
   ['CRI', '/cri/'],
   ['Evidence Pack', '/#evidence-pack-sample'],
+  ['The Brief', '/brief/'],
   ['For banks', '/validation/'],
   ['Investors', '/investors/'],
   ['About', '/about/'],
@@ -198,7 +200,7 @@ for (const file of publicEnglishPages) {
   assert.ok(navigationMatch, `${file} is missing the primary navigation`);
   const navigationLinks = [...navigationMatch[1].matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
     .map(match => [match[2].trim(), match[1]]);
-  const expectedNavigation = primaryNavigation.map(([label, href]) => [
+  const expectedNavigation = primaryNavigation.filter(([label]) => label !== 'The Brief' || !['evidence-packs/lausitz/index.html', 'evidence-packs/german-north-sea/index.html'].includes(file)).map(([label, href]) => [
     label,
     label === 'Evidence Pack' && refreshedPages.has(file) ? '/evidence-packs/' :
     label === 'Evidence Pack' && m2NavigationPages.has(file)

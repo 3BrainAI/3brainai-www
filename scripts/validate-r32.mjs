@@ -15,14 +15,15 @@ for(const [file,parts] of Object.entries(approved)) {
    const link='<a href="/assurance/">Assurance</a>';
    assert.equal(surface.split(link).length,2,`${file}: one Assurance footer link required`);
    surface=surface.replace(link,'');
+   surface=surface.replace('<a href="/brief/">The Brief</a>','');
   }
   assert.equal(createHash('sha256').update(surface).digest('hex'),parts[name],`${file}: approved ${name} drift`);
  }
 }
 const cri=await read('cri/index.html'),validation=await read('validation/index.html');
-assert.ok(cri.includes('Editorial evaluation access to The Brief is free and individually reviewed.'));
-assert.ok(validation.includes('Editorial evaluation access to The Brief is free and individually reviewed.'));
-assert.ok(cri.includes('Commercial terms, where applicable, are handled separately.'));
+assert.ok(cri.includes('Access to The Brief is free for all invited visitors.'));
+assert.ok(validation.includes('Access to The Brief is free for all invited visitors.'));
+assert.ok(cri.includes('Access to The Brief is always free.'));
 for(const file of ['contact/index.html','validation/index.html','investors/index.html']) {
  const html=await read(file);
  const cfg=JSON.parse(html.match(/<script type="application\/json" id="n4-config">([\s\S]*?)<\/script>/)[1]);
