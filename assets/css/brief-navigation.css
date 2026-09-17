@@ -1,0 +1,2 @@
+/* Seven primary destinations retain the compact shared footer. */
+.footer-navigation--primary .footer-link-list { row-gap: 6px; }

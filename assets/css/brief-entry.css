@@ -9,7 +9,7 @@
 .brief-entry-card > p:not(.eyebrow):not(.micro) { flex: 1; margin-bottom: 24px; }
 .brief-entry-card .button { min-height: 48px; gap: 16px; text-align: center; }
 .brief-entry-card .micro { margin: 16px 0 0; }
-.brief-help { margin: 28px 0 0; font-size: 15px; }
+.cri-n4 .brief-help { margin: 28px 0 0; font-size: 15px; }
 .brief-context .lead { max-width: 800px; }
 @media (max-width: 700px) {
   .brief-entry-options { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
