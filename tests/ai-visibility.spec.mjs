@@ -75,7 +75,7 @@ test('llms.txt is public-safe, bounded and internally resolvable', async ({ requ
   expect(body).toContain('Earth Observation is an input medium');
   expect(body).toContain('participating in the ESA Business Incubation Centre Czech Republic');
   expect(body).toContain('nine prepared model situations across Austria, Czechia and the Netherlands');
-  expect(body).toContain('Editorial evaluation access is free and individually reviewed');
+  expect(body).toContain('Access to The Brief is free for all invited visitors.');
   expect(body).not.toMatch(/EY Praha|Google Cloud|25[,. ]?000|Česká spořitelna/i);
 
   const linkedUrls = [...body.matchAll(/\(https:\/\/www\.3brain\.ai\/(?:[^)#]*)?(?:#[^)]+)?\)/g)]

@@ -18,7 +18,7 @@ test('homepage answers the skeptical-editor screening questions without claim co
   await expect(hero).toContainText('For banks & institutional lenders');
   await expect(hero).toContainText('Initial focus: DACH, Benelux and Central Europe');
   await expect(hero).toContainText('Public example · 2 pages · No sign-in.');
-  await expect(hero).toContainText('Free editorial evaluation.');
+  await expect(hero).toContainText('Free access by invitation.');
   await expect(hero).not.toContainText(/Paid professional access|Real Evidence Pack|Authentic record/);
 
   await expect(page.locator('.r38-product-key dt')).toHaveText(['CRI', 'Evidence Pack', 'The Brief']);
@@ -41,7 +41,7 @@ test('CRI exposes a concise orientation layer and removes internal display codes
   await expect(page.locator('#at-a-glance')).toContainText('Where CRI stands');
   await expect(page.locator('#the-brief')).toContainText('Austria, Czechia and the Netherlands');
   await expect(page.locator('#the-brief')).toContainText('not customer deployments');
-  await expect(page.locator('#the-brief')).toContainText('Editorial evaluation access to The Brief is free');
+  await expect(page.locator('#the-brief')).toContainText('Access to The Brief is free for all invited visitors.');
   await expect(page.locator('#image-provenance')).not.toContainText(/T38|N2|R2/);
 });
 
@@ -93,7 +93,7 @@ for (const javaScriptEnabled of [true, false]) {
       // Use the actual footer links to check both continuation anchors.
       for (const [name, pathname, hash] of [
         ['How to read an Evidence Pack', '/evidence-packs/', '#reading-guide'],
-        ['Request editorial access to The Brief', '/validation/', '#brief-request']
+        ['Enter The Brief or request a code', '/brief/', '']
       ]) {
         await page.goto('/evidence-packs/fischamend/');
         await page.locator('.ep-web-footer').getByRole('link', { name, exact: true }).click();

@@ -47,4 +47,4 @@ Current stage: controlled-case Proof of Concept validation of the governed Evide
 ## Professional evaluation
 
 - [Evidence Pack overview](https://www.3brain.ai/evidence-packs/): public output format and links to the published record.
-- [The Brief](https://www.3brain.ai/cri/#the-brief): nine prepared model situations across Austria, Czechia and the Netherlands. Editorial evaluation access is free and individually reviewed; other professional access is agreed separately. A request does not grant access or buy a bank pilot.
+- [The Brief](https://www.3brain.ai/brief/): nine prepared model situations across Austria, Czechia and the Netherlands. Access to The Brief is free for all invited visitors. Requests are reviewed individually. A request does not grant access or buy a bank pilot.

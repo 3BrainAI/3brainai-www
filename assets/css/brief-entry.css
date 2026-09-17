@@ -1,0 +1,19 @@
+.cri-n4 .brief-hero { padding-bottom: 48px; }
+.cri-n4 .brief-hero h1 { max-width: 900px; }
+.cri-n4 .brief-hero .lead { max-width: 760px; }
+.brief-welcome { max-width: 760px; margin: 20px 0 0; }
+.brief-entry-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 36px; }
+.brief-entry-card { padding: 32px; border: 1px solid #cbd5df; border-radius: 16px; background: #fff; display: flex; flex-direction: column; align-items: flex-start; }
+.brief-entry-invited { border-top: 4px solid #173e55; padding-top: 29px; background: #f2f7fa; }
+.cri-n4 .brief-entry-card h2 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.2; margin: 8px 0 14px; }
+.brief-entry-card > p:not(.eyebrow):not(.micro) { flex: 1; margin-bottom: 24px; }
+.brief-entry-card .button { min-height: 48px; gap: 16px; text-align: center; }
+.brief-entry-card .micro { margin: 16px 0 0; }
+.brief-help { margin: 28px 0 0; font-size: 15px; }
+.brief-context .lead { max-width: 800px; }
+@media (max-width: 700px) {
+  .brief-entry-options { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+  .brief-entry-card { padding: 24px; }
+  .brief-entry-invited { padding-top: 21px; }
+  .brief-entry-card .button { width: 100%; justify-content: space-between; }
+}
