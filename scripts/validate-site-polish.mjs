@@ -1,8 +1,11 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { validateTerminology } from './validate-terminology.mjs';
+validateTerminology();
 
 const repositoryRoot = process.cwd();
 const ignoredDirectories = new Set(['.git', 'node_modules', 'playwright-report', 'test-results', 'artifacts']);
@@ -149,7 +152,9 @@ const fischamendPublicReleaseHashes = new Map([
 ]);
 
 for (const [relativePath, expectedHash] of fischamendPublicReleaseHashes) {
-  const value = await readFile(path.join(repositoryRoot, relativePath));
+  const value = relativePath.endsWith('/index.html')
+    ? execFileSync('unzip', ['-p', 'evidence-packs/archive/public-records-before-terminology-2026-09-17.zip', relativePath])
+    : await readFile(path.join(repositoryRoot, relativePath));
   // Approved website context: shared feedback (15 Sep), static header/footer
   // (P0 v1.1, 17 Sep), reader terminology and metadata (17 Sep), and the
   // separately approved social preview. Strip only
@@ -216,7 +221,7 @@ for (const [relativePath, expectedHash] of institutionalVisualHashes) {
 }
 
 const fischamendSocialPreview = await readFile(
-  path.join(repositoryRoot, 'assets/img/og_fischamend_evidence_pack.png')
+  path.join(repositoryRoot, 'assets/img/og_fischamend_evidence_pack_v0_2.png')
 );
 assert.equal(fischamendSocialPreview.readUInt32BE(16), 1200, 'Fischamend social preview width');
 assert.equal(fischamendSocialPreview.readUInt32BE(20), 630, 'Fischamend social preview height');
@@ -237,7 +242,7 @@ assert.doesNotMatch(
 for (const requiredReleaseMarker of [
   'ILLUSTRATIVE PROTOTYPE - PUBLIC-SAFE EXAMPLE - HUMAN REVIEW REQUIRED',
   'PUBLIC-SAFE EXAMPLE - HUMAN REVIEW REQUIRED',
-  'v0.1 PUBLIC-SAFE RELEASE'
+  'v0.2 TERMINOLOGY REVISION'
 ]) {
   assert.ok(fischamendArtifactHtml.includes(requiredReleaseMarker));
 }

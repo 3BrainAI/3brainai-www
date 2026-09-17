@@ -16,7 +16,7 @@ const structuredDataByFile = new Map();
 for (const [file, canonicalUrl, title, description] of canonicalPages) {
   const html = await readRepositoryFile(file);
   const socialImage = file === 'evidence-packs/index.html'
-    ? 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png'
+    ? 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack_v0_2.png'
     : 'https://www.3brain.ai/assets/img/og_3brainai.png';
   const requiredFragments = [
     `<title>${title}</title>`,
@@ -267,7 +267,7 @@ for (const [file, canonicalUrl] of historicalArchivePages) {
     'Historical public-safe prototype',
     'archive only',
     'not a customer record',
-    'Synthetic review question',
+    'Hypothetical review question',
     'Observed vs Declared',
     'Uncertainty and non-inference',
     'Bounded conclusion',
@@ -285,7 +285,7 @@ assert.match(await readRepositoryFile('scripts/submit-indexnow.mjs'), new RegExp
 const ogImage = await readFile(path.join(repositoryRoot, 'assets/img/og_3brainai.png'));
 assert.equal(ogImage.readUInt32BE(16), 1200, 'Open Graph image width must be 1200');
 assert.equal(ogImage.readUInt32BE(20), 630, 'Open Graph image height must be 630');
-const evidencePackOgImage = await readFile(path.join(repositoryRoot, 'assets/img/og_fischamend_evidence_pack.png'));
+const evidencePackOgImage = await readFile(path.join(repositoryRoot, 'assets/img/og_fischamend_evidence_pack_v0_2.png'));
 assert.equal(evidencePackOgImage.readUInt32BE(16), 1200, 'Evidence Pack Open Graph image width must be 1200');
 assert.equal(evidencePackOgImage.readUInt32BE(20), 630, 'Evidence Pack Open Graph image height must be 630');
 

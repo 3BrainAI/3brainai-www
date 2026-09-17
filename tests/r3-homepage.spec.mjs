@@ -82,7 +82,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await expect(page.locator('.r4-hero')).toContainText('Public example · 2 pages · No sign-in.');
   await expect(page.locator('.r4-hero')).toContainText('Free editorial evaluation.');
   await expect(page.locator('.r4-evidence-anchor')).toHaveText(
-    'Public example · real Copernicus data · hypothetical review scenario'
+    'Public example · Real Copernicus data · Hypothetical review scenario'
   );
   await expect(page.locator('.r38-product-key dt')).toHaveText(['CRI', 'Evidence Pack', 'The Brief']);
 
@@ -189,7 +189,7 @@ test('Evidence Lens makes the real-data and hypothetical-scenario boundary expli
 
   const lens = page.locator('.r4-evidence-lens');
   await expect(lens).toContainText('Real Copernicus data · hypothetical review scenario');
-  await expect(lens).toContainText('DEMO-EU-AT-FIS-01 · v0.1 public-safe release');
+  await expect(lens).toContainText('DEMO-EU-AT-FIS-01 · v0.2 terminology revision');
   await expect(lens).toContainText('Human review required');
   await expect(lens).toContainText('WATCH – Evidence sufficiency');
   await expect(lens).toContainText('High – large roofed footprint change only');
