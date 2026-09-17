@@ -144,6 +144,7 @@ test('P0 layouts preserve readable entry points at narrow and wide widths', asyn
   for (const width of [320, 390, 1440, 1920]) {
     await prepare(page, width);
     await page.goto('/');
+    await page.locator('.r4-folio-sheet img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
     await page.screenshot({ path: `artifacts/r3-preview/p0-home-${width}.png` });
     await page.locator('.r4-record-head').screenshot({ path: `artifacts/r3-preview/p0-example-intro-${width}.png` });
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
@@ -167,6 +168,9 @@ test('P0 layouts preserve readable entry points at narrow and wide widths', asyn
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
   await page.locator('.ep-web-header').screenshot({ path: 'artifacts/r3-preview/p0-pack-header-text-200.png' });
   await page.locator('.ep-web-footer').screenshot({ path: 'artifacts/r3-preview/p0-pack-footer-text-200.png' });
+  const bannerBottom = await page.locator('.review-banner').evaluate(el => el.getBoundingClientRect().bottom);
+  const footerTop = await page.locator('.ep-web-footer').evaluate(el => el.getBoundingClientRect().top);
+  expect(bannerBottom).toBeLessThanOrEqual(footerTop + 1);
   const firstLink = page.locator('.ep-web-brand');
   await firstLink.press('Tab');
   await expect(page.locator('.ep-web-nav a').first()).toBeFocused();

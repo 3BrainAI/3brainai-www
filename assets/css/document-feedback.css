@@ -66,4 +66,7 @@
  .ep-web-header .ep-web-nav { column-gap:18px; }
  .ep-web-footer .ep-web-links { grid-template-columns:minmax(0,1fr); }
 }
-@media print { .document-feedback, .ep-web-header, .ep-web-footer { display:none !important; } }
+@media print {
+ .document-feedback, .ep-web-header, .ep-web-footer { display:none !important; }
+ .ep-web-record { display:contents; }
+}

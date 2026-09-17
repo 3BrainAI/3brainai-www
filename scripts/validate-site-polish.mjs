@@ -157,6 +157,8 @@ for (const [relativePath, expectedHash] of fischamendPublicReleaseHashes) {
     ? value.toString()
       .replace('<link rel="stylesheet" href="/assets/css/document-feedback.css?v=r40">\n<script src="/assets/js/document-feedback.js?v=r40" defer></script>\n', '')
       .replace(/\n  <header class="ep-web-header">[\s\S]*?<\/header>/, '')
+      .replace('  <div class="ep-web-record">\n', '')
+      .replace('  </main>\n  </div>', '  </main>')
       .replace(/\n  <footer class="ep-web-footer" aria-labelledby="ep-web-continue">[\s\S]*?<\/footer>/, '')
       .replace(
         '<meta property="og:image" content="https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png">',
