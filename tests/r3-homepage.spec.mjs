@@ -66,7 +66,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveCSS('font-size', '22px');
   await expect(page.locator('.r4-domain-rail')).toHaveCSS('font-size', '17px');
   await expect(page.locator('.r4-human-boundary')).toHaveText(
-    'Evidence for the people who review, challenge and decide.'
+    'Before the next drawdown, make clear what the evidence supports – and what still needs checking.'
   );
   await expect(page.locator('.r4-hero .r4-lead')).toContainText(
     'Initial focus: DACH, Benelux and Central Europe'

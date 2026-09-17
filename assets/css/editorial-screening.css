@@ -1,5 +1,14 @@
 /* R3.8 editorial-screening layer: short orientation cues around approved product records. */
 
+/* The example introduction now has one column and leads straight to the record. */
+.r4-home .r4-record-head {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.r4-home .r4-record-head > div {
+  max-width: 960px;
+}
+
 .r4-home .r38-product-key {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
