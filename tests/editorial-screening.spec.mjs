@@ -73,7 +73,7 @@ test('Evidence Pack guide separates observation, scenario and next review action
 
 for (const javaScriptEnabled of [true, false]) {
   test(`Fischamend has one static context route with JavaScript ${javaScriptEnabled ? 'on' : 'off'}`, async ({ browser }) => {
-    const context = await browser.newContext({ javaScriptEnabled });
+    const context = await browser.newContext({ javaScriptEnabled, baseURL: test.info().project.use.baseURL });
     const page = await context.newPage();
     try {
       await prepare(page, 390);
