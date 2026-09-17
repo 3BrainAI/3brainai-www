@@ -42,8 +42,8 @@ test('root favicon fallback is publicly available', async ({ request }) => {
 });
 
 test('Fischamend pages expose the evidence-led social preview', async ({ request }) => {
-  const imageUrl = 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png';
-  const imageResponse = await request.get('/assets/img/og_fischamend_evidence_pack.png');
+  const imageUrl = 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack_v0_2.png';
+  const imageResponse = await request.get('/assets/img/og_fischamend_evidence_pack_v0_2.png');
   expect(imageResponse.ok()).toBeTruthy();
   expect(imageResponse.headers()['content-type']).toContain('image/png');
   expect((await imageResponse.body()).byteLength).toBeGreaterThan(100_000);
@@ -131,7 +131,7 @@ for (const canonicalPage of canonicalPages) {
     );
     await expect(page.locator('head meta[property="og:url"]')).toHaveAttribute('content', canonicalPage.url);
     await expect(page.locator('head meta[property="og:site_name"]')).toHaveAttribute('content', '3BrainAI');
-    const evidencePackImage = 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png';
+    const evidencePackImage = 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack_v0_2.png';
     const defaultImage = 'https://www.3brain.ai/assets/img/og_3brainai.png';
     const expectedImage = canonicalPage.route === '/evidence-packs/' ? evidencePackImage : defaultImage;
     await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute('content', expectedImage);

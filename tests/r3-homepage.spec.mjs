@@ -53,7 +53,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
-  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=r37-programme-strip"]')).toHaveCount(1);
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=r41-hypothetical-scenario"]')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveText('The physical world does not wait for your next review.');
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveText('For banks & institutional lenders');
@@ -82,7 +82,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await expect(page.locator('.r4-hero')).toContainText('Public example · 2 pages · No sign-in.');
   await expect(page.locator('.r4-hero')).toContainText('Free editorial evaluation.');
   await expect(page.locator('.r4-evidence-anchor')).toHaveText(
-    'Public example · real Copernicus data · synthetic scenario'
+    'Public example · Real Copernicus data · Hypothetical review scenario'
   );
   await expect(page.locator('.r38-product-key dt')).toHaveText(['CRI', 'Evidence Pack', 'The Brief']);
 
@@ -184,16 +184,16 @@ test('four current programmes and the historical EY context remain explicitly se
     .toBeLessThanOrEqual(1);
 });
 
-test('Evidence Lens makes the real-data and synthetic-scenario boundary explicit', async ({ page }) => {
+test('Evidence Lens makes the real-data and hypothetical-scenario boundary explicit', async ({ page }) => {
   await openHomepage(page, 1440);
 
   const lens = page.locator('.r4-evidence-lens');
-  await expect(lens).toContainText('Real Copernicus data · synthetic scenario');
-  await expect(lens).toContainText('DEMO-EU-AT-FIS-01 · v0.1 public-safe release');
+  await expect(lens).toContainText('Real Copernicus data · hypothetical review scenario');
+  await expect(lens).toContainText('DEMO-EU-AT-FIS-01 · v0.2 terminology revision');
   await expect(lens).toContainText('Human review required');
   await expect(lens).toContainText('WATCH – Evidence sufficiency');
   await expect(lens).toContainText('High – large roofed footprint change only');
-  await expect(lens).toContainText('Declared – synthetic');
+  await expect(lens).toContainText('Declared – hypothetical');
   await expect(lens).toContainText('Observed – dated public evidence');
   await expect(lens).toContainText('20 Aug 2023 → 19 Aug 2025');
   await expect(lens).toContainText('Uncertainty and non-inference');
@@ -201,7 +201,7 @@ test('Evidence Lens makes the real-data and synthetic-scenario boundary explicit
   await expect(lens).toContainText('it is not a negative project rating');
   await expect(lens).toContainText('Modified Copernicus Sentinel data 2023 and 2025');
   await expect(lens).toContainText('Did large roofed structures become visible');
-  await expect(lens).toContainText('The released pack retains the full synthetic review question');
+  await expect(lens).toContainText('The released pack retains the full hypothetical review question');
 
   const fullPack = lens.getByRole('link', { name: 'Open full Evidence Pack' });
   await expect(fullPack).toHaveAttribute('href', '/evidence-packs/fischamend/');

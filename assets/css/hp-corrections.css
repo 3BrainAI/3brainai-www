@@ -691,7 +691,8 @@
   /* Clear the production 74 px sticky header while the folio follows the lens. */
   top: 92px;
   display: block;
-  align-self: stretch;
+  /* Keep the frame fitted to the pages as the adjacent explanation wraps. */
+  align-self: start;
   isolation: isolate;
   padding: 16px;
   background: var(--r4-navy);

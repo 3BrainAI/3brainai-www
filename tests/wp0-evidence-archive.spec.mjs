@@ -21,7 +21,7 @@ const archiveCases = [
 
 const responsiveWidths = [390, 768, 1024, 1280, 1440];
 const analyticalSections = [
-  'Synthetic review question',
+  'Hypothetical review question',
   'Assessment summary',
   'Observed vs Declared',
   'Findings',

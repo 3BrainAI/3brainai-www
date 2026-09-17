@@ -57,7 +57,7 @@ test('Evidence Pack guide separates observation, scenario and next review action
 
   const guide = page.locator('#reading-guide');
   await expect(guide).toContainText('Everything observed is real and checkable.');
-  await expect(guide).toContainText('Everything about the financing scenario is synthetic.');
+  await expect(guide).toContainText('The financing review scenario is hypothetical.');
   await expect(guide.locator('.card')).toHaveCount(3);
   await expect(guide.locator('.card h3')).toHaveText([
     'What the images show',
@@ -86,7 +86,7 @@ for (const javaScriptEnabled of [true, false]) {
       await expect(page.locator('main .ep-web-header, main .ep-web-footer')).toHaveCount(0);
       await expect(page.locator('.ep-web-brand-line')).toHaveText('Evidence for the people who review, challenge and decide.');
       await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute(
-        'content', 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack.png'
+        'content', 'https://www.3brain.ai/assets/img/og_fischamend_evidence_pack_v0_2.png'
       );
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
 
@@ -110,33 +110,28 @@ for (const javaScriptEnabled of [true, false]) {
   });
 }
 
-test('released Fischamend main stays byte-identical and prints as the same two A4 pages', async ({ page }, info) => {
-  const artifactPath = 'evidence-packs/fischamend/index.html';
-  const current = await readFile(artifactPath, 'utf8');
-  const baseline = execFileSync('git', ['show', `origin/${process.env.GITHUB_BASE_REF || 'main'}:${artifactPath}`], { encoding: 'utf8' });
-  const main = html => html.match(/<main\b[\s\S]*?<\/main>/)[0];
-  const sha = value => createHash('sha256').update(value).digest('hex');
-  expect(sha(main(current))).toBe('13813d23bf18616eda561407fcbcd004a660d38a8938ef8e2d7a67a5d469fd30');
-  expect(main(current)).toBe(main(baseline));
+test('terminology revision preserves the archived record and prints as two A4 pages', async ({ page }, info) => {
+  const { validateTerminology } = await import('../scripts/validate-terminology.mjs');
+  validateTerminology();
   await prepare(page, 1440);
   await page.emulateMedia({ media: 'print' });
   await mkdir('artifacts/r3-preview', { recursive: true });
-  const record = '/evidence-packs/fischamend/';
-  const pdfOptions = { format: 'A4', preferCSSPageSize: true, printBackground: true };
-  await page.route(`**${record}`, route => route.fulfill({ contentType: 'text/html', body: baseline }));
-  await page.goto(record);
-  const beforeImage = await page.locator('main').screenshot();
-  const beforePdf = await page.pdf({ ...pdfOptions, path: 'artifacts/r3-preview/p0-fischamend-before.pdf' });
-  await page.unroute(`**${record}`);
-  await page.reload();
+  await page.goto('/evidence-packs/fischamend/');
   await expect(page.locator('.ep-web-header')).toBeHidden();
   await expect(page.locator('.ep-web-footer')).toBeHidden();
-  const afterImage = await page.locator('main').screenshot({ path: 'artifacts/r3-preview/p0-fischamend-print.png' });
-  const afterPdf = await page.pdf({ ...pdfOptions, path: 'artifacts/r3-preview/p0-fischamend-after.pdf' });
-  // Chromium's page objects are uncompressed; avoid counting the Pages root.
-  for (const pdf of [beforePdf, afterPdf]) expect((pdf.toString('latin1').match(/\/Type\s*\/Page\b/g) || []).length).toBe(2);
-  expect(sha(afterImage)).toBe(sha(beforeImage));
-  await info.attach('print-verification.json', { body: JSON.stringify({ mainSha256: sha(main(current)), printPixelsIdentical: true, pagesBefore: 2, pagesAfter: 2 }), contentType: 'application/json' });
+  await expect(page.locator('main')).toContainText('Hypothetical drawdown review scenario');
+  await expect(page.locator('main')).not.toContainText(/synthetic/i);
+  const geometry = await page.locator('.page').evaluateAll(pages => pages.map(p => ({
+    contentBottom: p.querySelector('.page-content').getBoundingClientRect().bottom,
+    footerTop: p.querySelector('.document-footer').getBoundingClientRect().top,
+    pageBottom: p.getBoundingClientRect().bottom
+  })));
+  for (const bounds of geometry) expect(bounds.contentBottom).toBeLessThan(bounds.footerTop);
+  const pdf = await page.pdf({ format: 'A4', preferCSSPageSize: true, printBackground: true,
+    path: 'artifacts/r3-preview/fischamend-v0_2.pdf' });
+  expect((pdf.toString('latin1').match(/\/Type\s*\/Page\b/g) || []).length).toBe(2);
+  await page.locator('main').screenshot({ path: 'artifacts/r3-preview/fischamend-v0_2-print.png' });
+  await info.attach('print-verification.json', { body: JSON.stringify({ pages: 2, geometry }), contentType: 'application/json' });
 });
 
 test('P0 layouts preserve readable entry points at narrow and wide widths', async ({ page }) => {

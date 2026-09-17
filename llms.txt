@@ -13,7 +13,7 @@
 
 - [3BrainAI CRI](https://www.3brain.ai/cri/): Construction Risk Intelligence for governed institutional review.
 - [Evidence Pack portfolio](https://www.3brain.ai/#portfolio): Fischamend is the primary Austrian public-safe case; earlier German prototypes remain accessible as historical concept evidence.
-- [Fischamend Evidence Pack](https://www.3brain.ai/evidence-packs/fischamend/): Illustrative public-safe release for a synthetic construction review question; not a live customer assessment.
+- [Fischamend Evidence Pack](https://www.3brain.ai/evidence-packs/fischamend/): Illustrative public-safe release for a hypothetical construction review question; not a live customer assessment.
 - [Validation](https://www.3brain.ai/validation/): Complete product history and a separate institution-specific engagement path beginning with an Evidence Readiness Check.
 
 Current stage: controlled-case Proof of Concept validation of the governed Evidence Pack workflow is in progress. The next product gate is a contracted paid pilot. Product history remains visible from completed idea definition and illustrative prototype work through current PoC, next Paid Pilot and target Commercial Deployment. Institution-specific engagement is a separate axis beginning with an Evidence Readiness Check; institution-specific validation is normally run in shadow mode alongside existing controls.
@@ -40,7 +40,7 @@ Current stage: controlled-case Proof of Concept validation of the governed Evide
 
 - CRI supports accountable human review. It does not make autonomous credit decisions, replace bank policy or replace professional assessment.
 - In shadow mode, CRI outputs are reviewed alongside existing processes and do not affect live financial, operational or risk decisions; existing controls remain in place.
-- Public Evidence Pack content is synthetic or clearly identified as illustrative.
+- Public Evidence Pack examples distinguish real dated observations from hypothetical review scenarios; they do not represent client engagements.
 - Earth Observation is an input medium. CRI is the review-support product being developed; the Evidence Pack is its versioned review record.
 - Source, observation date, version, uncertainty and review state are designed to remain attached to each Evidence Pack record.
 
