@@ -99,8 +99,9 @@ for (const javaScriptEnabled of [true, false]) {
         await page.locator('.ep-web-footer').getByRole('link', { name, exact: true }).click();
         expect(new URL(page.url()).pathname).toBe(pathname);
         expect(new URL(page.url()).hash).toBe(hash);
-        await expect(page.locator(hash || '#have-code')).toBeAttached();
-        const y = await page.locator(hash).evaluate(el => el.getBoundingClientRect().top);
+        const destination = page.locator(hash || '#have-code');
+        await expect(destination).toBeAttached();
+        const y = await destination.evaluate(el => el.getBoundingClientRect().top);
         expect(y).toBeGreaterThanOrEqual(-1);
         expect(y).toBeLessThan(900);
       }
