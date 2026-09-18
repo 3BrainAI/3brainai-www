@@ -50,10 +50,10 @@ const requiredIconLinks = [
 
 const releaseStylesheetVersion = 'footer-cri-20260908';
 const releaseScriptVersion = 'f87d840f';
-const m3HomepageCorrectionVersion = 'r41-hypothetical-scenario';
+const m3HomepageCorrectionVersion = 'r44-cdse-ecosystem';
 const editorialScreeningVersion = 'r40';
 const evidenceArchiveVersion = 'wp0-20260907';
-const aboutFounderVersion = 'r37-programme-colour';
+const aboutFounderVersion = 'r44-cdse-ecosystem';
 const requiredScriptSource = `/assets/js/main.js?v=${releaseScriptVersion}`;
 
 for (const file of htmlFiles) {
@@ -348,8 +348,8 @@ assert.match(
 assert.equal((aboutHtml.match(/src="\/assets\/img\/ey-startup-academy-2025\.jpg"/g) ?? []).length, 1);
 assert.match(aboutHtml, /id="institutional-milestones"/);
 assert.equal((aboutHtml.match(/class="about-programme-cluster /g) ?? []).length, 2);
-assert.equal((aboutHtml.match(/class="about-programme-logo about-programme-logo--/g) ?? []).length, 4);
-assert.match(aboutHtml, /Different programmes\. Different roles\./);
+assert.equal((aboutHtml.match(/class="about-programme-logo about-programme-logo--/g) ?? []).length, 5);
+assert.match(aboutHtml, /Programmes and ecosystem\. Different roles\./);
 assert.match(aboutHtml, /one of two projects selected for ESA BIC Czech Republic incubation in 2026/);
 assert.match(aboutHtml, /Google for Startups Cloud Program/);
 assert.match(aboutHtml, /OVHcloud Startup Program/);
@@ -378,13 +378,16 @@ assert.match(homepageHtml, /id="evidence-pack-sample"/);
 assert.equal((homepageHtml.match(/<link rel="preload" as="image"/g) ?? []).length, 2);
 assert.equal((homepageHtml.match(/loading="eager"/g) ?? []).length, 2);
 assert.equal((homepageHtml.match(/fetchpriority="high"/g) ?? []).length, 1);
-assert.equal((homepageHtml.match(/class="r4-relationship-card"/g) ?? []).length, 4);
-assert.match(homepageHtml, /Incubation and technology programmes\./);
+assert.equal((homepageHtml.match(/class="r4-relationship-card"/g) ?? []).length, 5);
+assert.match(homepageHtml, /Programmes and European data ecosystem\./);
 assert.match(homepageHtml, /Google for Startups Cloud Program/);
 assert.match(homepageHtml, /NVIDIA Inception/);
+assert.match(homepageHtml, /Registered user/);
+assert.match(homepageHtml, /Copernicus Data Space Ecosystem/);
+assert.match(aboutHtml, /Registered user · European Earth observation ecosystem/);
 assert.match(homepageHtml, /Historical programme/);
 assert.match(homepageHtml, /EY Startup Academy Frankfurt 2025/);
-assert.match(homepageHtml, /href="\/about\/#institutional-milestones">Programme details in About<\/a>/);
+assert.match(homepageHtml, /href="\/about\/#institutional-milestones">Programme and ecosystem details in About<\/a>/);
 assert.doesNotMatch(homepageHtml, /r4-relationship-qualifier/);
 assert.match(homepageHtml, /How Construction Risk Intelligence works/);
 assert.match(homepageHtml, /A governed evidence workflow for accountable institutional review\./);
@@ -491,7 +494,7 @@ const homepageCorrections = await readFile(
   path.join(repositoryRoot, 'assets/css/hp-corrections.css'),
   'utf8'
 );
-assert.match(homepageCorrections, /\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*repeat\(4,/s);
+assert.match(homepageCorrections, /\.r4-home \.r4-relationship-grid\s*{[^}]*grid-template-columns:\s*repeat\(5,/s);
 assert.match(homepageCorrections, /\.r4-home \.r4-relationship-history\s*{[^}]*grid-template-columns:/s);
 assert.match(
   homepageCorrections,

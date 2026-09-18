@@ -284,3 +284,43 @@
     font-size: 19px;
   }
 }
+
+/* CDSE describes a registered-user relationship, separate from incubation programmes. */
+.about-cdse {
+  display: grid;
+  grid-template-columns: minmax(220px, 284px) minmax(0, 1fr);
+  gap: 34px;
+  align-items: center;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--r3-border);
+}
+
+.about-programme-logo--cdse {
+  height: 100px;
+  padding: 18px;
+  background: #071b2e;
+}
+
+.about-programme-logo--cdse img {
+  width: 100%;
+  max-height: 64px;
+}
+
+.about-cdse-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--r3-action);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .about-cdse {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .about-programme-logo--cdse {
+    width: min(100%, 284px);
+  }
+}

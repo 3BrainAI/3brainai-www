@@ -461,7 +461,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -489,6 +489,25 @@
 
 .r4-home .r4-relationship-media--esa img {
   width: min(100%, 210px);
+}
+
+.r4-home .r4-relationship-media--cdse {
+  flex-direction: column;
+  gap: 4px;
+}
+
+.r4-home .r4-relationship-media--cdse img {
+  width: min(100%, 176px);
+  max-height: 36px;
+  filter: brightness(0);
+  opacity: 0.64;
+}
+
+.r4-home .r4-cdse-role {
+  color: var(--r4-muted);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
 }
 
 .r4-home .r4-relationship-media--ovh img {
@@ -1442,6 +1461,17 @@
     height: 68px;
     padding: 8px;
   }
+
+  .r4-home .r4-relationship-card:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 12px) / 2);
+  }
+
+  .r4-home .r4-relationship-media--cdse img {
+    max-height: 30px;
+  }
+
 
   .r4-home .r4-relationship-history {
     display: block;
