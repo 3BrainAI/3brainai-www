@@ -53,7 +53,7 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   await openHomepage(page, 1440);
 
   await expect(page.locator('body')).toHaveClass('r4-home');
-  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=r41-hypothetical-scenario"]')).toHaveCount(1);
+  await expect(page.locator('link[href="/assets/css/hp-corrections.css?v=r44-cdse-ecosystem"]')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h1')).toHaveText('The physical world does not wait for your next review.');
   await expect(page.locator('.r4-hero .r4-kicker')).toHaveText('For banks & institutional lenders');
@@ -145,22 +145,25 @@ test('homepage implements the founder-approved R4-E content contract', async ({ 
   expect(missingAnchors).toEqual([]);
 });
 
-test('four current programmes and the historical EY context remain explicitly separated', async ({ page }) => {
+test('five programme and ecosystem logos show CDSE as a registered-user relationship', async ({ page }) => {
   await openHomepage(page, 1440);
 
   const cards = page.locator('.r4-relationship-card');
-  await expect(cards).toHaveCount(4);
+  await expect(cards).toHaveCount(5);
   expect(await cards.locator('img').evaluateAll(images => images.map(img => img.alt))).toEqual([
     'ESA Business Incubation Centre Czech Republic',
+    'Copernicus Data Space Ecosystem (CDSE)',
     'OVHcloud Startup Program',
     'Google for Startups Cloud Program',
     'NVIDIA Inception Program'
   ]);
   await expect(cards.locator('.r4-relationship-body')).toHaveCount(0);
-  for (const logo of await cards.locator('img').all()) {
+  for (const logo of await cards.locator('.r4-relationship-media:not(.r4-relationship-media--cdse) img').all()) {
     await expect(logo).toHaveCSS('filter', 'grayscale(1) saturate(0) contrast(0.78)');
   }
 
+  await expect(cards.locator('.r4-cdse-role')).toHaveText('Registered user');
+  await expect(cards.locator('.r4-relationship-media--cdse img')).toHaveCSS('filter', 'brightness(0)');
   await expect(cards.locator('a')).toHaveCount(0);
   const history = page.locator('.r4-relationship-history');
   await expect(history.locator('img')).toHaveCSS('filter', 'none');
